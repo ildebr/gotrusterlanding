@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import MenuIcon from '@material-ui/icons/Menu';
-import { Grid, Toolbar, Typography, Button, IconButton, Hidden } from '@material-ui/core';
+import { Grid, Toolbar, Typography, Button, IconButton, Hidden,Link } from '@material-ui/core';
 
 const styles = theme => ({
     root: {
         flexGrow: 1,
         border: 0,
+        margin:0,
+        marginTop: '2vh',
     },
     menuButton: {
         marginRight: theme.spacing(2),
     },
     title: {
+        marginLeft: 60,
         flexGrow: 1,
         align: "center",
         color: "#FFFFFF",
@@ -30,7 +33,7 @@ const styles = theme => ({
     },
     authWrapper: {
         [theme.breakpoints.up('xs')]: {
-            marginRight: '0px',
+            // marginRight: '0px',
             color: '#ACFD00',
             fontFamily: 'Poppins',
             fontSize: '16px',
@@ -42,7 +45,7 @@ const styles = theme => ({
             border:'1px',
             borderRadius:'20px',
             borderColor:'#ACFD00',
-            textTransform: 'lowercase',            
+                        
         },
         [theme.breakpoints.up('ls')]: {            
             color: '#ACFD00',
@@ -53,7 +56,7 @@ const styles = theme => ({
             lineHeight: '24px',
             letterSpacing: ' -0.02em',
             textAlign: 'left',
-            textTransform: 'lowercase',
+            
         },
     },
     
@@ -65,14 +68,22 @@ class Navbar extends Component {
         super(props);
         this.state = {
             anchorEl: null,
-            isMenuOpen: false
-
+            isMenuOpen: false,
+            isActive:this.props.active
         };
     }
 
     render() {
         const { classes, handleClick, handleCloseClick } = this.props;
         const { anchorEl, isMenuOpen } = this.state;
+        let $Show ='';
+        if (this.state.isActive ==="1"){
+            $Show=(<Button
+                className={classes.authWrapper}> Log in</Button>)
+        } else{
+            $Show ='' 
+        }
+
         return (
             <Grid position="static" color="transparent" className={classes.root}>
                 <Toolbar>
@@ -82,8 +93,9 @@ class Navbar extends Component {
                     <Typography variant="h6" className={classes.title}>
                         Truster
                     </Typography>
-                    <Button
-                       className={classes.authWrapper}> Log in</Button>
+                    <Hidden xsDown>
+                    {$Show}
+                     </Hidden>
                     <Typography
                         style={{
                             color: '#ACFD00',
@@ -95,9 +107,10 @@ class Navbar extends Component {
                             letterSpacing: ' -0.02em',
                             textAlign: 'left'
                         }} >&nbsp;&nbsp;&nbsp;       </Typography>
-                   <Hidden xsDown>
+
+                   
                     <Typography
-                        style={{
+                         > <Link href="/register" style={{
                             color: '#FFFFFF',
                             fontFamily: 'Poppins',
                             fontSize: '16px',
@@ -105,10 +118,10 @@ class Navbar extends Component {
                             fontWeight: '700',
                             lineHeight: '24px',
                             letterSpacing: ' -0.02em',
-                            textAlign: 'right',
+                            textAlign: 'center',
                             marginRight: 0,
-                        }} > Registrate</Typography>
-                      </Hidden>  
+                        }}>Registrate</Link></Typography>
+                        
                 </Toolbar>
             </Grid>
         );

@@ -95,7 +95,7 @@ class Landing extends Component {
                     </Container >
 
                     <Box className={classes.authWrapper}>
-
+                    
                         <CssBaseline />
                         <Box maxWidth="md">
                             <img src={Logo} alt='logo' />
