@@ -1,28 +1,18 @@
 import React, { Component } from 'react'
-import { CssBaseline, Grid, Box, Container, Typography, TextField, Button } from '@material-ui/core';
+import { CssBaseline, Grid, Box, Container, Typography} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import NavBar from '../../components/navBar/navbar.jsx'
-import Background from '../../asset/images/Rectangle44.png';
+import NavBar from '../../components/navBar/navbar.jsx';
 import Link from '@material-ui/core/Link';
 import InputBase from '@material-ui/core/InputBase';
 import Logo from '../../asset/images/Vector.svg';
-import VectorT from '../../asset/images/VectorT.svg';
+//import WindowDimensions from "../../components/UtilityComponents/WindowDimension"
+
 const styles = theme => ({
     root: {
         flexGrow: 1,
         backgroundColor: '#000000'
     },
-    paper: {
-        marginTop: theme.spacing(2),
-        background: '#000000',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'centerlumn',
-        font: 'normal normal normal 18px/24px Roboto',
-        letterSpacing: '0px',
-        textAlign: 'center',
-
-    },
+   
     authWrapper: {
         [theme.breakpoints.up('sm')]: {
             marginTop: '214px',
@@ -42,7 +32,7 @@ const styles = theme => ({
         backgroundColor: '#000000',
         backgroundSize: "cover",
         width: '1937px',
-        height: '217px',
+        //height: '217px',
         marginTop: '2vh',
     },
     paperWelcome: {
@@ -134,16 +124,18 @@ const styles = theme => ({
 
     },
     login: {
-        backgroundColor: '#ACFD00', 
+        backgroundColor: '#ACFD00',
         width: '100%',
+        maxWidth: 316,
         font: 'normal normal normal 18px/24px Poppins',
         height: 50,
         borderRadius: 15,
-        marginTop: theme.spacing(5),
+        marginTop: theme.spacing(3),
     },
-    formButton: { 
+    formButton: {
         marginTop: theme.spacing(1),
         height: 50,
+        maxWidth: 316,
         border: '1px solid',
         borderColor: '#999999',
         borderRadius: 15,
@@ -163,12 +155,12 @@ class Login extends Component {
         const { classes } = this.props;
         return (
             <div style={{ backgroundColor: '#000000' }}>
-                <Grid container  className={classes.root} component="main" maxWidth="md">
+                <Grid container className={classes.root} component="main" maxWidth="md">
                     <Container component="main" maxWidth="md" >
                         <Grid item container xs={12} className={classes.paperContainer} >
-                            <NavBar  active='0'/>
+                            <NavBar active={0} />
                         </Grid>
-                        <Container component="main" maxWidth="md" style={{alignItems: 'center'}} >
+                        <Container component="main" maxWidth="md" style={{ alignItems: 'center' }} >
                             <Box className={classes.authWrapper}   >
                                 <CssBaseline />
                                 <Box mx="auto"  >
@@ -183,69 +175,70 @@ class Login extends Component {
                                         <Typography className={classes.paperWelcome}>
                                             Tu punto de confianza. </Typography>
                                     </Box>
-                                    <Grid align='center'>
-                                    <form style={{
-                                        width: '70%', 
-                                        marginTop: 30,
-                                        justifyContent: "center",
-                                        alignContent: "center",
-                                    }}
-                                        onSubmit={this.handleSubmit}
-                                        noValidate>
-                                        <InputBase
-                                            placeholder="Usuario / Email"
-                                            fullWidth
-                                            id="email"
-                                            inputProps={{style: { textAlign: 'center' }}}
-                                            className={classes.formButton}
-                                           // onChange={}
-                                        />
-                                        <InputBase
-                                            placeholder="Contraseña"
-                                            fullWidth
-                                            color= 'white'
-                                            type="password"
-                                            inputProps={{style: { textAlign: 'center' }}}
-                                            className={classes.formButton}
+                                    <Grid justify='center' container>
+                                        <form style={{
+                                            width: '70%',
+                                            marginTop: 30,
+                                            justifyContent: "center",
+                                            alignContent: "center",
+                                            textAlign: 'center'
+                                        }}
+                                            onSubmit={this.handleSubmit}
+                                            noValidate>
+                                            <InputBase
+                                                placeholder="Usuario / Email"
+                                                fullWidth
+                                                id="email"
+                                                inputProps={{ style: { textAlign: 'center' } }}
+                                                className={classes.formButton}
                                             // onChange={}
-                                        />
-                                        
-                                        <button
-                                            type="submit"
-                                            variant="contained"
-                                            fullWidth
-                                            className={classes.login}
-                                        >
-                                            Log In
+                                            />
+                                            <InputBase
+                                                placeholder="Contraseña"
+                                                fullWidth
+                                                color='white'
+                                                type="password"
+                                                inputProps={{ style: { textAlign: 'center' } }}
+                                                className={classes.formButton}
+                                            // onChange={}
+                                            />
+
+                                            <button
+                                                type="submit"
+                                                variant="contained"
+                                                fullWidth
+                                                className={classes.login}
+                                            >
+                                                Log In
                                         </button>
-                                        <Grid container>
-                                            <Grid item xs>
-                                                <Link>
-                                                    <Typography
-                                                    className={classes.normaltext}>
-                                                         ¿Olvidaste contraseña?
+                                            <Grid container>
+                                                <Grid item xs>
+                                                    <Link>
+                                                        <Typography
+                                                            className={classes.normaltext}>
+                                                            ¿Olvidaste contraseña?
                                                     </Typography>
-                                                </Link>
+                                                    </Link>
+                                                </Grid>
+
                                             </Grid>
-                                            
-                                        </Grid>
-                                        <Grid container>
-                                            <Grid item xs>
-                                                
+                                            <Grid container>
+                                                <Grid item xs>
+
                                                     <Typography
-                                                    className={classes.normaltext}>
-                                                        ¿No tenés cuenta?{' '} 
+                                                        className={classes.normaltext}>
+                                                        ¿No tenés cuenta?{' '}
                                                         <Link
-                                                        href="/register"
-                                                        style={{color: '#ACFD00'}}>
+                                                            href="/register"
+                                                            style={{ color: '#ACFD00' }}>
                                                             Registrate
                                                         </Link>
                                                     </Typography>
-                                              
+
+                                                </Grid>
+
                                             </Grid>
-                                            
-                                        </Grid>
-                                    </form>
+                                        </form>
                                     </Grid>
 
 

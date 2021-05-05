@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import MenuIcon from '@material-ui/icons/Menu';
-import { Grid, Toolbar, Typography, Button, IconButton, Hidden,Link } from '@material-ui/core';
+import { Grid, Toolbar, Typography, IconButton, Hidden, Link } from '@material-ui/core';
 
 const styles = theme => ({
     root: {
         flexGrow: 1,
         border: 0,
-        margin:0,
+        margin: 0,
         marginTop: '2vh',
     },
     menuButton: {
@@ -42,12 +42,12 @@ const styles = theme => ({
             lineHeight: '24px',
             letterSpacing: ' -0.02em',
             textAlign: 'left',
-            border:'1px',
-            borderRadius:'20px',
-            borderColor:'#ACFD00',
-                        
+            border: '1px',
+            borderRadius: '20px',
+            borderColor: '#ACFD00',
+
         },
-        [theme.breakpoints.up('ls')]: {            
+        [theme.breakpoints.up('ls')]: {
             color: '#ACFD00',
             fontFamily: 'Poppins',
             fontSize: '16px',
@@ -56,10 +56,10 @@ const styles = theme => ({
             lineHeight: '24px',
             letterSpacing: ' -0.02em',
             textAlign: 'left',
-            
+
         },
     },
-    
+
 });
 
 
@@ -69,19 +69,17 @@ class Navbar extends Component {
         this.state = {
             anchorEl: null,
             isMenuOpen: false,
-            isActive:this.props.active
+            isActive: this.props.active
         };
     }
 
     render() {
-        const { classes, handleClick, handleCloseClick } = this.props;
-        const { anchorEl, isMenuOpen } = this.state;
-        let $Show ='';
-        if (this.state.isActive ==="1"){
-            $Show=(<Button
-                className={classes.authWrapper}> Log in</Button>)
-        } else{
-            $Show ='' 
+        const { classes} = this.props;        
+        let $Show = '';
+        if (this.state.isActive === "1") {
+            $Show = (<Typography><Link href="/"  className={classes.authWrapper}> Log in</Link></Typography>)
+        } else {
+            $Show = ''
         }
 
         return (
@@ -94,8 +92,8 @@ class Navbar extends Component {
                         Truster
                     </Typography>
                     <Hidden xsDown>
-                    {$Show}
-                     </Hidden>
+                        {$Show}
+                    </Hidden>
                     <Typography
                         style={{
                             color: '#ACFD00',
@@ -108,20 +106,20 @@ class Navbar extends Component {
                             textAlign: 'left'
                         }} >&nbsp;&nbsp;&nbsp;       </Typography>
 
-                   
+
                     <Typography
-                         > <Link href="/register" style={{
-                            color: '#FFFFFF',
-                            fontFamily: 'Poppins',
-                            fontSize: '16px',
-                            fontStyle: ' normal',
-                            fontWeight: '700',
-                            lineHeight: '24px',
-                            letterSpacing: ' -0.02em',
-                            textAlign: 'center',
-                            marginRight: 0,
-                        }}>Registrate</Link></Typography>
-                        
+                    > <Link href="/register" style={{
+                        color: '#FFFFFF',
+                        fontFamily: 'Poppins',
+                        fontSize: '16px',
+                        fontStyle: ' normal',
+                        fontWeight: '700',
+                        lineHeight: '24px',
+                        letterSpacing: ' -0.02em',
+                        textAlign: 'center',
+                        marginRight: 0,
+                    }}>Registrate</Link></Typography>
+
                 </Toolbar>
             </Grid>
         );

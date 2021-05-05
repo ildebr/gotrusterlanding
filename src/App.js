@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './views/login/login';
 import Register from './views/register/register';
+import RegisterSecond from './views/register/registersecond';
 
 import './App.css';
 
@@ -17,7 +18,7 @@ function App() {
                     </Route>
                     <Switch>
                         <Route path="/register" component={Register}/>                        
-                        
+                        <Route path="/registerex" component={RegisterSecond}/> 
                     </Switch>
 
                   
