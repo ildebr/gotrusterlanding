@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
-import { CssBaseline, Grid, Box, Container, Typography } from '@material-ui/core';
+import { CssBaseline, Grid, Box, Container, Typography,Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import NavBar from '../../components/navBar/navbar.jsx';
 import Link from '@material-ui/core/Link';
 import InputBase from '@material-ui/core/InputBase';
-import Logo from '../../asset/images/Vector.svg';
+import Logo from '../../asset/images/logo.svg';
 import Checkbox from '@material-ui/core/Checkbox';
-
 const styles = theme => ({
     root: {
         flexGrow: 1,
         backgroundColor: '#000000'
     },
-    
+
     authWrapper: {
         [theme.breakpoints.up('sm')]: {
             marginTop: '100px',
@@ -129,6 +128,7 @@ const styles = theme => ({
         font: 'normal normal normal 18px/24px Poppins',
         height: 50,
         borderRadius: 15,
+        textTransform:'none',
         marginTop: theme.spacing(3),
     },
     formButton: {
@@ -136,6 +136,15 @@ const styles = theme => ({
         height: 50,
         border: '1px solid',
         borderColor: '#999999',
+        borderRadius: 15,
+        color: "white",
+        font: 'normal normal normal 16px/22px Poppins',
+    },
+    formButton2: {
+        marginTop: theme.spacing(1),
+        height: 20,
+        //border: '1px solid',
+        borderBottomColor: '#999999',
         borderRadius: 15,
         color: "white",
         font: 'normal normal normal 16px/22px Poppins',
@@ -154,24 +163,41 @@ const styles = theme => ({
 });
 
 class Register extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { windowWidth: window.innerWidth };
+    }
+    handleResize = (e) => {
+        this.setState({ windowWidth: window.innerWidth });
+    };
+    componentDidMount() {
+        window.addEventListener("resize", this.handleResize);
+    }
 
     render() {
-
-
+        function getWindowDimensions() {
+            const { innerWidth: width } = window;
+            return {
+                width
+            };
+        }
         const { classes } = this.props;
+        const { width } = getWindowDimensions();
+
         return (
             <div style={{ backgroundColor: '#000000' }}>
+
                 <Grid container className={classes.root} component="main" maxWidth="md">
                     <Container component="main" maxWidth="md" >
                         <Grid item container xs={12} className={classes.paperContainer} >
-                            <NavBar active="1" />
+                            <NavBar active={1} />
                         </Grid>
                         <Container component="main" maxWidth="md" style={{ alignItems: 'center' }} >
                             <Box className={classes.authWrapper}   >
                                 <CssBaseline />
                                 <Box mx="auto"  >
                                     <Box className={classes.authHeader}>
-                                        <img src={Logo} alt='logo' />
+                                        <img src={Logo} alt='logo' width="50" height="50" />
                                     </Box>
                                 </Box>
                                 <div className={classes.paper}>
@@ -179,102 +205,214 @@ class Register extends Component {
                                         <Typography className={classes.paperWelcome}>
                                             Creá tu cuenta Truster </Typography>
                                     </Box>
-                                    <Grid align='center'>
-                                        <form style={{
-                                            width: '100%',
-                                            marginTop: 30,
-                                            justifyContent: "center",
-                                            alignContent: "center",
-                                        }}
-                                            onSubmit={this.handleSubmit}
-                                            noValidate>
-                                            <Typography className={classes.inputTitle}>
-                                                Nombre
-                                            </Typography>
-                                            <InputBase
-                                                placeholder="Nombre"
-                                                fullWidth
-                                                id="nombre"
-                                                inputProps={{ style: { textAlign: 'center' } }}
-                                                className={classes.formButton}
-                                            // onChange={}
-                                            />
-                                            <Typography className={classes.inputTitle}>
-                                                Apellido
-                                            </Typography>
-                                            <InputBase
-                                                placeholder="Apellido"
-                                                fullWidth
-                                                id="apellido"
-                                                inputProps={{ style: { textAlign: 'center' } }}
-                                                className={classes.formButton}
-                                            // onChange={}
-                                            />
-                                            <Typography className={classes.inputTitle}>
-                                                Email
-                                            </Typography>
-                                            <InputBase
-                                                placeholder="Email"
-                                                fullWidth
-                                                id="email"
-                                                inputProps={{ style: { textAlign: 'center' } }}
-                                                className={classes.formButton}
-                                            // onChange={}
-                                            />
-                                            <Typography className={classes.inputTitle}>
-                                                Contaseña
-                                            </Typography>
-                                            <InputBase
-                                                placeholder="Contaseña"
-                                                fullWidth
-                                                id="password"
-                                                inputProps={{ style: { textAlign: 'center' } }}
-                                                className={classes.formButton}
-                                            // onChange={}
-                                            />
-                                            <Typography style={{ color: '#999999', fontSize: 10 }}>
-                                                12 caracteres máx
-                                    </Typography>
-                                            <Typography className={classes.inputTitle}>
-                                                Repetir Contraseña
-                                            </Typography>
-                                            <InputBase
-                                                placeholder="Repetir Contraseña"
-                                                fullWidth
-                                                id="password"
-                                                inputProps={{ style: { textAlign: 'center' } }}
-                                                className={classes.formButton}
-                                            // onChange={}
-                                            />
-
-                                            <Grid container item>
-                                                <Grid container justify="center" style={{ marginTop: 10 }}>
-                                                    <Checkbox
-                                                        iconStyle={{ fill: '#ACFD00' }}
-                                                        inputStyle={{ color: '#ACFD00' }}
-                                                        style={{ color: '#ACFD00' }}
-                                                    />
-                                                    <Typography
-                                                        className={classes.normaltext}>
-                                                        Acepto los{' '}
-                                                        <Link
-                                                            style={{ color: '#ACFD00' }}>
-                                                            Condiciones de Uso
-                                                    </Link>
-                                                    </Typography>
-                                                </Grid>
-                                                <button
-                                                    type="submit"
-                                                    variant="contained"
+                                    {width > 550 ?
+                                        <Grid justify='center'>
+                                            <form style={{
+                                                width: '100%',
+                                                marginTop: 30,
+                                                justifyContent: "center",
+                                                alignContent: "center",
+                                            }}
+                                                onSubmit={this.handleSubmit}
+                                                noValidate>
+                                                <Typography className={classes.inputTitle}>
+                                                    Nombre
+                                                </Typography>
+                                                <InputBase
+                                                    placeholder="Nombre"
                                                     fullWidth
-                                                    className={classes.login}
-                                                >
-                                                    Continuar
-                                        </button>
-                                            </Grid>
+                                                    id="nombre"
+                                                    inputProps={{ style: { textAlign: 'center' } }}
+                                                    className={classes.formButton}
+                                                // onChange={}
+                                                />
 
-                                        </form>
-                                    </Grid>
+                                                <Typography className={classes.inputTitle}>
+                                                    Apellido
+                                            </Typography>
+                                                <InputBase
+                                                    placeholder="Apellido"
+                                                    fullWidth
+                                                    id="apellido"
+                                                    inputProps={{ style: { textAlign: 'center' } }}
+                                                    className={classes.formButton}
+                                                // onChange={}
+                                                />
+                                                <Typography className={classes.inputTitle}>
+                                                    Email
+                                            </Typography>
+                                                <InputBase
+                                                    placeholder="Email"
+                                                    fullWidth
+                                                    id="email"
+                                                    inputProps={{ style: { textAlign: 'center' } }}
+                                                    className={classes.formButton}
+                                                // onChange={}
+                                                />
+                                                <Typography className={classes.inputTitle}>
+                                                    Contaseña
+                                            </Typography>
+                                                <InputBase
+                                                    placeholder="Contaseña"
+                                                    fullWidth
+                                                    id="password"
+                                                    inputProps={{ style: { textAlign: 'center' } }}
+                                                    className={classes.formButton}
+                                                // onChange={}
+                                                />
+                                                <Typography style={{ color: '#999999', fontSize: 10 }}>
+                                                    12 caracteres máx
+                                            </Typography>
+                                                <Typography className={classes.inputTitle}>
+                                                    Repetir Contraseña
+                                            </Typography>
+                                                <InputBase
+                                                    placeholder="Repetir Contraseña"
+                                                    fullWidth
+                                                    id="password"
+                                                    inputProps={{ style: { textAlign: 'center' } }}
+                                                    className={classes.formButton}
+                                                // onChange={}
+                                                />
+
+                                                <Grid container item>
+                                                    <Grid container justify="center" style={{ marginTop: 10 }}>
+                                                        <Checkbox
+                                                            iconStyle={{ fill: '#ACFD00' }}
+                                                            inputStyle={{ color: '#ACFD00' }}
+                                                            style={{ color: '#ACFD00' }}
+                                                        />
+                                                        <Typography
+                                                            className={classes.normaltext}>
+                                                            Acepto los{' '}
+                                                            <Link
+                                                                style={{ color: '#ACFD00' }}>
+                                                                Condiciones de Uso
+                                                    </Link>
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Button
+                                                        type="submit"
+                                                        variant="contained"
+                                                        href="/registerex"
+                                                        fullWidth
+                                                        className={classes.login}
+                                                    >
+                                                        Continuar
+                                                </Button>
+                                                </Grid>
+
+                                            </form>
+                                        </Grid> : <Grid justify='flex-start'>
+                                            <form style={{
+                                                width: '100%',
+                                                marginTop: 30,
+                                                justifyContent: "left",
+                                                alignContent: "left",
+                                            }}
+                                                onSubmit={this.handleSubmit}
+                                                noValidate>
+                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                    Nombre
+                                                </Typography>
+                                                <InputBase
+                                                    placeholder="Nombre"
+                                                    fullWidth
+                                                    id="nombre"
+                                                    inputProps={{ style: { textAlign: 'left' } }}
+                                                    className={classes.formButton2}
+                                                // onChange={}
+                                                />
+                                                <hr width={'100%'} align={'left'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30 }} />
+                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                    Apellido
+                                                </Typography>
+                                                <InputBase
+                                                    placeholder="Apellido"
+                                                    fullWidth
+                                                    id="apellido"
+                                                    inputProps={{ style: { textAlign: 'left' } }}
+                                                    className={classes.formButton2}
+                                                // onChange={}
+                                                />
+                                                <hr width={'100%'} align={'left'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30 }} />
+                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                    Email
+                                            </Typography>
+                                                <InputBase
+                                                    placeholder="Email"
+                                                    fullWidth
+                                                    id="email"
+                                                    inputProps={{ style: { textAlign: 'left' } }}
+                                                    className={classes.formButton2}
+                                                // onChange={}
+                                                />
+                                                <hr width={'100%'} align={'left'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30 }} />
+                                                <Grid container>
+                                                    <Grid container justify='flex-start' alignContent='center' xs={6} xl={6} sm={6}>
+                                                        <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                            Contaseña
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid container justify='flex-end' alignContent='center' xs={6} xl={6} sm={6}>
+                                                        <Typography style={{ color: '#999999', fontSize: 10, marginTop: 15 }}>
+                                                            12 caracteres máx
+                                                        </Typography>
+                                                    </Grid>
+                                                </Grid>
+
+
+                                                <InputBase
+                                                    placeholder="Contaseña"
+                                                    fullWidth
+                                                    id="password"
+                                                    inputProps={{ style: { textAlign: 'left' } }}
+                                                    className={classes.formButton2}
+                                                // onChange={}
+                                                />
+                                                <hr width={'100%'} align={'left'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30 }} />
+
+                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                    Repetir Contraseña
+                                            </Typography>
+                                                <InputBase
+                                                    placeholder="Repetir Contraseña"
+                                                    fullWidth
+                                                    id="password"
+                                                    inputProps={{ style: { textAlign: 'left' } }}
+                                                    className={classes.formButton2}
+                                                // onChange={}
+                                                />
+                                                <hr width={'100%'} align={'left'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30 }} />
+                                                <Grid container item>
+                                                    <Grid container justify="center" style={{ marginTop: 10 }}>
+                                                        <Checkbox
+                                                            iconStyle={{ fill: '#ACFD00' }}
+                                                            inputStyle={{ color: '#ACFD00' }}
+                                                            style={{ color: '#ACFD00' }}
+                                                        />
+                                                        <Typography
+                                                            className={classes.normaltext}>
+                                                            Acepto los{' '}
+                                                            <Link
+                                                                style={{ color: '#ACFD00' }}>
+                                                                Condiciones de Uso
+                                                            </Link>
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Button
+                                                        type="submit"
+                                                        variant="contained"
+                                                        href="/registerex"
+                                                        fullWidth
+                                                        className={classes.login}
+                                                    >
+                                                        Continuar
+                                                </Button>
+                                                </Grid>
+
+                                            </form>
+                                        </Grid>}
 
 
                                 </div>

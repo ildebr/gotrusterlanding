@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import NavBar from '../../components/navBar/navbar.jsx'
 import Link from '@material-ui/core/Link';
 import InputBase from '@material-ui/core/InputBase';
-import Logo from '../../asset/images/Vector.svg';
+import Logo from '../../asset/images/logo.svg';
 
 import SelectBase from '@material-ui/core/Select';
 
@@ -13,7 +13,7 @@ const styles = theme => ({
         flexGrow: 1,
         backgroundColor: '#000000'
     },
-    
+
     authWrapper: {
         [theme.breakpoints.up('sm')]: {
             marginTop: '100px',
@@ -130,6 +130,7 @@ const styles = theme => ({
         font: 'normal normal normal 18px/24px Poppins',
         height: 50,
         borderRadius: 15,
+        textTransform:'none',
         marginTop: theme.spacing(3),
     },
     formButton: {
@@ -138,6 +139,17 @@ const styles = theme => ({
         border: '1px solid',
         borderColor: '#999999',
         borderRadius: 15,
+        color: "white",
+        font: 'normal normal normal 16px/22px Poppins',
+    },
+    formButtonMobile: {
+        marginTop: theme.spacing(1),
+        height: 50,
+        border: '1px solid',
+        borderColor: '#999999',
+        borderTop: 'red',
+        borderRight: 'red',
+        borderLeft: 'red',
         color: "white",
         font: 'normal normal normal 16px/22px Poppins',
     },
@@ -152,6 +164,11 @@ const styles = theme => ({
         fontSize: '14px',
         marginTop: theme.spacing(2),
     },
+    inputTitleMobile: {
+        color: '#FFFFFF',
+        fontSize: '16px',
+        marginTop: theme.spacing(0.5),
+    },
     select: {
         marginTop: theme.spacing(1),
         height: '50px',
@@ -162,8 +179,21 @@ const styles = theme => ({
         color: "#999999",
         font: 'normal normal normal 16px/22px Poppins',
         paddingLeft: 40,
-        
         justifyContent: "flex-end"
+    },
+    selectMobile: {
+        marginTop: theme.spacing(2),
+        height: '40px',
+        width: '100%',
+        color: "#999999",
+        font: 'normal normal normal 16px/22px Poppins',
+        paddingLeft: 10,
+        justifyContent: "flex-end",
+        borderTop: 'red',
+        borderRight: 'red',
+        borderLeft: 'red',
+        border: '1px solid',
+        borderColor: "#999999"
     },
     icon: {
         fill: '#999999',
@@ -177,11 +207,20 @@ class RegisterSecond extends Component {
             day: 0,
             months: 0,
             years: 0,
-            gender:0,
-            number:0,
-            local:0
+            gender: 0,
+            number: 0,
+            local: 0,
+            nationality: 0,
+            province: 0,
+            windowWidth: window.innerWidth
         };
     }
+    componentDidMount() {
+        window.addEventListener("resize", this.handleResize);
+    }
+    handleResize = (e) => {
+        this.setState({ windowWidth: window.innerWidth });
+    };
     handleDayChange = e => {
         e.preventDefault();
         this.setState({ day: e.target.value })
@@ -206,11 +245,27 @@ class RegisterSecond extends Component {
         e.preventDefault();
         this.setState({ local: e.target.value })
     }
+    handleProvinceChange = e => {
+        e.preventDefault();
+        this.setState({ province: e.target.value })
+    }
+    handleNationalityChange = e => {
+        e.preventDefault();
+        this.setState({ nationality: e.target.value })
+    }
 
     render() {
+        function getWindowDimensions() {
+            const { innerWidth: width } = window;
+            return {
+                width
+            };
+        }
+        const { width } = getWindowDimensions();
         const { classes } = this.props;
         return (
             <div style={{ backgroundColor: '#000000' }}>
+
                 <Grid container className={classes.root} component="main" maxWidth="md">
                     <Container component="main" maxWidth="md" >
                         <Grid item container xs={12} className={classes.paperContainer} >
@@ -221,7 +276,7 @@ class RegisterSecond extends Component {
                                 <CssBaseline />
                                 <Box mx="auto"  >
                                     <Box className={classes.authHeader}>
-                                        <img src={Logo} alt='logo' />
+                                        <img src={Logo} alt='logo' width="50" height="50" />
                                     </Box>
                                 </Box>
                                 <div className={classes.paper}>
@@ -229,316 +284,630 @@ class RegisterSecond extends Component {
                                         <Typography className={classes.paperWelcome}>
                                             Estás a punto de tener tu cuenta Truster. </Typography>
                                     </Box>
-                                    <Grid justify='center' style={{ maxWidth: 400 }}>
-                                        <form style={{
-                                            width: '100%',
-                                            marginTop: 30,
-                                            justifyContent: "center",
-                                            alignContent: "center",
-                                        }}
-                                            onSubmit={this.handleSubmit}
-                                            noValidate>
-                                            <Typography className={classes.inputTitle}>
-                                                Fecha de Nacimiento
+                                    {width > 550 ?
+                                        <Grid justify='center' style={{ maxWidth: 400 }}>
+                                            <form style={{
+                                                width: '100%',
+                                                marginTop: 30,
+                                                justifyContent: "center",
+                                                alignContent: "center",
+                                            }}
+                                                onSubmit={this.handleSubmit}
+                                                noValidate>
+                                                <Typography className={classes.inputTitle}>
+                                                    Fecha de Nacimiento
                                             </Typography>
-                                            <Grid container justify='center'>
-                                                <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 10 }}>
-                                                    <SelectBase
-                                                        native
-                                                        value={this.state.day}
-                                                        onChange={(e) => { this.handleDayChange(e) }}
-                                                        className={classes.select}
-                                                        inputProps={{
-                                                            classes: {
-                                                                icon: classes.icon,
-                                                            },
-                                                        }}
-                                                    >
-                                                        <option aria-label="Día" value="" />
-                                                        <option value={0}>Día</option>
-                                                        <option value={1}>01</option>
-                                                        <option value={2}>02</option>
-                                                        <option value={3}>03</option>
-                                                        <option value={4}>04</option>
-                                                        <option value={5}>05</option>
-                                                        <option value={6}>06</option>
-                                                        <option value={7}>07</option>
-                                                        <option value={8}>08</option>
-                                                        <option value={9}>09</option>
-                                                        <option value={10}>10</option>
-                                                        <option value={11}>11</option>
-                                                        <option value={12}>12</option>
-                                                        <option value={13}>13</option>
-                                                        <option value={14}>14</option>
-                                                        <option value={15}>15</option>
-                                                        <option value={16}>16</option>
-                                                        <option value={17}>17</option>
-                                                        <option value={18}>18</option>
-                                                        <option value={19}>19</option>
-                                                        <option value={20}>20</option>
-                                                        <option value={21}>21</option>
-                                                        <option value={22}>22</option>
-                                                        <option value={23}>23</option>
-                                                        <option value={24}>24</option>
-                                                        <option value={25}>25</option>
-                                                        <option value={26}>26</option>
-                                                        <option value={27}>27</option>
-                                                        <option value={28}>28</option>
-                                                        <option value={29}>29</option>
-                                                        <option value={30}>30</option>
-                                                        <option value={31}>31</option>
-                                                    </SelectBase>
+                                                <Grid container justify='center'>
+                                                    <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 10 }}>
+                                                        <SelectBase
+                                                            native
+                                                            value={this.state.day}
+                                                            onChange={(e) => { this.handleDayChange(e) }}
+                                                            className={classes.select}
+                                                            inputProps={{
+                                                                classes: {
+                                                                    icon: classes.icon,
+                                                                },
+                                                            }}
+                                                        >
+                                                            <option aria-label="Día" value="" />
+                                                            <option value={0}>Día</option>
+                                                            <option value={1}>01</option>
+                                                            <option value={2}>02</option>
+                                                            <option value={3}>03</option>
+                                                            <option value={4}>04</option>
+                                                            <option value={5}>05</option>
+                                                            <option value={6}>06</option>
+                                                            <option value={7}>07</option>
+                                                            <option value={8}>08</option>
+                                                            <option value={9}>09</option>
+                                                            <option value={10}>10</option>
+                                                            <option value={11}>11</option>
+                                                            <option value={12}>12</option>
+                                                            <option value={13}>13</option>
+                                                            <option value={14}>14</option>
+                                                            <option value={15}>15</option>
+                                                            <option value={16}>16</option>
+                                                            <option value={17}>17</option>
+                                                            <option value={18}>18</option>
+                                                            <option value={19}>19</option>
+                                                            <option value={20}>20</option>
+                                                            <option value={21}>21</option>
+                                                            <option value={22}>22</option>
+                                                            <option value={23}>23</option>
+                                                            <option value={24}>24</option>
+                                                            <option value={25}>25</option>
+                                                            <option value={26}>26</option>
+                                                            <option value={27}>27</option>
+                                                            <option value={28}>28</option>
+                                                            <option value={29}>29</option>
+                                                            <option value={30}>30</option>
+                                                            <option value={31}>31</option>
+                                                        </SelectBase>
+                                                    </Grid>
+                                                    <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 10 }}>
+                                                        <SelectBase
+                                                            native
+                                                            value={this.state.months}
+                                                            onChange={(e) => { this.handleMonthsChange(e) }}
+                                                            className={classes.select}
+                                                            style={{ paddingLeft: 25, }}
+                                                            inputProps={{
+                                                                classes: {
+                                                                    icon: classes.icon,
+                                                                },
+                                                            }}
+                                                        >
+                                                            <option aria-label="Mes" value="" />
+                                                            <option value={0}>Mes</option>
+                                                            <option value={1}>Enero</option>
+                                                            <option value={2}>Febrero</option>
+                                                            <option value={3}>Marzo</option>
+                                                            <option value={4}>Abril</option>
+                                                            <option value={5}>Mayo</option>
+                                                            <option value={6}>Junio</option>
+                                                            <option value={7}>Julio</option>
+                                                            <option value={8}>Agosto</option>
+                                                            <option value={9}>Septiembre</option>
+                                                            <option value={10}>Octubre</option>
+                                                            <option value={11}>Noviembre</option>
+                                                            <option value={12}>Diciembre</option>
+                                                        </SelectBase>
+                                                    </Grid>
+                                                    <Grid container xs={4} xl={4} sm={4}>
+                                                        <SelectBase
+                                                            native
+                                                            value={this.state.years}
+                                                            onChange={(e) => { this.handleYearChange(e) }}
+                                                            className={classes.select}
+                                                            inputProps={{
+                                                                classes: {
+                                                                    icon: classes.icon,
+                                                                },
+                                                            }}
+                                                        >
+                                                            <option aria-label="Año" value="" />
+                                                            <option value={0}>Año</option>
+                                                            <option value={1}>2021</option>
+                                                            <option value={2}>2020</option>
+                                                            <option value={3}>2019</option>
+                                                            <option value={4}>2018</option>
+                                                            <option value={5}>2017</option>
+                                                            <option value={6}>2016</option>
+                                                            <option value={7}>2015</option>
+                                                            <option value={8}>2014</option>
+                                                            <option value={9}>2013</option>
+                                                            <option value={10}>2012</option>
+                                                            <option value={11}>2011</option>
+                                                            <option value={12}>2010</option>
+                                                            <option value={13}>2009</option>
+                                                            <option value={14}>2008</option>
+                                                            <option value={15}>2007</option>
+                                                            <option value={16}>2006</option>
+                                                            <option value={17}>2005</option>
+                                                            <option value={18}>2004</option>
+                                                            <option value={19}>2003</option>
+                                                            <option value={20}>2002</option>
+                                                            <option value={21}>2001</option>
+                                                            <option value={22}>2000</option>
+                                                            <option value={23}>1999</option>
+                                                            <option value={24}>1998</option>
+                                                            <option value={25}>1997</option>
+                                                            <option value={26}>1996</option>
+                                                            <option value={27}>1995</option>
+                                                            <option value={28}>1994</option>
+                                                            <option value={29}>1993</option>
+                                                            <option value={30}>1992</option>
+                                                            <option value={31}>1991</option>
+                                                            <option value={32}>1990</option>
+                                                            <option value={33}>1989</option>
+                                                            <option value={34}>1988</option>
+                                                            <option value={35}>1987</option>
+                                                            <option value={36}>1986</option>
+                                                            <option value={37}>1985</option>
+                                                            <option value={38}>1984</option>
+                                                            <option value={39}>1983</option>
+                                                            <option value={40}>1982</option>
+                                                            <option value={41}>1981</option>
+                                                            <option value={42}>1980</option>
+                                                            <option value={43}>1979</option>
+                                                            <option value={44}>1978</option>
+                                                            <option value={45}>1977</option>
+                                                            <option value={46}>1976</option>
+                                                            <option value={47}>1975</option>
+                                                            <option value={48}>1974</option>
+                                                            <option value={49}>1973</option>
+                                                            <option value={50}>1972</option>
+                                                            <option value={51}>1971</option>
+                                                            <option value={52}>1970</option>
+                                                            <option value={53}>1969</option>
+                                                            <option value={54}>1968</option>
+                                                            <option value={55}>1967</option>
+                                                            <option value={56}>1966</option>
+                                                            <option value={57}>1965</option>
+                                                            <option value={58}>1964</option>
+                                                            <option value={59}>1963</option>
+                                                            <option value={60}>1962</option>
+                                                            <option value={61}>1961</option>
+                                                            <option value={62}>1960</option>
+                                                        </SelectBase>
+                                                    </Grid>
                                                 </Grid>
-                                                <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 10 }}>
-                                                    <SelectBase
-                                                        native
-                                                        value={this.state.months}
-                                                        onChange={(e) => { this.handleMonthsChange(e) }}
-                                                        className={classes.select}
-                                                        inputProps={{
-                                                            classes: {
-                                                                icon: classes.icon,
-                                                            },
-                                                        }}
-                                                    >
-                                                        <option aria-label="Mes" value="" />
-                                                        <option value={0}>Mes</option>
-                                                        <option value={1}>Enero</option>
-                                                        <option value={2}>Febrero</option>
-                                                        <option value={3}>Marzo</option>
-                                                        <option value={4}>Abril</option>
-                                                        <option value={5}>Mayo</option>
-                                                        <option value={6}>Junio</option>
-                                                        <option value={7}>Julio</option>
-                                                        <option value={8}>Agosto</option>
-                                                        <option value={9}>Septiembre</option>
-                                                        <option value={10}>Octubre</option>
-                                                        <option value={11}>Noviembre</option>
-                                                        <option value={12}>Diciembre</option>
-                                                    </SelectBase>
-                                                </Grid>
-                                                <Grid container xs={4} xl={4} sm={4}>
-                                                    <SelectBase
-                                                        native
-                                                        value={this.state.years}
-                                                        onChange={(e) => { this.handleYearChange(e) }}
-                                                        className={classes.select}
-                                                        inputProps={{
-                                                            classes: {
-                                                                icon: classes.icon,
-                                                            },
-                                                        }}
-                                                    >
-                                                        <option aria-label="Año" value="" />
-                                                        <option value={0}>Año</option>
-                                                        <option value={1}>2021</option>
-                                                        <option value={2}>2020</option>
-                                                        <option value={3}>2019</option>
-                                                        <option value={4}>2018</option>
-                                                        <option value={5}>2017</option>
-                                                        <option value={6}>2016</option>
-                                                        <option value={7}>2015</option>
-                                                        <option value={8}>2014</option>
-                                                        <option value={9}>2013</option>
-                                                        <option value={10}>2012</option>
-                                                        <option value={11}>2011</option>
-                                                        <option value={12}>2010</option>
-                                                        <option value={13}>2009</option>
-                                                        <option value={14}>2008</option>
-                                                        <option value={15}>2007</option>
-                                                        <option value={16}>2006</option>
-                                                        <option value={17}>2005</option>
-                                                        <option value={18}>2004</option>
-                                                        <option value={19}>2003</option>
-                                                        <option value={20}>2002</option>
-                                                        <option value={21}>2001</option>
-                                                        <option value={22}>2000</option>
-                                                        <option value={23}>1999</option>
-                                                        <option value={24}>1998</option>
-                                                        <option value={25}>1997</option>
-                                                        <option value={26}>1996</option>
-                                                        <option value={27}>1995</option>
-                                                        <option value={28}>1994</option>
-                                                        <option value={29}>1993</option>
-                                                        <option value={30}>1992</option>
-                                                        <option value={31}>1991</option>
-                                                        <option value={32}>1990</option>
-                                                        <option value={33}>1989</option>
-                                                        <option value={34}>1988</option>
-                                                        <option value={35}>1987</option>
-                                                        <option value={36}>1986</option>
-                                                        <option value={37}>1985</option>
-                                                        <option value={38}>1984</option>
-                                                        <option value={39}>1983</option>
-                                                        <option value={40}>1982</option>
-                                                        <option value={41}>1981</option>
-                                                        <option value={42}>1980</option>
-                                                        <option value={43}>1979</option>
-                                                        <option value={44}>1978</option>
-                                                        <option value={45}>1977</option>
-                                                        <option value={46}>1976</option>
-                                                        <option value={47}>1975</option>
-                                                        <option value={48}>1974</option>
-                                                        <option value={49}>1973</option>
-                                                        <option value={50}>1972</option>
-                                                        <option value={51}>1971</option>
-                                                        <option value={52}>1970</option>
-                                                        <option value={53}>1969</option>
-                                                        <option value={54}>1968</option>
-                                                        <option value={55}>1967</option>
-                                                        <option value={56}>1966</option>
-                                                        <option value={57}>1965</option>
-                                                        <option value={58}>1964</option>
-                                                        <option value={59}>1963</option>
-                                                        <option value={60}>1962</option>
-                                                        <option value={61}>1961</option>
-                                                        <option value={62}>1960</option>
-                                                    </SelectBase>
-                                                </Grid>
-                                            </Grid>
 
-                                            <Typography className={classes.inputTitle}>
-                                                Género
+                                                <Typography className={classes.inputTitle}>
+                                                    Género
                                             </Typography>
-                                            <SelectBase
-                                                native
-                                                value={this.state.gender}
-                                                onChange={(e) => { this.handleGenderChange(e) }}
-                                                
-                                                className={classes.select}
-                                                inputProps={{
-                                                    classes: {
-                                                        icon: classes.icon,
-                                                    },
-                                                }}
-                                                style={{ paddingLeft: 170 }}
-                                            >
-                                                <option aria-label="Género" value="" />
-                                                <option value={0}>Género</option>
-                                                <option value={20}>Femenino</option>
-                                                <option value={30}>Masculino</option>
-                                            </SelectBase>
-                                            <Typography className={classes.inputTitle}>
-                                                Dirección
-                                            </Typography>
-                                            <Grid container justify='center'>
-                                                <Grid container xs={9} xl={9} sm={9} style={{ paddingRight: 10 }}>
-                                                    <InputBase
-                                                        placeholder="Email"
-                                                        fullWidth
-                                                        id="email"
-                                                        inputProps={{ style: { textAlign: 'center' } }}
-                                                        className={classes.formButton}
-                                                    // onChange={}
-                                                    />
-                                                </Grid>
-                                                <Grid container xs={3} xl={3} sm={3}>
-                                                    <SelectBase
-                                                        native
-                                                        value={this.state.number}
-                                                        onChange={(e) => { this.handleNumberChange(e) }}
-                                                        className={classes.select}
-                                                        inputProps={{
-                                                            classes: {
-                                                                icon: classes.icon,
-                                                            },
-                                                        }}
+                                                <SelectBase
+                                                    native
+                                                    value={this.state.gender}
+                                                    onChange={(e) => { this.handleGenderChange(e) }}
 
-                                                    >
-                                                        <option aria-label="Numero" value="" />
-                                                        <option value={0}>Nº</option>
-                                                        <option value={1}>01</option>
-                                                        <option value={2}>02</option>
-                                                        <option value={3}>03</option>
-                                                        <option value={4}>04</option>
-                                                        <option value={5}>05</option>
-                                                        <option value={6}>06</option>
-                                                        <option value={7}>07</option>
-                                                        <option value={8}>08</option>
-                                                        <option value={9}>09</option>
-                                                        <option value={10}>10</option>
-                                                        <option value={11}>11</option>
-                                                        <option value={12}>12</option>
-                                                        <option value={13}>13</option>
-                                                        <option value={14}>14</option>
-                                                        <option value={15}>15</option>
-                                                        <option value={16}>16</option>
-                                                        <option value={17}>17</option>
-                                                        <option value={18}>18</option>
-                                                        <option value={19}>19</option>
-                                                        <option value={20}>20</option>
-                                                        <option value={21}>21</option>
-                                                        <option value={22}>22</option>
-                                                        <option value={23}>23</option>
-                                                        <option value={24}>24</option>
-                                                        <option value={25}>25</option>
-                                                        <option value={26}>26</option>
-                                                        <option value={27}>27</option>
-                                                        <option value={28}>28</option>
-                                                        <option value={29}>29</option>
-                                                        <option value={30}>30</option>
-                                                        <option value={31}>31</option>
-                                                    </SelectBase>
-                                                </Grid>
-                                            </Grid>
-
-                                            <Typography className={classes.inputTitle}>
-                                                Localidad
-                                            </Typography>
-                                            <SelectBase
-                                                native
-                                                value={this.state.local}
-                                                onChange={(e) => { this.handleLocalChange(e) }}
-                                                className={classes.select}
-                                                inputProps={{
-                                                    classes: {
-                                                        icon: classes.icon,
-                                                    },
-                                                }}
-                                                style={{ paddingLeft: 160 }}
-                                            >
-                                                <option aria-label="Local" value="" />
-                                                <option value={0}>Localidad</option>
-                                                <option value={20}>Twenty</option>
-                                                <option value={30}>Thirty</option>
-                                            </SelectBase>
-                                            <Typography style={{ color: '#999999', fontSize: 11 }}>
-                                                12 caracteres máx
-                                    </Typography>
-                                            <Typography className={classes.inputTitle}>
-                                                Provincia
-                                            </Typography>
-                                            <InputBase
-                                                placeholder="Provincia"
-                                                fullWidth
-                                                id="provincia"
-                                                inputProps={{ style: { textAlign: 'center' } }}
-                                                className={classes.formButton}
-                                            // onChange={}
-                                            />
-
-                                            <Grid container item>
-                                                <Grid container justify="center" style={{ marginTop: 10 }}>
-                                                    <Typography
-                                                        className={classes.normaltext}>
-                                                        <Link
-                                                            style={{ color: '#999999' }}>
-                                                            ¿Por qué me solicitan esta información?
-                                                        </Link>
-                                                    </Typography>
-                                                </Grid>
-                                                <button
-                                                    type="submit"
-                                                    variant="contained"
-                                                    fullWidth
-                                                    className={classes.login}
+                                                    className={classes.select}
+                                                    inputProps={{
+                                                        classes: {
+                                                            icon: classes.icon,
+                                                        },
+                                                    }}
+                                                    style={{ paddingLeft: 160 }}
                                                 >
-                                                    Finalizar registro
-                                        </button>
-                                            </Grid>
+                                                    <option aria-label="Género" value="" />
+                                                    <option value={0}>Género</option>
+                                                    <option value={20}>Femenino</option>
+                                                    <option value={30}>Masculino</option>
+                                                </SelectBase>
+                                                <Typography className={classes.inputTitle}>
+                                                    Dirección
+                                            </Typography>
+                                                <Grid container justify='center'>
+                                                    <Grid container xs={9} xl={9} sm={9} style={{ paddingRight: 10 }}>
+                                                        <InputBase
+                                                            placeholder="Email"
+                                                            fullWidth
+                                                            id="email"
+                                                            inputProps={{ style: { textAlign: 'center' } }}
+                                                            className={classes.formButton}
+                                                        // onChange={}
+                                                        />
+                                                    </Grid>
+                                                    <Grid container xs={3} xl={3} sm={3}>
+                                                        <SelectBase
+                                                            native
+                                                            value={this.state.number}
+                                                            onChange={(e) => { this.handleNumberChange(e) }}
+                                                            className={classes.select}
+                                                            inputProps={{
+                                                                classes: {
+                                                                    icon: classes.icon,
+                                                                },
+                                                            }}
 
-                                        </form>
-                                    </Grid>
+                                                        >
+                                                            <option aria-label="Numero" value="" />
+                                                            <option value={0}>Nº</option>
+                                                            <option value={1}>01</option>
+                                                            <option value={2}>02</option>
+                                                            <option value={3}>03</option>
+                                                            <option value={4}>04</option>
+                                                            <option value={5}>05</option>
+                                                            <option value={6}>06</option>
+                                                            <option value={7}>07</option>
+                                                            <option value={8}>08</option>
+                                                            <option value={9}>09</option>
+                                                            <option value={10}>10</option>
+                                                            <option value={11}>11</option>
+                                                            <option value={12}>12</option>
+                                                            <option value={13}>13</option>
+                                                            <option value={14}>14</option>
+                                                            <option value={15}>15</option>
+                                                            <option value={16}>16</option>
+                                                            <option value={17}>17</option>
+                                                            <option value={18}>18</option>
+                                                            <option value={19}>19</option>
+                                                            <option value={20}>20</option>
+                                                            <option value={21}>21</option>
+                                                            <option value={22}>22</option>
+                                                            <option value={23}>23</option>
+                                                            <option value={24}>24</option>
+                                                            <option value={25}>25</option>
+                                                            <option value={26}>26</option>
+                                                            <option value={27}>27</option>
+                                                            <option value={28}>28</option>
+                                                            <option value={29}>29</option>
+                                                            <option value={30}>30</option>
+                                                            <option value={31}>31</option>
+                                                        </SelectBase>
+                                                    </Grid>
+                                                </Grid>
+
+                                                <Typography className={classes.inputTitle}>
+                                                    Localidad
+                                            </Typography>
+                                                <SelectBase
+                                                    native
+                                                    value={this.state.local}
+                                                    onChange={(e) => { this.handleLocalChange(e) }}
+                                                    className={classes.select}
+                                                    inputProps={{
+                                                        classes: {
+                                                            icon: classes.icon,
+                                                        },
+                                                    }}
+                                                    style={{ paddingLeft: 160 }}
+                                                >
+                                                    <option aria-label="Local" value="" />
+                                                    <option value={0}>Localidad</option>
+                                                    <option value={20}>Twenty</option>
+                                                    <option value={30}>Thirty</option>
+                                                </SelectBase>
+                                                <Typography style={{ color: '#999999', fontSize: 11 }}>
+                                                    12 caracteres máx
+                                            </Typography>
+                                                <Typography className={classes.inputTitle}>
+                                                    Provincia
+                                            </Typography>
+                                                <InputBase
+                                                    placeholder="Provincia"
+                                                    fullWidth
+                                                    id="provincia"
+                                                    inputProps={{ style: { textAlign: 'center' } }}
+                                                    className={classes.formButton}
+                                                // onChange={}
+                                                />
+
+                                                <Grid container item>
+                                                    <Grid container justify="center" style={{ marginTop: 10 }}>
+                                                        <Typography
+                                                            className={classes.normaltext}>
+                                                            <Link
+                                                                style={{ color: '#999999' }}>
+                                                                ¿Por qué me solicitan esta información?
+                                                        </Link>
+                                                        </Typography>
+                                                    </Grid>
+                                                    <button
+                                                        type="submit"
+                                                        variant="contained"
+                                                        fullWidth
+                                                        className={classes.login}
+                                                    >
+                                                        Finalizar registro
+                                        </button>
+                                                </Grid>
+
+                                            </form>
+                                        </Grid> :
+                                        <Grid justify='center' style={{ maxWidth: 400 }}>
+                                            <form style={{
+                                                width: '100%',
+                                                marginTop: 30,
+                                                justifyContent: "center",
+                                                alignContent: "center",
+                                            }}
+                                                onSubmit={this.handleSubmit}
+                                                noValidate>
+                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                    Fecha de Nacimiento
+                                                </Typography>
+                                                <Grid container justify='flex-start'>
+                                                    <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 10 }}>
+                                                        <SelectBase
+                                                            style={{ width: '80%' }}
+                                                            native
+                                                            value={this.state.day}
+                                                            onChange={(e) => { this.handleDayChange(e) }}
+                                                            className={classes.selectMobile}
+                                                            inputProps={{
+                                                                classes: {
+                                                                    icon: classes.icon,
+                                                                },
+                                                            }}
+                                                        >
+
+                                                            <option aria-label="Día" value="" />
+                                                            <option value={0}>Día</option>
+                                                            <option value={1}>01</option>
+                                                            <option value={2}>02</option>
+                                                            <option value={3}>03</option>
+                                                            <option value={4}>04</option>
+                                                            <option value={5}>05</option>
+                                                            <option value={6}>06</option>
+                                                            <option value={7}>07</option>
+                                                            <option value={8}>08</option>
+                                                            <option value={9}>09</option>
+                                                            <option value={10}>10</option>
+                                                            <option value={11}>11</option>
+                                                            <option value={12}>12</option>
+                                                            <option value={13}>13</option>
+                                                            <option value={14}>14</option>
+                                                            <option value={15}>15</option>
+                                                            <option value={16}>16</option>
+                                                            <option value={17}>17</option>
+                                                            <option value={18}>18</option>
+                                                            <option value={19}>19</option>
+                                                            <option value={20}>20</option>
+                                                            <option value={21}>21</option>
+                                                            <option value={22}>22</option>
+                                                            <option value={23}>23</option>
+                                                            <option value={24}>24</option>
+                                                            <option value={25}>25</option>
+                                                            <option value={26}>26</option>
+                                                            <option value={27}>27</option>
+                                                            <option value={28}>28</option>
+                                                            <option value={29}>29</option>
+                                                            <option value={30}>30</option>
+                                                            <option value={31}>31</option>
+                                                        </SelectBase>
+                                                    </Grid>
+                                                    <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 0 }}>
+                                                        <SelectBase
+                                                            native
+                                                            value={this.state.months}
+                                                            onChange={(e) => { this.handleMonthsChange(e) }}
+                                                            className={classes.selectMobile}
+                                                            style={{ paddingLeft: 15, width: '100%' }}
+                                                            inputProps={{
+                                                                classes: {
+                                                                    icon: classes.icon,
+                                                                },
+                                                            }}
+                                                        >
+                                                            <option aria-label="Mes" value="" />
+                                                            <option value={0}>Mes</option>
+                                                            <option value={1}>Enero</option>
+                                                            <option value={2}>Febrero</option>
+                                                            <option value={3}>Marzo</option>
+                                                            <option value={4}>Abril</option>
+                                                            <option value={5}>Mayo</option>
+                                                            <option value={6}>Junio</option>
+                                                            <option value={7}>Julio</option>
+                                                            <option value={8}>Agosto</option>
+                                                            <option value={9}>Septiembre</option>
+                                                            <option value={10}>Octubre</option>
+                                                            <option value={11}>Noviembre</option>
+                                                            <option value={12}>Diciembre</option>
+                                                        </SelectBase>
+                                                    </Grid>
+                                                    <Grid container xs={4} xl={4} sm={4} style={{ paddingLeft: 30 }}>
+                                                        <SelectBase
+                                                            style={{ width: '100%' }}
+                                                            native
+                                                            value={this.state.years}
+                                                            onChange={(e) => { this.handleYearChange(e) }}
+                                                            className={classes.selectMobile}
+                                                            inputProps={{
+                                                                classes: {
+                                                                    icon: classes.icon,
+                                                                },
+                                                            }}
+                                                        >
+                                                            <option aria-label="Año" value="" />
+                                                            <option value={0}>Año</option>
+                                                            <option value={1}>2021</option>
+                                                            <option value={2}>2020</option>
+                                                            <option value={3}>2019</option>
+                                                            <option value={4}>2018</option>
+                                                            <option value={5}>2017</option>
+                                                            <option value={6}>2016</option>
+                                                            <option value={7}>2015</option>
+                                                            <option value={8}>2014</option>
+                                                            <option value={9}>2013</option>
+                                                            <option value={10}>2012</option>
+                                                            <option value={11}>2011</option>
+                                                            <option value={12}>2010</option>
+                                                            <option value={13}>2009</option>
+                                                            <option value={14}>2008</option>
+                                                            <option value={15}>2007</option>
+                                                            <option value={16}>2006</option>
+                                                            <option value={17}>2005</option>
+                                                            <option value={18}>2004</option>
+                                                            <option value={19}>2003</option>
+                                                            <option value={20}>2002</option>
+                                                            <option value={21}>2001</option>
+                                                            <option value={22}>2000</option>
+                                                            <option value={23}>1999</option>
+                                                            <option value={24}>1998</option>
+                                                            <option value={25}>1997</option>
+                                                            <option value={26}>1996</option>
+                                                            <option value={27}>1995</option>
+                                                            <option value={28}>1994</option>
+                                                            <option value={29}>1993</option>
+                                                            <option value={30}>1992</option>
+                                                            <option value={31}>1991</option>
+                                                            <option value={32}>1990</option>
+                                                            <option value={33}>1989</option>
+                                                            <option value={34}>1988</option>
+                                                            <option value={35}>1987</option>
+                                                            <option value={36}>1986</option>
+                                                            <option value={37}>1985</option>
+                                                            <option value={38}>1984</option>
+                                                            <option value={39}>1983</option>
+                                                            <option value={40}>1982</option>
+                                                            <option value={41}>1981</option>
+                                                            <option value={42}>1980</option>
+                                                            <option value={43}>1979</option>
+                                                            <option value={44}>1978</option>
+                                                            <option value={45}>1977</option>
+                                                            <option value={46}>1976</option>
+                                                            <option value={47}>1975</option>
+                                                            <option value={48}>1974</option>
+                                                            <option value={49}>1973</option>
+                                                            <option value={50}>1972</option>
+                                                            <option value={51}>1971</option>
+                                                            <option value={52}>1970</option>
+                                                            <option value={53}>1969</option>
+                                                            <option value={54}>1968</option>
+                                                            <option value={55}>1967</option>
+                                                            <option value={56}>1966</option>
+                                                            <option value={57}>1965</option>
+                                                            <option value={58}>1964</option>
+                                                            <option value={59}>1963</option>
+                                                            <option value={60}>1962</option>
+                                                            <option value={61}>1961</option>
+                                                            <option value={62}>1960</option>
+                                                        </SelectBase>
+                                                    </Grid>
+                                                </Grid>
+
+                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                    Nacionalidad
+                                                </Typography>
+                                                <SelectBase
+                                                    native
+                                                    value={this.state.nationality}
+                                                    onChange={(e) => { this.handleNationalityChange(e) }}
+                                                    className={classes.selectMobile}
+                                                    inputProps={{
+                                                        classes: {
+                                                            icon: classes.icon,
+                                                        },
+                                                    }}
+                                                    style={{ paddingLeft: 10 }}
+                                                >
+                                                    <option aria-label="Género" value="" />
+                                                    <option value={0}>Elegí tu nacionalidad</option>
+                                                    <option value={20}>Argentina</option>
+                                                    <option value={30}>Bolivia</option>
+                                                </SelectBase>
+                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                    Género
+                                                </Typography>
+                                                <SelectBase
+                                                    native
+                                                    value={this.state.gender}
+                                                    onChange={(e) => { this.handleGenderChange(e) }}
+                                                    className={classes.selectMobile}
+                                                    inputProps={{
+                                                        classes: {
+                                                            icon: classes.icon,
+                                                        },
+                                                    }}
+                                                    style={{ paddingLeft: 10 }}
+                                                >
+                                                    <option aria-label="Género" value="" />
+                                                    <option value={0}>Elegí tu Género</option>
+                                                    <option value={20}>Femenino</option>
+                                                    <option value={30}>Masculino</option>
+                                                </SelectBase>
+                                                <Grid container justify='flex-start'>
+                                                    <Grid container xs={9} xl={9} sm={9} style={{ paddingRight: 10 }}>
+                                                        <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                            Dirección
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid container xs={3} xl={3} sm={3}>
+                                                        <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                            Número
+                                                        </Typography>
+                                                    </Grid>
+                                                </Grid>
+                                                <Grid container justify='center'>
+                                                    <Grid container xs={9} xl={9} sm={9} style={{ paddingRight: 10 }}>
+                                                        <InputBase
+                                                            placeholder="Calle, Avenida, etc"
+                                                            fullWidth
+                                                            id="email"
+                                                            inputProps={{ style: { textAlign: 'left' } }}
+                                                            className={classes.formButtonMobile}
+                                                        // onChange={}
+                                                        />
+                                                    </Grid>
+                                                    <Grid container xs={3} xl={3} sm={3}>
+                                                        <InputBase
+                                                            placeholder="XXXX"
+                                                            onChange={(e) => { this.handleNumberChange(e) }}
+                                                            className={classes.formButtonMobile}
+                                                            inputProps={{
+                                                                classes: {
+                                                                    icon: classes.icon,
+                                                                },
+                                                            }}
+                                                        >
+                                                        </InputBase>
+                                                    </Grid>
+                                                </Grid>
+                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                    Localidad
+                                                </Typography>
+                                                <SelectBase
+                                                    native
+                                                    value={this.state.local}
+                                                    onChange={(e) => { this.handleLocalChange(e) }}
+                                                    className={classes.selectMobile}
+                                                    inputProps={{
+                                                        classes: {
+                                                            icon: classes.icon,
+                                                        },
+                                                    }}
+
+                                                >
+                                                    <option aria-label="Local" value="" />
+                                                    <option value={0}>Localidad</option>
+                                                    <option value={20}>Twenty</option>
+                                                    <option value={30}>Thirty</option>
+                                                </SelectBase>
+
+                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                    Provincia
+                                                </Typography>
+                                                <SelectBase
+                                                    native
+                                                    value={this.state.province}
+                                                    onChange={(e) => { this.handleProvinceChange(e) }}
+                                                    className={classes.selectMobile}
+                                                    inputProps={{
+                                                        classes: {
+                                                            icon: classes.icon,
+                                                        },
+                                                    }}
+                                                // onChange={}
+                                                >
+                                                    <option aria-label="Local" value="" />
+                                                    <option value={0}>Provincia</option>
+                                                    <option value={20}>Twenty</option>
+                                                    <option value={30}>Thirty</option>
+                                                </SelectBase>
+                                                <Grid container item>
+                                                    <Grid container justify="center" style={{ marginTop: 10 }}>
+                                                        <Typography
+                                                            className={classes.normaltext}>
+                                                            <Link
+                                                                style={{ color: '#999999' }}>
+                                                                ¿Por qué me solicitan esta información?
+                                                    </Link>
+                                                        </Typography>
+                                                    </Grid>
+                                                    <button
+                                                        type="submit"
+                                                        variant="contained"
+                                                        fullWidth
+                                                        className={classes.login}
+                                                    >
+                                                        Finalizar registro
+                                    </button>
+                                                </Grid>
+
+                                            </form>
+                                        </Grid>}
 
 
                                 </div>

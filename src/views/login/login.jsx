@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { CssBaseline, Grid, Box, Container, Typography} from '@material-ui/core';
+import { CssBaseline, Grid, Box, Container, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import NavBar from '../../components/navBar/navbar.jsx';
 import Link from '@material-ui/core/Link';
 import InputBase from '@material-ui/core/InputBase';
-import Logo from '../../asset/images/Vector.svg';
+import Logo from '../../asset/images/logo.svg';
 //import WindowDimensions from "../../components/UtilityComponents/WindowDimension"
 
 const styles = theme => ({
@@ -12,7 +12,7 @@ const styles = theme => ({
         flexGrow: 1,
         backgroundColor: '#000000'
     },
-   
+
     authWrapper: {
         [theme.breakpoints.up('sm')]: {
             marginTop: '214px',
@@ -165,7 +165,7 @@ class Login extends Component {
                                 <CssBaseline />
                                 <Box mx="auto"  >
                                     <Box className={classes.authHeader}>
-                                        <img src={Logo} alt='logo' />
+                                        <img src={Logo} alt='logo' width="50" height="50" />
                                     </Box>
                                 </Box>
                                 <div className={classes.paper}>
