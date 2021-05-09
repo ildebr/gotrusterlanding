@@ -49,7 +49,23 @@ const Account = () =>{
     let REACT_APP_USER=' https://truster-back.herokuapp.com/api/users' ;
     return REACT_APP_USER;
  }
- 
+ //////////////Shop
+ const ShopResource = () =>{
+   let REACT_APP_SHOP=' https://truster-back.herokuapp.com/api/shop' ;
+   return REACT_APP_SHOP;
+}
+//////////////Transaction 
+const TransactionResource = () =>{
+   let REACT_APP_Transaction=' https://truster-back.herokuapp.com/api/transactions' ;
+   return REACT_APP_Transaction;
+}
+
+/////////////Trust 
+const TrustResource = () =>{
+   let REACT_APP_Trust =' https://truster-back.herokuapp.com/api/trust' ;
+   return REACT_APP_Trust;
+}
+
  const UserAuthoritie = () =>{
     let REACT_APP_USER_AUTH=' https://truster-back.herokuapp.com/api/users/authorities' ;
     return REACT_APP_USER_AUTH;
