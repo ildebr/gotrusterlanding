@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { CssBaseline, Grid, Box, Container, Typography } from '@material-ui/core';
+import { CssBaseline, Grid, Box, Container, Typography, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import NavBar from '../../components/navBar/navbar.jsx'
 import Link from '@material-ui/core/Link';
@@ -584,14 +584,15 @@ class RegisterSecond extends Component {
                                                         </Link>
                                                         </Typography>
                                                     </Grid>
-                                                    <button
+                                                    <Button
                                                         type="submit"
                                                         variant="contained"
+                                                        href="/verificationemail"
                                                         fullWidth
                                                         className={classes.login}
                                                     >
                                                         Finalizar registro
-                                        </button>
+                                        </Button>
                                                 </Grid>
 
                                             </form>
@@ -896,14 +897,15 @@ class RegisterSecond extends Component {
                                                     </Link>
                                                         </Typography>
                                                     </Grid>
-                                                    <button
+                                                    <Button
                                                         type="submit"
                                                         variant="contained"
                                                         fullWidth
+                                                        href="/verificationemail"
                                                         className={classes.login}
                                                     >
                                                         Finalizar registro
-                                    </button>
+                                    </Button>
                                                 </Grid>
 
                                             </form>

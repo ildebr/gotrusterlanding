@@ -2,6 +2,16 @@ import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import { Grid, Toolbar, Typography, Button, Hidden, Link } from '@material-ui/core';
 import WindowDimensions from "../../components/UtilityComponents/WindowDimension"
+import Inicio from '../../asset/images/sidemenu/inicio.svg'
+import Busqueda from '../../asset/images/sidemenu/busqueda.svg'
+import MiPerfil from '../../asset/images/sidemenu/miperfil.svg'
+import MiNegocio from '../../asset/images/sidemenu/minegocio.svg'
+import MiReputacion from '../../asset/images/sidemenu/mireputacion.svg'
+import Compartir from '../../asset/images/sidemenu/compartir.svg'
+import Insertar from '../../asset/images/sidemenu/insertar.svg'
+import Ajustes from '../../asset/images/sidemenu/ajustes.svg'
+import Soporte from '../../asset/images/sidemenu/soporte.svg'
+import CerrarSesion from '../../asset/images/sidemenu/cerrarsesion.svg'
 
 const styles = theme => ({
     root: {
@@ -56,7 +66,7 @@ const Navbar = ({ active }) => {
                 border: '1px',
                 borderRadius: '20px',
                 borderColor: '#ACFD00',
-                textTransform:'none'
+                textTransform: 'none'
             }}> Log in</Button>)
     } else {
         $Show = ''
@@ -110,27 +120,27 @@ const Navbar = ({ active }) => {
                                         fontWeight: 700,
                                         font: " normal normal 40px/60px Poppins"
                                     }}>
-                                        Daniel Pavon
+                                        USER
                                     </Typography>
                                     <ul style={{ paddingLeft: '40px' }}>
-                                        <li><Link href='/' style={{ color: "#ACFD00" }} > Inicio</Link></li>
-                                        <li><Link href='/'>Búsqueda</Link></li>
-                                        <li><Link href='/'>Mi Perfil</Link></li>
-                                        <li><Link href='/'>Mi Negocio</Link></li>
-                                        <li><Link href='/'>Mi Reputación</Link></li>
+                                        <li><Link href='/' style={{ color: "#ACFD00" }} ><img src={Inicio} alt='inicio' /> Inicio</Link></li>
+                                        <li><Link href='/'><img src={Busqueda} alt='busqueda' /> Búsqueda</Link></li>
+                                        <li><Link href='/'><img src={MiPerfil} alt='miperfil' /> Mi Perfil</Link></li>
+                                        <li><Link href='/'><img src={MiNegocio} alt='minegocio' /> Mi Negocio</Link></li>
+                                        <li><Link href='/'><img src={MiReputacion} alt='mireputacion' /> Mi Reputación</Link></li>
                                     </ul>
                                     <hr width={'100%'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30, marginLeft: 20 }} />
                                     <ul style={{ paddingLeft: '40px' }}>
-                                        <li><Link href='/'>Compartir Perfil</Link></li>
-                                        <li><Link href='/'>Insertar Perfil</Link></li>
-                                        <li><Link href='/'>Ajustes</Link></li>
-                                        <li><Link href='/'>Soporte</Link></li>
+                                        <li><Link href='/'><img src={Compartir} alt='compartir' /> Compartir Perfil</Link></li>
+                                        <li><Link href='/'><img src={Insertar} alt='insertar' /> Insertar Perfil</Link></li>
+                                        <li><Link href='/'><img src={Ajustes} alt='ajustes' /> Ajustes</Link></li>
+                                        <li><Link href='/'><img src={Soporte} alt='soporte' /> Soporte</Link></li>
                                     </ul>
                                     <hr width={'100%'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30, marginLeft: 20 }} />
                                     <ul style={{ paddingLeft: '40px' }}>
                                         <li><Link href='/' style={{ color: "#5e5e5d" }}>Términos y Condiciones</Link></li>
                                         <li><Link href='/' style={{ color: "#5e5e5d" }}>Política</Link></li>
-                                        <li><Link href='/' style={{ color: "#5e5e5d", fontSize: 12 }}>Cerrar Sesión</Link></li>
+                                        <li><Link href='/' style={{ color: "#5e5e5d", fontSize: 12 }}><img src={CerrarSesion} alt='cerrarsesion' /> Cerrar Sesión</Link></li>
                                     </ul>
                                 </div>
                             </div>
@@ -218,27 +228,27 @@ const Navbar = ({ active }) => {
                                         fontWeight: 700,
                                         font: " normal normal 40px/60px Poppins"
                                     }}>
-                                        Daniel Pavon
+                                       USER
                                     </Typography>
                                     <ul >
-                                        <li style={{ padding: '2px' }}><Link href='/' style={{ color: "#ACFD00" }} > Inicio</Link></li>
-                                        <li style={{ padding: '2px' }}><Link href='/'>Búsqueda</Link></li>
-                                        <li style={{ padding: '2px' }}><Link href='/'>Mi Perfil</Link></li>
-                                        <li style={{ padding: '2px' }}><Link href='/'>Mi Negocio</Link></li>
-                                        <li style={{ padding: '2px' }}><Link href='/'>Mi Reputación</Link></li>
+                                        <li style={{ padding: '2px' }}><Link href='/' style={{ color: "#ACFD00" }} ><img src={Inicio} alt='inicio' /> Inicio</Link></li>
+                                        <li style={{ padding: '2px' }}><Link href='/'><img src={Busqueda} alt='busqueda' /> Búsqueda</Link></li>
+                                        <li style={{ padding: '2px' }}><Link href='/'><img src={MiPerfil} alt='miperfil' /> Mi Perfil</Link></li>
+                                        <li style={{ padding: '2px' }}><Link href='/'><img src={MiNegocio} alt='minegocio' /> Mi Negocio</Link></li>
+                                        <li style={{ padding: '2px' }}><Link href='/'><img src={MiReputacion} alt='mireputacion' /> Mi Reputación</Link></li>
                                     </ul>
                                     <hr width={'70%'} size={1} color={'#5e5e5d'} style={{ marginLeft: 40 }} />
                                     <ul>
-                                        <li style={{ padding: '2px' }}><Link href='/'>Compartir Perfil</Link></li>
-                                        <li style={{ padding: '2px' }}><Link href='/'>Insertar Perfil</Link></li>
-                                        <li style={{ padding: '2px' }}><Link href='/'>Ajustes</Link></li>
-                                        <li style={{ padding: '2px' }}><Link href='/'>Soporte</Link></li>
+                                        <li style={{ padding: '2px' }}><Link href='/'><img src={Compartir} alt='compartir' /> Compartir Perfil</Link></li>
+                                        <li style={{ padding: '2px' }}><Link href='/'><img src={Insertar} alt='insertar' /> Insertar Perfil</Link></li>
+                                        <li style={{ padding: '2px' }}><Link href='/'><img src={Ajustes} alt='ajustes' /> Ajustes</Link></li>
+                                        <li style={{ padding: '2px' }}><Link href='/'><img src={Soporte} alt='soporte' /> Soporte</Link></li>
                                     </ul>
                                     <hr width={'70%'} size={1} color={'#5e5e5d'} style={{ marginLeft: 40 }} />
                                     <ul>
                                         <li style={{ padding: '2px' }}><Link href='/' style={{ color: "#5e5e5d" }}>Términos y Condiciones</Link></li>
                                         <li style={{ padding: '2px' }}><Link href='/' style={{ color: "#5e5e5d" }}>Política</Link></li>
-                                        <li style={{ padding: '2px' }}><Link href='/' style={{ color: "#5e5e5d", fontSize: 12 }}>Cerrar Sesión</Link></li>
+                                        <li style={{ padding: '2px' }}><Link href='/' style={{ color: "#5e5e5d", fontSize: 12 }}><img src={CerrarSesion} alt='cerrarsesion' /> Cerrar Sesión</Link></li>
                                     </ul>
                                 </div>
                             </div>
@@ -255,7 +265,7 @@ const Navbar = ({ active }) => {
                             Truster
                         </Typography>
                     </Grid> :
-                    <Grid container xs={9} xl={9} sm={9} justify='flex-end' alignContent='flex-start'>
+                    <Grid container xs={9} xl={9} sm={9} justify='flex-end' alignContent='flex-start' style={{ marginTop: -12 }}>
                         <Button style={{ color: '#999999', fontSize: 25, paddingLeft: '100%', font: " normal normal 35px/35px Poppins" }} href="/"> {back} </Button>
                     </Grid>}
             </Grid>}

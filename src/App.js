@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './views/login/login';
 import Register from './views/register/register';
 import RegisterSecond from './views/register/registersecond';
+import EmailVerification from './views/emailVerification/emailVerification';
+
 import './App.css';
 
 function App() {
@@ -18,6 +20,7 @@ function App() {
         <Switch>
           <Route path="/register" component={Register} />
           <Route path="/registerex" component={RegisterSecond} />
+          <Route path="/verificationemail" component={EmailVerification} />
         </Switch>
       </Router>
     </div>
