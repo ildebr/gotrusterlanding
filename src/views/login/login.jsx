@@ -10,7 +10,7 @@ import Logo from '../../asset/images/logo.svg';
 const styles = theme => ({
     root: {
         flexGrow: 1,
-        backgroundColor: '#000000'
+        backgroundColor: '#000000',
     },
 
     authWrapper: {
@@ -141,7 +141,24 @@ const styles = theme => ({
         borderRadius: 15,
         color: "white",
         font: 'normal normal normal 16px/22px Poppins',
+        "&:hover": {
+            border: '2px solid',
+            borderColor: '#ACFD00',
+            borderRadius: 15,
+        },
     },
+    errorFormButton: {
+        marginTop: theme.spacing(1),
+        height: 50,
+        maxWidth: 316,
+        border: '2px solid',
+        borderColor: '#E94342',
+        borderRadius: 15,
+        color: "white",
+        font: 'normal normal normal 16px/22px Poppins',
+
+    },
+
     normaltext: {
         fontSize: 12,
         color: '#999999',
@@ -151,6 +168,7 @@ const styles = theme => ({
 });
 
 class Login extends Component {
+
     render() {
         const { classes } = this.props;
         return (
@@ -181,7 +199,7 @@ class Login extends Component {
                                             marginTop: 30,
                                             justifyContent: "center",
                                             alignContent: "center",
-                                            textAlign: 'center'
+                                            textAlign: 'center',
                                         }}
                                             onSubmit={this.handleSubmit}
                                             noValidate>
@@ -191,6 +209,7 @@ class Login extends Component {
                                                 id="email"
                                                 inputProps={{ style: { textAlign: 'center' } }}
                                                 className={classes.formButton}
+
                                             // onChange={}
                                             />
                                             <InputBase
@@ -202,7 +221,6 @@ class Login extends Component {
                                                 className={classes.formButton}
                                             // onChange={}
                                             />
-
                                             <button
                                                 type="submit"
                                                 variant="contained"

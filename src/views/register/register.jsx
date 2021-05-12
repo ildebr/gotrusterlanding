@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { CssBaseline, Grid, Box, Container, Typography,Button } from '@material-ui/core';
+import { CssBaseline, Grid, Box, Container, Typography, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import NavBar from '../../components/navBar/navbar.jsx';
 import Link from '@material-ui/core/Link';
@@ -128,7 +128,7 @@ const styles = theme => ({
         font: 'normal normal normal 18px/24px Poppins',
         height: 50,
         borderRadius: 15,
-        textTransform:'none',
+        textTransform: 'none',
         marginTop: theme.spacing(3),
     },
     formButton: {
@@ -139,15 +139,52 @@ const styles = theme => ({
         borderRadius: 15,
         color: "white",
         font: 'normal normal normal 16px/22px Poppins',
+        "&:hover": {
+            border: '2px solid',
+            borderColor: '#ACFD00',
+            borderRadius: 15,
+        },
     },
-    formButton2: {
+    errorFormButton: {
         marginTop: theme.spacing(1),
-        height: 20,
-        //border: '1px solid',
-        borderBottomColor: '#999999',
+        height: 50,
+        border: '2px solid',
+        borderColor: '#E94342',
         borderRadius: 15,
         color: "white",
         font: 'normal normal normal 16px/22px Poppins',
+
+    },
+    formButton2: {
+        marginTop: theme.spacing(1),
+        height: 50,
+        border: '1px solid',
+        borderBottomColor: '#999999',
+        borderTop: 'red',
+        borderRight: 'red',
+        borderLeft: 'red',
+        color: "white",
+        font: 'normal normal normal 16px/22px Poppins',
+        "&:hover": {
+            borderTop: 'red',
+            borderRight: 'red',
+            borderLeft: 'red',
+            border: '2px solid',
+            borderColor: '#ACFD00',
+
+        },
+    },
+    errorFormButton2: {
+        marginTop: theme.spacing(1),
+        height: 50,
+        borderTop: 'red',
+        borderRight: 'red',
+        borderLeft: 'red',
+        border: '2px solid',
+        borderColor: '#E94342',
+        color: "white",
+        font: 'normal normal normal 16px/22px Poppins',
+
     },
     normaltext: {
         fontSize: 12,
@@ -323,7 +360,7 @@ class Register extends Component {
                                                     className={classes.formButton2}
                                                 // onChange={}
                                                 />
-                                                <hr width={'100%'} align={'left'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30 }} />
+
                                                 <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
                                                     Apellido
                                                 </Typography>
@@ -335,7 +372,6 @@ class Register extends Component {
                                                     className={classes.formButton2}
                                                 // onChange={}
                                                 />
-                                                <hr width={'100%'} align={'left'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30 }} />
                                                 <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
                                                     Email
                                             </Typography>
@@ -347,7 +383,6 @@ class Register extends Component {
                                                     className={classes.formButton2}
                                                 // onChange={}
                                                 />
-                                                <hr width={'100%'} align={'left'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30 }} />
                                                 <Grid container>
                                                     <Grid container justify='flex-start' alignContent='center' xs={6} xl={6} sm={6}>
                                                         <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
@@ -370,7 +405,6 @@ class Register extends Component {
                                                     className={classes.formButton2}
                                                 // onChange={}
                                                 />
-                                                <hr width={'100%'} align={'left'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30 }} />
 
                                                 <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
                                                     Repetir Contraseña
@@ -383,7 +417,6 @@ class Register extends Component {
                                                     className={classes.formButton2}
                                                 // onChange={}
                                                 />
-                                                <hr width={'100%'} align={'left'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30 }} />
                                                 <Grid container item>
                                                     <Grid container justify="center" style={{ marginTop: 10 }}>
                                                         <Checkbox

@@ -130,7 +130,7 @@ const styles = theme => ({
         font: 'normal normal normal 18px/24px Poppins',
         height: 50,
         borderRadius: 15,
-        textTransform:'none',
+        textTransform: 'none',
         marginTop: theme.spacing(3),
     },
     formButton: {
@@ -141,6 +141,21 @@ const styles = theme => ({
         borderRadius: 15,
         color: "white",
         font: 'normal normal normal 16px/22px Poppins',
+        "&:hover": {
+            border: '1px solid',
+            borderColor: '#ACFD00',
+            borderRadius: 15,
+        },
+    },
+    errorFormButton: {
+        marginTop: theme.spacing(1),
+        height: 50,
+        border: '2px solid',
+        borderColor: '#E94342',
+        borderRadius: 15,
+        color: "white",
+        font: 'normal normal normal 16px/22px Poppins',
+
     },
     formButtonMobile: {
         marginTop: theme.spacing(1),
@@ -152,6 +167,25 @@ const styles = theme => ({
         borderLeft: 'red',
         color: "white",
         font: 'normal normal normal 16px/22px Poppins',
+        "&:hover": {
+            border: '1px solid',
+            borderTop: 'red',
+            borderRight: 'red',
+            borderLeft: 'red',
+            borderColor: '#ACFD00',
+        },
+    },
+    errorFormButtonMobile: {
+        marginTop: theme.spacing(1),
+        height: 50,
+        border: '2px solid',
+        borderColor: '#E94342',
+        borderTop: 'red',
+        borderRight: 'red',
+        borderLeft: 'red',
+        color: "white",
+        font: 'normal normal normal 16px/22px Poppins',
+
     },
     normaltext: {
         fontSize: 12,
@@ -163,6 +197,7 @@ const styles = theme => ({
         color: '#FFFFFF',
         fontSize: '14px',
         marginTop: theme.spacing(2),
+
     },
     inputTitleMobile: {
         color: '#FFFFFF',
@@ -179,7 +214,27 @@ const styles = theme => ({
         color: "#999999",
         font: 'normal normal normal 16px/22px Poppins',
         paddingLeft: 40,
-        justifyContent: "flex-end"
+        justifyContent: "flex-end",
+        textAlign: "center",
+        "&:hover": {
+            border: '1px solid',
+            borderColor: '#ACFD00',
+            borderRadius: 15,
+        },
+    },
+    errorSelect: {
+        marginTop: theme.spacing(1),
+        height: '50px',
+        width: '100%',
+        border: '2px solid',
+        borderColor: '#E94342',
+        color: "#999999",
+        justifyContent: "flex-end",
+        textAlign: "center",
+        paddingLeft: 40,
+        borderRadius: 15,
+        font: 'normal normal normal 16px/22px Poppins',
+
     },
     selectMobile: {
         marginTop: theme.spacing(2),
@@ -193,7 +248,30 @@ const styles = theme => ({
         borderRight: 'red',
         borderLeft: 'red',
         border: '1px solid',
-        borderColor: "#999999"
+        borderColor: "#999999",
+        "&:hover": {
+            border: '1px solid',
+            borderTop: 'red',
+            borderRight: 'red',
+            borderLeft: 'red',
+            borderColor: '#ACFD00',
+        },
+    },
+    errorSelectMobile: {
+        marginTop: theme.spacing(2),
+        height: '40px',
+        width: '100%',
+        border: '2px solid',
+        borderTop: 'red',
+        borderRight: 'red',
+        borderLeft: 'red',
+        borderColor: '#E94342',
+        color: "#999999",
+        justifyContent: "flex-end",
+        textAlign: "center",
+        paddingLeft: 10,
+        font: 'normal normal normal 16px/22px Poppins',
+
     },
     icon: {
         fill: '#999999',
@@ -461,7 +539,49 @@ class RegisterSecond extends Component {
                                                     native
                                                     value={this.state.gender}
                                                     onChange={(e) => { this.handleGenderChange(e) }}
+                                                    className={classes.select}
+                                                    inputProps={{
+                                                        classes: {
+                                                            icon: classes.icon,
+                                                        },
+                                                    }}
+                                                    style={{ paddingLeft: 140 }}
+                                                >
+                                                    <option aria-label="Género" value="" />
+                                                    <option value={0}>Elegí tu género</option>
+                                                    <option value={20}>Femenino</option>
+                                                    <option value={30}>Masculino</option>
+                                                </SelectBase>
+                                                <Typography className={classes.inputTitle}>
+                                                    Nacionalidad
+                                                </Typography>
+                                                <SelectBase
+                                                    native
+                                                    justifyContent="center"
+                                                    value={this.state.nationality}
+                                                    onChange={(e) => { this.handleNationalityChange(e) }}
+                                                    className={classes.select}
+                                                    inputProps={{
+                                                        classes: {
+                                                            icon: classes.icon,
+                                                        },
+                                                    }}
+                                                    style={{ paddingLeft: 140 }}
 
+                                                >
+                                                    <option aria-label="Género" value="" />
+                                                    <option value={0}>Elegí tu Nacionalidad</option>
+                                                    <option value={20}>Argentina</option>
+                                                    <option value={30}>Chile</option>
+                                                </SelectBase>
+                                                <Typography className={classes.inputTitle}>
+                                                    Provincia
+                                                </Typography>
+                                                <SelectBase
+                                                    native
+                                                    justifyContent="center"
+                                                    value={this.state.province}
+                                                    onChange={(e) => { this.handleProvinceChange(e) }}
                                                     className={classes.select}
                                                     inputProps={{
                                                         classes: {
@@ -469,79 +589,16 @@ class RegisterSecond extends Component {
                                                         },
                                                     }}
                                                     style={{ paddingLeft: 160 }}
+
                                                 >
                                                     <option aria-label="Género" value="" />
-                                                    <option value={0}>Género</option>
-                                                    <option value={20}>Femenino</option>
-                                                    <option value={30}>Masculino</option>
+                                                    <option value={0}>Provincia</option>
+                                                    <option value={20}>Cordoba</option>
+                                                    <option value={30}>Mendoza</option>
                                                 </SelectBase>
                                                 <Typography className={classes.inputTitle}>
-                                                    Dirección
-                                            </Typography>
-                                                <Grid container justify='center'>
-                                                    <Grid container xs={9} xl={9} sm={9} style={{ paddingRight: 10 }}>
-                                                        <InputBase
-                                                            placeholder="Email"
-                                                            fullWidth
-                                                            id="email"
-                                                            inputProps={{ style: { textAlign: 'center' } }}
-                                                            className={classes.formButton}
-                                                        // onChange={}
-                                                        />
-                                                    </Grid>
-                                                    <Grid container xs={3} xl={3} sm={3}>
-                                                        <SelectBase
-                                                            native
-                                                            value={this.state.number}
-                                                            onChange={(e) => { this.handleNumberChange(e) }}
-                                                            className={classes.select}
-                                                            inputProps={{
-                                                                classes: {
-                                                                    icon: classes.icon,
-                                                                },
-                                                            }}
-
-                                                        >
-                                                            <option aria-label="Numero" value="" />
-                                                            <option value={0}>Nº</option>
-                                                            <option value={1}>01</option>
-                                                            <option value={2}>02</option>
-                                                            <option value={3}>03</option>
-                                                            <option value={4}>04</option>
-                                                            <option value={5}>05</option>
-                                                            <option value={6}>06</option>
-                                                            <option value={7}>07</option>
-                                                            <option value={8}>08</option>
-                                                            <option value={9}>09</option>
-                                                            <option value={10}>10</option>
-                                                            <option value={11}>11</option>
-                                                            <option value={12}>12</option>
-                                                            <option value={13}>13</option>
-                                                            <option value={14}>14</option>
-                                                            <option value={15}>15</option>
-                                                            <option value={16}>16</option>
-                                                            <option value={17}>17</option>
-                                                            <option value={18}>18</option>
-                                                            <option value={19}>19</option>
-                                                            <option value={20}>20</option>
-                                                            <option value={21}>21</option>
-                                                            <option value={22}>22</option>
-                                                            <option value={23}>23</option>
-                                                            <option value={24}>24</option>
-                                                            <option value={25}>25</option>
-                                                            <option value={26}>26</option>
-                                                            <option value={27}>27</option>
-                                                            <option value={28}>28</option>
-                                                            <option value={29}>29</option>
-                                                            <option value={30}>30</option>
-                                                            <option value={31}>31</option>
-                                                        </SelectBase>
-                                                    </Grid>
-                                                </Grid>
-
-                                                <Typography className={classes.inputTitle}>
                                                     Localidad
-                                            </Typography>
+                                                </Typography>
                                                 <SelectBase
                                                     native
                                                     value={this.state.local}
@@ -550,7 +607,9 @@ class RegisterSecond extends Component {
                                                     inputProps={{
                                                         classes: {
                                                             icon: classes.icon,
+
                                                         },
+
                                                     }}
                                                     style={{ paddingLeft: 160 }}
                                                 >
@@ -561,18 +620,33 @@ class RegisterSecond extends Component {
                                                 </SelectBase>
                                                 <Typography style={{ color: '#999999', fontSize: 11 }}>
                                                     12 caracteres máx
-                                            </Typography>
+                                                </Typography>
                                                 <Typography className={classes.inputTitle}>
-                                                    Provincia
-                                            </Typography>
-                                                <InputBase
-                                                    placeholder="Provincia"
-                                                    fullWidth
-                                                    id="provincia"
-                                                    inputProps={{ style: { textAlign: 'center' } }}
-                                                    className={classes.formButton}
-                                                // onChange={}
-                                                />
+                                                    Dirección
+                                                </Typography>
+                                                <Grid container justify='center'>
+                                                    <Grid container xs={9} xl={9} sm={9} style={{ paddingRight: 10 }}>
+                                                        <InputBase
+                                                            placeholder="Calle"
+                                                            fullWidth
+                                                            id="email"
+                                                            inputProps={{ style: { textAlign: 'center' } }}
+                                                            className={classes.formButton}
+                                                        // onChange={}
+                                                        />
+                                                    </Grid>
+                                                    <Grid container xs={3} xl={3} sm={3}>
+                                                        <InputBase
+                                                            placeholder="Nº"
+                                                            fullWidth
+                                                            id="numero"
+                                                            inputProps={{ style: { textAlign: 'center' } }}
+                                                            className={classes.formButton}
+                                                        // onChange={}
+                                                        />
+                                                    </Grid>
+                                                </Grid>
+
 
                                                 <Grid container item>
                                                     <Grid container justify="center" style={{ marginTop: 10 }}>
@@ -809,6 +883,46 @@ class RegisterSecond extends Component {
                                                     <option value={20}>Femenino</option>
                                                     <option value={30}>Masculino</option>
                                                 </SelectBase>
+                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                    Provincia
+                                                </Typography>
+                                                <SelectBase
+                                                    native
+                                                    value={this.state.province}
+                                                    onChange={(e) => { this.handleProvinceChange(e) }}
+                                                    className={classes.selectMobile}
+                                                    inputProps={{
+                                                        classes: {
+                                                            icon: classes.icon,
+                                                        },
+                                                    }}
+                                                // onChange={}
+                                                >
+                                                    <option aria-label="Local" value="" />
+                                                    <option value={0}>Provincia</option>
+                                                    <option value={20}>Twenty</option>
+                                                    <option value={30}>Thirty</option>
+                                                </SelectBase>
+                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                    Localidad
+                                                </Typography>
+                                                <SelectBase
+                                                    native
+                                                    value={this.state.local}
+                                                    onChange={(e) => { this.handleLocalChange(e) }}
+                                                    className={classes.selectMobile}
+                                                    inputProps={{
+                                                        classes: {
+                                                            icon: classes.icon,
+                                                        },
+                                                    }}
+
+                                                >
+                                                    <option aria-label="Local" value="" />
+                                                    <option value={0}>Localidad</option>
+                                                    <option value={20}>Twenty</option>
+                                                    <option value={30}>Thirty</option>
+                                                </SelectBase>
                                                 <Grid container justify='flex-start'>
                                                     <Grid container xs={9} xl={9} sm={9} style={{ paddingRight: 10 }}>
                                                         <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
@@ -846,47 +960,7 @@ class RegisterSecond extends Component {
                                                         </InputBase>
                                                     </Grid>
                                                 </Grid>
-                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
-                                                    Localidad
-                                                </Typography>
-                                                <SelectBase
-                                                    native
-                                                    value={this.state.local}
-                                                    onChange={(e) => { this.handleLocalChange(e) }}
-                                                    className={classes.selectMobile}
-                                                    inputProps={{
-                                                        classes: {
-                                                            icon: classes.icon,
-                                                        },
-                                                    }}
 
-                                                >
-                                                    <option aria-label="Local" value="" />
-                                                    <option value={0}>Localidad</option>
-                                                    <option value={20}>Twenty</option>
-                                                    <option value={30}>Thirty</option>
-                                                </SelectBase>
-
-                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
-                                                    Provincia
-                                                </Typography>
-                                                <SelectBase
-                                                    native
-                                                    value={this.state.province}
-                                                    onChange={(e) => { this.handleProvinceChange(e) }}
-                                                    className={classes.selectMobile}
-                                                    inputProps={{
-                                                        classes: {
-                                                            icon: classes.icon,
-                                                        },
-                                                    }}
-                                                // onChange={}
-                                                >
-                                                    <option aria-label="Local" value="" />
-                                                    <option value={0}>Provincia</option>
-                                                    <option value={20}>Twenty</option>
-                                                    <option value={30}>Thirty</option>
-                                                </SelectBase>
                                                 <Grid container item>
                                                     <Grid container justify="center" style={{ marginTop: 10 }}>
                                                         <Typography
@@ -905,11 +979,15 @@ class RegisterSecond extends Component {
                                                         className={classes.login}
                                                     >
                                                         Finalizar registro
-                                    </Button>
+                                                    </Button>
+
                                                 </Grid>
 
                                             </form>
                                         </Grid>}
+                                    <Grid style={{ marginBottom: 50 }}>
+
+                                    </Grid>
 
 
                                 </div>
@@ -917,7 +995,7 @@ class RegisterSecond extends Component {
                         </Container>
                     </Container>
                 </Grid>
-            </div>
+            </div >
         );
     }
 }
