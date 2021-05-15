@@ -194,6 +194,7 @@ const styles = theme => ({
     },
     inputTitle: {
         color: '#FFFFFF',
+        font: 'normal normal normal 14px/14px Poppins',
         fontSize: '14px',
         marginTop: theme.spacing(2),
     },
@@ -287,7 +288,7 @@ class Register extends Component {
                                                 // onChange={}
                                                 />
                                                 <Typography className={classes.inputTitle}>
-                                                    Contaseña
+                                                    Contraseña
                                             </Typography>
                                                 <InputBase
                                                     placeholder="Contaseña"
@@ -317,7 +318,7 @@ class Register extends Component {
                                                         <Checkbox
                                                             iconStyle={{ fill: '#ACFD00' }}
                                                             inputStyle={{ color: '#ACFD00' }}
-                                                            style={{ color: '#ACFD00' }}
+                                                            style={{ color: '#ACFD00', marginTop: 3 }}
                                                         />
                                                         <Typography
                                                             className={classes.normaltext}>
@@ -422,7 +423,7 @@ class Register extends Component {
                                                         <Checkbox
                                                             iconStyle={{ fill: '#ACFD00' }}
                                                             inputStyle={{ color: '#ACFD00' }}
-                                                            style={{ color: '#ACFD00' }}
+                                                            style={{ color: '#ACFD00', marginTop: 3 }}
                                                         />
                                                         <Typography
                                                             className={classes.normaltext}>

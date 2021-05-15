@@ -17,3 +17,9 @@ code {
   src: local("Poppins"),
     url(./asset/fonts/Poppins-Regular.ttf) format("truetype");
 }
+
+@font-face {
+  font-family: "PoppinsBold";
+  src: local("PoppinsBold"),
+    url(./asset/fonts/Poppins-Bold.ttf) format("truetype");
+}

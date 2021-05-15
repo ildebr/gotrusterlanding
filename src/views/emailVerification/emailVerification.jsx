@@ -35,13 +35,11 @@ const styles = theme => ({
     paperWelcome: {
         position: 'flex',
         marginTop: '30px',
-        //width: '931px',
-        //height: '89px',
-        fontFamily: 'Poppins',
+        lineHeight: '38px',
+        fontFamily: 'PoppinsBold',
         fontStyle: 'normal',
         fontWeight: 'bold',
-        fontSize: '36px',
-        lineHeight: '36px',
+        fontSize: '32px',
         alignItems: 'center',
         textAlign: 'center',
         letterSpacing: '-0.02em',
@@ -78,11 +76,12 @@ const styles = theme => ({
     paperWelcome1: {
         alignItems: 'center',
         position: 'flex',
-        marginTop: '30px',
-        fontFamily: 'Poppins',
+        marginTop: '20px',
+        fontFamily: 'PoppinsBold',
         fontWeight: ' bold',
-        fontSize: '30px',
+        fontSize: '26px',
         textAlign: 'center',
+        lineHeight: '35px',
         letterSpacing: '-0.02em',
         color: '#ACFD00'
     },
@@ -196,9 +195,9 @@ class EmailVerification extends Component {
                                             </Typography>
                                             </Grid>
                                             <Grid container justify='center'>
-                                                <Button 
-                                                href="/"
-                                                className={classes.formButton2}
+                                                <Button
+                                                    href="/"
+                                                    className={classes.formButton2}
                                                 >
                                                     De vuelta a Inicio
                                                 </Button>
@@ -228,11 +227,11 @@ class EmailVerification extends Component {
                                             </Typography>
                                                 </Grid>
                                                 <Grid container justify='center'>
-                                                    <Button 
-                                                    className={classes.formButton2}
-                                                    href="/"
+                                                    <Button
+                                                        className={classes.formButton2}
+                                                        href="/"
                                                     >
-                                                         De vuelta a Inicio
+                                                        De vuelta a Inicio
                                                 </Button>
                                                 </Grid>
                                             </Grid>

@@ -1,6 +1,6 @@
 
 import client from './cliente';
-import  CurrentUser from './../config/config'
+
 const TOKEN_KEY = "id_token";
 
 export function setToken(token) {
@@ -17,7 +17,7 @@ export function deleteToken(e) {
 }
 
 export async function getCurrentUser() {
-    const URI = CurrentUser();
+    const URI ='';
   if (!getToken()) return false;
   try { 
   let response = await client.get(URI);

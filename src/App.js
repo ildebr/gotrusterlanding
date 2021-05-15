@@ -4,6 +4,7 @@ import Login from './views/login/login';
 import Register from './views/register/register';
 import RegisterSecond from './views/register/registersecond';
 import EmailVerification from './views/emailVerification/emailVerification';
+import PassRecover from './views/passRecover/passRecover';
 
 import './App.css';
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/register" component={Register} />
           <Route path="/registerex" component={RegisterSecond} />
           <Route path="/verificationemail" component={EmailVerification} />
+          <Route path="/passrecover" component={PassRecover} />
         </Switch>
       </Router>
     </div>

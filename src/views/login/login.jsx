@@ -4,7 +4,11 @@ import { withStyles } from '@material-ui/core/styles';
 import NavBar from '../../components/navBar/navbar.jsx';
 import Link from '@material-ui/core/Link';
 import InputBase from '@material-ui/core/InputBase';
-import Logo from '../../asset/images/logo.svg';
+import { ReactComponent as Logo } from '../../asset/images/logo.svg';
+import auth from './../../setting/auth';
+import { LoopCircleLoading} from 'react-loadingg';
+import { getToken, deleteToken } from './../../setting/auth-helpers';
+import {AccountAuth} from './../../services/hostConfig'
 //import WindowDimensions from "../../components/UtilityComponents/WindowDimension"
 
 const styles = theme => ({
@@ -40,7 +44,7 @@ const styles = theme => ({
         //marginLeft: '20px',
         //width: '931px',
         //height: '89px',
-        fontFamily: 'Poppins',
+        fontFamily: 'PoppinsBold',
         fontStyle: 'normal',
         fontWeight: ' bold',
         fontSize: '40px',
@@ -84,9 +88,9 @@ const styles = theme => ({
         //marginLeft: '5px',
         //width: '931px',
         //height: '89px',
-        fontFamily: 'Poppins',
+        fontFamily: 'PoppinsBold',
         fontStyle: 'normal',
-        fontWeight: ' bold',
+        fontWeight: 1000,
         fontSize: '50px',
         //lineHeight: '40px',
         textAlign: 'center',
@@ -127,9 +131,12 @@ const styles = theme => ({
         backgroundColor: '#ACFD00',
         width: '100%',
         maxWidth: 316,
+        border: '1px solid',
+        borderColor: '#ACFD00',
+        cursor:'pointer',
+        borderRadius: 15,
         font: 'normal normal normal 18px/24px Poppins',
         height: 50,
-        borderRadius: 15,
         marginTop: theme.spacing(3),
     },
     formButton: {
@@ -168,9 +175,111 @@ const styles = theme => ({
 });
 
 class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            password: '',
+            error: '',
+            textError: '',
+            ruta: '/',
+            show: false,
+            enabledComponent: false,
+            windowWidth: window.innerWidth
+        };
+        this._handleChangeValue = this._handleChangeValue.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this._handleChangeValuePass = this._handleChangeValuePass.bind(this);
+    }
 
-    render() {
+    _handleChangeValue = e => {
+        e.preventDefault();
+        this.setState({ name: e.target.value })
+      }
+      _handleChangeValuePass = e => {
+        e.preventDefault();
+        this.setState({ password: e.target.value })
+      }
+    handleResize = (e) => {
+        this.setState({ windowWidth: window.innerWidth });
+    };
+    componentDidMount() {
+        window.addEventListener("resize", this.handleResize);
+    }
+
+    handleSubmit = e => {
+        e.preventDefault();
+        let name = this.state.name;
+        let pass = this.state.password;
+        
+        if ((name === '') || (pass === '')) {
+          this.setState({
+            error: 'error',
+            textError: '*El Usuario o la contraseña no esta especificada',
+            name: ''
+          })
+          //deleteToken(e);
+        } else {
+          this.setState({
+            show: true,
+            enabledComponent: true
+          })
+          auth.login(name, pass)
+            .then(() => {
+              const token = getToken();
+              if (token !== 'undefined') {    
+                fetch(AccountAuth(), {
+                  method: 'get',
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                  }
+                }).then(response => {
+                  return response.json();
+                }).then(response => {
+                    this.setState({
+                        show: false,
+                        enabledComponent: false
+                      })                
+                    }).catch(error => {
+                        console.error('Error:', error)
+                        this.setState({
+                            show: false,
+                            enabledComponent: false
+                          })            
+                    });
+    
+              } else {
+                this.setState({
+                  error: 'error',
+                  textError: '*Tu usuario o contraseña no son correctos, por favor revisa tus datos',
+                  name: '',
+                  show: false,
+                  enabledComponent: false
+                })
+                deleteToken(e);
+              }
+            }).catch(error => console.error('Error:', error));
+        }
+      }
+    render() {      
+        function getWindowDimensions() {
+            const { innerWidth: width } = window;
+            return {
+                width
+            };
+        }
+
         const { classes } = this.props;
+        const { width } = getWindowDimensions();
+        let $show = this.state.show;
+        let $wait = '';
+        let $textError = this.state.textError; 
+        if ($show) {
+            $wait = (<LoopCircleLoading size='large' color='#ACFD00
+            '/>);
+          }
         return (
             <div style={{ backgroundColor: '#000000' }}>
                 <Grid container className={classes.root} component="main" maxWidth="md">
@@ -183,7 +292,7 @@ class Login extends Component {
                                 <CssBaseline />
                                 <Box mx="auto"  >
                                     <Box className={classes.authHeader}>
-                                        <img src={Logo} alt='logo' width="50" height="50" />
+                                        <Logo width="50" height="50" />
                                     </Box>
                                 </Box>
                                 <div className={classes.paper}>
@@ -194,7 +303,7 @@ class Login extends Component {
                                             Tu punto de confianza. </Typography>
                                     </Box>
                                     <Grid justify='center' container>
-                                        <form style={{
+                                        {width > 600 ? <form style={{
                                             width: '70%',
                                             marginTop: 30,
                                             justifyContent: "center",
@@ -207,23 +316,27 @@ class Login extends Component {
                                                 placeholder="Usuario / Email"
                                                 fullWidth
                                                 id="email"
+                                                name="name"
+                                                helperText={(<font color='red'>{$textError}</font>)}
                                                 inputProps={{ style: { textAlign: 'center' } }}
-                                                className={classes.formButton}
-
-                                            // onChange={}
+                                                className={classes.formButton}  
+                                                disabled={this.state.enabledComponent} 
+                                                onChange={this._handleChangeValue}
                                             />
                                             <InputBase
                                                 placeholder="Contraseña"
                                                 fullWidth
                                                 color='white'
                                                 type="password"
+                                                name="password"
+                                                disabled={this.state.enabledComponent} 
                                                 inputProps={{ style: { textAlign: 'center' } }}
                                                 className={classes.formButton}
-                                            // onChange={}
+                                                onChange={this._handleChangeValuePass}
                                             />
+                                             
                                             <button
                                                 type="submit"
-                                                variant="contained"
                                                 fullWidth
                                                 className={classes.login}
                                             >
@@ -231,7 +344,8 @@ class Login extends Component {
                                         </button>
                                             <Grid container>
                                                 <Grid item xs>
-                                                    <Link>
+                                                    <Link href="/passrecover" style={{ textDecoration: 'none' }} >
+                                                        {$wait}
                                                         <Typography
                                                             className={classes.normaltext}>
                                                             ¿Olvidaste contraseña?
@@ -256,7 +370,76 @@ class Login extends Component {
                                                 </Grid>
 
                                             </Grid>
-                                        </form>
+                                        </form> :
+                                            <form style={{
+                                                width: '100%',
+                                                marginTop: 30,
+                                                justifyContent: "center",
+                                                alignContent: "center",
+                                                textAlign: 'center',
+                                            }}
+                                                onSubmit={this.handleSubmit}
+                                                noValidate>
+                                                <InputBase
+                                                    placeholder="Usuario / Email"
+                                                    fullWidth
+                                                    id="email"
+                                                    name="name"
+                                                    helperText={(<font color='red'>{$textError}</font>)}
+                                                    inputProps={{ style: { textAlign: 'center' } }}
+                                                    className={classes.formButton}
+                                                    disabled={this.state.enabledComponent} 
+                                                    onChange={this._handleChangeValue}
+
+                                                />
+                                                <InputBase
+                                                    placeholder="Contraseña"
+                                                    fullWidth
+                                                    color='white'
+                                                    type="password"
+                                                    name="password"
+                                                    inputProps={{ style: { textAlign: 'center' } }}
+                                                    className={classes.formButton}
+                                                    disabled={this.state.enabledComponent} 
+                                                    onChange={this._handleChangeValuePass}
+                                                />
+                                                <button
+                                                    type="submit"
+                                                    fullWidth
+                                                    className={classes.login}
+                                                >
+                                                    Log In
+                                        </button>
+                                                <Grid container>
+                                                    <Grid item xs>
+                                                        <Link style={{ textDecoration: 'none' }} >
+                                                        {$wait}
+                                                            <Typography
+                                                                className={classes.normaltext}>
+                                                                ¿Olvidaste contraseña?
+                                                    </Typography>
+                                                        </Link>
+                                                    </Grid>
+
+                                                </Grid>
+                                                <Grid container>
+                                                    <Grid item xs>
+
+                                                        <Typography
+                                                            className={classes.normaltext}>
+                                                            ¿No tenés cuenta?{' '}
+                                                            <Link
+                                                                href="/register"
+                                                                style={{ color: '#ACFD00' }}>
+                                                                Registrate
+                                                        </Link>
+                                                        </Typography>
+
+                                                    </Grid>
+
+                                                </Grid>
+                                            </form>}
+
                                     </Grid>
 
 

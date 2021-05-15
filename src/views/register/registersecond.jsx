@@ -197,6 +197,7 @@ const styles = theme => ({
         color: '#FFFFFF',
         fontSize: '14px',
         marginTop: theme.spacing(2),
+        font: 'normal normal normal 14px/14px Poppins',
 
     },
     inputTitleMobile: {
@@ -347,7 +348,7 @@ class RegisterSecond extends Component {
                 <Grid container className={classes.root} component="main" maxWidth="md">
                     <Container component="main" maxWidth="md" >
                         <Grid item container xs={12} className={classes.paperContainer} >
-                            <NavBar active='1' />
+                            <NavBar active={1} />
                         </Grid>
                         <Container component="main" maxWidth="md" style={{ alignItems: 'center' }} >
                             <Box className={classes.authWrapper}   >
@@ -365,7 +366,7 @@ class RegisterSecond extends Component {
                                     {width > 550 ?
                                         <Grid justify='center' style={{ maxWidth: 400 }}>
                                             <form style={{
-                                                width: '100%',
+                                                //width: '100%',
                                                 marginTop: 30,
                                                 justifyContent: "center",
                                                 alignContent: "center",
@@ -374,17 +375,19 @@ class RegisterSecond extends Component {
                                                 noValidate>
                                                 <Typography className={classes.inputTitle}>
                                                     Fecha de Nacimiento
-                                            </Typography>
-                                                <Grid container justify='center'>
-                                                    <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 10 }}>
+                                                </Typography>
+                                                <Grid container justify='flex-start'>
+                                                    <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 30 }} >
                                                         <SelectBase
+                                                            disableUnderline
                                                             native
                                                             value={this.state.day}
                                                             onChange={(e) => { this.handleDayChange(e) }}
                                                             className={classes.select}
+                                                            style={{ paddingLeft: 20 }}
                                                             inputProps={{
                                                                 classes: {
-                                                                    icon: classes.icon,
+                                                                    icon: classes.icon
                                                                 },
                                                             }}
                                                         >
@@ -423,13 +426,14 @@ class RegisterSecond extends Component {
                                                             <option value={31}>31</option>
                                                         </SelectBase>
                                                     </Grid>
-                                                    <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 10 }}>
+                                                    <Grid container xs={5} xl={5} sm={5} style={{ marginLeft: -10, paddingRight: 10 }}>
                                                         <SelectBase
+                                                            disableUnderline
                                                             native
                                                             value={this.state.months}
                                                             onChange={(e) => { this.handleMonthsChange(e) }}
                                                             className={classes.select}
-                                                            style={{ paddingLeft: 25, }}
+                                                            style={{ paddingLeft: 20, }}
                                                             inputProps={{
                                                                 classes: {
                                                                     icon: classes.icon,
@@ -452,12 +456,14 @@ class RegisterSecond extends Component {
                                                             <option value={12}>Diciembre</option>
                                                         </SelectBase>
                                                     </Grid>
-                                                    <Grid container xs={4} xl={4} sm={4}>
+                                                    <Grid container xs={3} xl={3} sm={3} style={{ marginLeft: 10, paddingRight: 0 }}>
                                                         <SelectBase
+                                                            disableUnderline
                                                             native
                                                             value={this.state.years}
                                                             onChange={(e) => { this.handleYearChange(e) }}
                                                             className={classes.select}
+                                                            style={{ paddingLeft: 10 }}
                                                             inputProps={{
                                                                 classes: {
                                                                     icon: classes.icon,
@@ -536,6 +542,7 @@ class RegisterSecond extends Component {
                                                     Género
                                             </Typography>
                                                 <SelectBase
+                                                    disableUnderline
                                                     native
                                                     value={this.state.gender}
                                                     onChange={(e) => { this.handleGenderChange(e) }}
@@ -556,6 +563,7 @@ class RegisterSecond extends Component {
                                                     Nacionalidad
                                                 </Typography>
                                                 <SelectBase
+                                                    disableUnderline
                                                     native
                                                     justifyContent="center"
                                                     value={this.state.nationality}
@@ -578,6 +586,7 @@ class RegisterSecond extends Component {
                                                     Provincia
                                                 </Typography>
                                                 <SelectBase
+                                                    disableUnderline
                                                     native
                                                     justifyContent="center"
                                                     value={this.state.province}
@@ -600,6 +609,7 @@ class RegisterSecond extends Component {
                                                     Localidad
                                                 </Typography>
                                                 <SelectBase
+                                                    disableUnderline
                                                     native
                                                     value={this.state.local}
                                                     onChange={(e) => { this.handleLocalChange(e) }}
@@ -686,6 +696,7 @@ class RegisterSecond extends Component {
                                                 <Grid container justify='flex-start'>
                                                     <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 10 }}>
                                                         <SelectBase
+                                                            disableUnderline
                                                             style={{ width: '80%' }}
                                                             native
                                                             value={this.state.day}
@@ -735,6 +746,7 @@ class RegisterSecond extends Component {
                                                     </Grid>
                                                     <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 0 }}>
                                                         <SelectBase
+                                                            disableUnderline
                                                             native
                                                             value={this.state.months}
                                                             onChange={(e) => { this.handleMonthsChange(e) }}
@@ -764,6 +776,7 @@ class RegisterSecond extends Component {
                                                     </Grid>
                                                     <Grid container xs={4} xl={4} sm={4} style={{ paddingLeft: 30 }}>
                                                         <SelectBase
+                                                            disableUnderline
                                                             style={{ width: '100%' }}
                                                             native
                                                             value={this.state.years}
@@ -847,6 +860,7 @@ class RegisterSecond extends Component {
                                                     Nacionalidad
                                                 </Typography>
                                                 <SelectBase
+                                                    disableUnderline
                                                     native
                                                     value={this.state.nationality}
                                                     onChange={(e) => { this.handleNationalityChange(e) }}
@@ -867,6 +881,7 @@ class RegisterSecond extends Component {
                                                     Género
                                                 </Typography>
                                                 <SelectBase
+                                                    disableUnderline
                                                     native
                                                     value={this.state.gender}
                                                     onChange={(e) => { this.handleGenderChange(e) }}
@@ -887,6 +902,7 @@ class RegisterSecond extends Component {
                                                     Provincia
                                                 </Typography>
                                                 <SelectBase
+                                                    disableUnderline
                                                     native
                                                     value={this.state.province}
                                                     onChange={(e) => { this.handleProvinceChange(e) }}
@@ -907,6 +923,7 @@ class RegisterSecond extends Component {
                                                     Localidad
                                                 </Typography>
                                                 <SelectBase
+                                                    disableUnderline
                                                     native
                                                     value={this.state.local}
                                                     onChange={(e) => { this.handleLocalChange(e) }}
@@ -985,9 +1002,7 @@ class RegisterSecond extends Component {
 
                                             </form>
                                         </Grid>}
-                                    <Grid style={{ marginBottom: 50 }}>
 
-                                    </Grid>
 
 
                                 </div>

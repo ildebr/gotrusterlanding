@@ -87,7 +87,11 @@ const TrustResource = () =>{
      AddressOperations,     
      CustomerResource,     
      UserResource,
-     UserAuthoritie,     
-     ImageLoad,     
+     UserAuthoritie,  
+     ShopResource,  
+     TransactionResource, 
+     TrustResource,
+     ImageLoad,
+          
  }
  
