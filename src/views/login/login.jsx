@@ -6,11 +6,12 @@ import Link from '@material-ui/core/Link';
 import InputBase from '@material-ui/core/InputBase';
 import { ReactComponent as Logo } from '../../asset/images/logo.svg';
 import auth from './../../setting/auth';
-import { LoopCircleLoading} from 'react-loadingg';
+import { LoopCircleLoading } from 'react-loadingg';
 import { getToken, deleteToken } from './../../setting/auth-helpers';
-import {AccountAuth} from './../../services/hostConfig'
+import { Account, CustomerResource } from './../../services/hostConfig';
 //import WindowDimensions from "../../components/UtilityComponents/WindowDimension"
-
+import Cliente from './../../setting/cliente'
+const { localStorage } = global.window;
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -133,7 +134,7 @@ const styles = theme => ({
         maxWidth: 316,
         border: '1px solid',
         borderColor: '#ACFD00',
-        cursor:'pointer',
+        cursor: 'pointer',
         borderRadius: 15,
         font: 'normal normal normal 18px/24px Poppins',
         height: 50,
@@ -184,6 +185,10 @@ class Login extends Component {
             textError: '',
             ruta: '/',
             show: false,
+            userType: '',
+            idUser: '',
+            email: '',
+            userLogin: '',
             enabledComponent: false,
             windowWidth: window.innerWidth
         };
@@ -195,15 +200,18 @@ class Login extends Component {
     _handleChangeValue = e => {
         e.preventDefault();
         this.setState({ name: e.target.value })
-      }
-      _handleChangeValuePass = e => {
+    }
+    _handleChangeValuePass = e => {
         e.preventDefault();
         this.setState({ password: e.target.value })
-      }
+    }
     handleResize = (e) => {
         this.setState({ windowWidth: window.innerWidth });
     };
     componentDidMount() {
+        localStorage.clear();
+        localStorage.setItem("formato", "undefined");
+        localStorage.setItem("thisEmail", "undefined");
         window.addEventListener("resize", this.handleResize);
     }
 
@@ -211,59 +219,110 @@ class Login extends Component {
         e.preventDefault();
         let name = this.state.name;
         let pass = this.state.password;
-        
+        let userType = '';
+        let idUser = '';
+        let emailUser = '';
+        let loginvar = '';
         if ((name === '') || (pass === '')) {
-          this.setState({
-            error: 'error',
-            textError: '*El Usuario o la contraseña no esta especificada',
-            name: ''
-          })
-          //deleteToken(e);
+            this.setState({
+                error: 'error',
+                textError: '*El Usuario o la contraseña no esta especificada',
+                name: ''
+            })
+            //deleteToken(e);
         } else {
-          this.setState({
-            show: true,
-            enabledComponent: true
-          })
-          auth.login(name, pass)
-            .then(() => {
-              const token = getToken();
-              if (token !== 'undefined') {    
-                fetch(AccountAuth(), {
-                  method: 'get',
-                  headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                  }
-                }).then(response => {
-                  return response.json();
-                }).then(response => {
-                    this.setState({
-                        show: false,
-                        enabledComponent: false
-                      })                
-                    }).catch(error => {
-                        console.error('Error:', error)
+            this.setState({
+                show: true,
+                enabledComponent: true
+            })
+            auth.login(name, pass)
+                .then(() => {
+                    const token = getToken();
+                    if (typeof token !== 'undefined') {
+                        fetch(Account(), {
+                            method: 'get',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            }
+                        }).then(response => {
+                            console.log(response)
+                            return response.json();
+
+                        }).then(response => {
+                            console.log(response)
+                            this.setState({
+                                firtsName: response.firstName,
+                                LastName: response.lastName
+                            })
+                            return response.id;
+                        }).then(response => {
+
+                            Cliente.get(CustomerResource() + '/' + response, {
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${token}`
+                                }
+                            })
+                                .then(response => {
+                                    return response.data
+                                }).then(response => {
+                                    console.log(response);
+                                    idUser = response.id;
+                                    loginvar = response.email;
+                                    emailUser = response.email;
+                                    this.setState({
+                                        userType: response.userType,
+                                        userId: idUser,
+                                        userLogin: loginvar,
+                                        email: emailUser,
+                                    })
+                                    localStorage.setItem('userType', this.state.userType);
+                                    localStorage.setItem('userId', this.state.idUser);
+                                    localStorage.setItem('userLogin', this.state.userLogin);
+                                    localStorage.setItem('nombre', this.state.firtsName);
+                                    localStorage.setItem('apellido', this.state.LastName);
+                                    localStorage.setItem('email', this.state.email);
+                                    if (this.state.userType === 'INDIVIDUAL') {
+                                        window.open("/reputation", '_self');
+                                        this.setState({
+                                            show: false,
+                                            enabledComponent: false
+                                        })
+
+                                    } else if (this.state.userType === 'SHOP') {
+                                        window.open("/reputation", '_self');
+                                        this.setState({
+                                            show: false,
+                                            enabledComponent: false
+                                        })
+
+                                    }
+
+                                }).catch(error => {
+                                    console.error('Error:', error)
+                                    this.setState({
+                                        show: false,
+                                        enabledComponent: false
+                                    })
+                                });
+                        })
+                    } else {
                         this.setState({
+                            error: 'error',
+                            textError: '*Tu usuario o contraseña no son correctos, por favor revisa tus datos',
+                            name: '',
                             show: false,
                             enabledComponent: false
-                          })            
-                    });
-    
-              } else {
-                this.setState({
-                  error: 'error',
-                  textError: '*Tu usuario o contraseña no son correctos, por favor revisa tus datos',
-                  name: '',
-                  show: false,
-                  enabledComponent: false
-                })
-                deleteToken(e);
-              }
-            }).catch(error => console.error('Error:', error));
+                        })
+                        deleteToken(e);
+                    }
+                }).catch(error => console.error('Error:', error));
         }
-      }
-    render() {      
+    }
+    render() {
         function getWindowDimensions() {
             const { innerWidth: width } = window;
             return {
@@ -275,11 +334,11 @@ class Login extends Component {
         const { width } = getWindowDimensions();
         let $show = this.state.show;
         let $wait = '';
-        let $textError = this.state.textError; 
+        let $textError = this.state.textError;
         if ($show) {
             $wait = (<LoopCircleLoading size='large' color='#ACFD00
             '/>);
-          }
+        }
         return (
             <div style={{ backgroundColor: '#000000' }}>
                 <Grid container className={classes.root} component="main" maxWidth="md">
@@ -319,8 +378,8 @@ class Login extends Component {
                                                 name="name"
                                                 helperText={(<font color='red'>{$textError}</font>)}
                                                 inputProps={{ style: { textAlign: 'center' } }}
-                                                className={classes.formButton}  
-                                                disabled={this.state.enabledComponent} 
+                                                className={classes.formButton}
+                                                disabled={this.state.enabledComponent}
                                                 onChange={this._handleChangeValue}
                                             />
                                             <InputBase
@@ -329,12 +388,12 @@ class Login extends Component {
                                                 color='white'
                                                 type="password"
                                                 name="password"
-                                                disabled={this.state.enabledComponent} 
+                                                disabled={this.state.enabledComponent}
                                                 inputProps={{ style: { textAlign: 'center' } }}
                                                 className={classes.formButton}
                                                 onChange={this._handleChangeValuePass}
                                             />
-                                             
+
                                             <button
                                                 type="submit"
                                                 fullWidth
@@ -388,7 +447,7 @@ class Login extends Component {
                                                     helperText={(<font color='red'>{$textError}</font>)}
                                                     inputProps={{ style: { textAlign: 'center' } }}
                                                     className={classes.formButton}
-                                                    disabled={this.state.enabledComponent} 
+                                                    disabled={this.state.enabledComponent}
                                                     onChange={this._handleChangeValue}
 
                                                 />
@@ -400,7 +459,7 @@ class Login extends Component {
                                                     name="password"
                                                     inputProps={{ style: { textAlign: 'center' } }}
                                                     className={classes.formButton}
-                                                    disabled={this.state.enabledComponent} 
+                                                    disabled={this.state.enabledComponent}
                                                     onChange={this._handleChangeValuePass}
                                                 />
                                                 <button
@@ -413,7 +472,7 @@ class Login extends Component {
                                                 <Grid container>
                                                     <Grid item xs>
                                                         <Link style={{ textDecoration: 'none' }} >
-                                                        {$wait}
+                                                            {$wait}
                                                             <Typography
                                                                 className={classes.normaltext}>
                                                                 ¿Olvidaste contraseña?

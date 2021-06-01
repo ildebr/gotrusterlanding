@@ -2,10 +2,16 @@ import React, { Component } from 'react'
 import { CssBaseline, Grid, Box, Container, Typography, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import NavBar from '../../components/navBar/navbar.jsx';
+import EmailCheck from '../../components/helpers/emailCheck.jsx'
+import Swal from "sweetalert2";
 import Link from '@material-ui/core/Link';
 import InputBase from '@material-ui/core/InputBase';
 import Logo from '../../asset/images/logo.svg';
 import Checkbox from '@material-ui/core/Checkbox';
+import RegexTextField from "../../components/helpers/regexTextField";
+const onlyLettersRegex = /[^a-zA-Z]/gi;
+const onlyNumbersRegex = /[^0-9]/gi;
+const { localStorage } = global.window;
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -131,6 +137,16 @@ const styles = theme => ({
         textTransform: 'none',
         marginTop: theme.spacing(3),
     },
+    loginError: {
+        backgroundColor: '#E94342',
+        width: '100%',
+        font: 'normal normal normal 18px/24px Poppins',
+        height: 50,
+        borderRadius: 15,
+        color: '#FFFFFF',
+        textTransform: 'none',
+        marginTop: theme.spacing(3),
+    },
     formButton: {
         marginTop: theme.spacing(1),
         height: 50,
@@ -153,6 +169,11 @@ const styles = theme => ({
         borderRadius: 15,
         color: "white",
         font: 'normal normal normal 16px/22px Poppins',
+        "&:hover": {
+            border: '2px solid',
+            borderColor: '#E94342',
+            borderRadius: 15,
+        },
 
     },
     formButton2: {
@@ -198,18 +219,185 @@ const styles = theme => ({
         fontSize: '14px',
         marginTop: theme.spacing(2),
     },
+    inputTitle2: {
+        color: '#E94342',
+        font: 'normal normal normal 14px/14px Poppins',
+        fontSize: '14px',
+        marginTop: theme.spacing(2),
+    },
+    checkTerminos: {
+        color: '#ACFD00',
+        marginTop: 3
+    },
+    checkTerminosError: {
+        color: '#ACFD00',
+        marginTop: 3,
+        borderColor: '#E94342'
+
+    },
 });
 
 class Register extends Component {
     constructor(props) {
         super(props);
-        this.state = { windowWidth: window.innerWidth };
+        this.state = {
+            name: '',
+            lastName: '',
+            email: '',
+            password: '',
+            passwordEx: '',
+            checkTer: '',
+            ruta: '',
+            error: false,
+            nameError: false,
+            LastNameError: false,
+            emailError: false,
+            checkTerError: false,
+            maxPass: '',
+            passError: '',
+            emailState: '',
+            windowWidth: window.innerWidth
+        };
     }
     handleResize = (e) => {
         this.setState({ windowWidth: window.innerWidth });
     };
+    handleName = e => {
+        e.preventDefault();
+        this.setState({
+            name: e.target.value,
+            nameError: false,
+        })
+        console.log(e.target.value);
+    }
+    handleLastName = e => {
+        e.preventDefault();
+        this.setState({
+            lastName: e.target.value,
+            lastNameError: false,
+        })
+    }
+    handleEmail = e => {
+        e.preventDefault();
+        this.setState({
+            email: e.target.value,
+            emailError: false
+        });
+    }
+    handlepass = e => {
+        e.preventDefault();
+        this.setState({ password: e.target.value })
+    }
+    handlepassEx = e => {
+        e.preventDefault();
+        this.setState({ passwordEx: e.target.value })
+    }
     componentDidMount() {
         window.addEventListener("resize", this.handleResize);
+    }
+    handlerMaxPass = e => {
+        const target = e.target;
+        const longitudAct = target.value.length;
+        console.log(longitudAct);
+        this.setState({ maxPass: longitudAct })
+        return longitudAct;
+    }
+    handleCreateAccountSubmit = (e) => {
+        e.preventDefault();
+        let name = this.state.name;
+        let lastName = this.state.lastName;
+        let email = this.state.email;
+        let password = this.state.password;
+        let passwordEx = this.state.passwordEx;
+        let maxpass = this.state.maxPass;
+        let emailocal = localStorage.getItem("thisEmail");
+        let format = localStorage.getItem("formato");
+        let ter = this.state.checkTer;
+        if (ter !== true) {
+            this.setState({
+                checkTerError: true,
+                error: true
+            })
+        } else if (name === '') {
+            this.setState({
+                nameError: true,
+                error: true
+            })
+        } else if (lastName === '') {
+            this.setState({
+                lastNameError: true,
+                error: true
+            })
+        } else if (password === '') {
+            this.setState({
+                passError: true,
+                error: true
+            })
+        } else if (maxpass < 8) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'La contraseña de tener 8 o mas caracteres',
+                footer: 'Truster App'
+            })
+        } else if (password !== passwordEx) {
+            this.setState({
+                password: '',
+                passwordEx: '',
+                passError: true,
+                error: true
+            })
+        } else if (email === 'undefined') {
+            this.setState({
+                emailError: true,
+                error: true
+            })
+        } else
+            if (format === '0' || format === 'undefined') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Formato de email no válido',
+                    footer: 'Truster App'
+                })
+
+            } else
+                if (emailocal === '1') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Email no disponible o espere a que se determine su disponibilidad',
+                        footer: 'Truster App'
+                    })
+                   
+                } else {
+                    localStorage.setItem("nombre", name);
+                    localStorage.setItem("apellido", lastName);
+                    localStorage.setItem("email", email);
+                    localStorage.setItem("password", password);
+                    window.open("/registerex", '_self');
+                }
+    }
+    handlerEmailName = (emailState, email) => {
+        if (email) {
+            this.setState({
+                email: email,
+                emailState: emailState
+            })
+        } else {
+            //this.setState({
+            //avatar: null
+            // })
+        }
+    }
+
+    handlerTer = (e) => {
+        if (this.state.checkTer === true) {
+            this.setState({ checkTer: false })
+        } else {
+            this.setState({ checkTer: true })
+        }
+        console.log("termino  " + this.state.checkTer)
     }
 
     render() {
@@ -221,7 +409,10 @@ class Register extends Component {
         }
         const { classes } = this.props;
         const { width } = getWindowDimensions();
-
+        let $nameError = this.state.nameError ? '*no olvides poner tu nombre' : '';
+        let $lastError = this.state.lastNameError ? '*no olvides poner tu Apellido' : '';
+        let $emailError = this.state.emailError ? '*no olvides poner tu email' : '';
+        let $passError = this.state.passError ? '*las contraseña no coinciden' : '';
         return (
             <div style={{ backgroundColor: '#000000' }}>
 
@@ -256,69 +447,109 @@ class Register extends Component {
                                                 <Typography className={classes.inputTitle}>
                                                     Nombre
                                                 </Typography>
-                                                <InputBase
+                                                <RegexTextField
                                                     placeholder="Nombre"
                                                     fullWidth
                                                     id="nombre"
+                                                    name='name'
+                                                    regex={onlyLettersRegex}
                                                     inputProps={{ style: { textAlign: 'center' } }}
-                                                    className={classes.formButton}
-                                                // onChange={}
+                                                    className={this.state.nameError ? classes.errorFormButton : classes.formButton}
+                                                    onChange={this.handleName}
+                                                    required
                                                 />
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$nameError}
+                                                </Typography>
 
                                                 <Typography className={classes.inputTitle}>
                                                     Apellido
                                             </Typography>
-                                                <InputBase
+                                                <RegexTextField
                                                     placeholder="Apellido"
                                                     fullWidth
                                                     id="apellido"
+                                                    name='lastName'
                                                     inputProps={{ style: { textAlign: 'center' } }}
-                                                    className={classes.formButton}
-                                                // onChange={}
+                                                    className={this.state.LastNameError ? classes.errorFormButton : classes.formButton}
+                                                    onChange={this.handleLastName}
+                                                    required
+
                                                 />
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$lastError}
+                                                </Typography>
                                                 <Typography className={classes.inputTitle}>
                                                     Email
                                             </Typography>
-                                                <InputBase
+                                                {/*  <InputBase
                                                     placeholder="Email"
                                                     fullWidth
                                                     id="email"
+                                                    name="email"
                                                     inputProps={{ style: { textAlign: 'center' } }}
-                                                    className={classes.formButton}
-                                                // onChange={}
-                                                />
+                                                    className={this.state.emailError ? classes.errorFormButton : classes.formButton}
+                                                    onChange={this.handleEmail}
+                                                    required
+
+                                                />*/}
+                                                <EmailCheck changeEmail={(emailState, email) => this.handlerEmailName(emailState, email)} width={width} />
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$emailError}
+                                                </Typography>
                                                 <Typography className={classes.inputTitle}>
                                                     Contraseña
                                             </Typography>
                                                 <InputBase
                                                     placeholder="Contaseña"
                                                     fullWidth
+                                                    type="password"
                                                     id="password"
-                                                    inputProps={{ style: { textAlign: 'center' } }}
-                                                    className={classes.formButton}
-                                                // onChange={}
+                                                    name="password"
+                                                    inputProps={{ style: { textAlign: 'center' }, type: "password", minlength: 8 }}
+                                                    className={this.state.passError ? classes.errorFormButton : classes.formButton}
+                                                    onChange={this.handlepass}
+                                                    onBlur={(e) => {
+
+                                                        this.handlerMaxPass(e);
+                                                    }}
+                                                    required
+
                                                 />
                                                 <Typography style={{ color: '#999999', fontSize: 10 }}>
-                                                    12 caracteres máx
-                                            </Typography>
+                                                    {$passError}
+                                                </Typography>
                                                 <Typography className={classes.inputTitle}>
                                                     Repetir Contraseña
                                             </Typography>
                                                 <InputBase
                                                     placeholder="Repetir Contraseña"
                                                     fullWidth
+                                                    type="password"
                                                     id="password"
-                                                    inputProps={{ style: { textAlign: 'center' } }}
-                                                    className={classes.formButton}
-                                                // onChange={}
+                                                    name="passwordEx"
+                                                    inputProps={{ style: { textAlign: 'center' }, type: "password", minlength: 8 }}
+                                                    className={this.state.passError ? classes.errorFormButton : classes.formButton}
+                                                    onChange={this.handlepassEx}
+                                                    onBlur={(e) => {
+                                                        this.handlerMaxPass(e);
+                                                    }}
+                                                    required
+
                                                 />
+                                                <Typography style={{ color: '#999999', fontSize: 10 }}>
+                                                    {$passError}
+                                                </Typography>
 
                                                 <Grid container item>
                                                     <Grid container justify="center" style={{ marginTop: 10 }}>
                                                         <Checkbox
                                                             iconStyle={{ fill: '#ACFD00' }}
                                                             inputStyle={{ color: '#ACFD00' }}
+                                                            name="terms"
+                                                            className={this.state.checkTerError ? classes.checkTerminosError : classes.checkTerminos}
                                                             style={{ color: '#ACFD00', marginTop: 3 }}
+                                                            onChange={this.handlerTer}
                                                         />
                                                         <Typography
                                                             className={classes.normaltext}>
@@ -332,9 +563,10 @@ class Register extends Component {
                                                     <Button
                                                         type="submit"
                                                         variant="contained"
-                                                        href="/registerex"
                                                         fullWidth
-                                                        className={classes.login}
+                                                        className={this.state.error ? classes.loginError : classes.login}
+                                                        onClick={this.handleCreateAccountSubmit}
+
                                                     >
                                                         Continuar
                                                 </Button>
@@ -353,37 +585,47 @@ class Register extends Component {
                                                 <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
                                                     Nombre
                                                 </Typography>
-                                                <InputBase
+                                                <RegexTextField
                                                     placeholder="Nombre"
                                                     fullWidth
                                                     id="nombre"
+                                                    name='name'
+                                                    regex={onlyLettersRegex}
                                                     inputProps={{ style: { textAlign: 'left' } }}
-                                                    className={classes.formButton2}
-                                                // onChange={}
+                                                    className={this.state.nameError ? classes.errorFormButton2 : classes.formButton2}
+                                                    onChange={this.handleName}
+                                                    required
                                                 />
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$nameError}
+                                                </Typography>
 
                                                 <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
                                                     Apellido
                                                 </Typography>
-                                                <InputBase
+                                                <RegexTextField
                                                     placeholder="Apellido"
                                                     fullWidth
                                                     id="apellido"
+                                                    name='apellido'
+                                                    regex={onlyLettersRegex}
                                                     inputProps={{ style: { textAlign: 'left' } }}
-                                                    className={classes.formButton2}
-                                                // onChange={}
+                                                    className={this.state.lastError ? classes.errorFormButton2 : classes.formButton2}
+                                                    onChange={this.handleLastName}
+                                                    required
                                                 />
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$lastError}
+                                                </Typography>
                                                 <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
                                                     Email
                                             </Typography>
-                                                <InputBase
-                                                    placeholder="Email"
-                                                    fullWidth
-                                                    id="email"
-                                                    inputProps={{ style: { textAlign: 'left' } }}
-                                                    className={classes.formButton2}
-                                                // onChange={}
-                                                />
+
+                                                <EmailCheck changeEmail={(emailState, email) => this.handlerEmailName(emailState, email)} width={width} />
+
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$emailError}
+                                                </Typography>
                                                 <Grid container>
                                                     <Grid container justify='flex-start' alignContent='center' xs={6} xl={6} sm={6}>
                                                         <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
@@ -392,38 +634,53 @@ class Register extends Component {
                                                     </Grid>
                                                     <Grid container justify='flex-end' alignContent='center' xs={6} xl={6} sm={6}>
                                                         <Typography style={{ color: '#999999', fontSize: 10, marginTop: 15 }}>
-                                                            12 caracteres máx
+                                                            8 caracteres min
                                                         </Typography>
                                                     </Grid>
                                                 </Grid>
-
-
                                                 <InputBase
                                                     placeholder="Contaseña"
                                                     fullWidth
                                                     id="password"
-                                                    inputProps={{ style: { textAlign: 'left' } }}
-                                                    className={classes.formButton2}
-                                                // onChange={}
+                                                    type="password"
+                                                    name="password"
+                                                    inputProps={{ style: { textAlign: 'left' }, type: "password", minlength: 8 }}
+                                                    className={this.state.passError ? classes.errorFormButton2 : classes.formButton2}
+                                                    onChange={this.handlepass}
+                                                    onBlur={(e) => {
+                                                        this.handlerMaxPass(e);
+                                                    }}
+                                                    required
                                                 />
 
-                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
-                                                    Repetir Contraseña
-                                            </Typography>
+                                                <Typography style={{ color: '#999999', fontSize: 10 }}>
+                                                    {$passError}
+                                                </Typography>
                                                 <InputBase
                                                     placeholder="Repetir Contraseña"
                                                     fullWidth
                                                     id="password"
-                                                    inputProps={{ style: { textAlign: 'left' } }}
-                                                    className={classes.formButton2}
-                                                // onChange={}
+                                                    type="password"
+                                                    name="passwordEx"
+                                                    inputProps={{ style: { textAlign: 'left' }, type: "password", minlength: 8 }}
+                                                    className={this.state.passError ? classes.errorFormButton2 : classes.formButton2}
+                                                    onChange={this.handlepassEx}
+                                                    onBlur={(e) => {
+                                                        this.handlerMaxPass(e);
+                                                    }}
+                                                    required
                                                 />
+                                                <Typography style={{ color: '#999999', fontSize: 10 }}>
+                                                    {$passError}
+                                                </Typography>
                                                 <Grid container item>
                                                     <Grid container justify="center" style={{ marginTop: 10 }}>
                                                         <Checkbox
                                                             iconStyle={{ fill: '#ACFD00' }}
                                                             inputStyle={{ color: '#ACFD00' }}
-                                                            style={{ color: '#ACFD00', marginTop: 3 }}
+                                                            name="terms"
+                                                            className={this.state.checkTerError ? classes.checkTerminosError : classes.checkTerminos}
+                                                            onChange={this.handlerTer}
                                                         />
                                                         <Typography
                                                             className={classes.normaltext}>
@@ -437,9 +694,9 @@ class Register extends Component {
                                                     <Button
                                                         type="submit"
                                                         variant="contained"
-                                                        href="/registerex"
                                                         fullWidth
-                                                        className={classes.login}
+                                                        className={this.state.error ? classes.loginError : classes.login}
+                                                        onClick={this.handleCreateAccountSubmit}
                                                     >
                                                         Continuar
                                                 </Button>

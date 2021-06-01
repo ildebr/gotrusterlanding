@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import NavBar from '../../components/navBar/navbar.jsx';
 import InputBase from '@material-ui/core/InputBase';
 import Logo from '../../asset/images/logo.svg';
+import { AccountEmailPass } from './../../services/hostConfig';
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -151,7 +152,13 @@ class PassRecover extends Component {
         super(props);
         this.state = {
             windowWidth: window.innerWidth,
-            sent: false
+            sent: false,
+            email:'',
+            error:'',
+            textError:'',
+            ruta:'/',
+            show:false,
+            
         };
 
     }
@@ -165,6 +172,37 @@ class PassRecover extends Component {
         e.preventDefault();
         this.setState({ sent: !this.state.sent })
     }
+    _handleChangeValueEmail = e =>{
+        e.preventDefault();
+        this.setState({email:e.target.value})
+      }
+    _handleSubmit = e => {
+        e.preventDefault();
+        let email = this.state.email;
+        if (email === '') {
+          this.setState({
+            error: 'error',
+            textError: '*Debe ingresar su email'
+          })
+        } else {
+          this.setState({
+            show:true
+          })
+          fetch(AccountEmailPass(), {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: email,
+          }).then(response=>{
+            console.log(response);
+            this.setState({
+              show:false
+            })
+          });
+        }
+      }
 
     render() {
         function getWindowDimensions() {
@@ -174,6 +212,7 @@ class PassRecover extends Component {
             };
         }
         const { classes } = this.props;
+        let $textError = this.state.textError;
         const { width } = getWindowDimensions();
 
         return (
@@ -217,8 +256,9 @@ class PassRecover extends Component {
                                                         id="email"
                                                         inputProps={{ style: { textAlign: 'center' } }}
                                                         className={classes.formButton}
+                                                        helperText={(<font color='red'>{$textError}</font>)}
+                                                       onChange={this._handleChangeValueEmail}
 
-                                                    // onChange={}
                                                     />
                                                     {console.log(this.state.sent)}
                                                     <button
@@ -271,7 +311,7 @@ class PassRecover extends Component {
                                                     alignContent: "center",
                                                     textAlign: 'center',
                                                 }}
-                                                    onSubmit={this.handleSubmit}
+                                                    onSubmit={this._handleSubmit}
                                                     noValidate>
                                                     <InputBase
                                                         placeholder="Tu correo electrónico"
@@ -279,8 +319,10 @@ class PassRecover extends Component {
                                                         id="email"
                                                         inputProps={{ style: { textAlign: 'center' } }}
                                                         className={classes.formButton}
+                                                        helperText={(<font color='red'>{$textError}</font>)}
+                                                        onChange={this._handleChangeValueEmail}
 
-                                                    // onChange={}
+                                                    
                                                     />
                                                     {console.log(this.state.sent)}
                                                     <button

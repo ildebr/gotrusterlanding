@@ -6,16 +6,16 @@ const Account = () =>{
  
  const AccountChancePass = () =>{
     //changePassword
-     let REACT_APP_ACCOUNT_CHANCE_PASS =' https://truster-back.herokuapp.com/api/account/change-password' ;
+     let REACT_APP_ACCOUNT_CHANCE_PASS ='https://truster-back.herokuapp.com/api/account/change-password' ;
      return REACT_APP_ACCOUNT_CHANCE_PASS;
   }
   const AccountResetPass = () =>{
-     let REACT_APP_ACCOUNT_RESET_PASS =' https://truster-back.herokuapp.com/api/account/reset-password/finish' ;
+     let REACT_APP_ACCOUNT_RESET_PASS ='https://truster-back.herokuapp.com/api/account/reset-password/finish' ;
      return REACT_APP_ACCOUNT_RESET_PASS;
   }
  
  const AccountEmailPass = () =>{
-     let REACT_APP_ACCOUNT_EMAIL_PASS =' https://truster-back.herokuapp.com/api/account/reset-password/init' ;
+     let REACT_APP_ACCOUNT_EMAIL_PASS ='https://truster-back.herokuapp.com/api/account/reset-password/init' ;
      return REACT_APP_ACCOUNT_EMAIL_PASS;
  }
  
@@ -24,17 +24,17 @@ const Account = () =>{
     return REACT_APP_ACCOUNT_ACTIVATE;
  }
  const AccountAuth = () =>{
-    let REACT_APP_ACCOUNT_AUTH=` https://truster-back.herokuapp.com/api/authenticate` ;
+    let REACT_APP_ACCOUNT_AUTH=`https://truster-back.herokuapp.com/api/authenticate` ;
     return REACT_APP_ACCOUNT_AUTH;
  }
  const AccountRegister= () =>{
-    let REACT_APP_ACCOUNT_REGISTER=` https://truster-back.herokuapp.com/api/register` ;
+    let REACT_APP_ACCOUNT_REGISTER=`https://truster-back.herokuapp.com/api/register` ;
     return REACT_APP_ACCOUNT_REGISTER;
  }
  
  ///////////////Address Resource
  const AddressOperations= () =>{
-    let REACT_APP_ADDRESS_OPERATIONS=' https://truster-back.herokuapp.com/api/addresses' ;
+    let REACT_APP_ADDRESS_OPERATIONS='https://truster-back.herokuapp.com/api/addresses' ;
     return REACT_APP_ADDRESS_OPERATIONS;
  }
  ///////////////Customer Resource

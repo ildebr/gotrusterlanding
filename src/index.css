@@ -7,6 +7,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.MuiDrawer-paper {
+  width: 90% !important;
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+  border: 2px solid;
+  border-color: #1a1a1a;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

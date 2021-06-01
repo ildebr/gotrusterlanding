@@ -3,11 +3,16 @@ import { CssBaseline, Grid, Box, Container, Typography, Button } from '@material
 import { withStyles } from '@material-ui/core/styles';
 import NavBar from '../../components/navBar/navbar.jsx'
 import Link from '@material-ui/core/Link';
+//import Swal from "sweetalert2";
+import cliente from "./../../setting/cliente";
+import { LoopCircleLoading } from 'react-loadingg';
 import InputBase from '@material-ui/core/InputBase';
 import Logo from '../../asset/images/logo.svg';
-
 import SelectBase from '@material-ui/core/Select';
-
+import { AccountRegister, AddressOperations } from './../../services/hostConfig';
+import { getToken } from './../../setting/auth-helpers';
+import auth from './../../setting/auth';
+const { localStorage } = global.window;
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -278,61 +283,751 @@ const styles = theme => ({
         fill: '#999999',
     },
 });
+const countries = [
+    {
+        value: 'Paises',
+        name: 'Paises'
+    },
+    {
+        value: 'Ecuador',
+        name: 'Ecuador'
+    },
+    {
+        value: 'México',
+        name: 'México'
+    },
+    {
+        value: 'Uruguay',
+        name: 'Uruguay'
+    },
+    {
+        value: 'Perú',
+        name: 'Perú'
+    },
+    {
+        value: 'Argentina',
+        name: 'Argentina'
+    },
+];
+const provinces = [
+    {
+        value: 'Provincias',
+        name: 'Provincias'
+    },
+    {
+        value: 'CABA',
+        name: 'CABA'
+    },
+    {
+        value: 'Provincia de BA',
+        name: 'Provincia de BA'
+    },
+    {
+        value: 'Mendoza',
+        name: 'Mendoza'
+    },
+    {
+        value: 'Cordoba',
+        name: 'Cordoba'
+    },
+    {
+        value: 'Entre Rios',
+        name: 'Entre Rios'
+    },
+];
+const locality = [
+    {
+        value: 'Localidades',
+        name: 'Localidades'
+    },
+    {
+        value: 'Belgrano',
+        name: 'Belgrano'
+    },
+    {
+        value: 'Palermo',
+        name: 'Palermo'
+    },
+    {
+        value: 'Flores',
+        name: 'Flores'
+    },
+    {
+        value: 'Villa lugano',
+        name: 'Villa lugano'
+    },
+    {
+        value: 'Congreso',
+        name: 'Congreso'
+    },
+]
+const days = [
+    {
+        value: 'Dias',
+        name: 'Dias',
+    },
+    {
+        value: '01',
+        name: '01',
+    },
+    {
+        value: '02',
+        name: '02',
+    },
+    {
+        value: '03',
+        name: '03',
+    },
+    {
+        value: '04',
+        name: '04',
+    },
+    {
+        value: '05',
+        name: '05',
+    },
+    {
+        value: '06',
+        name: '06',
+    },
+    {
+        value: '07',
+        name: '07',
+    },
+    {
+        value: '08',
+        name: '08',
+    },
+    {
+        value: '09',
+        name: '09',
+    },
+    {
+        value: '10',
+        name: '10',
+    },
+    {
+        value: '11',
+        name: '11',
+    },
+    {
+        value: '12',
+        name: '12',
+    },
+    {
+        value: '13',
+        name: '13',
+    },
+    {
+        value: '14',
+        name: '14',
+    },
+    {
+        value: '15',
+        name: '15',
+    },
+    {
+        value: '16',
+        name: '016',
+    },
+    {
+        value: '17',
+        name: '17',
+    },
+    {
+        value: '18',
+        name: '18',
+    },
+    {
+        value: '19',
+        name: '19',
+    },
+    {
+        value: '20',
+        name: '20',
+    },
+    {
+        value: '21',
+        name: '21',
+    },
+    {
+        value: '22',
+        name: '22',
+    },
+    {
+        value: '23',
+        name: '23',
+    },
+    {
+        value: '24',
+        name: '24',
+    },
+    {
+        value: '25',
+        name: '25',
+    },
+    {
+        value: '26',
+        name: '26',
+    },
+    {
+        value: '27',
+        name: '27',
+    },
+    {
+        value: '28',
+        name: '28',
+    },
+    {
+        value: '29',
+        name: '29',
+    },
+    {
+        value: '30',
+        name: '30',
+    },
+    {
+        value: '31',
+        name: '31',
+    },
+
+]
+
+const months = [
+    {
+        value: 'Meses',
+        name: 'Meses'
+    },
+    {
+        value: 'Enero',
+        name: 'Enero'
+    },
+    {
+        value: 'Febrero',
+        name: 'Febrero'
+    },
+    {
+        value: 'Marzo',
+        name: 'Marzo'
+    },
+    {
+        value: 'Abril',
+        name: 'Abril'
+    },
+    {
+        value: 'Mayo',
+        name: 'Mayo'
+    },
+    {
+        value: 'Junio',
+        name: 'Junio'
+    },
+    {
+        value: 'Julio',
+        name: 'Julio'
+    },
+    {
+        value: 'Agosto',
+        name: 'Agosto'
+    },
+    {
+        value: 'Septiembre',
+        name: 'Septiembre'
+    },
+    {
+        value: 'Octubre',
+        name: 'Octubre'
+    },
+    {
+        value: 'Noviembre',
+        name: 'Noviembre'
+    },
+    {
+        value: 'Diciembre',
+        name: 'Diciembre'
+    },
+];
+const gender = [
+    {
+        value: 'Género',
+        name: 'Género'
+    },
+    {
+        value: 'Masculino',
+        name: 'Masculino'
+    },
+    {
+        value: 'Femenino',
+        name: 'Femenino'
+    },
+]
+const years = [
+    {
+        value: 'Años',
+        name: 'Años',
+    },
+    {
+        value: '2021',
+        name: '2021',
+    },
+    {
+        value: '2020',
+        name: '2020',
+    },
+    {
+        value: '2019',
+        name: '2019',
+    },
+    {
+        value: '2018',
+        name: '2018',
+    },
+    {
+        value: '2017',
+        name: '2017',
+    },
+    {
+        value: '2016',
+        name: '2016',
+    },
+    {
+        value: '2015',
+        name: '2015',
+    },
+    {
+        value: '2014',
+        name: '2014',
+    },
+    {
+        value: '2013',
+        name: '2013',
+    },
+    {
+        value: '2012',
+        name: '2012',
+    },
+    {
+        value: '2011',
+        name: '2011',
+    },
+    {
+        value: '2010',
+        name: '2010',
+    },
+    {
+        value: '2009',
+        name: '2009',
+    },
+    {
+        value: '2008',
+        name: '2008',
+    },
+    {
+        value: '2007',
+        name: '2007',
+    },
+    {
+        value: '2006',
+        name: '2006',
+    },
+    {
+        value: '2005',
+        name: '2005',
+    },
+    {
+        value: '2004',
+        name: '2004',
+    },
+    {
+        value: '2003',
+        name: '2003',
+    },
+    {
+        value: '2002',
+        name: '2002',
+    },
+    {
+        value: '2001',
+        name: '2001',
+    },
+    {
+        value: '2000',
+        name: '2000',
+    },
+    {
+        value: '1999',
+        name: '1999',
+    },
+    {
+        value: '1998',
+        name: '1998',
+    },
+    {
+        value: '1997',
+        name: '1997',
+    },
+    {
+        value: '1996',
+        name: '1996',
+    },
+    {
+        value: '1995',
+        name: '1995',
+    },
+    {
+        value: '1994',
+        name: '1994',
+    },
+    {
+        value: '1993',
+        name: '1993',
+    },
+    {
+        value: '1992',
+        name: '1992',
+    },
+    {
+        value: '1991',
+        name: '1991',
+    },
+    {
+        value: '1990',
+        name: '1990',
+    },
+    {
+        value: '1989',
+        name: '1989',
+    },
+    {
+        value: '1988',
+        name: '1988',
+    },
+    {
+        value: '1987',
+        name: '1987',
+    },
+    {
+        value: '1986',
+        name: '1986',
+    },
+    {
+        value: '1985',
+        name: '1985',
+    },
+    {
+        value: '1984',
+        name: '1984',
+    },
+    {
+        value: '1983',
+        name: '1983',
+    },
+    {
+        value: '1982',
+        name: '1982',
+    },
+    {
+        value: '1981',
+        name: '1981',
+    },
+    {
+        value: '1980',
+        name: '1980',
+    },
+    {
+        value: '1979',
+        name: '1979',
+    },
+    {
+        value: '1978',
+        name: '1978',
+    },
+    {
+        value: '1977',
+        name: '1977',
+    },
+    {
+        value: '1976',
+        name: '1976',
+    },
+    {
+        value: '1975',
+        name: '1975',
+    },
+    {
+        value: '1974',
+        name: '1974',
+    },
+    {
+        value: '1973',
+        name: '1973',
+    },
+    {
+        value: '1972',
+        name: '1972',
+    },
+    {
+        value: '1971',
+        name: '1971',
+    },
+    {
+        value: '1970',
+        name: '1970',
+    },
+    {
+        value: '1969',
+        name: '1969',
+    },
+]
 
 class RegisterSecond extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            day: 0,
-            months: 0,
-            years: 0,
-            gender: 0,
-            number: 0,
-            local: 0,
-            nationality: 0,
+            day: "Dia",
+            months: "Mes",
+            years: "Año",
+            gender: "Género",
+            number: '',
+            local: "Localidades",
+            nationality: "Argentina",
             province: 0,
+            adress: '',
+            numberDir: '',
+            show: false,
+            ipPublic: '',
+            enabledComponent: false,
             windowWidth: window.innerWidth
         };
     }
+
+    handleSetMonths =(months)=>{
+        let tip = months ;
+        switch (months) {
+            case "Enero": return tip = "01";
+                break;
+            case "Febrero": return tip = "02";
+                break;
+            case "Marzo": return tip = "03";
+                break;
+            case "Abril": return tip = "04";
+                break;
+            case "Mayo": return tip = "05";
+                break;
+            case "Junio": return tip = "06";
+                break;
+            case "Julio": return tip = "07";
+                break;
+            case "Agosto": return tip = "08";
+                break;
+            case "Septiembre": return tip = "09";
+                break;
+            case "Octubre": return tip = "10";
+                break;
+            case "Noviembre": return tip = "11";
+                break;
+            case "Diciembre": return tip = "12";
+                break;
+            default: return tip;
+        }
+    }
+    handleSetGender =(gender)=>{
+        let tip = gender;
+        switch (gender) {
+            case "Femenino": return tip = "FEMALE";
+                break;
+            case "Masculino": return tip = "MALE";
+                break;            
+            default: return tip;
+        }
+    }
     componentDidMount() {
+        let textip = this.getIpClient();
+        console.log("mi ip publica " + textip);
         window.addEventListener("resize", this.handleResize);
     }
     handleResize = (e) => {
         this.setState({ windowWidth: window.innerWidth });
     };
     handleDayChange = e => {
-        e.preventDefault();
+
         this.setState({ day: e.target.value })
+        console.log(e.target.value)
     }
-    handleMonthsChange = e => {
-        e.preventDefault();
+    handleMonthsChange = e => {       
         this.setState({ months: e.target.value })
+        console.log(e.target.value)
     }
     handleYearChange = e => {
-        e.preventDefault();
+
         this.setState({ years: e.target.value })
+        console.log(e.target.value)
     }
     handleGenderChange = e => {
-        e.preventDefault();
+       
         this.setState({ gender: e.target.value })
+        console.log(e.target.value)
     }
     handleNumberChange = e => {
         e.preventDefault();
         this.setState({ number: e.target.value })
+        console.log(e.target.value)
     }
     handleLocalChange = e => {
         e.preventDefault();
         this.setState({ local: e.target.value })
+        console.log(e.target.value)
     }
     handleProvinceChange = e => {
         e.preventDefault();
         this.setState({ province: e.target.value })
+        console.log(e.target.value)
     }
     handleNationalityChange = e => {
-        e.preventDefault();
+
         this.setState({ nationality: e.target.value })
+        console.log(e.target.value)
+    }
+    handleDir = e => {
+        e.preventDefault();
+        this.setState({ adress: e.target.value })
+        console.log(e.target.value)
     }
 
+    ///////////////////
+    getIpClient = () => {
+        try {
+            fetch('https://api.ipify.org?format=json')
+                .then(response => {
+                    return response.json();
+                }).then(response => {
+                    this.setState({
+                        ipPublic: response.ip
+                    })
+
+                    console.log("mi ip publica " + response.ip);
+                    console.log(response);
+                    return response.ip;
+                })
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    //////////////////
+
+
+    handleCreateAccountSubmit = (e) => {
+        e.preventDefault();
+        let name = localStorage.getItem("nombre");
+        let lastName = localStorage.getItem("apellido");
+        let email = localStorage.getItem("email");
+        let password = localStorage.getItem("password");
+        //let userid = localStorage.getItem("userId");
+        let birthDate = this.state.years + '-' + this.handleSetMonths(this.state.months) + '-' + this.state.day;
+        let ipPublic = this.state.ipPublic;
+
+        this.setState({
+            show: true,
+            enabledComponent: true
+        })
+        ////dataRegister //
+
+        const dataRegister = {
+            "activated": true,
+            "active": true,
+            "authorities": [
+                "ROLE_USER"
+            ],
+            //TODO: only one of the "lastModifiedBy" is correct, delete the other one
+            "birthDate": birthDate,
+            "cellphone": "string",
+            "cuit": "string",
+            "dni": "string",
+            "createdBy": "system",
+            "lastModifiedBy": "system",
+            "email": email,
+            "firstName": name,
+            "gender": this.handleSetGender(this.state.gender),
+            "langKey": "es",
+            "imageUrl": "string",
+            "ip": ipPublic,
+            "lastName": lastName,
+            "login": email,
+            "password": password,
+            "phone": "string",
+            "lastModifiedBy": "string",
+            "lastModifiedDate": "2021-05-19T04:23:28.205Z",
+            "points": 1,
+            "userType": "INDIVIDUAL"
+        }
+        ////dataAdress //
+        
+        console.log(dataRegister);
+       
+        auth.login("admin", "Truster2021")
+            .then(() => {
+                const token = getToken();
+                console.log(token);
+                cliente.post(AccountRegister(), dataRegister, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }                
+                }).then(response => {
+                    console.log(response)
+                    return response
+                    
+                }).then(response => { 
+                    console.log(response)  
+                   /* const dataAdress = {
+                        "apartment": "string",
+                        "city": this.state.local,
+                        "country": this.state.province,
+                        "customer": {
+                            "active": true,
+                            "birthDate": birthDate,
+                            "cellphone": "string",
+                            "cuit": "string",
+                            "dni": "string",
+                            "email": email,
+                            "gender": this.handleSetGender(this.state.gender),
+                            "ip": ipPublic,
+                            "id":response.data.id,
+                            "phone": "string",
+                            "points": 1,
+                            "user": {
+                                "id":response.data.id,
+                                "login": email
+                            },
+                            "userType": "INDIVIDUAL"
+                        },            
+                        "postalCode": "string",
+                        "streetName": this.state.adress,
+                        "streetNumber": this.state.number
+                    }  
+                    console.log(dataAdress)  ;              
+                    cliente.post(AddressOperations(), dataAdress, {
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        }
+                    }).then(response => {*/
+                       // console.log(response);
+                    
+                        this.setState({
+                            show: false,
+                            enabledComponent: false
+                        })
+                        window.open("/verificationemail", '_self');
+                    })
+               // })
+                
+
+            }).catch(error => console.error('Error:', error));
+    }
     render() {
         function getWindowDimensions() {
             const { innerWidth: width } = window;
@@ -342,6 +1037,12 @@ class RegisterSecond extends Component {
         }
         const { width } = getWindowDimensions();
         const { classes } = this.props;
+        let $show = this.state.show;
+        let $wait = '';
+        if ($show) {
+            $wait = (<LoopCircleLoading size='large' color='#ACFD00
+            '/>);
+        }
         return (
             <div style={{ backgroundColor: '#000000' }}>
 
@@ -371,7 +1072,7 @@ class RegisterSecond extends Component {
                                                 justifyContent: "center",
                                                 alignContent: "center",
                                             }}
-                                                onSubmit={this.handleSubmit}
+                                                onSubmit={this.handleCreateAccountSubmit}
                                                 noValidate>
                                                 <Typography className={classes.inputTitle}>
                                                     Fecha de Nacimiento
@@ -382,7 +1083,8 @@ class RegisterSecond extends Component {
                                                             disableUnderline
                                                             native
                                                             value={this.state.day}
-                                                            onChange={(e) => { this.handleDayChange(e) }}
+                                                            disabled={this.state.enabledComponent}
+                                                            onChange={this.handleDayChange}
                                                             className={classes.select}
                                                             style={{ paddingLeft: 20 }}
                                                             inputProps={{
@@ -391,39 +1093,8 @@ class RegisterSecond extends Component {
                                                                 },
                                                             }}
                                                         >
-                                                            <option aria-label="Día" value="" />
-                                                            <option value={0}>Día</option>
-                                                            <option value={1}>01</option>
-                                                            <option value={2}>02</option>
-                                                            <option value={3}>03</option>
-                                                            <option value={4}>04</option>
-                                                            <option value={5}>05</option>
-                                                            <option value={6}>06</option>
-                                                            <option value={7}>07</option>
-                                                            <option value={8}>08</option>
-                                                            <option value={9}>09</option>
-                                                            <option value={10}>10</option>
-                                                            <option value={11}>11</option>
-                                                            <option value={12}>12</option>
-                                                            <option value={13}>13</option>
-                                                            <option value={14}>14</option>
-                                                            <option value={15}>15</option>
-                                                            <option value={16}>16</option>
-                                                            <option value={17}>17</option>
-                                                            <option value={18}>18</option>
-                                                            <option value={19}>19</option>
-                                                            <option value={20}>20</option>
-                                                            <option value={21}>21</option>
-                                                            <option value={22}>22</option>
-                                                            <option value={23}>23</option>
-                                                            <option value={24}>24</option>
-                                                            <option value={25}>25</option>
-                                                            <option value={26}>26</option>
-                                                            <option value={27}>27</option>
-                                                            <option value={28}>28</option>
-                                                            <option value={29}>29</option>
-                                                            <option value={30}>30</option>
-                                                            <option value={31}>31</option>
+                                                            {days.map(days => <option key={days.value} value={days.value}>{days.name}</option>)}
+
                                                         </SelectBase>
                                                     </Grid>
                                                     <Grid container xs={5} xl={5} sm={5} style={{ marginLeft: -10, paddingRight: 10 }}>
@@ -431,7 +1102,8 @@ class RegisterSecond extends Component {
                                                             disableUnderline
                                                             native
                                                             value={this.state.months}
-                                                            onChange={(e) => { this.handleMonthsChange(e) }}
+                                                            disabled={this.state.enabledComponent}
+                                                            onChange={this.handleMonthsChange}
                                                             className={classes.select}
                                                             style={{ paddingLeft: 20, }}
                                                             inputProps={{
@@ -440,20 +1112,7 @@ class RegisterSecond extends Component {
                                                                 },
                                                             }}
                                                         >
-                                                            <option aria-label="Mes" value="" />
-                                                            <option value={0}>Mes</option>
-                                                            <option value={1}>Enero</option>
-                                                            <option value={2}>Febrero</option>
-                                                            <option value={3}>Marzo</option>
-                                                            <option value={4}>Abril</option>
-                                                            <option value={5}>Mayo</option>
-                                                            <option value={6}>Junio</option>
-                                                            <option value={7}>Julio</option>
-                                                            <option value={8}>Agosto</option>
-                                                            <option value={9}>Septiembre</option>
-                                                            <option value={10}>Octubre</option>
-                                                            <option value={11}>Noviembre</option>
-                                                            <option value={12}>Diciembre</option>
+                                                            {months.map(months => <option key={months.value} value={months.value}>{months.name}</option>)}
                                                         </SelectBase>
                                                     </Grid>
                                                     <Grid container xs={3} xl={3} sm={3} style={{ marginLeft: 10, paddingRight: 0 }}>
@@ -461,7 +1120,8 @@ class RegisterSecond extends Component {
                                                             disableUnderline
                                                             native
                                                             value={this.state.years}
-                                                            onChange={(e) => { this.handleYearChange(e) }}
+                                                            disabled={this.state.enabledComponent}
+                                                            onChange={this.handleYearChange}
                                                             className={classes.select}
                                                             style={{ paddingLeft: 10 }}
                                                             inputProps={{
@@ -470,70 +1130,8 @@ class RegisterSecond extends Component {
                                                                 },
                                                             }}
                                                         >
-                                                            <option aria-label="Año" value="" />
-                                                            <option value={0}>Año</option>
-                                                            <option value={1}>2021</option>
-                                                            <option value={2}>2020</option>
-                                                            <option value={3}>2019</option>
-                                                            <option value={4}>2018</option>
-                                                            <option value={5}>2017</option>
-                                                            <option value={6}>2016</option>
-                                                            <option value={7}>2015</option>
-                                                            <option value={8}>2014</option>
-                                                            <option value={9}>2013</option>
-                                                            <option value={10}>2012</option>
-                                                            <option value={11}>2011</option>
-                                                            <option value={12}>2010</option>
-                                                            <option value={13}>2009</option>
-                                                            <option value={14}>2008</option>
-                                                            <option value={15}>2007</option>
-                                                            <option value={16}>2006</option>
-                                                            <option value={17}>2005</option>
-                                                            <option value={18}>2004</option>
-                                                            <option value={19}>2003</option>
-                                                            <option value={20}>2002</option>
-                                                            <option value={21}>2001</option>
-                                                            <option value={22}>2000</option>
-                                                            <option value={23}>1999</option>
-                                                            <option value={24}>1998</option>
-                                                            <option value={25}>1997</option>
-                                                            <option value={26}>1996</option>
-                                                            <option value={27}>1995</option>
-                                                            <option value={28}>1994</option>
-                                                            <option value={29}>1993</option>
-                                                            <option value={30}>1992</option>
-                                                            <option value={31}>1991</option>
-                                                            <option value={32}>1990</option>
-                                                            <option value={33}>1989</option>
-                                                            <option value={34}>1988</option>
-                                                            <option value={35}>1987</option>
-                                                            <option value={36}>1986</option>
-                                                            <option value={37}>1985</option>
-                                                            <option value={38}>1984</option>
-                                                            <option value={39}>1983</option>
-                                                            <option value={40}>1982</option>
-                                                            <option value={41}>1981</option>
-                                                            <option value={42}>1980</option>
-                                                            <option value={43}>1979</option>
-                                                            <option value={44}>1978</option>
-                                                            <option value={45}>1977</option>
-                                                            <option value={46}>1976</option>
-                                                            <option value={47}>1975</option>
-                                                            <option value={48}>1974</option>
-                                                            <option value={49}>1973</option>
-                                                            <option value={50}>1972</option>
-                                                            <option value={51}>1971</option>
-                                                            <option value={52}>1970</option>
-                                                            <option value={53}>1969</option>
-                                                            <option value={54}>1968</option>
-                                                            <option value={55}>1967</option>
-                                                            <option value={56}>1966</option>
-                                                            <option value={57}>1965</option>
-                                                            <option value={58}>1964</option>
-                                                            <option value={59}>1963</option>
-                                                            <option value={60}>1962</option>
-                                                            <option value={61}>1961</option>
-                                                            <option value={62}>1960</option>
+                                                            {years.map(years => <option key={years.value} value={years.value}>{years.name}</option>)}
+
                                                         </SelectBase>
                                                     </Grid>
                                                 </Grid>
@@ -544,8 +1142,9 @@ class RegisterSecond extends Component {
                                                 <SelectBase
                                                     disableUnderline
                                                     native
+                                                    disabled={this.state.enabledComponent}
                                                     value={this.state.gender}
-                                                    onChange={(e) => { this.handleGenderChange(e) }}
+                                                    onChange={this.handleGenderChange}
                                                     className={classes.select}
                                                     inputProps={{
                                                         classes: {
@@ -554,10 +1153,8 @@ class RegisterSecond extends Component {
                                                     }}
                                                     style={{ paddingLeft: 140 }}
                                                 >
-                                                    <option aria-label="Género" value="" />
-                                                    <option value={0}>Elegí tu género</option>
-                                                    <option value={20}>Femenino</option>
-                                                    <option value={30}>Masculino</option>
+                                                    {gender.map(gender => <option key={gender.value} value={gender.value}>{gender.name}</option>)}
+
                                                 </SelectBase>
                                                 <Typography className={classes.inputTitle}>
                                                     Nacionalidad
@@ -565,9 +1162,10 @@ class RegisterSecond extends Component {
                                                 <SelectBase
                                                     disableUnderline
                                                     native
+                                                    disabled={this.state.enabledComponent}
                                                     justifyContent="center"
                                                     value={this.state.nationality}
-                                                    onChange={(e) => { this.handleNationalityChange(e) }}
+                                                    onChange={this.handleNationalityChange}
                                                     className={classes.select}
                                                     inputProps={{
                                                         classes: {
@@ -577,10 +1175,7 @@ class RegisterSecond extends Component {
                                                     style={{ paddingLeft: 140 }}
 
                                                 >
-                                                    <option aria-label="Género" value="" />
-                                                    <option value={0}>Elegí tu Nacionalidad</option>
-                                                    <option value={20}>Argentina</option>
-                                                    <option value={30}>Chile</option>
+                                                    {countries.map(country => <option key={country.value} value={country.value}>{country.name}</option>)}
                                                 </SelectBase>
                                                 <Typography className={classes.inputTitle}>
                                                     Provincia
@@ -588,9 +1183,10 @@ class RegisterSecond extends Component {
                                                 <SelectBase
                                                     disableUnderline
                                                     native
+                                                    disabled={this.state.enabledComponent}
                                                     justifyContent="center"
                                                     value={this.state.province}
-                                                    onChange={(e) => { this.handleProvinceChange(e) }}
+                                                    onChange={this.handleProvinceChange}
                                                     className={classes.select}
                                                     inputProps={{
                                                         classes: {
@@ -600,10 +1196,8 @@ class RegisterSecond extends Component {
                                                     style={{ paddingLeft: 160 }}
 
                                                 >
-                                                    <option aria-label="Género" value="" />
-                                                    <option value={0}>Provincia</option>
-                                                    <option value={20}>Cordoba</option>
-                                                    <option value={30}>Mendoza</option>
+                                                    {provinces.map(provinces => <option key={provinces.value} value={provinces.value}>{provinces.name}</option>)}
+
                                                 </SelectBase>
                                                 <Typography className={classes.inputTitle}>
                                                     Localidad
@@ -611,8 +1205,9 @@ class RegisterSecond extends Component {
                                                 <SelectBase
                                                     disableUnderline
                                                     native
+                                                    disabled={this.state.enabledComponent}
                                                     value={this.state.local}
-                                                    onChange={(e) => { this.handleLocalChange(e) }}
+                                                    onChange={this.handleLocalChange}
                                                     className={classes.select}
                                                     inputProps={{
                                                         classes: {
@@ -623,10 +1218,8 @@ class RegisterSecond extends Component {
                                                     }}
                                                     style={{ paddingLeft: 160 }}
                                                 >
-                                                    <option aria-label="Local" value="" />
-                                                    <option value={0}>Localidad</option>
-                                                    <option value={20}>Twenty</option>
-                                                    <option value={30}>Thirty</option>
+                                                    {locality.map(locality => <option key={locality.value} value={locality.value}>{locality.name}</option>)}
+
                                                 </SelectBase>
                                                 <Typography style={{ color: '#999999', fontSize: 11 }}>
                                                     12 caracteres máx
@@ -639,20 +1232,22 @@ class RegisterSecond extends Component {
                                                         <InputBase
                                                             placeholder="Calle"
                                                             fullWidth
+                                                            disabled={this.state.enabledComponent}
                                                             id="email"
                                                             inputProps={{ style: { textAlign: 'center' } }}
                                                             className={classes.formButton}
-                                                        // onChange={}
+                                                            onChange={this.handleDir}
                                                         />
                                                     </Grid>
                                                     <Grid container xs={3} xl={3} sm={3}>
                                                         <InputBase
                                                             placeholder="Nº"
                                                             fullWidth
+                                                            disabled={this.state.enabledComponent}
                                                             id="numero"
                                                             inputProps={{ style: { textAlign: 'center' } }}
                                                             className={classes.formButton}
-                                                        // onChange={}
+                                                            onChange={this.handleNumberChange}
                                                         />
                                                     </Grid>
                                                 </Grid>
@@ -668,11 +1263,12 @@ class RegisterSecond extends Component {
                                                         </Link>
                                                         </Typography>
                                                     </Grid>
+                                                    {$wait}
                                                     <Button
                                                         type="submit"
                                                         variant="contained"
-                                                        href="/verificationemail"
                                                         fullWidth
+                                                        disabled={this.state.enabledComponent}
                                                         className={classes.login}
                                                     >
                                                         Finalizar registro
@@ -688,7 +1284,7 @@ class RegisterSecond extends Component {
                                                 justifyContent: "center",
                                                 alignContent: "center",
                                             }}
-                                                onSubmit={this.handleSubmit}
+                                                onSubmit={this.handleCreateAccountSubmit}
                                                 noValidate>
                                                 <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
                                                     Fecha de Nacimiento
@@ -699,6 +1295,7 @@ class RegisterSecond extends Component {
                                                             disableUnderline
                                                             style={{ width: '80%' }}
                                                             native
+                                                            disabled={this.state.enabledComponent}
                                                             value={this.state.day}
                                                             onChange={(e) => { this.handleDayChange(e) }}
                                                             className={classes.selectMobile}
@@ -708,40 +1305,8 @@ class RegisterSecond extends Component {
                                                                 },
                                                             }}
                                                         >
+                                                            {days.map(days => <option key={days.value} value={days.value}>{days.name}</option>)}
 
-                                                            <option aria-label="Día" value="" />
-                                                            <option value={0}>Día</option>
-                                                            <option value={1}>01</option>
-                                                            <option value={2}>02</option>
-                                                            <option value={3}>03</option>
-                                                            <option value={4}>04</option>
-                                                            <option value={5}>05</option>
-                                                            <option value={6}>06</option>
-                                                            <option value={7}>07</option>
-                                                            <option value={8}>08</option>
-                                                            <option value={9}>09</option>
-                                                            <option value={10}>10</option>
-                                                            <option value={11}>11</option>
-                                                            <option value={12}>12</option>
-                                                            <option value={13}>13</option>
-                                                            <option value={14}>14</option>
-                                                            <option value={15}>15</option>
-                                                            <option value={16}>16</option>
-                                                            <option value={17}>17</option>
-                                                            <option value={18}>18</option>
-                                                            <option value={19}>19</option>
-                                                            <option value={20}>20</option>
-                                                            <option value={21}>21</option>
-                                                            <option value={22}>22</option>
-                                                            <option value={23}>23</option>
-                                                            <option value={24}>24</option>
-                                                            <option value={25}>25</option>
-                                                            <option value={26}>26</option>
-                                                            <option value={27}>27</option>
-                                                            <option value={28}>28</option>
-                                                            <option value={29}>29</option>
-                                                            <option value={30}>30</option>
-                                                            <option value={31}>31</option>
                                                         </SelectBase>
                                                     </Grid>
                                                     <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 0 }}>
@@ -749,6 +1314,7 @@ class RegisterSecond extends Component {
                                                             disableUnderline
                                                             native
                                                             value={this.state.months}
+                                                            disabled={this.state.enabledComponent}
                                                             onChange={(e) => { this.handleMonthsChange(e) }}
                                                             className={classes.selectMobile}
                                                             style={{ paddingLeft: 15, width: '100%' }}
@@ -758,20 +1324,7 @@ class RegisterSecond extends Component {
                                                                 },
                                                             }}
                                                         >
-                                                            <option aria-label="Mes" value="" />
-                                                            <option value={0}>Mes</option>
-                                                            <option value={1}>Enero</option>
-                                                            <option value={2}>Febrero</option>
-                                                            <option value={3}>Marzo</option>
-                                                            <option value={4}>Abril</option>
-                                                            <option value={5}>Mayo</option>
-                                                            <option value={6}>Junio</option>
-                                                            <option value={7}>Julio</option>
-                                                            <option value={8}>Agosto</option>
-                                                            <option value={9}>Septiembre</option>
-                                                            <option value={10}>Octubre</option>
-                                                            <option value={11}>Noviembre</option>
-                                                            <option value={12}>Diciembre</option>
+                                                            {months.map(months => <option key={months.value} value={months.value}>{months.name}</option>)}
                                                         </SelectBase>
                                                     </Grid>
                                                     <Grid container xs={4} xl={4} sm={4} style={{ paddingLeft: 30 }}>
@@ -779,6 +1332,7 @@ class RegisterSecond extends Component {
                                                             disableUnderline
                                                             style={{ width: '100%' }}
                                                             native
+                                                            disabled={this.state.enabledComponent}
                                                             value={this.state.years}
                                                             onChange={(e) => { this.handleYearChange(e) }}
                                                             className={classes.selectMobile}
@@ -788,70 +1342,8 @@ class RegisterSecond extends Component {
                                                                 },
                                                             }}
                                                         >
-                                                            <option aria-label="Año" value="" />
-                                                            <option value={0}>Año</option>
-                                                            <option value={1}>2021</option>
-                                                            <option value={2}>2020</option>
-                                                            <option value={3}>2019</option>
-                                                            <option value={4}>2018</option>
-                                                            <option value={5}>2017</option>
-                                                            <option value={6}>2016</option>
-                                                            <option value={7}>2015</option>
-                                                            <option value={8}>2014</option>
-                                                            <option value={9}>2013</option>
-                                                            <option value={10}>2012</option>
-                                                            <option value={11}>2011</option>
-                                                            <option value={12}>2010</option>
-                                                            <option value={13}>2009</option>
-                                                            <option value={14}>2008</option>
-                                                            <option value={15}>2007</option>
-                                                            <option value={16}>2006</option>
-                                                            <option value={17}>2005</option>
-                                                            <option value={18}>2004</option>
-                                                            <option value={19}>2003</option>
-                                                            <option value={20}>2002</option>
-                                                            <option value={21}>2001</option>
-                                                            <option value={22}>2000</option>
-                                                            <option value={23}>1999</option>
-                                                            <option value={24}>1998</option>
-                                                            <option value={25}>1997</option>
-                                                            <option value={26}>1996</option>
-                                                            <option value={27}>1995</option>
-                                                            <option value={28}>1994</option>
-                                                            <option value={29}>1993</option>
-                                                            <option value={30}>1992</option>
-                                                            <option value={31}>1991</option>
-                                                            <option value={32}>1990</option>
-                                                            <option value={33}>1989</option>
-                                                            <option value={34}>1988</option>
-                                                            <option value={35}>1987</option>
-                                                            <option value={36}>1986</option>
-                                                            <option value={37}>1985</option>
-                                                            <option value={38}>1984</option>
-                                                            <option value={39}>1983</option>
-                                                            <option value={40}>1982</option>
-                                                            <option value={41}>1981</option>
-                                                            <option value={42}>1980</option>
-                                                            <option value={43}>1979</option>
-                                                            <option value={44}>1978</option>
-                                                            <option value={45}>1977</option>
-                                                            <option value={46}>1976</option>
-                                                            <option value={47}>1975</option>
-                                                            <option value={48}>1974</option>
-                                                            <option value={49}>1973</option>
-                                                            <option value={50}>1972</option>
-                                                            <option value={51}>1971</option>
-                                                            <option value={52}>1970</option>
-                                                            <option value={53}>1969</option>
-                                                            <option value={54}>1968</option>
-                                                            <option value={55}>1967</option>
-                                                            <option value={56}>1966</option>
-                                                            <option value={57}>1965</option>
-                                                            <option value={58}>1964</option>
-                                                            <option value={59}>1963</option>
-                                                            <option value={60}>1962</option>
-                                                            <option value={61}>1961</option>
-                                                            <option value={62}>1960</option>
+                                                            {years.map(years => <option key={years.value} value={years.value}>{years.name}</option>)}
+
                                                         </SelectBase>
                                                     </Grid>
                                                 </Grid>
@@ -862,6 +1354,7 @@ class RegisterSecond extends Component {
                                                 <SelectBase
                                                     disableUnderline
                                                     native
+                                                    disabled={this.state.enabledComponent}
                                                     value={this.state.nationality}
                                                     onChange={(e) => { this.handleNationalityChange(e) }}
                                                     className={classes.selectMobile}
@@ -872,10 +1365,8 @@ class RegisterSecond extends Component {
                                                     }}
                                                     style={{ paddingLeft: 10 }}
                                                 >
-                                                    <option aria-label="Género" value="" />
-                                                    <option value={0}>Elegí tu nacionalidad</option>
-                                                    <option value={20}>Argentina</option>
-                                                    <option value={30}>Bolivia</option>
+                                                    {countries.map(country => <option key={country.value} value={country.value}>{country.name}</option>)}
+
                                                 </SelectBase>
                                                 <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
                                                     Género
@@ -883,6 +1374,7 @@ class RegisterSecond extends Component {
                                                 <SelectBase
                                                     disableUnderline
                                                     native
+                                                    disabled={this.state.enabledComponent}
                                                     value={this.state.gender}
                                                     onChange={(e) => { this.handleGenderChange(e) }}
                                                     className={classes.selectMobile}
@@ -893,10 +1385,8 @@ class RegisterSecond extends Component {
                                                     }}
                                                     style={{ paddingLeft: 10 }}
                                                 >
-                                                    <option aria-label="Género" value="" />
-                                                    <option value={0}>Elegí tu Género</option>
-                                                    <option value={20}>Femenino</option>
-                                                    <option value={30}>Masculino</option>
+                                                    {gender.map(gender => <option key={gender.value} value={gender.value}>{gender.name}</option>)}
+
                                                 </SelectBase>
                                                 <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
                                                     Provincia
@@ -904,6 +1394,7 @@ class RegisterSecond extends Component {
                                                 <SelectBase
                                                     disableUnderline
                                                     native
+                                                    disabled={this.state.enabledComponent}
                                                     value={this.state.province}
                                                     onChange={(e) => { this.handleProvinceChange(e) }}
                                                     className={classes.selectMobile}
@@ -912,12 +1403,10 @@ class RegisterSecond extends Component {
                                                             icon: classes.icon,
                                                         },
                                                     }}
-                                                // onChange={}
+
                                                 >
-                                                    <option aria-label="Local" value="" />
-                                                    <option value={0}>Provincia</option>
-                                                    <option value={20}>Twenty</option>
-                                                    <option value={30}>Thirty</option>
+                                                    {provinces.map(provinces => <option key={provinces.value} value={provinces.value}>{provinces.name}</option>)}
+
                                                 </SelectBase>
                                                 <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
                                                     Localidad
@@ -925,6 +1414,7 @@ class RegisterSecond extends Component {
                                                 <SelectBase
                                                     disableUnderline
                                                     native
+                                                    disabled={this.state.enabledComponent}
                                                     value={this.state.local}
                                                     onChange={(e) => { this.handleLocalChange(e) }}
                                                     className={classes.selectMobile}
@@ -935,10 +1425,8 @@ class RegisterSecond extends Component {
                                                     }}
 
                                                 >
-                                                    <option aria-label="Local" value="" />
-                                                    <option value={0}>Localidad</option>
-                                                    <option value={20}>Twenty</option>
-                                                    <option value={30}>Thirty</option>
+                                                    {locality.map(locality => <option key={locality.value} value={locality.value}>{locality.name}</option>)}
+
                                                 </SelectBase>
                                                 <Grid container justify='flex-start'>
                                                     <Grid container xs={9} xl={9} sm={9} style={{ paddingRight: 10 }}>
@@ -957,15 +1445,18 @@ class RegisterSecond extends Component {
                                                         <InputBase
                                                             placeholder="Calle, Avenida, etc"
                                                             fullWidth
+                                                            disabled={this.state.enabledComponent}
                                                             id="email"
+                                                            name="direccion"
                                                             inputProps={{ style: { textAlign: 'left' } }}
                                                             className={classes.formButtonMobile}
-                                                        // onChange={}
+                                                            onChange={this.handleDir}
                                                         />
                                                     </Grid>
                                                     <Grid container xs={3} xl={3} sm={3}>
                                                         <InputBase
                                                             placeholder="XXXX"
+                                                            disabled={this.state.enabledComponent}
                                                             onChange={(e) => { this.handleNumberChange(e) }}
                                                             className={classes.formButtonMobile}
                                                             inputProps={{
@@ -988,12 +1479,14 @@ class RegisterSecond extends Component {
                                                     </Link>
                                                         </Typography>
                                                     </Grid>
+                                                    {$wait}
                                                     <Button
                                                         type="submit"
                                                         variant="contained"
                                                         fullWidth
-                                                        href="/verificationemail"
+                                                        disabled={this.state.enabledComponent}
                                                         className={classes.login}
+                                                        onSubmit={this.handleCreateAccountSubmit}
                                                     >
                                                         Finalizar registro
                                                     </Button>

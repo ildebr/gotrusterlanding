@@ -12,6 +12,7 @@ import Insertar from '../../asset/images/sidemenu/insertar.svg'
 import Ajustes from '../../asset/images/sidemenu/ajustes.svg'
 import Soporte from '../../asset/images/sidemenu/soporte.svg'
 import CerrarSesion from '../../asset/images/sidemenu/cerrarsesion.svg'
+import TemporaryDrawer from './mobileDrawer'
 
 const styles = theme => ({
     root: {
@@ -45,7 +46,7 @@ const styles = theme => ({
 });
 
 
-const Navbar = ({ active }) => {
+const Navbar = ({ active, recover }) => {
     const { width } = WindowDimensions();
     const isActive = active
     const back = '<'
@@ -211,7 +212,8 @@ const Navbar = ({ active }) => {
                 height: 80,
             }} >
                 <Grid container xs={2} xl={2} sm={2} justify='center' style={{ alignContent: 'flex-start' }}>
-                    <div class="menu-wrap">
+                    <TemporaryDrawer />
+                    {/* <div class="menu-wrap">
                         <input type="checkbox" class="toggler" />
                         <div class="hamburger"><div></div></div>
                         <div class="menu">
@@ -271,19 +273,37 @@ const Navbar = ({ active }) => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </Grid>
                 {active === 0 ?
-                    <Grid container xs={2} xl={2} sm={2} justify='left'>
-                        <Typography variant="h6" style={{
-                            marginLeft: -10,
-                            flexGrow: 1,
-                            marginTop: 5,
-                            color: "#FFFFFF",
-                            font: " normal normal 35px/35px Poppins",
-                        }}>
-                            Truster
+                    <Grid container xs={10} xl={10} sm={10} >
+                        <Grid container xs={2} xl={2} sm={2} justify='flex-start' >
+                            <Typography variant="h6" style={{
+                                marginLeft: 10,
+                                flexGrow: 1,
+                                marginTop: 20,
+                                color: "#FFFFFF",
+                                font: " normal normal 35px/35px Poppins",
+                            }}>
+                                Truster
                         </Typography>
+                        </Grid >
+                        {recover === 1 ?
+                            <Grid container xs={10} xl={10} sm={10} justify='flex-end'>
+                                <button style={{
+                                    backgroundColor: 'rgba(0,0,0,0)',
+                                    marginTop: 5,
+                                    width: 80,
+                                    height: 35,
+                                    color: '#ACFD00',
+                                    font: 'normal normal normal 18px/24px PoppinsBold',
+                                    border: '2px solid',
+                                    borderColor: '#ACFD00',
+                                    borderRadius: 5,
+                                    textTransform: 'none',
+                                }}>Log In</button>
+                            </Grid>
+                            : console.log('no pa')}
                     </Grid> :
                     <Grid container xs={9} xl={9} sm={9} justify='flex-end' alignContent='flex-start' style={{ marginTop: 0, marginLeft: 20 }}>
                         <Button style={{ color: '#999999', fontSize: 25, paddingLeft: '100%', font: " normal normal 35px/35px PoppinsBold" }} href="/"> {back} </Button>
