@@ -10,6 +10,12 @@ import Ubicacion from "../../components/myBusiness/ubicacion";
 import Button from "@material-ui/core/Button";
 import Imagenes from "../../components/myBusiness/imagenes";
 import Consultas from "../../components/myBusiness/consultas";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faAngleLeft, faTimes} from "@fortawesome/free-solid-svg-icons";
+import MobileHeader from "../../components/myBusiness/mobileHeader";
+import MobileTienda from "../../components/myBusiness/mobileTienda";
+import MobileBotonera from "../../components/myBusiness/mobileBotonera";
+
 
 const styles = theme => ({
     root: {
@@ -19,6 +25,7 @@ const styles = theme => ({
     paperContainer: {
         height: '90px',
         marginTop: '2vh',
+
     },
     background: {
         position: 'absolute',
@@ -64,17 +71,18 @@ class Business extends Component {
                     {width >= 600 ? <div className={classes.background}>
                         <img src={LandingImage} alt='background' width={'100%'} height={'550px'}/>
                     </div> : ''}
-                    <Grid className={classes.test} container maxWidth="md" component="main">
+                    <Grid className={classes.test} container maxWidth="md" component="main" >
                         <Container component="main" maxWidth="md">
-                            <Grid container>
-                                <Grid item container xs={4} xl={4} sm={4} className={classes.paperContainer}>
+                            <Grid container style={{display:'flex',  justifyContent:'center'}}>
+                                <Grid item container xs={2} xl={4} sm={4} className={classes.paperContainer}>
                                     {width >= 600 ? <ReputatioNavBar/> : <TemporaryDrawer/>}
                                 </Grid>
-                                {width >= 600 ? <Grid xs={4} xl={4} sm={4} container justify='center'>
+                                {width >= 600 ? <Grid xs={8} container >
                                     <Typography style={{
-                                        flexGrow: 1,
+                                        //flexGrow: 1,
+                                        paddingLeft: 85,
                                         marginTop: 35,
-                                        align: "center",
+                                        //align: "center",
                                         color: "#FFFFFF",
                                         font: " normal normal 40px/40px Poppins",
                                     }}>
@@ -82,19 +90,37 @@ class Business extends Component {
                                     </Typography>
                                 </Grid> : <Grid xs={8} xl={8} sm={8} container justify='flex-start'>
                                     <Typography style={{
-                                        marginLeft: '-40%',
                                         flexGrow: 1,
-                                        marginTop: 40,
+                                        marginTop: 34,
+                                        paddingLeft:'10px',
                                         align: "center",
                                         color: "#999999",
-                                        font: " normal normal 26px/26px Poppins",
+                                        fontFamily: "Poppins",
+                                        fontWeight: 400,
+                                        fontSize: '26px',
+
                                     }}>
                                         Mi Negocio
                                     </Typography>
                                 </Grid>}
 
-                                <Grid container direction={"column"}>
-                                    <Header/>
+                                {width >= 600 ?
+                                    <Grid xs={2}> <a/>  </Grid>
+                                    :
+                                    <Grid item xs={2} container justify='flex-end' alignItems={"center"}>
+                                        <FontAwesomeIcon icon={faAngleLeft} style={{
+                                            color: '#777777', fontSize: "26px", align:'right', marginRight:'20px'
+                                        }}/>
+                                    </Grid>
+                                }
+
+                                <Grid container direction={"column"}  style={{width:'100%',
+                                display:'flex', justifyContent:'center'}} xs={12}>
+                                    {width >= 600 ?
+                                        <Header/>
+                                        :
+                                        <MobileHeader/>
+                                    }
                                 </Grid>
                             </Grid>
 
@@ -104,7 +130,7 @@ class Business extends Component {
 
 
                 </Grid>
-
+                {width >= 600 ?
                 <Grid container component="main" maxWidth="md" style={{display: 'flex', justifyContent: 'center'}}>
                     <Container component="main" maxWidth="md" style={{paddingBottom:'40px'}}>
                         <Grid item style={{
@@ -186,6 +212,19 @@ class Business extends Component {
                         </div>
                     </Container>
                 </Grid>
+                    :
+                <Grid container direction={"column"} component="main" maxWidth="md" style={{display: 'flex', justifyContent: 'center'}}>
+                    <Grid item>
+                        <MobileTienda/>
+                    </Grid>
+                    <Grid item style={{padding:'18px 22px', marginBottom:'40px'}}>
+                        <MobileBotonera/>
+                    </Grid>
+
+                </Grid>
+
+
+                }
             </React.Fragment>
 
 

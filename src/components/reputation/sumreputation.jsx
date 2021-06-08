@@ -5,6 +5,7 @@ import Airbnb from '../../asset/images/reputation/sumReputation/airbnb.svg'
 import Amazon from '../../asset/images/reputation/sumReputation/amazon.svg'
 import Arrow from '../../asset/images/reputation/sumReputation/caret-right.svg'
 import Cuil from '../../asset/images/reputation/sumReputation/cuil.svg'
+import dni from '../../asset/images/reputation/sumReputation/dni.svg'
 import Direction from '../../asset/images/reputation/sumReputation/direction.svg'
 import Facebook from '../../asset/images/reputation/sumReputation/facebook.svg'
 import Instagram from '../../asset/images/reputation/sumReputation/instagram.svg'
@@ -56,16 +57,18 @@ const SumReputation = () => {
         }} >
             <Grid container justify='flex-start'>
                 <Typography style={{
-                    font: 'normal normal normal 18px/18px Poppins',
+                    font: 'normal normal normal 19px/19px Poppins',
+                    fontWeight: '600',
                     textAlign: 'center',
                     letterSpacing: '-0.02em',
                     color: '#FFFFFF',
-                    marginBottom: 50
+                    marginBottom: 50,
+                    marginLeft: -30
                 }}>
                     Suma Reputación
                 </Typography>
                 <Grid container justify='flex-start' >
-                    <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ marginLeft: -30 }}>
+                    <Grid container justify='center' xs={3} xl={3} sm={3} alignItems='center' style={{ marginLeft: -30, paddingRight: 15 }}>
                         <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
                             <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
                                 <img src={Telephone} alt='telefono' />
@@ -117,6 +120,7 @@ const SumReputation = () => {
                                 }}>
                                     +4
                                 </Typography>
+                                <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
                                 <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
                             </Grid>
                             <hr style={{ width: '100%' }} color='#333333' />
@@ -144,15 +148,16 @@ const SumReputation = () => {
                                 }}>
                                     +4
                                 </Typography>
+                                <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
                                 <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
                             </Grid>
                             <hr style={{ width: '100%' }} color='#333333' />
                         </Grid>
                     </Grid>
-                    <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ marginLeft: 10 }}>
+                    <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ marginLeft: 10, paddingLeft: 15, paddingRight: 15 }}>
                         <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
                             <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
-                                <img src={Cuil} alt='cuil' />
+                                <img src={dni} alt='dni' />
                                 <Typography style={{
                                     align: "center",
                                     color: "#FFFFFF",
@@ -173,6 +178,7 @@ const SumReputation = () => {
                                 }}>
                                     +4
                                 </Typography>
+                                <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
                                 <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
                             </Grid>
                             <hr style={{ width: '100%' }} color='#333333' />
@@ -200,6 +206,7 @@ const SumReputation = () => {
                                 }}>
                                     +4
                                 </Typography>
+                                <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
                                 <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
                             </Grid>
                             <hr style={{ width: '100%' }} color='#333333' />
@@ -227,12 +234,13 @@ const SumReputation = () => {
                                 }}>
                                     +4
                                 </Typography>
+                                <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
                                 <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
                             </Grid>
                             <hr style={{ width: '100%' }} color='#333333' />
                         </Grid>
                     </Grid>
-                    <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ marginLeft: 10 }}>
+                    <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ marginLeft: 10, paddingLeft: 15, paddingRight: 15 }}>
                         <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
                             <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
                                 <img src={Cuil} alt='cuil' />
@@ -256,6 +264,7 @@ const SumReputation = () => {
                                 }}>
                                     +4
                                 </Typography>
+                                <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
                                 <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
                             </Grid>
                             <hr style={{ width: '100%' }} color='#333333' />
@@ -283,6 +292,7 @@ const SumReputation = () => {
                                 }}>
                                     +4
                                 </Typography>
+                                <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
                                 <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
                             </Grid>
                             <hr style={{ width: '100%' }} color='#333333' />
@@ -310,12 +320,13 @@ const SumReputation = () => {
                                 }}>
                                     +4
                                 </Typography>
+                                <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
                                 <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
                             </Grid>
                             <hr style={{ width: '100%' }} color='#333333' />
                         </Grid>
                     </Grid>
-                    <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='flex-start' style={{ marginLeft: 10 }}>
+                    <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='flex-start' style={{ marginLeft: 10, paddingLeft: 15 }}>
                         <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }} >
                             <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
                                 <img src={Direction} alt='direction' />
@@ -339,6 +350,7 @@ const SumReputation = () => {
                                 }}>
                                     +4
                                 </Typography>
+                                <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
                                 <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
                             </Grid>
                             <hr style={{ width: '100%' }} color='#333333' />
@@ -366,6 +378,7 @@ const SumReputation = () => {
                                 }}>
                                     +4
                                 </Typography>
+                                <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
                                 <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
                             </Grid>
                             <hr style={{ width: '100%' }} color='#333333' />

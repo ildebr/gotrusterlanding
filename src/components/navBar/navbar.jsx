@@ -303,7 +303,7 @@ const Navbar = ({ active, recover }) => {
                                     textTransform: 'none',
                                 }}>Log In</button>
                             </Grid>
-                            : console.log('no pa')}
+                            : ''}
                     </Grid> :
                     <Grid container xs={9} xl={9} sm={9} justify='flex-end' alignContent='flex-start' style={{ marginTop: 0, marginLeft: 20 }}>
                         <Button style={{ color: '#999999', fontSize: 25, paddingLeft: '100%', font: " normal normal 35px/35px PoppinsBold" }} href="/"> {back} </Button>

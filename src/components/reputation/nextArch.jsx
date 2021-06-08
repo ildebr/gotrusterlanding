@@ -45,20 +45,23 @@ const NextArch = () => {
         }} >
             <Grid container justify='flex-start'>
                 <Typography style={{
-                    font: 'normal normal normal 18px/18px Poppins',
+                    font: 'normal normal normal 19px/19px Poppins',
+                    fontWeight: '600',
                     textAlign: 'center',
                     letterSpacing: '-0.02em',
-                    color: '#FFFFFF'
+                    color: '#FFFFFF',
+                    marginLeft: -30
                 }}>
                     Próximos Logros
                 </Typography>
 
                 <Grid container justify='flex-start' alignItems='center' style={{ marginTop: 40 }}>
                     <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ padding: 25, background: '#1C1C1C', borderRadius: 15, paddingRight: 15, marginLeft: -30 }}>
-                        <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center'>
+                        <Grid container justify='flex-start' xs={8} xl={8} sm={8} alignItems='center'>
                             <Typography style={{
-                                font: 'normal normal normal 24px/24px Poppins',
+                                font: 'normal normal normal 22px/22px Poppins',
                                 textAlign: 'left',
+                                fontWeight: '400',
                                 letterSpacing: '-0.02em',
                                 color: '#FFFFFF'
                             }}>
@@ -67,8 +70,9 @@ const NextArch = () => {
                         </Grid>
                         <Grid container justify='flex-start' xs={8} xl={8} sm={8} alignItems='center'>
                             <Typography style={{
-                                font: 'normal normal normal 14px/14px Poppins',
+                                font: 'normal normal normal 15px/15px Poppins',
                                 textAlign: 'left',
+                                fontWeight: '500',
                                 letterSpacing: '-0.02em',
                                 marginTop: 30,
                                 color: '#ACFD00'
@@ -76,7 +80,7 @@ const NextArch = () => {
                                 Te faltan solo 4 puntos
                             </Typography>
                         </Grid>
-                        <Grid container justify='flex-end' xs={4} xl={4} sm={4} alignItems='baseline'>
+                        <Grid container justify='flex-end' xs={4} xl={4} sm={4} alignItems='baseline' style={{ marginTop: 35 }}>
                             <img src={SmallLogo} alt='small logo' />
                             <Typography style={{
                                 font: 'normal normal normal 28px/28px PoppinsBold',
@@ -92,8 +96,9 @@ const NextArch = () => {
                     <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ padding: 25, background: '#1C1C1C', borderRadius: 15, paddingRight: 15, marginLeft: 10 }}>
                         <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center'>
                             <Typography style={{
-                                font: 'normal normal normal 24px/24px Poppins',
+                                font: 'normal normal normal 22px/22px Poppins',
                                 textAlign: 'left',
+                                fontWeight: '400',
                                 letterSpacing: '-0.02em',
                                 color: '#FFFFFF'
                             }}>
@@ -102,8 +107,9 @@ const NextArch = () => {
                         </Grid>
                         <Grid container justify='flex-start' xs={8} xl={8} sm={8} alignItems='center'>
                             <Typography style={{
-                                font: 'normal normal normal 14px/14px Poppins',
+                                font: 'normal normal normal 15px/15px Poppins',
                                 textAlign: 'left',
+                                fontWeight: '500',
                                 letterSpacing: '-0.02em',
                                 marginTop: 30,
                                 color: '#ACFD00'
@@ -111,7 +117,7 @@ const NextArch = () => {
                                 Te faltan solo 4 puntos
                             </Typography>
                         </Grid>
-                        <Grid container justify='flex-end' xs={4} xl={4} sm={4} alignItems='baseline'>
+                        <Grid container justify='flex-end' xs={4} xl={4} sm={4} alignItems='baseline' style={{ marginTop: 35 }}>
                             <img src={SmallLogo} alt='small logo' />
                             <Typography style={{
                                 font: 'normal normal normal 28px/28px PoppinsBold',
@@ -127,8 +133,9 @@ const NextArch = () => {
                     <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ padding: 25, background: '#1C1C1C', borderRadius: 15, marginLeft: 10 }}>
                         <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center'>
                             <Typography style={{
-                                font: 'normal normal normal 24px/24px Poppins',
+                                font: 'normal normal normal 22px/22px Poppins',
                                 textAlign: 'left',
+                                fontWeight: '400',
                                 letterSpacing: '-0.02em',
                                 color: '#FFFFFF'
                             }}>
@@ -137,8 +144,9 @@ const NextArch = () => {
                         </Grid>
                         <Grid container justify='flex-start' xs={8} xl={8} sm={8} alignItems='center'>
                             <Typography style={{
-                                font: 'normal normal normal 14px/14px Poppins',
+                                font: 'normal normal normal 15px/15px Poppins',
                                 textAlign: 'left',
+                                fontWeight: '500',
                                 letterSpacing: '-0.02em',
                                 marginTop: 30,
                                 color: '#ACFD00'
@@ -146,7 +154,7 @@ const NextArch = () => {
                                 Te faltan solo 6 puntos
                             </Typography>
                         </Grid>
-                        <Grid container justify='flex-end' xs={4} xl={4} sm={4} alignItems='baseline'>
+                        <Grid container justify='flex-end' xs={4} xl={4} sm={4} alignItems='baseline' style={{ marginTop: 35 }}>
                             <img src={SmallLogo} alt='small logo' />
                             <Typography style={{
                                 font: 'normal normal normal 28px/28px PoppinsBold',
@@ -162,8 +170,9 @@ const NextArch = () => {
                     <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ padding: 25, background: '#1C1C1C', borderRadius: 15, marginLeft: 10 }}>
                         <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center'>
                             <Typography style={{
-                                font: 'normal normal normal 24px/24px Poppins',
+                                font: 'normal normal normal 22px/22px Poppins',
                                 textAlign: 'left',
+                                fontWeight: '400',
                                 letterSpacing: '-0.02em',
                                 color: '#FFFFFF'
                             }}>
@@ -172,8 +181,9 @@ const NextArch = () => {
                         </Grid>
                         <Grid container justify='flex-start' xs={8} xl={8} sm={8} alignItems='center'>
                             <Typography style={{
-                                font: 'normal normal normal 14px/14px Poppins',
+                                font: 'normal normal normal 15px/15px Poppins',
                                 textAlign: 'left',
+                                fontWeight: '500',
                                 letterSpacing: '-0.02em',
                                 marginTop: 30,
                                 color: '#ACFD00'
@@ -181,7 +191,7 @@ const NextArch = () => {
                                 Te faltan solo 12 puntos
                             </Typography>
                         </Grid>
-                        <Grid container justify='flex-end' xs={4} xl={4} sm={4} alignItems='baseline'>
+                        <Grid container justify='flex-end' xs={4} xl={4} sm={4} alignItems='baseline' style={{ marginTop: 35 }}>
                             <img src={SmallLogo} alt='small logo' />
                             <Typography style={{
                                 font: 'normal normal normal 28px/28px PoppinsBold',

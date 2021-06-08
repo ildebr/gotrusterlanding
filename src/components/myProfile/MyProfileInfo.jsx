@@ -1,12 +1,9 @@
 import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import { Grid, Typography } from '@material-ui/core';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import ReputationImg from '../../asset/images/reputation/Ellipse 6.png'
 import Cover from '../../asset/images/myProfile/cover.svg'
-import ShareButton from '../../asset/images/reputation/Group 25.svg'
 import Logo from '../../asset/images/reputation/logo.svg'
-import GreyLogo from '../../asset/images/reputation/greylogo.svg'
 
 const { localStorage } = global.window;
 const styles = theme => ({

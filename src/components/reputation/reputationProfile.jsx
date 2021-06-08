@@ -6,6 +6,7 @@ import ReputationImg from '../../asset/images/reputation/Ellipse 6.png'
 import ShareButton from '../../asset/images/reputation/Group 25.svg'
 import Logo from '../../asset/images/reputation/logo.svg'
 import GreyLogo from '../../asset/images/reputation/greylogo.svg'
+import LinearDeterminate from './progressBarArchMobile'
 
 const { localStorage } = global.window;
 const styles = theme => ({
@@ -41,7 +42,7 @@ const styles = theme => ({
 
 
 const ReputationProfile = () => {
-      const namefull = localStorage.getItem("nombre")+' '+localStorage.getItem("apellido");
+    const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
     return (
         <Grid position="static" color="transparent" style={{
             flexGrow: 1,
@@ -114,8 +115,8 @@ const ReputationProfile = () => {
                             Miembro Truster desde Septiembre / 2021
                             </Typography>
                     </Grid>
-                    <Grid container justify='flex-start' alignItems='center' style={{ background: '#222222' }}>
-                        <LinearProgress variant="determinate" color='#ACFD00' value={100} />
+                    <Grid container justify='flex-start' alignItems='center'>
+                        <LinearDeterminate value={50} />
                     </Grid>
                     <Grid container alignItems='center'>
                         <Grid container justify='flex-start' xs={6} xl={6} sm={6} alignItems='center'>

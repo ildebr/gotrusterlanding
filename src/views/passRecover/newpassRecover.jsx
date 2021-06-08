@@ -269,15 +269,7 @@ class NewpassRecover extends Component {
                                                     }}
                                                         onSubmit={this._handleSubmit}
                                                         noValidate>
-                                                        <InputBase
-                                                            placeholder="Contraseña actual"
-                                                            fullWidth
-                                                            id="currentpass"
-                                                            inputProps={{ style: { textAlign: 'center' } }}
-                                                            className={classes.formButton}
-
-                                                        // onChange={}
-                                                        />
+                                                       
                                                         <InputBase
                                                             placeholder="Nueva contraseña"
                                                             fullWidth
@@ -335,8 +327,8 @@ class NewpassRecover extends Component {
                                                                 id="user"
                                                                 inputProps={{ style: { textAlign: 'center' } }}
                                                                 className={classes.formButton}
+                                                                onChange={this._handleChangeValuePass}
 
-                                                            // onChange={}
                                                             />
                                                             <InputBase
                                                                 placeholder="Contraseña"
@@ -344,8 +336,8 @@ class NewpassRecover extends Component {
                                                                 id="pass"
                                                                 inputProps={{ style: { textAlign: 'center' } }}
                                                                 className={classes.formButton}
-
-                                                            // onChange={}
+                                                                onChange={this._handleChangeValuePass2}
+       
                                                             />
 
                                                             <button
@@ -407,15 +399,7 @@ class NewpassRecover extends Component {
                                                         }}
                                                             onSubmit={this._handleSubmit}
                                                             noValidate>
-                                                            <InputBase
-                                                                placeholder="Contraseña actual"
-                                                                fullWidth
-                                                                id="currentpass"
-                                                                inputProps={{ style: { textAlign: 'center' } }}
-                                                                className={classes.formButton}
-
-                                                            // onChange={}
-                                                            />
+                                                           
                                                             <InputBase
                                                                 placeholder="Nueva contraseña"
                                                                 fullWidth
@@ -436,7 +420,7 @@ class NewpassRecover extends Component {
 
                                                            
                                                             />
-                                                            {/* {console.log(this.state.sent)} */}
+                                                            
                                                             <button
                                                                 type="submit"
                                                                 fullWidth

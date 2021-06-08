@@ -34,7 +34,7 @@ const Account = () =>{
  
  ///////////////Address Resource
  const AddressOperations= () =>{
-    let REACT_APP_ADDRESS_OPERATIONS='https://truster-back.herokuapp.com/api/addresses' ;
+    let REACT_APP_ADDRESS_OPERATIONS=`https://truster-back.herokuapp.com/api/addresses` ;
     return REACT_APP_ADDRESS_OPERATIONS;
  }
  ///////////////Customer Resource

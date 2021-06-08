@@ -234,7 +234,7 @@ export default function TemporaryDrawer() {
         <div>
             <React.Fragment key={'left'}>
                 <Grid container style={{ marginTop: '20px', marginLeft: '20px' }}>
-                    <Button onClick={toggleDrawer('left', true)}><img src={BurgerIcon} alt='burger' /></Button>
+                    <Button onClick={toggleDrawer('left', true)}><img src={BurgerIcon} alt='burger' width='20px' /></Button>
                 </Grid>
                 <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)} >
                     {list('left')}

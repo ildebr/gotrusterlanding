@@ -470,6 +470,7 @@ class Register extends Component {
                                                     fullWidth
                                                     id="apellido"
                                                     name='lastName'
+                                                    regex={onlyLettersRegex}
                                                     inputProps={{ style: { textAlign: 'center' } }}
                                                     className={this.state.LastNameError ? classes.errorFormButton : classes.formButton}
                                                     onChange={this.handleLastName}

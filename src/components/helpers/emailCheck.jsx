@@ -8,7 +8,7 @@ import InputBase from '@material-ui/core/InputBase';
 import { isEmpty } from "lodash";
 import auth from './../../setting/auth';
 import { getToken, deleteToken } from './../../setting/auth-helpers';
-import { Account, UserResource } from './../../services/hostConfig';
+import { CustomerResource } from './../../services/hostConfig';
 
 const { localStorage } = global.window;
 const styles = theme => ({
@@ -151,7 +151,7 @@ class EmailCheck extends Component {
       auth.login(name, pass)
         .then(() => {
           const token = getToken();
-          fetch(Account(), {
+          fetch(CustomerResource(), {
             method: 'get',
             headers: {
               'Accept': 'application/json',
@@ -159,14 +159,14 @@ class EmailCheck extends Component {
               'Authorization': `Bearer ${token}`
             }
           }).then(response => {
-            console.log(response)
+            //console.log(response)
             return response.json();
           }).then(response => {
-
+            //console.log(response)
             let thisEmail = '';
             for (let index = 0; index < response.length; index++) {
               const element = response[index].email;
-                console.log("Este email es que estoy buscando "+element)
+               // console.log("Este email es que estoy buscando "+element)
               if (element === email) {
                 thisEmail = '1';
                 localStorage.setItem("thisEmail", thisEmail)

@@ -931,6 +931,7 @@ class RegisterSecond extends Component {
             show: true,
             enabledComponent: true
         })
+
         ////dataRegister //
 
         const dataRegister = {
@@ -981,7 +982,7 @@ class RegisterSecond extends Component {
                     
                 }).then(response => { 
                     console.log(response)  
-                   /* const dataAdress = {
+                   const dataAdress = {
                         "apartment": "string",
                         "city": this.state.local,
                         "country": this.state.province,
@@ -994,11 +995,11 @@ class RegisterSecond extends Component {
                             "email": email,
                             "gender": this.handleSetGender(this.state.gender),
                             "ip": ipPublic,
-                            "id":response.data.id,
+                            "id":parseInt(response.data.id),
                             "phone": "string",
                             "points": 1,
                             "user": {
-                                "id":response.data.id,
+                                "id":parseInt(response.data.id),
                                 "login": email
                             },
                             "userType": "INDIVIDUAL"
@@ -1014,7 +1015,7 @@ class RegisterSecond extends Component {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${token}`
                         }
-                    }).then(response => {*/
+                    }).then(response => {
                        // console.log(response);
                     
                         this.setState({
@@ -1023,7 +1024,7 @@ class RegisterSecond extends Component {
                         })
                         window.open("/verificationemail", '_self');
                     })
-               // })
+                })
                 
 
             }).catch(error => console.error('Error:', error));
