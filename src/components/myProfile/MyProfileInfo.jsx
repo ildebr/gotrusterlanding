@@ -1,11 +1,14 @@
-import React from 'react';
-import { withStyles } from "@material-ui/core/styles";
-import { Grid, Typography } from '@material-ui/core';
+import React, {useEffect, useState} from 'react';
+import {withStyles} from "@material-ui/core/styles";
+import {Grid, Typography, Button} from '@material-ui/core';
 import ReputationImg from '../../asset/images/reputation/Ellipse 6.png'
 import Cover from '../../asset/images/myProfile/cover.svg'
 import Logo from '../../asset/images/reputation/logo.svg'
+import Cliente from "../../setting/cliente";
+import {Fileload, GetImage,UriServices} from "../../services/hostConfig";
 
-const { localStorage } = global.window;
+
+const {localStorage} = global.window;
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -40,15 +43,66 @@ const styles = theme => ({
 
 const MyProfileInfo = () => {
     const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
+
+    const [file, setFile] = useState(null)
+    const [user, setUser] = useState(null)
+    const [imagesArray, setImagesArray] = useState(null)
+
+    const onFileChange = (event) => {
+        let fileName = event.target.files[0].name
+        const reader = new FileReader();
+        let _file = event.target.files[0];
+
+        reader.onload = function (event) {
+            setFile(event.target.result)
+            Cliente.post(Fileload(), {
+                    'file': event.target.result,
+                    'fileName': fileName,
+                    'user': user,
+                    'destination': 'perfil'
+                }
+            ).then(() => getImages())
+        };
+        reader.readAsDataURL(_file);
+    }
+
+    function getImages() {
+        Cliente.get(GetImage(), {
+            params: {
+                'user': user,
+                'folder': 'perfil'
+            }
+        },).then(
+            res => {
+                setImagesArray(res['data']['fileNames'])
+                console.log(res)
+            }
+        )
+    }
+
+    useEffect(() => {
+
+        if (user === null) {
+            setUser(localStorage.getItem('userLogin'))
+        }
+
+        if (imagesArray === null && user !== null) {
+            getImages();
+        }
+        //let user = JSON.parse(localStorage.getItem('currentUser'));
+
+    }, [imagesArray, file, user]);
+    let occupation = localStorage.getItem('occupation')=='null'? '': localStorage.getItem('occupation');
     return (
         <Grid position="static" color="transparent" style={{
             flexGrow: 1,
             border: 0,
             marginTop: 60,
-        }} >
+        }}>
             <Grid container alignItems='center'>
                 <Grid container xs={9} xl={9} sm={9} justify="center" alignItems='center'>
-                    <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center' style={{ marginBottom: 20 }}>
+                    <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center'
+                          style={{marginBottom: 20}}>
                         <Typography style={{
                             align: "left",
                             color: "#FFFFFF",
@@ -58,17 +112,19 @@ const MyProfileInfo = () => {
                             {namefull}
                         </Typography>
                     </Grid>
-                    <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center' style={{ marginBottom: 20 }}>
+                    <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center'
+                          style={{marginBottom: 20}}>
                         <Typography style={{
                             font: 'normal normal normal 24px/24px Poppins',
                             textAlign: 'center',
                             letterSpacing: '-0.02em',
                             color: '#ACFD00'
                         }}>
-                            Front End Developer
-                            </Typography>
+                            {occupation}
+                        </Typography>
                     </Grid>
-                    <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center' style={{ marginBottom: 20 }}>
+                    <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center'
+                          style={{marginBottom: 20}}>
                         <Typography style={{
                             font: 'normal normal normal 18px/18px Poppins',
                             textAlign: 'center',
@@ -76,10 +132,10 @@ const MyProfileInfo = () => {
                             color: '#FFFFFF'
                         }}>
                             Miembro Truster desde Septiembre / 2021
-                            </Typography>
+                        </Typography>
                     </Grid>
-                    <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center' >
-                        <img src={Cover} alt='cover' />
+                    <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center'>
+                        <img src={Cover} alt='cover'/>
                         <Typography style={{
                             marginLeft: 20,
                             align: "center",
@@ -91,31 +147,61 @@ const MyProfileInfo = () => {
                         </Typography>
                     </Grid>
                 </Grid>
-                <Grid container justify='flex-end' xs={3} xl={3} sm={3} style={{ marginTop: -10 }}>
+                <Grid container justify='flex-end' xs={3} xl={3} sm={3} style={{marginTop: -10}}>
                     <Grid container justify='flex-end'>
-                        <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
-                            <img src={ReputationImg} alt='test' width='160px' height='160px' />
-                        </Grid>
-                        <Grid container justify='flex-end' xs={1} xl={1} sm={1} style={{ marginTop: 130, marginLeft: -30 }}>
-                            <img src={Logo} alt='logo' />
+
+                        {imagesArray !== null && imagesArray.length > 0 ?
+                            <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
+
+                                <img
+                                    src={UriServices() + '/' + user + '/images/perfil/' + imagesArray[0]}
+                                    width='160px' height='160px' style={{
+                                        borderRadius:'50%',
+                                    objectFit:'cover'
+                                }}
+                                />
+
+                            </Grid>
+                            : <Grid container justify='flex-end' xs={11} xl={11} sm={11}> 
+                                <img src={ReputationImg} alt='test' width='160px' height='160px' />
+                             </Grid>
+                        }
+
+
+                        <Grid container justify='flex-end' xs={1} xl={1} sm={1}
+                              style={{marginTop: 130, marginLeft: -30}}>
+                            <img src={Logo} alt='logo'/>
                         </Grid>
                     </Grid>
-                    <Grid container justify='flex-end'>
+                    <Grid container justify='flex-end' component="label">
+                        {/*<Button component="label">*/}
+
+                        <input
+                            id="file"
+                            name="file"
+                            type="file"
+                            hidden
+                            onChange={(e) => onFileChange(e)}
+                        />
+
                         <Typography style={{
                             marginTop: 15,
                             marginRight: 30,
                             textAlign: "center",
                             color: "#A3A3A3",
                             font: " normal normal 14px/14px Poppins",
-
+                            cursor: 'pointer'
                         }}>
                             Editar Foto
                         </Typography>
+                        {/*</Button>*/}
+
+
                     </Grid>
 
                 </Grid>
 
             </Grid>
-        </Grid >)
+        </Grid>)
 }
-export default withStyles(styles, { withTheme: true })(MyProfileInfo);
+export default withStyles(styles, {withTheme: true})(MyProfileInfo);

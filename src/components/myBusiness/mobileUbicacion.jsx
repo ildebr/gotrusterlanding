@@ -6,9 +6,7 @@ import {Typography} from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
-import imagen from "../../asset/images/myBusiness/RectangleMobile 4.png";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
+
 
 
 
@@ -88,7 +86,6 @@ const CssTextField = withStyles({
         },
         '& .MuiInput-underline:before': {
             borderBottomColor: '#2C2C2C',
-
             bottom: '-10px',
         },
 
@@ -117,10 +114,10 @@ const AntSwitch = withStyles((theme) => ({
     },
     switchBase: {
         padding: 2,
-        color: theme.palette.grey[500],
+        color: '#000000',
         '&$checked': {
             transform: 'translateX(12px)',
-            color: theme.palette.common.white,
+            color: '#000000',
             '& + $track': {
                 opacity: 1,
                 backgroundColor: '#ACFD00',
@@ -132,10 +129,9 @@ const AntSwitch = withStyles((theme) => ({
         width: 12,
         height: 12,
         boxShadow: 'none',
-        backgroundColor: '#000'
     },
     track: {
-        border: `1px solid ${theme.palette.grey[500]}`,
+        //border: `1px solid ${theme.palette.grey[500]}`,
         borderRadius: 16 / 2,
         opacity: 1,
         backgroundColor: theme.palette.common.white,
@@ -143,26 +139,10 @@ const AntSwitch = withStyles((theme) => ({
     checked: {},
 }))(Switch);
 
-// const User = () => {
-//     return (
-//
-//         <div style={{width: '50px', height: '50px', backgroundColor: '#ff0000', display: 'inline-block'}}>
-//             +1
-//         </div>
-//
-//
-//     )
-//
-// }
-
 function MobileUbicacion(props) {
     const classes = useStyles();
     const [switchState, setSwitchState] = useState(false)
     const [imageAddCount, setImageAddCount] = useState(1)
-
-    // const [user, setUser] = useState([])
-
-
 
 
     return (
@@ -194,7 +174,8 @@ function MobileUbicacion(props) {
                                 <div style={{display: 'grid', paddingTop: '4px'}}>
                                     <CssTextField placeholder="Calle"/>
                                 </div>
-                            </Grid><Grid item xs={3}>
+                            </Grid>
+                            <Grid item xs={3}>
                             <div style={{display: 'grid', paddingTop: '4px'}}>
                                 <CssTextField placeholder="N°"/>
                             </div>
@@ -251,9 +232,9 @@ function MobileUbicacion(props) {
                         </Grid>
 
                         <Grid item style={{paddingTop: '56px'}}>
-                            <Typography className={classes.subtitulo}>
-                                Galería
-                            </Typography>
+                            {/*<Typography className={classes.subtitulo}>*/}
+                            {/*    Galería*/}
+                            {/*</Typography>*/}
                         </Grid>
                         {/*<Button*/}
                         {/*    onClick={*/}
@@ -271,54 +252,59 @@ function MobileUbicacion(props) {
                         {/*    {user}*/}
 
                         {/*</div>*/}
-                    <div style={{width:'100vw',
-                        position:'relative',
-                        marginLeft: '-50vw',
-                        left:'50%',
-                        overflow:'scroll'}}>
-                    <Grid container direction={"row"} style={{
-                        width:'max-content',
-                        marginTop:'16px'
-                        }}>
-                        <img src={imagen}
-                        style={{
-                            width:'168px',
-                            height:'133px',
-                            marginLeft:'22px'
-                        }}
-                        />
-                        <div style={{
-                            width:'168px',
-                            height:'133px',
-                            borderRadius:'18px',
-                            backgroundColor:'#202020',
-                            margin:'0 22px',
-                            display:'flex',
-                            justifyContent:'center',
-                            alignItems:'center'
-                        }}>
-                            <FontAwesomeIcon icon={faPlus} style={{
-                                color: '#999999', fontSize: 18
-                            }}/>
-                        </div>
-                        <div style={{
-                            width:'168px',
-                            height:'133px',
-                            borderRadius:'18px',
-                            backgroundColor:'#202020',
-                            marginRight:'22px',
-                            display:'flex',
-                            justifyContent:'center',
-                            alignItems:'center'
-                        }}>
-                            <FontAwesomeIcon icon={faPlus} style={{
-                                color: '#999999', fontSize: 18
-                            }}/>
-                        </div>
 
 
-                    </Grid>
-                    </div>
+                    {/*<div style={{width:'100vw',*/}
+                    {/*    position:'relative',*/}
+                    {/*    marginLeft: '-50vw',*/}
+                    {/*    left:'50%',*/}
+                    {/*    overflow:'scroll'}}>*/}
+                    {/*<Grid container direction={"row"} style={{*/}
+                    {/*    width:'max-content',*/}
+                    {/*    marginTop:'16px'*/}
+                    {/*    }}>*/}
+                    {/*    <img src={imagen}*/}
+                    {/*    style={{*/}
+                    {/*        width:'168px',*/}
+                    {/*        height:'133px',*/}
+                    {/*        marginLeft:'22px'*/}
+                    {/*    }}*/}
+                    {/*    />*/}
+                    {/*    <div style={{*/}
+                    {/*        width:'168px',*/}
+                    {/*        height:'133px',*/}
+                    {/*        borderRadius:'18px',*/}
+                    {/*        backgroundColor:'#202020',*/}
+                    {/*        margin:'0 22px',*/}
+                    {/*        display:'flex',*/}
+                    {/*        justifyContent:'center',*/}
+                    {/*        alignItems:'center'*/}
+                    {/*    }}>*/}
+                    {/*        <FontAwesomeIcon icon={faPlus} style={{*/}
+                    {/*            color: '#999999', fontSize: 18*/}
+                    {/*        }}/>*/}
+                    {/*    </div>*/}
+                    {/*    <div style={{*/}
+                    {/*        width:'168px',*/}
+                    {/*        height:'133px',*/}
+                    {/*        borderRadius:'18px',*/}
+                    {/*        backgroundColor:'#202020',*/}
+                    {/*        marginRight:'22px',*/}
+                    {/*        display:'flex',*/}
+                    {/*        justifyContent:'center',*/}
+                    {/*        alignItems:'center'*/}
+                    {/*    }}>*/}
+                    {/*        <FontAwesomeIcon icon={faPlus} style={{*/}
+                    {/*            color: '#999999', fontSize: 18*/}
+                    {/*        }}/>*/}
+                    {/*    </div>*/}
+
+
+                    {/*</Grid>*/}
+                    {/*</div>*/}
+
+                    {/*<Imagenes/>*/}
+
                     </Grid>
                     :
                     <a/>

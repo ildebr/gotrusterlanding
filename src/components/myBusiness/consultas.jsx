@@ -2,25 +2,26 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Grid} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles(theme => ({
-    titulo:{
+    titulo: {
         color: '#ACFD00',
         fontFamily: "Poppins",
         fontSize: '22px',
         fontWeight: 600,
         textAlign: 'left',
         letterSpacing: '-0.02em',
-        paddingBottom:'34px'
+        paddingBottom: '34px'
     },
-    subtitulo:{
+    subtitulo: {
         color: '#FFF',
         fontFamily: "Poppins",
         fontSize: '12px',
         fontWeight: 600,
         textAlign: 'left',
         letterSpacing: '-0.02em',
-        paddingBottom:'25px'
+        paddingBottom: '25px'
     },
 
     texto: {
@@ -30,7 +31,30 @@ const useStyles = makeStyles(theme => ({
         fontWeight: 500,
         textAlign: 'left',
         letterSpacing: '-0.02em',
-    }
+    },
+    textfield: {
+        '& .MuiFilledInput-multiline': {
+            padding: '12px 0 0 0'
+            //backgroundColor:'#202020',
+            //borderRadius:'12px'
+        },
+
+        '& textarea': {
+            fontFamily: "Poppins",
+            fontWeight: 500,
+            fontSize: 16,
+            letterSpacing: '-0.02em',
+            color: '#666666',
+        },
+        '& .MuiFilledInput-underline:before': {
+            //borderBottomColor: '#2C2C2C',
+            borderBottom: ' 3px solid #2C2C2C',
+        },
+        '& .MuiFilledInput-underline:after': {
+            //borderBottomColor: '#2C2C2C',
+            borderBottom: ' 3px solid #2C2C2C',
+        },
+    },
 }));
 
 
@@ -38,25 +62,32 @@ function Consultas(props) {
     const classes = useStyles();
     return (
         <React.Fragment>
-            <Grid container direction={"column"} style={{paddingTop:'104px'}}>
+            <Grid container direction={"column"} style={{paddingTop: '104px'}}>
                 <Grid item>
-                  <Typography className={classes.titulo}>
-                      Consultas
-                  </Typography>
+                    <Typography className={classes.titulo}>
+                        Consultas
+                    </Typography>
                 </Grid>
                 <Grid item>
                     <Typography className={classes.subtitulo}>
                         Mensaje para consultas
                     </Typography>
                 </Grid>
-                <Grid item>
-                    <Typography className={classes.texto}>
-                        Escribí el mensaje que van a recibir tus clientes a la hora de hacerte una consulta
-                    </Typography>
-                </Grid>
+
+
+                <TextField
+                    id="filled-multiline-static"
+
+                    multiline
+                    rows={10}
+                    placeholder={"Escribí el mensaje que van a recibir tus clientes a la hora de hacerte una consulta"}
+
+                    variant="filled"
+                    className={classes.textfield}
+                />
+
             </Grid>
 
-            <hr style={{width: '100%', marginTop: '223px'}} color='#333333'/>
 
         </React.Fragment>
     );

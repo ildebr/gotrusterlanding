@@ -15,6 +15,7 @@ import BurgerIcon from '../../asset/images/navBar/burger.svg'
 import Logo from '../../asset/images/navBar/logo.svg'
 import X from '../../asset/images/navBar/x.svg'
 const { localStorage } = global.window;
+const userActive = localStorage.getItem('logueado');
 export default function TemporaryDrawer() {
     const [state, setState] = React.useState({
         left: false,
@@ -28,6 +29,7 @@ export default function TemporaryDrawer() {
     };
 
     const list = (anchor) => (
+       
         <div
             style={{ background: '#1A1A1A', height: '300vh' }}
             role="presentation"
@@ -83,7 +85,7 @@ export default function TemporaryDrawer() {
                         <Link href='/'><img src={Busqueda} alt='busqueda' /></Link>
                     </Grid>
                     <Grid container xs={11} xl={11} sm={11} justify='flex-start'>
-                        <Link href='/'><Typography style={{
+                        <Link href={userActive ?'/search':'/'}><Typography style={{
                             color: "#FFFFFF",
                             font: " normal normal 14px/14px Poppins"
                         }}>Búsqueda</Typography></Link>
@@ -91,10 +93,10 @@ export default function TemporaryDrawer() {
                 </Grid>
                 <Grid container xs={12} xl={12} sm={12} style={{ marginTop: 15 }} alignItems='center'>
                     <Grid container xs={1} xl={1} sm={1}>
-                        <Link href='/'><img src={MiReputacion} alt='reputacion' /></Link>
+                        <Link href={userActive ?'/reputation':'/'}><img src={MiReputacion} alt='reputacion' /></Link>
                     </Grid>
                     <Grid container xs={11} xl={11} sm={11} justify='flex-start'>
-                        <Link href='/'><Typography style={{
+                        <Link href={userActive ?'/reputation':'/'}><Typography style={{
                             color: "#FFFFFF",
                             font: " normal normal 14px/14px Poppins"
                         }}>Mi Reputación</Typography></Link>
@@ -102,11 +104,11 @@ export default function TemporaryDrawer() {
                 </Grid>
                 <Grid container xs={12} xl={12} sm={12} style={{ marginTop: 15 }} alignItems='center'>
                     <Grid container xs={1} xl={1} sm={1}>
-                        <Link href='/'><img src={MiNegocio} alt='negocio' /></Link>
+                        <Link href={userActive ?'/mybusiness':'/'}><img src={MiNegocio} alt='negocio' /></Link>
                     </Grid>
                     <Grid container xs={11} xl={11} sm={11} justify='flex-start'>
                         <Grid container xs={12} xl={12} sm={12} justify='flex-start'>
-                            <Link href='/'><Typography style={{
+                            <Link href={userActive ?'/mybusiness':'/'}><Typography style={{
                                 color: "#777777",
                                 font: " normal normal 14px/14px Poppins"
                             }}>Mi Negocio</Typography></Link>
@@ -121,10 +123,10 @@ export default function TemporaryDrawer() {
                 </Grid>
                 <Grid container xs={12} xl={12} sm={12} style={{ marginTop: 15 }} alignItems='center'>
                     <Grid container xs={1} xl={1} sm={1}>
-                        <Link href='/'><img src={MiPerfil} alt='perfil' /></Link>
+                        <Link href={userActive ?'/myprofile':'/'}><img src={MiPerfil} alt='perfil' /></Link>
                     </Grid>
                     <Grid container xs={11} xl={11} sm={11} justify='flex-start'>
-                        <Link href='/'><Typography style={{
+                        <Link href={userActive ?'/myprofile':'/'}><Typography style={{
                             color: "#FFFFFF",
                             font: " normal normal 14px/14px Poppins"
                         }}>Mi Perfil</Typography></Link>
@@ -132,7 +134,7 @@ export default function TemporaryDrawer() {
                 </Grid>
                 <Grid container xs={12} xl={12} sm={12} style={{ marginTop: 15 }} alignItems='center'>
                     <Grid container xs={1} xl={1} sm={1}>
-                        <Link href='/'><img src={MiPerfil} alt='seguridad' /></Link>
+                        <Link href='/security'><img src={MiPerfil} alt='seguridad' /></Link>
                     </Grid>
                     <Grid container xs={11} xl={11} sm={11} justify='flex-start'>
                         <Link href='/'><Typography style={{
@@ -148,10 +150,10 @@ export default function TemporaryDrawer() {
                     </Grid>
                     <Grid container xs={11} xl={11} sm={11} justify='flex-start'>
                         <Grid container xs={12} xl={12} sm={12} justify='flex-start'>
-                            <Link href='/'><Typography style={{
+                            <Link href='/sharemyprofile'><Typography style={{
                                 color: "#777777",
                                 font: " normal normal 14px/14px Poppins"
-                            }}>Compartir Perfil</Typography></Link>
+                            }}>Compartir Perfíl</Typography></Link>
                         </Grid>
                         <Grid container xs={12} xl={12} sm={12} justify='flex-start' style={{ marginTop: 3 }}>
                             <Typography style={{

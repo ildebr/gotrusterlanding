@@ -11,7 +11,8 @@ import Insertar from '../../asset/images/sidemenu/insertar.svg'
 import Ajustes from '../../asset/images/sidemenu/ajustes.svg'
 import Soporte from '../../asset/images/sidemenu/soporte.svg'
 import CerrarSesion from '../../asset/images/sidemenu/cerrarsesion.svg'
-
+const { localStorage } = global.window;
+const userActive = localStorage.getItem('logueado');
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -51,6 +52,7 @@ const ReputationNavbar = () => {
             flexGrow: 1,
             border: 0,
             margin: 0,
+            zIndex: 100
         }} >
             <Toolbar>
                 <div class="menu-wrap">
@@ -92,14 +94,14 @@ const ReputationNavbar = () => {
                                     </Typography>
                                 <ul style={{ paddingLeft: '40px' }}>
                                     <li><Link underline='hover' href='/' style={{ color: "#ACFD00" }} ><img src={Inicio} alt='inicio' style={{ paddingRight: 10, width: '12px' }} /> Inicio</Link></li>
-                                    <li><Link href='/'><img src={Busqueda} alt='busqueda' style={{ paddingRight: 10, width: '13px' }} /> Búsqueda</Link></li>
-                                    <li><Link href='/'><img src={MiPerfil} alt='miperfil' style={{ paddingRight: 10, width: '12px' }} /> Mi Perfil</Link></li>
-                                    <li><Link href='/'><img src={MiNegocio} alt='minegocio' style={{ paddingRight: 10, width: '14px' }} /> Mi Negocio</Link></li>
-                                    <li><Link href='/'><img src={MiReputacion} alt='mireputacion' style={{ paddingRight: 10, width: '13px' }} /> Mi Reputación</Link></li>
+                                    <li><Link href={userActive ?'/search':'/'}><img src={Busqueda} alt='busqueda' style={{ paddingRight: 10, width: '13px' }} /> Búsqueda</Link></li>
+                                    <li><Link href={userActive ?'/myprofile':'/'}><img src={MiPerfil} alt='miperfil' style={{ paddingRight: 10, width: '12px' }} /> Mi Perfil</Link></li>
+                                    <li><Link href={userActive ?'/mybusiness':'/'}><img src={MiNegocio} alt='minegocio' style={{ paddingRight: 10, width: '14px' }} /> Mi Negocio</Link></li>
+                                    <li><Link href={userActive ?'/reputation':'/'}><img src={MiReputacion} alt='mireputacion' style={{ paddingRight: 10, width: '13px' }} /> Mi Reputación</Link></li>
                                 </ul>
                                 <hr width={'100%'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30, marginLeft: 20 }} />
                                 <ul style={{ paddingLeft: '40px' }}>
-                                    <li><Link href='/'><img src={Compartir} alt='compartir' style={{ paddingRight: 10, width: '12px' }} /> Compartir Perfil</Link></li>
+                                    <li><Link href='/sharemyprofile'><img src={Compartir} alt='compartir' style={{ paddingRight: 10, width: '12px' }} /> Compartir Perfil</Link></li>
                                     <li><Link href='/'><img src={Insertar} alt='insertar' style={{ paddingRight: 10, width: '14px' }} /> Insertar Perfil</Link></li>
                                     <li><Link href='/'><img src={Ajustes} alt='ajustes' style={{ paddingRight: 10, width: '13px' }} /> Ajustes</Link></li>
                                     <li><Link href='/'><img src={Soporte} alt='soporte' style={{ paddingRight: 10, width: '12px' }} /> Soporte</Link></li>

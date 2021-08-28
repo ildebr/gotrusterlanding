@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
-import { CssBaseline, Grid, Box, Container, Typography } from '@material-ui/core';
+import { CssBaseline, Grid, Box, Container, Typography, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import auth from './../../setting/auth';
 import NavBar from '../../components/navBar/navbar.jsx';
 import InputBase from '@material-ui/core/InputBase';
 import Logo from '../../asset/images/logo.svg';
 import Link from '@material-ui/core/Link';
-import { AccountResetPass } from './../../services/hostConfig';
+import Loading from './../../components/Loading';
+import cliente from "./../../setting/cliente";
+import { AccountResetPassEx } from './../../services/hostConfig';
+import { getToken } from './../../setting/auth-helpers';
+const { localStorage } = global.window;
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -123,6 +128,18 @@ const styles = theme => ({
         border: '1px solid',
         borderColor: '#ACFD00',
         borderRadius: 15,
+        textTransform: 'none',
+        font: 'normal normal normal 18px/24px Poppins',
+        height: 60,
+        marginTop: theme.spacing(4),
+    },
+    loginEx: {
+        backgroundColor: '#ACFD00',
+        width: '50%',
+        border: '1px solid',
+        borderColor: '#ACFD00',
+        borderRadius: 15,
+        textTransform: 'none',
         font: 'normal normal normal 18px/24px Poppins',
         height: 60,
         marginTop: theme.spacing(4),
@@ -158,15 +175,17 @@ class NewpassRecover extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            key:'',
-            password:'',
-            password2:'',
-            error:'',
-            textError:'',
-            ruta:'/',
-            show:false,
+            password: '',
+            password2: '',
+            error: '',
+            textError: '',
+            ruta: '/',
+            show: false,
             windowWidth: window.innerWidth,
-            sent: false
+            sent: false,
+            passError: '',
+            incompletePassError: '',
+            active: false
         };
 
     }
@@ -182,47 +201,127 @@ class NewpassRecover extends Component {
     }
     useQuery() {
         return new URLSearchParams(window.location.search);
-      }
-    
-      _handleChangeValuePass = e =>{
+    }
+
+    _handleChangeValuePass = e => {
         e.preventDefault();
-        this.setState({password:e.target.value})
-      }
-      _handleChangeValuePass2 = e =>{
+        this.setState({ password: e.target.value })
+    }
+    _handleChangeValuePass2 = e => {
         e.preventDefault();
-        this.setState({password2:e.target.value})
-      }
+        this.setState({ password2: e.target.value })
+    }
+    componentDidMount() {
+        window.addEventListener("resize", this.handleResize);
+        //let url = window.location.search;
+        let params = new URLSearchParams(window.location.search);
+        var key = params.get('key');
+        this.setState({ key: key })
+        localStorage.setItem('key', key)
+    }
+    securityPassword = e => {
+
+        const targetVal = e.target.value;
+        const longitudAct = targetVal.length;
+        let security = false;
+        let securityUp = 0;
+        let securityLower = 0;
+        let securityNumber = 0;
+        let securityLenght = false;
+        var i = 0;
+        var character = '';
+        console.log(longitudAct);
+        this.setState({ maxPass: longitudAct })
+        if (longitudAct < 8) {
+            securityLenght = false;
+        } else {
+
+            while (i <= targetVal.length) {
+                character = targetVal.charAt(i);
+                if (!isNaN(character * 1)) {
+                    securityNumber++;
+                    console.log('character is numeric ' + character);
+                } else {
+                    if (character == character.toUpperCase()) {
+                        securityUp++;
+                        console.log('upper case true ' + character);
+                    }
+                    if (character == character.toLowerCase()) {
+                        securityLower++;
+                        console.log('lower case true ' + character);
+                    }
+                }
+                i++;
+            }
+
+        }
+        if (securityNumber > 0
+            && securityUp > 0
+            && securityLower > 0) {
+            security = true
+        } else {
+            security = false;
+        }
+
+        console.log("total seguridad " + security)
+        return security
+
+    }
+
 
     _handleSubmit = e => {
         e.preventDefault();
         let pass = this.state.password;
         let pass2 = this.state.password2;
-        let key = this.useQuery().get('key');
-        console.log('key: ' + key);
-        if ((pass === '') || (pass2 === '')) {
-          this.setState({
-            error: 'error',
-            textError: '*Debe ingresa la contraseña en ambos campos'
-          })
-        } else {
-          this.setState({
-            show:true
-          })
-          fetch(AccountResetPass(), {
-            method: 'post',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({'key': key, 'newPassword': this.state.password}),
-          }).then(response=>{
-            console.log(response)
-            this.setState({
-              show:false
-            })
-          });
+        let clave = localStorage.getItem("key");
+        this.setState({
+            active: true,
+            show: true
+        })
+        const newPass = {
+            "key": clave,
+            "newPassword": this.state.password
         }
-      }
+        console.log(newPass);
+        if ((pass === '') || (pass2 === '') || (pass !== pass2)) {
+            this.setState({
+                error: true,
+                textError: '*Debe ingresa la contraseña en ambos campos',
+                passError: true,
+            })
+        } else {
+            this.setState({
+                show: true
+            })
+            auth.login("admin", "Truster2021")
+                .then(() => {
+                    const token = getToken();
+                    console.log(token);
+                    cliente.post(AccountResetPassEx(), newPass, {
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        }
+                    }).then(response => {
+                        console.log(response.status)
+                        if (response.status === 200) {
+                            this.setState({
+                                sent: true,
+                                active: true,
+                                show: false
+                            })
+                        } else {
+                            this.setState({
+                                sent: false,
+                                active: false,
+                                show: true
+                            })
+                        }
+
+                    });
+                }).catch(error => console.error('Error:', error));
+        }
+    }
     render() {
         function getWindowDimensions() {
             const { innerWidth: width } = window;
@@ -232,6 +331,18 @@ class NewpassRecover extends Component {
         }
         const { classes } = this.props;
         const { width } = getWindowDimensions();
+        let $show = this.state.show;
+        let $wait = '';
+        if ($show) {
+            $wait = (<Loading />);
+        } else {
+            $wait = (<img src={Logo} alt='logo' width="50" height="50" />);
+        }
+
+        let $passError = this.state.passError ? '*las contraseña no coinciden' : '';
+
+        let $incompletePassError = this.state.incompletePassError ? '*La contraseña debe contener 8 caracteres mínimo,' : '';
+        let $incompletePassErrorEx = this.state.incompletePassError ? '*una minúscula, una mayúscula y un número' : '';
 
         return (
             <div style={{ backgroundColor: '#000000' }}>
@@ -248,15 +359,20 @@ class NewpassRecover extends Component {
                                     {width > 600 ?
                                         <div>
                                             {this.state.sent === false ? <Grid justify='center' container style={{ marginTop: 100 }}>
+                                                <Box mx="auto"  >
+                                                    <Box className={classes.authHeader}>
+                                                        {$wait}
+                                                    </Box>
+                                                </Box>
                                                 <Grid container justify='center'>
                                                     <Typography className={classes.paperWelcome} style={{ maxWidth: 450 }}>
                                                         Ingresá una nueva contraseña para continuar
-                                        </Typography>
+                                                    </Typography>
                                                 </Grid>
                                                 <Grid container justify='center'>
                                                     <Typography className={classes.paperWelcome1} style={{ maxWidth: 450 }}>
                                                         Te enviaremos un correo con un link de recuperación
-                                        </Typography>
+                                                    </Typography>
                                                 </Grid>
                                                 <Grid container justify='center'>
                                                     <form style={{
@@ -269,33 +385,80 @@ class NewpassRecover extends Component {
                                                     }}
                                                         onSubmit={this._handleSubmit}
                                                         noValidate>
-                                                       
+
                                                         <InputBase
                                                             placeholder="Nueva contraseña"
+                                                            type='password'
                                                             fullWidth
                                                             id="newpass"
                                                             inputProps={{ style: { textAlign: 'center' } }}
                                                             className={classes.formButton}
                                                             onChange={this._handleChangeValuePass}
+                                                            onClick={(e) => {
+                                                                this.setState({
+                                                                    password: '',
+                                                                    password2: '',
+                                                                    passError: false,
+                                                                    incompletePassError: false,
+                                                                    error: false
+                                                                })
+                                                            }}
+                                                            onBlur={(e) => {
+                                                                if (this.securityPassword(e) == false) {
+                                                                    this.setState({
+                                                                        incompletePassError: true,
+                                                                        error: true
+                                                                    })
+                                                                } else if (this.securityPassword(e) == true) {
+                                                                    this.setState({
+                                                                        incompletePassError: false,
+                                                                        error: false
+                                                                    })
+                                                                }
+                                                            }}
+                                                            required
                                                         />
+                                                        <Typography style={{ color: 'red', fontSize: 10 }}>
+                                                            {$incompletePassError}
+                                                        </Typography>
+                                                        <Typography style={{ color: 'red', fontSize: 10 }}>
+                                                            {$incompletePassErrorEx}
+                                                        </Typography>
+                                                        <Typography style={{ color: 'red', fontSize: 10 }}>
+                                                            {$passError}
+                                                        </Typography>
                                                         <InputBase
                                                             placeholder="Repetir nueva contraseña"
                                                             fullWidth
                                                             id="newpassvalid"
+                                                            type='password'
                                                             inputProps={{ style: { textAlign: 'center' } }}
                                                             className={classes.formButton}
                                                             onChange={this._handleChangeValuePass2}
+                                                            onClick={(e) => {
+                                                                this.setState({
+
+                                                                    passError: false,
+                                                                    error: false
+                                                                })
+                                                            }}
+
+                                                            onPaste={(e) => {
+                                                                e.preventDefault();
+                                                                return false;
+                                                            }}
 
                                                         />
                                                         {/* {console.log(this.state.sent)} */}
-                                                        <button
+                                                        <Button
                                                             type="submit"
                                                             fullWidth
                                                             className={classes.login}
-                                                            onClick={this.handleSentChange}
+                                                            disabled={this.state.active}
+
                                                         >
                                                             Modificar
-                                                </button>
+                                                        </Button>
                                                     </form>
                                                 </Grid>
                                             </Grid> :
@@ -311,67 +474,18 @@ class NewpassRecover extends Component {
                                                         </Typography>
                                                     </Grid>
                                                     <Grid container justify='center'>
-                                                        <form style={{
-                                                            width: '40%',
-                                                            minWidth: 300,
-                                                            marginTop: 30,
-                                                            justifyContent: "center",
-                                                            alignContent: "center",
-                                                            textAlign: 'center',
-                                                        }}
-                                                        onSubmit={this._handleSubmit}
-                                                            noValidate>
-                                                            <InputBase
-                                                                placeholder="Usuario / Email"
-                                                                fullWidth
-                                                                id="user"
-                                                                inputProps={{ style: { textAlign: 'center' } }}
-                                                                className={classes.formButton}
-                                                                onChange={this._handleChangeValuePass}
 
-                                                            />
-                                                            <InputBase
-                                                                placeholder="Contraseña"
-                                                                fullWidth
-                                                                id="pass"
-                                                                inputProps={{ style: { textAlign: 'center' } }}
-                                                                className={classes.formButton}
-                                                                onChange={this._handleChangeValuePass2}
-       
-                                                            />
+                                                        <Button
+                                                            type="submit"
+                                                            fullWidth
+                                                            className={classes.loginEx}
+                                                            href={'/'}
+                                                        >
+                                                            Log in
+                                                        </Button>
 
-                                                            <button
-                                                                type="submit"
-                                                                fullWidth
-                                                                className={classes.login}
-                                                                onClick={this.handleSentChange}
-                                                            >
-                                                                Log in
-                                                            </button>
-                                                            <Grid container>
-                                                                <Grid item xs>
-                                                                    <Link href="/passrecover" style={{ textDecoration: 'none' }} >
-                                                                        <Typography
-                                                                            className={classes.normaltext}>
-                                                                            ¿Olvidaste contraseña?
-                                                                        </Typography>
-                                                                    </Link>
-                                                                </Grid>
-                                                            </Grid>
-                                                            <Grid container>
-                                                                <Grid item xs>
-                                                                    <Typography
-                                                                        className={classes.normaltext}>
-                                                                        ¿No tenés cuenta?{' '}
-                                                                        <Link
-                                                                            href="/register"
-                                                                            style={{ color: '#ACFD00' }}>
-                                                                            Registrate
-                                                                        </Link>
-                                                                    </Typography>
-                                                                </Grid>
-                                                            </Grid>
-                                                        </form>
+
+
                                                     </Grid>
                                                 </Grid>}
                                         </div>
@@ -379,89 +493,138 @@ class NewpassRecover extends Component {
                                         <Grid justify='center' container style={{ marginTop: 0 }}>
                                             <Box mx="auto"  >
                                                 <Box className={classes.authHeader}>
-                                                    <img src={Logo} alt='logo' width="50" height="50" />
+                                                    {$wait}
                                                 </Box>
                                             </Box>
+                                           
                                             {this.state.sent === false ?
-                                                <div>
-                                                    <Grid container justify='center'>
-                                                        <Typography className={classes.paperWelcome} style={{ maxWidth: 300, marginBottom: 15 }}>
-                                                            Ingresá una nueva contraseña para continuar
+                                        <div>
+                                            <Grid container justify='center'>
+                                                <Typography className={classes.paperWelcome} style={{ maxWidth: 300, marginBottom: 15 }}>
+                                                    Ingresá una nueva contraseña para continuar
                                                 </Typography>
-                                                    </Grid>
-                                                    <Grid container justify='center'>
-                                                        <form style={{
-                                                            width: '100%',
-                                                            marginTop: 30,
-                                                            justifyContent: "center",
-                                                            alignContent: "center",
-                                                            textAlign: 'center',
+                                            </Grid>
+                                            <Grid container justify='center'>
+                                                <form style={{
+                                                    width: '100%',
+                                                    marginTop: 30,
+                                                    justifyContent: "center",
+                                                    alignContent: "center",
+                                                    textAlign: 'center',
+                                                }}
+                                                    onSubmit={this._handleSubmit}
+                                                    noValidate>
+
+                                                    <InputBase
+                                                        placeholder="Nueva contraseña"
+                                                        fullWidth
+                                                        id="newpass"
+                                                        type='password'
+                                                        inputProps={{ style: { textAlign: 'center' } }}
+                                                        className={classes.formButton}
+                                                        onChange={this._handleChangeValuePass}
+                                                        onClick={(e) => {
+                                                            this.setState({
+                                                                password: '',
+                                                                password2: '',
+                                                                passError: false,
+                                                                incompletePassError: false,
+                                                                error: false
+                                                            })
                                                         }}
-                                                            onSubmit={this._handleSubmit}
-                                                            noValidate>
-                                                           
-                                                            <InputBase
-                                                                placeholder="Nueva contraseña"
-                                                                fullWidth
-                                                                id="newpass"
-                                                                inputProps={{ style: { textAlign: 'center' } }}
-                                                                className={classes.formButton}
-                                                                onChange={this._handleChangeValuePass}
+                                                        onBlur={(e) => {
+                                                            if (this.securityPassword(e) == false) {
+                                                                this.setState({
+                                                                    incompletePassError: true,
+                                                                    error: true
+                                                                })
+                                                            } else if (this.securityPassword(e) == true) {
+                                                                this.setState({
+                                                                    incompletePassError: false,
+                                                                    error: false
+                                                                })
+                                                            }
+                                                        }}
 
-                                                            
-                                                            />
-                                                            <InputBase
-                                                                placeholder="Repetir nueva contraseña"
-                                                                fullWidth
-                                                                id="newpassvalid"
-                                                                inputProps={{ style: { textAlign: 'center' } }}
-                                                                className={classes.formButton}
-                                                                onChange={this._handleChangeValuePass2}
+                                                    />
+                                                    <Typography style={{ color: 'red', fontSize: 10 }}>
+                                                        {$incompletePassError}
+                                                    </Typography>
+                                                    <Typography style={{ color: 'red', fontSize: 10 }}>
+                                                        {$incompletePassErrorEx}
+                                                    </Typography>
+                                                    <Typography style={{ color: 'red', fontSize: 10 }}>
+                                                        {$passError}
+                                                    </Typography>
+                                                    <InputBase
+                                                        placeholder="Repetir nueva contraseña"
+                                                        fullWidth
+                                                        type='password'
+                                                        id="newpassvalid"
+                                                        inputProps={{ style: { textAlign: 'center' } }}
+                                                        className={classes.formButton}
+                                                        onChange={this._handleChangeValuePass2}
+                                                        onClick={(e) => {
+                                                            this.setState({
 
-                                                           
-                                                            />
-                                                            
-                                                            <button
-                                                                type="submit"
-                                                                fullWidth
-                                                                className={classes.login}
-                                                                onClick={this.handleSentChange}
-                                                            >
-                                                                Modificar
-                                                    </button>
+                                                                passError: false,
+                                                                error: false
+                                                            })
+                                                        }}
 
-                                                        </form>
-                                                    </Grid>
-                                                </div> :
-                                                <Grid container justify='center'>
-                                                    <Grid container justify='center' xs={12} xl={12} sm={12}>
-                                                        <Typography className={classes.paperWelcome} style={{ marginBottom: 15 }}>
-                                                            ¡Listo! Tu contraseña ha sido modificada. Ya podés iniciar sesión.
-                                                            </Typography>
-                                                    </Grid>
-                                                    <Grid container justify='center' xs={12} xl={12} sm={12}>
-
-                                                        <button
-                                                            type="submit"
-                                                            fullWidth
-                                                            className={classes.login}
-                                                            onClick={this.handleSentChange}
-                                                        >
-                                                            Ingresar
-                                                    </button>
+                                                        onPaste={(e) => {
+                                                            e.preventDefault();
+                                                            return false;
+                                                        }}
 
 
-                                                    </Grid>
-                                                </Grid>
-                                            }
+                                                    />
+                                                    <Typography style={{ color: 'red', fontSize: 10 }}>
+                                                        {$passError}
+                                                    </Typography>
+
+                                                    <Button
+                                                        type="submit"
+                                                        fullWidth
+                                                        className={classes.login}
+                                                        disabled={this.state.active}
+
+                                                    >
+                                                        Modificar
+                                                    </Button>
+
+                                                </form>
+                                            </Grid>
+                                        </div> :
+                                        <Grid container justify='center'>
+                                            <Grid container justify='center' xs={12} xl={12} sm={12}>
+                                                <Typography className={classes.paperWelcome} style={{ marginBottom: 15 }}>
+                                                    ¡Listo! Tu contraseña ha sido modificada. Ya podés iniciar sesión.
+                                                </Typography>
+                                            </Grid>
+                                            <Grid container justify='center' xs={12} xl={12} sm={12}>
+
+                                                <Button
+                                                    type="submit"
+                                                    fullWidth
+                                                    className={classes.login}
+                                                    href={'/'}
+                                                >
+                                                    Ingresar
+                                                </Button>
+
+
+                                            </Grid>
+                                        </Grid>
+                                    }
 
                                         </Grid>}
                                 </div>
                             </Box>
-                        </Container>
+                    </Container>
                     </Container>
                 </Grid>
-            </div>
+            </div >
         );
     }
 }

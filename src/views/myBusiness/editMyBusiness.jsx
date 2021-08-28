@@ -1,12 +1,13 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import {Container, Grid, Typography} from "@material-ui/core";
+import {Container, Grid, Typography, Link } from "@material-ui/core";
 import TemporaryDrawer from "../../components/navBar/mobileDrawer";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft} from "@fortawesome/free-solid-svg-icons";
 import EditTienda from "../../components/myBusiness/editTienda";
 import MobileUbicacion from "../../components/myBusiness/mobileUbicacion";
 import MobileConsultas from "../../components/myBusiness/mobileConsultas";
+import Imagenes from "../../components/myBusiness/imagenes";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -59,9 +60,9 @@ function EditMyBusiness(props) {
                                 </Typography>
                             </Grid>
                             <Grid item xs={2} container justify='flex-end' alignItems={"center"}>
-                                <FontAwesomeIcon icon={faAngleLeft} style={{
+                                <Link href='/mybusiness'><FontAwesomeIcon icon={faAngleLeft} style={{
                                     color: '#777777', fontSize: "26px", align:'right', marginRight:'20px'
-                                }}/>
+                                }}/></Link>
                             </Grid>
                         </Grid>
 
@@ -73,6 +74,9 @@ function EditMyBusiness(props) {
                         </Grid>
                         <Grid item >
                             <MobileUbicacion/>
+                        </Grid>
+                        <Grid item style={{marginBottom:'32px'}}>
+                            <Imagenes/>
                         </Grid>
                         <Grid item style={{marginBottom:'32px'}}>
                         <MobileConsultas/>

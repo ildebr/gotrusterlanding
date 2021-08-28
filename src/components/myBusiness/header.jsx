@@ -111,7 +111,7 @@ function Header(props) {
                         <Grid item style={{display: "flex", alignItems: 'center'}}>
                             <img src={icon1} style={{paddingRight: '16px'}}/>
                             <Typography className={classes.numberGrid}>
-                                +22
+                                +0
                             </Typography>
                         </Grid>
                         <Grid item>
@@ -126,7 +126,7 @@ function Header(props) {
                         <Grid item style={{display: "flex", alignItems: 'center'}}>
                             <img src={icon2} style={{paddingRight: '16px'}}/>
                             <Typography className={classes.numberGrid}>
-                                +232
+                                +0
                             </Typography>
                         </Grid>
                         <Grid item>

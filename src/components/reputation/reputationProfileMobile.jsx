@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import { Grid, Typography } from '@material-ui/core';
 import ReputationImg from '../../asset/images/reputation/Ellipse 6.png'
@@ -6,7 +6,8 @@ import ShareButton from '../../asset/images/reputation/Group 25.svg'
 import Logo from '../../asset/images/reputation/logo.svg'
 import GreyLogo from '../../asset/images/reputation/greylogo.svg'
 import CircularDeterminate from './progressBarMobile'
-
+import Cliente from "../../setting/cliente";
+import { GetImage, UriServices } from "../../services/hostConfig";
 const { localStorage } = global.window;
 const styles = theme => ({
     root: {
@@ -45,7 +46,40 @@ const styles = theme => ({
 
 
 const ReputationProfileMobile = () => {
+    const [user, setUser] = useState(null)
+    const [imagesArray, setImagesArray] = useState(null)
+
+
+    function getImages() {
+        Cliente.get(GetImage(), {
+            params: {
+                'user': user,
+                'folder': 'perfil'
+            }
+        }).then(
+            res => {
+                setImagesArray(res['data']['fileNames'])
+                console.log(res)
+            }
+        )
+    }
+    useEffect(() => {
+
+        if (user === null) {
+            setUser(localStorage.getItem('userLogin'))
+        }
+
+        if (imagesArray === null && user !== null) {
+            getImages();
+        }
+        //let user = JSON.parse(localStorage.getItem('currentUser'));
+
+    }, [imagesArray, user]);
+    let occupation = localStorage.getItem('occupation') === 'null' ? 'Agregue su ocupación' : localStorage.getItem('occupation');
     const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
+    let points = localStorage.getItem('points')=='null'? '': localStorage.getItem('points');
+    let nextLevel = localStorage.getItem('points')=='null'? '': parseInt(localStorage.getItem('points'))+4;
+    
     return (
         <Grid position="static" color="transparent" style={{
             flexGrow: 1,
@@ -65,7 +99,7 @@ const ReputationProfileMobile = () => {
                                 letterSpacing: '-0.02em',
                                 color: '#ACFD00'
                             }}>
-                                12
+                                {points}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -78,16 +112,34 @@ const ReputationProfileMobile = () => {
                             paddingRight: 10
                         }}>
                             Puntos Truster
-                            </Typography>
+                        </Typography>
                     </Grid>
                 </Grid>
+
                 <Grid container justify="center" xs={4} xl={4} sm={4} style={{ marginTop: -30 }}>
                     <div style={{ zIndex: -1, marginTop: -8.2 }}>
-                        <CircularDeterminate givenValue={100} />
+                        <CircularDeterminate givenValue={5} />
                     </div>
+                    {imagesArray !== null && imagesArray.length > 0 ?
                     <div style={{ zIndex: 1 }}>
-                        <img src={ReputationImg} alt='reputationImg' width='120px' />
+                        <img
+                            src={UriServices() + '/' + user + '/images/perfil/' + imagesArray[0]}
+                            width='120px' height='120px' style={{
+                                borderRadius: '50%',
+                                objectFit: 'cover'
+                            }}
+                        />
                     </div>
+                    :<div style={{ zIndex: 1 }}>
+                    <img
+                        src={ReputationImg}
+                        width='120px' height='120px' style={{
+                            borderRadius: '50%',
+                            objectFit: 'cover'
+                        }}
+                    />
+                </div>
+                }
                 </Grid>
                 <Grid container justify="center" xs={4} xl={4} sm={4}>
                     <Grid container justify="center" xs={12} xl={12} sm={12} style={{ marginLeft: -40 }}>
@@ -102,7 +154,7 @@ const ReputationProfileMobile = () => {
                                 letterSpacing: '-0.02em',
                                 color: '#777777'
                             }}>
-                                16
+                               {nextLevel}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -115,7 +167,7 @@ const ReputationProfileMobile = () => {
                             paddingRight: 10
                         }}>
                             Siguiente Nivel
-                            </Typography>
+                        </Typography>
                     </Grid>
                     <Grid container justify="center" xs={12} xl={12} sm={12}>
                         <Typography style={{
@@ -126,7 +178,7 @@ const ReputationProfileMobile = () => {
                             paddingRight: 10
                         }}>
                             +4
-                            </Typography>
+                        </Typography>
                     </Grid>
                 </Grid>
             </Grid>
@@ -146,7 +198,7 @@ const ReputationProfileMobile = () => {
                         color: "#777777",
                         font: " normal normal 22px/22px Poppins",
                     }}>
-                        Front End Developer
+                        {occupation}
                     </Typography>
                 </Grid>
                 <Grid container justify="center" align='center' xs={12} xl={12} sm={12} style={{ paddingTop: 10 }}>

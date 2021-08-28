@@ -8,9 +8,10 @@ import Link from '@material-ui/core/Link';
 import InputBase from '@material-ui/core/InputBase';
 import Logo from '../../asset/images/logo.svg';
 import Checkbox from '@material-ui/core/Checkbox';
-import RegexTextField from "../../components/helpers/regexTextField";
+//import RegexTextField from "../../components/helpers/regexTextField";
+
 const onlyLettersRegex = /[^a-zA-Z]/gi;
-const onlyNumbersRegex = /[^0-9]/gi;
+//const onlyNumbersRegex = /[^0-9]/gi;
 const { localStorage } = global.window;
 const styles = theme => ({
     root: {
@@ -136,7 +137,12 @@ const styles = theme => ({
         borderRadius: 15,
         textTransform: 'none',
         marginTop: theme.spacing(3),
+        "&:disabled": {
+            backgroundColor: '#597c1e',
+        }
     },
+
+
     loginError: {
         backgroundColor: '#E94342',
         width: '100%',
@@ -146,6 +152,9 @@ const styles = theme => ({
         color: '#FFFFFF',
         textTransform: 'none',
         marginTop: theme.spacing(3),
+        "&:disabled": {
+            backgroundColor: '#6e1d1d',
+        }
     },
     formButton: {
         marginTop: theme.spacing(1),
@@ -255,20 +264,29 @@ class Register extends Component {
             checkTerError: false,
             maxPass: '',
             passError: '',
+            incompletePassError: '',
             emailState: '',
-            windowWidth: window.innerWidth
+            emailAvailable: false,
+            emailAvailableEx: false,
+            emailRep: '',
+            windowWidth: window.innerWidth,
+
         };
     }
+
     handleResize = (e) => {
         this.setState({ windowWidth: window.innerWidth });
     };
     handleName = e => {
         e.preventDefault();
+
         this.setState({
             name: e.target.value,
             nameError: false,
+
         })
         console.log(e.target.value);
+
     }
     handleLastName = e => {
         e.preventDefault();
@@ -286,22 +304,37 @@ class Register extends Component {
     }
     handlepass = e => {
         e.preventDefault();
-        this.setState({ password: e.target.value })
+        this.setState({
+            password: e.target.value,
+            incompletePassError: false
+        })
     }
     handlepassEx = e => {
         e.preventDefault();
         this.setState({ passwordEx: e.target.value })
     }
+
     componentDidMount() {
         window.addEventListener("resize", this.handleResize);
     }
+
     handlerMaxPass = e => {
         const target = e.target;
         const longitudAct = target.value.length;
         console.log(longitudAct);
         this.setState({ maxPass: longitudAct })
+
+
+        if (longitudAct <= 0) {
+            this.setState({
+                incompletePassError: true,
+                error: true
+            })
+        }
+
         return longitudAct;
     }
+
     handleCreateAccountSubmit = (e) => {
         e.preventDefault();
         let name = this.state.name;
@@ -310,10 +343,21 @@ class Register extends Component {
         let password = this.state.password;
         let passwordEx = this.state.passwordEx;
         let maxpass = this.state.maxPass;
+        let checkTerError = this.state.checkTer;
         let emailocal = localStorage.getItem("thisEmail");
         let format = localStorage.getItem("formato");
         let ter = this.state.checkTer;
-        if (ter !== true) {
+
+
+
+        if (checkTerError !== true) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Debe aceptar los terminos y condiciones',
+                footer: 'Truster App'
+            })
+        } else if (ter !== true) {
             this.setState({
                 checkTerError: true,
                 error: true
@@ -325,6 +369,7 @@ class Register extends Component {
             })
         } else if (lastName === '') {
             this.setState({
+
                 lastNameError: true,
                 error: true
             })
@@ -352,33 +397,24 @@ class Register extends Component {
                 emailError: true,
                 error: true
             })
-        } else
-            if (format === '0' || format === 'undefined') {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Formato de email no válido',
-                    footer: 'Truster App'
-                })
 
-            } else
-                if (emailocal === '1') {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Email no disponible o espere a que se determine su disponibilidad',
-                        footer: 'Truster App'
-                    })
-                   
-                } else {
-                    localStorage.setItem("nombre", name);
-                    localStorage.setItem("apellido", lastName);
-                    localStorage.setItem("email", email);
-                    localStorage.setItem("password", password);
-                    window.open("/registerex", '_self');
-                }
+
+        } else if (emailocal === '1') {
+            this.setState({
+                emailAvailable: true,
+                error: true
+            })
+
+        } else {
+            localStorage.setItem("nombre", name);
+            localStorage.setItem("apellido", lastName);
+            localStorage.setItem("email", email);
+            localStorage.setItem("password", password);
+            window.open("/registerex", '_self');
+        }
     }
     handlerEmailName = (emailState, email) => {
+        let emailocal = localStorage.getItem("thisEmail");
         if (email) {
             this.setState({
                 email: email,
@@ -386,9 +422,27 @@ class Register extends Component {
             })
         } else {
             //this.setState({
-            //avatar: null
+            //avatar: null           
             // })
         }
+        if (emailocal === '1') {
+            this.setState({
+                emailAvailable: true,
+                error: true
+            })
+        }
+        if (emailocal === '0') {
+            this.setState({
+                emailAvailable: false,
+                emailAvailableEx: false,
+                error: false
+            })
+        }
+    }
+    handlerRepEmail = e => {
+        e.preventDefault();
+        this.setState({ emailRep: e.target.value })
+
     }
 
     handlerTer = (e) => {
@@ -400,6 +454,110 @@ class Register extends Component {
         console.log("termino  " + this.state.checkTer)
     }
 
+    inputChange = (e) => {
+        e.preventDefault();
+        switch (e.target.id) {
+            case 'nombre':
+                if (e.target.value === '') {
+                    this.setState({
+                        nameError: true,
+                        error: true
+                    })
+                }
+                break;
+            case 'apellido':
+                if (e.target.value === '') {
+                    this.setState({
+                        lastNameError: true,
+                        error: true
+                    })
+                }
+                break;
+            case 'password':
+                if (e.target.value === '') {
+                    this.setState({
+                        passError: true,
+                        error: true
+                    })
+                }
+                break;
+
+        }
+
+    }
+    inputChangeEx = (e) => {
+        e.preventDefault();
+        switch (e.target.id) {
+            case 'RepEmail':
+
+                if (e.target.value !== localStorage.getItem('Email')) {
+                    this.setState({
+                        passError: true,
+                        error: true,
+                        emailAvailableEx: true
+                    })
+                }
+                break;
+        }
+    }
+    searchCapitalLetter = (letters) => {
+        return letters === letters.toUpperCase();
+    }
+
+    searchLowercase = (letters) => {
+        return letters === letters.toLowerCase();
+    }
+
+
+    securityPassword = e => {
+       
+        const targetVal = e.target.value;
+        const longitudAct = targetVal.length;       
+        let security =false;
+        let securityUp = 0;
+        let securityLower = 0;
+        let securityNumber = 0;
+        let securityLenght = false;
+        var i=0;
+        var character='';
+        console.log(longitudAct);        
+        this.setState({ maxPass: longitudAct })
+        if (longitudAct < 8) {           
+            securityLenght = false;
+        } else {
+            
+           while (i <= targetVal.length){
+            character = targetVal.charAt(i);
+            if (!isNaN(character * 1)){
+                securityNumber++;
+                console.log('character is numeric ' + character);
+            }else{
+                if (character == character.toUpperCase()) {
+                    securityUp++;
+                    console.log ('upper case true ' + character);
+                }
+                if (character == character.toLowerCase()){
+                    securityLower++;
+                    console.log ('lower case true ' + character);
+                }
+            }
+            i++;
+        }        
+           
+        }
+        if (securityNumber > 0
+         && securityUp > 0
+         && securityLower > 0){
+            security = true
+        }else {
+            security= false;
+        }
+        
+        console.log("total seguridad "+security)
+        return security
+
+    }
+
     render() {
         function getWindowDimensions() {
             const { innerWidth: width } = window;
@@ -407,30 +565,41 @@ class Register extends Component {
                 width
             };
         }
+
         const { classes } = this.props;
         const { width } = getWindowDimensions();
         let $nameError = this.state.nameError ? '*no olvides poner tu nombre' : '';
         let $lastError = this.state.lastNameError ? '*no olvides poner tu Apellido' : '';
         let $emailError = this.state.emailError ? '*no olvides poner tu email' : '';
         let $passError = this.state.passError ? '*las contraseña no coinciden' : '';
+        
+        let $incompletePassError = this.state.incompletePassError ? '*La contraseña debe contener 8 caracteres mínimo,' : '';
+        let $incompletePassErrorEx = this.state.incompletePassError ? '*una minúscula, una mayúscula y un número' : '';
+        let $emailAvailable = this.state.emailAvailable ? '*Correo no disponible' : '';
+        let $emailAvailableEx = this.state.emailAvailableEx ? '*No coinciden los correos' : '';
+        let $emailocal = localStorage.getItem("thisEmail");
+        const isEnabled = this.state.name !== '' && this.state.lastName !== '' && this.state.email !== ''
+            && this.state.password !== '' && this.state.passwordEx !== ''
+            && this.state.checkTer === true
+
         return (
             <div style={{ backgroundColor: '#000000' }}>
 
                 <Grid container className={classes.root} component="main" maxWidth="md">
-                    <Container component="main" maxWidth="md" >
-                        <Grid item container xs={12} className={classes.paperContainer} >
+                    <Container component="main" maxWidth="md">
+                        <Grid item container xs={12} className={classes.paperContainer}>
                             <NavBar active={1} />
                         </Grid>
-                        <Container component="main" maxWidth="md" style={{ alignItems: 'center' }} >
-                            <Box className={classes.authWrapper}   >
+                        <Container component="main" maxWidth="md" style={{ alignItems: 'center' }}>
+                            <Box className={classes.authWrapper}>
                                 <CssBaseline />
-                                <Box mx="auto"  >
+                                <Box mx="auto">
                                     <Box className={classes.authHeader}>
                                         <img src={Logo} alt='logo' width="50" height="50" />
                                     </Box>
                                 </Box>
                                 <div className={classes.paper}>
-                                    <Box >
+                                    <Box>
                                         <Typography className={classes.paperWelcome}>
                                             Creá tu cuenta Truster </Typography>
                                     </Box>
@@ -442,21 +611,25 @@ class Register extends Component {
                                                 justifyContent: "center",
                                                 alignContent: "center",
                                             }}
+
                                                 onSubmit={this.handleSubmit}
                                                 noValidate>
                                                 <Typography className={classes.inputTitle}>
                                                     Nombre
                                                 </Typography>
-                                                <RegexTextField
+                                                <InputBase
                                                     placeholder="Nombre"
                                                     fullWidth
                                                     id="nombre"
                                                     name='name'
-                                                    regex={onlyLettersRegex}
+
                                                     inputProps={{ style: { textAlign: 'center' } }}
                                                     className={this.state.nameError ? classes.errorFormButton : classes.formButton}
                                                     onChange={this.handleName}
                                                     required
+                                                    onBlur={(e) => {
+                                                        this.inputChange(e)
+                                                    }}
                                                 />
                                                 <Typography className={classes.inputTitle2}>
                                                     {$nameError}
@@ -464,17 +637,20 @@ class Register extends Component {
 
                                                 <Typography className={classes.inputTitle}>
                                                     Apellido
-                                            </Typography>
-                                                <RegexTextField
+                                                </Typography>
+                                                <InputBase
                                                     placeholder="Apellido"
                                                     fullWidth
                                                     id="apellido"
                                                     name='lastName'
-                                                    regex={onlyLettersRegex}
+
                                                     inputProps={{ style: { textAlign: 'center' } }}
                                                     className={this.state.LastNameError ? classes.errorFormButton : classes.formButton}
                                                     onChange={this.handleLastName}
                                                     required
+                                                    onBlur={(e) => {
+                                                        this.inputChange(e)
+                                                    }}
 
                                                 />
                                                 <Typography className={classes.inputTitle2}>
@@ -482,58 +658,145 @@ class Register extends Component {
                                                 </Typography>
                                                 <Typography className={classes.inputTitle}>
                                                     Email
-                                            </Typography>
-                                                {/*  <InputBase
+                                                </Typography>
+
+                                                <EmailCheck
+
+                                                    changeEmail={(emailState, email) => this.handlerEmailName(emailState, email)
+
+                                                    }
+
+                                                    width={width} />
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$emailError} {$emailAvailable}
+                                                </Typography>
+                                                <Typography className={classes.inputTitle}>
+                                                Repetir Email(Teclear)
+                                                </Typography>
+                                                <InputBase
                                                     placeholder="Email"
                                                     fullWidth
-                                                    id="email"
-                                                    name="email"
+                                                    id="RepEmail"
+                                                    name="RepEmail"
                                                     inputProps={{ style: { textAlign: 'center' } }}
                                                     className={this.state.emailError ? classes.errorFormButton : classes.formButton}
-                                                    onChange={this.handleEmail}
+                                                    onChange={this.handlerRepEmail}
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        this.setState({
+                                                            error: false,
+                                                            emailAvailableEx: false
+                                                        })
+                                                    }}
+                                                    onBlur={(e) => {
+
+                                                        if (this.state.emailRep == localStorage.getItem('Email')) {
+                                                            this.setState({
+                                                                error: false,
+                                                                emailAvailableEx: false
+                                                            })
+                                                        } else {
+                                                            this.setState({
+                                                                error: true,
+                                                                emailAvailableEx: true
+                                                            })
+                                                        }
+                                                        if (this.state.emailRep == '') {
+                                                            this.setState({
+                                                                error: true,
+                                                                emailAvailableEx: true
+                                                            })
+
+                                                        }
+                                                    }}
+                                                    onPaste={(e) => {
+                                                        e.preventDefault();
+                                                        return false;
+                                                    }}
                                                     required
 
-                                                />*/}
-                                                <EmailCheck changeEmail={(emailState, email) => this.handlerEmailName(emailState, email)} width={width} />
+                                                />
                                                 <Typography className={classes.inputTitle2}>
-                                                    {$emailError}
+                                                    {$emailError} {$emailAvailable}{$emailAvailableEx}
                                                 </Typography>
                                                 <Typography className={classes.inputTitle}>
                                                     Contraseña
-                                            </Typography>
+                                                </Typography>
                                                 <InputBase
                                                     placeholder="Contaseña"
                                                     fullWidth
                                                     type="password"
                                                     id="password"
                                                     name="password"
-                                                    inputProps={{ style: { textAlign: 'center' }, type: "password", minlength: 8 }}
-                                                    className={this.state.passError ? classes.errorFormButton : classes.formButton}
+                                                    inputProps={{
+                                                        style: { textAlign: 'center' },
+                                                        type: "password",
+                                                        minlength: 8
+                                                    }}
+                                                    className={this.state.passError || this.state.incompletePassError ? classes.errorFormButton : classes.formButton}
                                                     onChange={this.handlepass}
                                                     onBlur={(e) => {
-
-                                                        this.handlerMaxPass(e);
+                                                        //this.handlerMaxPass(e);
+                                                        if (this.securityPassword(e) == false) {
+                                                            this.setState({
+                                                                incompletePassError: true,
+                                                                error: true
+                                                            })
+                                                        } else if (this.securityPassword(e) == true) {
+                                                            this.setState({
+                                                                incompletePassError: false,
+                                                                error: false
+                                                            })
+                                                        }
                                                     }}
+
                                                     required
 
                                                 />
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$incompletePassError}
+                                                </Typography>
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$incompletePassErrorEx}
+                                                </Typography>
                                                 <Typography style={{ color: '#999999', fontSize: 10 }}>
                                                     {$passError}
                                                 </Typography>
                                                 <Typography className={classes.inputTitle}>
                                                     Repetir Contraseña
-                                            </Typography>
+                                                </Typography>
                                                 <InputBase
                                                     placeholder="Repetir Contraseña"
                                                     fullWidth
                                                     type="password"
                                                     id="password"
                                                     name="passwordEx"
-                                                    inputProps={{ style: { textAlign: 'center' }, type: "password", minlength: 8 }}
+                                                    inputProps={{
+                                                        style: { textAlign: 'center' },
+                                                        type: "password",
+                                                        minlength: 8
+                                                    }}
                                                     className={this.state.passError ? classes.errorFormButton : classes.formButton}
                                                     onChange={this.handlepassEx}
+                                                    onClick={(e) => {
+                                                        this.setState({
+                                                            passwordEx: '',
+                                                            passError: false,
+                                                            error: false
+                                                        })
+                                                    }}
                                                     onBlur={(e) => {
-                                                        this.handlerMaxPass(e);
+                                                        if (this.state.password !== e.target.value) {
+                                                            this.setState({
+                                                                passwordEx: '',
+                                                                passError: true,
+                                                                error: true
+                                                            })
+                                                        }
+                                                    }}
+                                                    onPaste={(e) => {
+                                                        e.preventDefault();
+                                                        return false;
                                                     }}
                                                     required
 
@@ -558,7 +821,7 @@ class Register extends Component {
                                                             <Link
                                                                 style={{ color: '#ACFD00' }}>
                                                                 Condiciones de Uso
-                                                    </Link>
+                                                            </Link>
                                                         </Typography>
                                                     </Grid>
                                                     <Button
@@ -567,10 +830,11 @@ class Register extends Component {
                                                         fullWidth
                                                         className={this.state.error ? classes.loginError : classes.login}
                                                         onClick={this.handleCreateAccountSubmit}
-
+                                                        disabled={!isEnabled}
                                                     >
                                                         Continuar
-                                                </Button>
+                                                    </Button>
+
                                                 </Grid>
 
                                             </form>
@@ -586,16 +850,18 @@ class Register extends Component {
                                                 <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
                                                     Nombre
                                                 </Typography>
-                                                <RegexTextField
+                                                <InputBase
                                                     placeholder="Nombre"
                                                     fullWidth
                                                     id="nombre"
                                                     name='name'
-                                                    regex={onlyLettersRegex}
                                                     inputProps={{ style: { textAlign: 'left' } }}
                                                     className={this.state.nameError ? classes.errorFormButton2 : classes.formButton2}
                                                     onChange={this.handleName}
                                                     required
+                                                    onBlur={(e) => {
+                                                        this.inputChange(e)
+                                                    }}
                                                 />
                                                 <Typography className={classes.inputTitle2}>
                                                     {$nameError}
@@ -604,37 +870,98 @@ class Register extends Component {
                                                 <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
                                                     Apellido
                                                 </Typography>
-                                                <RegexTextField
+                                                <InputBase
                                                     placeholder="Apellido"
                                                     fullWidth
                                                     id="apellido"
                                                     name='apellido'
-                                                    regex={onlyLettersRegex}
+
                                                     inputProps={{ style: { textAlign: 'left' } }}
                                                     className={this.state.lastError ? classes.errorFormButton2 : classes.formButton2}
                                                     onChange={this.handleLastName}
                                                     required
+                                                    onBlur={(e) => {
+                                                        this.inputChange(e)
+                                                    }}
                                                 />
                                                 <Typography className={classes.inputTitle2}>
                                                     {$lastError}
                                                 </Typography>
                                                 <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
                                                     Email
-                                            </Typography>
+                                                </Typography>
 
-                                                <EmailCheck changeEmail={(emailState, email) => this.handlerEmailName(emailState, email)} width={width} />
+                                                <EmailCheck
+                                                    changeEmail={(emailState, email) => this.handlerEmailName(emailState, email)}
+                                                    onBlur={(e) => {
+                                                        this.inputChange(e)
+                                                    }}
+                                                    width={width} />
 
                                                 <Typography className={classes.inputTitle2}>
-                                                    {$emailError}
+                                                    {$emailError} {$emailAvailable}
                                                 </Typography>
+                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                    Repetir Email(Teclear)
+                                                </Typography>
+                                                <InputBase
+                                                    placeholder="Repetir Email"
+                                                    fullWidth
+                                                    type="text"
+                                                    name="RepEmail"
+                                                    onChange={this.handlerRepEmail}
+                                                    className={this.state.passError ? classes.errorFormButton2 : classes.formButton2}
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        this.setState({
+                                                            error: false,
+                                                            emailAvailableEx: false
+                                                        })
+                                                    }}
+                                                    onBlur={(e) => {
+
+                                                        if (this.state.emailRep == localStorage.getItem('Email')) {
+                                                            this.setState({
+                                                                error: false,
+                                                                emailAvailableEx: false
+                                                            })
+                                                        } else {
+                                                            this.setState({
+                                                                error: true,
+                                                                emailAvailableEx: true
+                                                            })
+                                                        }
+                                                        if (this.state.emailRep == '') {
+                                                            this.setState({
+                                                                error: true,
+                                                                emailAvailableEx: true
+                                                            })
+
+                                                        }
+                                                    }}
+                                                    onPaste={(e) => {
+                                                        e.preventDefault();
+                                                        return false;
+                                                    }}
+
+                                                    required
+                                                />
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$emailError} {$emailAvailable}{$emailAvailableEx}
+                                                </Typography>
+
                                                 <Grid container>
-                                                    <Grid container justify='flex-start' alignContent='center' xs={6} xl={6} sm={6}>
-                                                        <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                    <Grid container justify='flex-start' alignContent='center' xs={6}
+                                                        xl={6} sm={6}>
+                                                        <Typography className={classes.inputTitle}
+                                                            style={{ textAlign: 'left' }}>
                                                             Contaseña
                                                         </Typography>
                                                     </Grid>
-                                                    <Grid container justify='flex-end' alignContent='center' xs={6} xl={6} sm={6}>
-                                                        <Typography style={{ color: '#999999', fontSize: 10, marginTop: 15 }}>
+                                                    <Grid container justify='flex-end' alignContent='center' xs={6}
+                                                        xl={6} sm={6}>
+                                                        <Typography
+                                                            style={{ color: '#999999', fontSize: 10, marginTop: 15 }}>
                                                             8 caracteres min
                                                         </Typography>
                                                     </Grid>
@@ -645,15 +972,34 @@ class Register extends Component {
                                                     id="password"
                                                     type="password"
                                                     name="password"
-                                                    inputProps={{ style: { textAlign: 'left' }, type: "password", minlength: 8 }}
-                                                    className={this.state.passError ? classes.errorFormButton2 : classes.formButton2}
+                                                    inputProps={{
+                                                        style: { textAlign: 'left' },
+                                                        type: "password",
+                                                        minlength: 8
+                                                    }}
+                                                    className={this.state.passError || this.state.incompletePassError ? classes.errorFormButton2 : classes.formButton2}
                                                     onChange={this.handlepass}
                                                     onBlur={(e) => {
-                                                        this.handlerMaxPass(e);
+                                                        if (this.securityPassword(e) == false) {
+                                                            this.setState({
+                                                                incompletePassError: true,
+                                                                error: true
+                                                            })
+                                                        } else if (this.securityPassword(e) == true) {
+                                                            this.setState({
+                                                                incompletePassError: false,
+                                                                error: false
+                                                            })
+                                                        }
                                                     }}
                                                     required
                                                 />
-
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$incompletePassError}
+                                                </Typography>
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$incompletePassErrorEx}
+                                                </Typography>
                                                 <Typography style={{ color: '#999999', fontSize: 10 }}>
                                                     {$passError}
                                                 </Typography>
@@ -663,11 +1009,33 @@ class Register extends Component {
                                                     id="password"
                                                     type="password"
                                                     name="passwordEx"
-                                                    inputProps={{ style: { textAlign: 'left' }, type: "password", minlength: 8 }}
+                                                    inputProps={{
+                                                        style: { textAlign: 'left' },
+                                                        type: "password",
+                                                        minlength: 8
+                                                    }}
                                                     className={this.state.passError ? classes.errorFormButton2 : classes.formButton2}
                                                     onChange={this.handlepassEx}
+                                                    onClick={(e) => {
+                                                        this.setState({
+                                                            passwordEx: '',
+                                                            passError: false,
+                                                            error: false
+                                                        })
+                                                    }
+                                                    }
                                                     onBlur={(e) => {
-                                                        this.handlerMaxPass(e);
+                                                        if (this.state.password !== e.target.value) {
+                                                            this.setState({
+                                                                passwordEx: '',
+                                                                passError: true,
+                                                                error: true
+                                                            })
+                                                        }
+                                                    }}
+                                                    onPaste={(e) => {
+                                                        e.preventDefault();
+                                                        return false;
                                                     }}
                                                     required
                                                 />
@@ -692,15 +1060,17 @@ class Register extends Component {
                                                             </Link>
                                                         </Typography>
                                                     </Grid>
+
                                                     <Button
                                                         type="submit"
                                                         variant="contained"
                                                         fullWidth
                                                         className={this.state.error ? classes.loginError : classes.login}
                                                         onClick={this.handleCreateAccountSubmit}
+                                                        disabled={!isEnabled}
                                                     >
                                                         Continuar
-                                                </Button>
+                                                    </Button>
                                                 </Grid>
 
                                             </form>
@@ -716,4 +1086,5 @@ class Register extends Component {
         );
     }
 }
+
 export default withStyles(styles, { withTheme: true })(Register);

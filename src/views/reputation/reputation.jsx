@@ -60,7 +60,7 @@ class Reputation extends Component {
         return (<React.Fragment>
             <Grid container className={classes.root} component="main" maxWidth="md" style={{ display: 'flex', justifyContent: 'center' }}>
                 {width >= 600 ? <div className={classes.background} >
-                    <img src={Rectangle} alt='background' width={'100%'} height={'475px'} />
+                    <img src={Rectangle} alt='background' width={'100%'} height={'100%'} />
                 </div> : ''}
                 <Grid className={classes.test} container maxWidth="md" component="main" >
                     <Container component="main" maxWidth="md" container justify='center' >

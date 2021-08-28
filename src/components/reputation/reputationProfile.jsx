@@ -1,13 +1,13 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import { Grid, Typography } from '@material-ui/core';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import ReputationImg from '../../asset/images/reputation/Ellipse 6.png'
 import ShareButton from '../../asset/images/reputation/Group 25.svg'
 import Logo from '../../asset/images/reputation/logo.svg'
 import GreyLogo from '../../asset/images/reputation/greylogo.svg'
 import LinearDeterminate from './progressBarArchMobile'
-
+import Cliente from "../../setting/cliente";
+import {GetImage, UriServices} from "../../services/hostConfig";
 const { localStorage } = global.window;
 const styles = theme => ({
     root: {
@@ -42,7 +42,39 @@ const styles = theme => ({
 
 
 const ReputationProfile = () => {
+    const [user, setUser] = useState(null)
+    const [imagesArray, setImagesArray] = useState(null)
+
+
+    function getImages() {
+        Cliente.get(GetImage(), {
+            params: {
+                'user': user,
+                'folder': 'perfil'
+            }
+        },).then(
+            res => {
+                setImagesArray(res['data']['fileNames'])
+                console.log(res)
+            }
+        )
+    }
+    useEffect(() => {
+
+        if (user === null) {
+            setUser(localStorage.getItem('userLogin'))
+        }
+
+        if (imagesArray === null && user !== null) {
+            getImages();
+        }
+        //let user = JSON.parse(localStorage.getItem('currentUser'));
+
+    }, [imagesArray, user]);
     const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
+    let occupation = localStorage.getItem('occupation')=='null'? '': localStorage.getItem('occupation');
+    let points = localStorage.getItem('points')=='null'? '': localStorage.getItem('points');
+    let nextLevel = localStorage.getItem('points')=='null'? '': parseInt(localStorage.getItem('points'))+4;
     return (
         <Grid position="static" color="transparent" style={{
             flexGrow: 1,
@@ -52,13 +84,29 @@ const ReputationProfile = () => {
 
             <Grid container>
                 <Grid container justify='flex-start' xs={4} xl={4} sm={4}>
-                    <img src={ReputationImg} alt='test' width='250px' height='250px' />
+                {imagesArray !== null && imagesArray.length > 0 ?
+                            <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
+
+                                <img
+                                    src={UriServices() + '/' + user + '/images/perfil/' + imagesArray[0]}
+                                    width='250px' height='250px' style={{
+                                        borderRadius:'50%',
+                                    objectFit:'cover'
+                                }}
+                                />
+
+                            </Grid>
+                            : <Grid container justify='flex-end' xs={11} xl={11} sm={11}> 
+                            <img src={ReputationImg} alt='test' width='250px' height='250px' />
+                            </Grid>
+                        }
+                   
                 </Grid>
                 <Grid container xs={10} xl={8} sm={8}>
-                    <Grid container style={{ maxHeight: 30 }} >
-                        <Grid container justify='flex-start' xs={7} xl={7} sm={7} alignItems='center' >
+                    <Grid container>
+                        <Grid container justify='flex-start' xs={8} xl={8} sm={8} alignItems='center' >
                             <Typography style={{
-                                align: "center",
+                                textAlign: "left",
                                 color: "#FFFFFF",
                                 font: " normal normal 30px/30px PoppinsBold",
                                 paddingRight: 10
@@ -73,12 +121,13 @@ const ReputationProfile = () => {
                                 height: 30,
                                 borderColor: '#ACFD00',
                                 borderRadius: 5,
+                                marginTop: 5,
                                 textTransform: 'none',
                             }}>Master</button>
                         </Grid >
-                        <Grid container justify='flex-end' xs={5} xl={5} sm={5} alignItems='center'>
+                        <Grid container justify='flex-end' xs={4} xl={4} sm={4} alignItems='center'>
                             <Typography style={{
-                                align: "center",
+                                textAlign: "left",
                                 color: "#888888",
                                 font: " normal normal 14px/14px Poppins",
                                 textAlign: 'center',
@@ -95,15 +144,15 @@ const ReputationProfile = () => {
                             </button>
                         </Grid>
                     </Grid>
-                    <Grid container justify='flex-start'>
+                    <Grid container justify='flex-start' style={{ marginTop: 5 }}>
                         <Typography style={{
                             font: 'normal normal normal 24px/24px Poppins',
                             textAlign: 'center',
                             letterSpacing: '-0.02em',
                             color: '#ACFD00'
                         }}>
-                            Front End Developer
-                            </Typography>
+                            {occupation}
+                        </Typography>
                     </Grid>
                     <Grid container justify='flex-start'>
                         <Typography style={{
@@ -113,10 +162,10 @@ const ReputationProfile = () => {
                             color: '#FFFFFF'
                         }}>
                             Miembro Truster desde Septiembre / 2021
-                            </Typography>
+                        </Typography>
                     </Grid>
                     <Grid container justify='flex-start' alignItems='center'>
-                        <LinearDeterminate value={50} />
+                        <LinearDeterminate value={5} />
                     </Grid>
                     <Grid container alignItems='center'>
                         <Grid container justify='flex-start' xs={6} xl={6} sm={6} alignItems='center'>
@@ -129,7 +178,7 @@ const ReputationProfile = () => {
                                     letterSpacing: '-0.02em',
                                     color: '#ACFD00'
                                 }}>
-                                    12
+                                    {points}
                                 </Typography>
                             </Grid>
                             <Grid>
@@ -154,7 +203,7 @@ const ReputationProfile = () => {
                                     letterSpacing: '-0.02em',
                                     color: '#888888'
                                 }}>
-                                    16
+                                   {nextLevel}
                                 </Typography>
                             </Grid>
                             <Grid>

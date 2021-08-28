@@ -75,7 +75,7 @@ const NextArch = () => {
                     </Grid>
                 </Grid>
                 <Grid container xs={12} xl={12} sm={12} justify='center' style={{ marginTop: 20 }}>
-                    <LinearDeterminate value={75} />
+                    <LinearDeterminate value={10} />
                 </Grid>
             </Grid>
             <Grid container xs={12} xl={12} sm={12} align='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 100, padding: 25, marginBottom: 15 }}>

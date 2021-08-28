@@ -191,17 +191,10 @@ class EmailVerification extends Component {
                                             </Grid>
                                             <Grid container justify='center'>
                                                 <Typography className={classes.paperWelcome1} style={{ maxWidth: 450 }}>
-                                                    Hacé click en el link para finalizar el registro.
+                                                Revisa tu casilla de correo para finalizar el registro.
                                             </Typography>
                                             </Grid>
-                                            <Grid container justify='center'>
-                                                <Button
-                                                    href="/"
-                                                    className={classes.formButton2}
-                                                >
-                                                    De vuelta a Inicio
-                                                </Button>
-                                            </Grid>
+                                            
                                         </Grid>
                                         :
                                         <Grid container>
@@ -223,17 +216,10 @@ class EmailVerification extends Component {
                                                 </Grid>
                                                 <Grid container justify='center'>
                                                     <Typography className={classes.paperWelcome1} style={{ maxWidth: 450 }}>
-                                                        Hacé click en el link para finalizar el registro.
+                                                        Revisa tu casilla de correo para finalizar el registro.
                                             </Typography>
                                                 </Grid>
-                                                <Grid container justify='center'>
-                                                    <Button
-                                                        className={classes.formButton2}
-                                                        href="/"
-                                                    >
-                                                        De vuelta a Inicio
-                                                </Button>
-                                                </Grid>
+                                               
                                             </Grid>
                                         </Grid>}
                                 </div>

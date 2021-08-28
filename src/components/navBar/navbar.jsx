@@ -13,7 +13,8 @@ import Ajustes from '../../asset/images/sidemenu/ajustes.svg'
 import Soporte from '../../asset/images/sidemenu/soporte.svg'
 import CerrarSesion from '../../asset/images/sidemenu/cerrarsesion.svg'
 import TemporaryDrawer from './mobileDrawer'
-
+const { localStorage } = global.window;
+const userActive = localStorage.getItem('logueado');
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -50,7 +51,7 @@ const Navbar = ({ active, recover }) => {
     const { width } = WindowDimensions();
     const isActive = active
     const back = '<'
-
+    const nameUser = localStorage.getItem("nombre");
     let $Show = '';
     if (isActive === 1) {
         $Show = (<Button
@@ -66,6 +67,7 @@ const Navbar = ({ active, recover }) => {
                 letterSpacing: ' -0.02em',
                 textAlign: 'left',
                 border: '1px',
+                marginTop: 5,
                 borderRadius: '20px',
                 borderColor: '#ACFD00',
                 textTransform: 'none'
@@ -85,6 +87,7 @@ const Navbar = ({ active, recover }) => {
                 margin: 0,
                 marginTop: '2vh',
                 height: 217,
+                zIndex: 100
             }} >
                 <Toolbar>
                     <div class="menu-wrap">
@@ -122,19 +125,19 @@ const Navbar = ({ active, recover }) => {
                                         fontWeight: 700,
                                         font: " normal normal 40px/60px Poppins"
                                     }}>
-                                        USER
+                                        {nameUser}
                                     </Typography>
                                     <ul style={{ paddingLeft: '40px' }}>
                                         <li><Link underline='hover' href='/' style={{ color: "#ACFD00" }} ><img src={Inicio} alt='inicio' style={{ paddingRight: 10, width: '12%' }} /> Inicio</Link></li>
-                                        <li><Link href='/'><img src={Busqueda} alt='busqueda' style={{ paddingRight: 10, width: '12%' }} /> Búsqueda</Link></li>
-                                        <li><Link href='/'><img src={MiPerfil} alt='miperfil' style={{ paddingRight: 10, width: '11%' }} /> Mi Perfil</Link></li>
-                                        <li><Link href='/'><img src={MiNegocio} alt='minegocio' style={{ paddingRight: 10, width: '13%' }} /> Mi Negocio</Link></li>
-                                        <li><Link href='/'><img src={MiReputacion} alt='mireputacion' style={{ paddingRight: 10, width: '12%' }} /> Mi Reputación</Link></li>
+                                        <li><Link href={userActive ?'/search':'/'}><img src={Busqueda} alt='busqueda' style={{ paddingRight: 10, width: '12%' }} /> Búsqueda</Link></li>
+                                        <li><Link href={userActive ?'/myprofile':'/'}><img src={MiPerfil} alt='miperfil' style={{ paddingRight: 10, width: '11%' }} /> Mi Perfíl</Link></li>
+                                        <li><Link href={userActive ?'/mybusiness':'/'}><img src={MiNegocio} alt='minegocio' style={{ paddingRight: 10, width: '13%' }} /> Mi Negocio</Link></li>
+                                        <li><Link href={userActive ?'/reputation':'/'}><img src={MiReputacion} alt='mireputacion' style={{ paddingRight: 10, width: '12%' }} /> Mi Reputación</Link></li>
                                     </ul>
                                     <hr width={'100%'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30, marginLeft: 20 }} />
                                     <ul style={{ paddingLeft: '40px' }}>
-                                        <li><Link href='/'><img src={Compartir} alt='compartir' style={{ paddingRight: 10, width: '11%' }} /> Compartir Perfil</Link></li>
-                                        <li><Link href='/'><img src={Insertar} alt='insertar' style={{ paddingRight: 10, width: '13%' }} /> Insertar Perfil</Link></li>
+                                        <li><Link href='/sharemyprofile'><img src={Compartir} alt='compartir' style={{ paddingRight: 10, width: '11%' }} /> Compartir Perfíl</Link></li>
+                                        <li><Link href='/'><img src={Insertar} alt='insertar' style={{ paddingRight: 10, width: '13%' }} /> Insertar Perfíl</Link></li>
                                         <li><Link href='/'><img src={Ajustes} alt='ajustes' style={{ paddingRight: 10, width: '12%' }} /> Ajustes</Link></li>
                                         <li><Link href='/'><img src={Soporte} alt='soporte' style={{ paddingRight: 10, width: '11%' }} /> Soporte</Link></li>
                                     </ul>
@@ -286,13 +289,13 @@ const Navbar = ({ active, recover }) => {
                                 font: " normal normal 35px/35px Poppins",
                             }}>
                                 Truster
-                        </Typography>
+                            </Typography>
                         </Grid >
                         {recover === 1 ?
                             <Grid container xs={10} xl={10} sm={10} justify='flex-end'>
                                 <button style={{
                                     backgroundColor: 'rgba(0,0,0,0)',
-                                    marginTop: 5,
+                                    marginTop: 18,
                                     width: 80,
                                     height: 35,
                                     color: '#ACFD00',

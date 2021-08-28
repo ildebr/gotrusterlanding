@@ -1,17 +1,26 @@
 import React, { Component } from 'react'
-import { CssBaseline, Grid, Box, Container, Typography, Button } from '@material-ui/core';
+import { CssBaseline, Grid, Box, Container, Typography, Button, TextField } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import NavBar from '../../components/navBar/navbar.jsx'
 import Link from '@material-ui/core/Link';
+import InputBase from '@material-ui/core/InputBase';
 //import Swal from "sweetalert2";
 import cliente from "./../../setting/cliente";
 import { LoopCircleLoading } from 'react-loadingg';
-import InputBase from '@material-ui/core/InputBase';
+//import InputBase from '@material-ui/core/InputBase';
 import Logo from '../../asset/images/logo.svg';
 import SelectBase from '@material-ui/core/Select';
-import { AccountRegister, AddressOperations } from './../../services/hostConfig';
+import { AccountRegister, AddressOperationsFull } from './../../services/hostConfig';
 import { getToken } from './../../setting/auth-helpers';
 import auth from './../../setting/auth';
+import RegexTextField from "../../components/helpers/regexTextField";
+import Swal from "sweetalert2";
+
+const dataSourceAvailable = require('./provincias.json');
+const dataSourceAvailableLocal= require('./municipios.json');
+const onlyLettersRegex = /[^a-zA-Z]/gi;
+const onlyNumbersRegex = /[^0-9]/gi;
+
 const { localStorage } = global.window;
 const styles = theme => ({
     root: {
@@ -137,6 +146,9 @@ const styles = theme => ({
         borderRadius: 15,
         textTransform: 'none',
         marginTop: theme.spacing(3),
+        "&:disabled": {
+            backgroundColor: '#597c1e',
+        }
     },
     formButton: {
         marginTop: theme.spacing(1),
@@ -144,7 +156,7 @@ const styles = theme => ({
         border: '1px solid',
         borderColor: '#999999',
         borderRadius: 15,
-        color: "white",
+        color: "#FFFFFF",
         font: 'normal normal normal 16px/22px Poppins',
         "&:hover": {
             border: '1px solid',
@@ -161,6 +173,12 @@ const styles = theme => ({
         color: "white",
         font: 'normal normal normal 16px/22px Poppins',
 
+    },
+    errorFormButtonDesktop: {
+        border: '2px solid',
+        borderColor: '#E94342',
+        borderRadius: 15,
+        font: 'normal normal normal 16px/22px Poppins',
     },
     formButtonMobile: {
         marginTop: theme.spacing(1),
@@ -212,6 +230,26 @@ const styles = theme => ({
     },
     select: {
         marginTop: theme.spacing(1),
+        textAlignLast: 'center',
+        height: '50px',
+        width: '100%',
+        border: '1px solid',
+        borderColor: '#999999',
+        borderRadius: 15,
+        color: "#999999",
+        font: 'normal normal normal 16px/22px Poppins',
+        paddingLeft: 40,
+        justifyContent: "flex-end",
+        textAlign: "center",
+        "&:hover": {
+            border: '1px solid',
+            borderColor: '#ACFD00',
+            borderRadius: 15,
+        },
+    },
+    selectEx: {
+        marginTop: theme.spacing(1),
+        textAlignLast: 'center',
         height: '50px',
         width: '100%',
         border: '1px solid',
@@ -282,59 +320,37 @@ const styles = theme => ({
     icon: {
         fill: '#999999',
     },
+    inputTitle2: {
+        color: '#E94342',
+        font: 'normal normal normal 14px/14px Poppins',
+        fontSize: '14px',
+        marginTop: theme.spacing(2),
+    },
+    loginError: {
+        backgroundColor: '#E94342',
+        width: '100%',
+        font: 'normal normal normal 18px/24px Poppins',
+        height: 50,
+        borderRadius: 15,
+        color: '#FFFFFF',
+        textTransform: 'none',
+        marginTop: theme.spacing(3),
+        "&:disabled": {
+            backgroundColor: '#6e1d1d',
+        }
+    },
 });
 const countries = [
     {
         value: 'Paises',
         name: 'Paises'
-    },
-    {
-        value: 'Ecuador',
-        name: 'Ecuador'
-    },
-    {
-        value: 'México',
-        name: 'México'
-    },
-    {
-        value: 'Uruguay',
-        name: 'Uruguay'
-    },
-    {
-        value: 'Perú',
-        name: 'Perú'
-    },
+    },    
     {
         value: 'Argentina',
         name: 'Argentina'
     },
 ];
-const provinces = [
-    {
-        value: 'Provincias',
-        name: 'Provincias'
-    },
-    {
-        value: 'CABA',
-        name: 'CABA'
-    },
-    {
-        value: 'Provincia de BA',
-        name: 'Provincia de BA'
-    },
-    {
-        value: 'Mendoza',
-        name: 'Mendoza'
-    },
-    {
-        value: 'Cordoba',
-        name: 'Cordoba'
-    },
-    {
-        value: 'Entre Rios',
-        name: 'Entre Rios'
-    },
-];
+
 const locality = [
     {
         value: 'Localidades',
@@ -363,8 +379,8 @@ const locality = [
 ]
 const days = [
     {
-        value: 'Dias',
-        name: 'Dias',
+        value: 'Día',
+        name: 'Día',
     },
     {
         value: '01',
@@ -428,7 +444,7 @@ const days = [
     },
     {
         value: '16',
-        name: '016',
+        name: '16',
     },
     {
         value: '17',
@@ -495,8 +511,8 @@ const days = [
 
 const months = [
     {
-        value: 'Meses',
-        name: 'Meses'
+        value: 'Mes',
+        name: 'Mes'
     },
     {
         value: 'Enero',
@@ -563,8 +579,8 @@ const gender = [
 ]
 const years = [
     {
-        value: 'Años',
-        name: 'Años',
+        value: 'Año',
+        name: 'Año',
     },
     {
         value: '2021',
@@ -780,6 +796,12 @@ const years = [
     },
 ]
 
+function pad(n, width, z) {
+    z = z || '0';
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+
 class RegisterSecond extends Component {
     constructor(props) {
         super(props);
@@ -789,108 +811,188 @@ class RegisterSecond extends Component {
             years: "Año",
             gender: "Género",
             number: '',
-            local: "Localidades",
-            nationality: "Argentina",
+            local: 0,
+            nationality: 0,
             province: 0,
             adress: '',
             numberDir: '',
             show: false,
+            error: false,
             ipPublic: '',
             enabledComponent: false,
+            dirError: false,
+            numberError: false,
+            genderError: false,
+            nationalityError: false,
+            locationError: false,
+            provinceError: false,
+            dayError: false,
+            monthError: false,
+            yearError: false,
             windowWidth: window.innerWidth
         };
     }
 
-    handleSetMonths =(months)=>{
-        let tip = months ;
+    handleSetMonths = (months) => {
+        let tip = months;
         switch (months) {
-            case "Enero": return tip = "01";
+            case "Enero":
+                return tip = "01";
                 break;
-            case "Febrero": return tip = "02";
+            case "Febrero":
+                return tip = "02";
                 break;
-            case "Marzo": return tip = "03";
+            case "Marzo":
+                return tip = "03";
                 break;
-            case "Abril": return tip = "04";
+            case "Abril":
+                return tip = "04";
                 break;
-            case "Mayo": return tip = "05";
+            case "Mayo":
+                return tip = "05";
                 break;
-            case "Junio": return tip = "06";
+            case "Junio":
+                return tip = "06";
                 break;
-            case "Julio": return tip = "07";
+            case "Julio":
+                return tip = "07";
                 break;
-            case "Agosto": return tip = "08";
+            case "Agosto":
+                return tip = "08";
                 break;
-            case "Septiembre": return tip = "09";
+            case "Septiembre":
+                return tip = "09";
                 break;
-            case "Octubre": return tip = "10";
+            case "Octubre":
+                return tip = "10";
                 break;
-            case "Noviembre": return tip = "11";
+            case "Noviembre":
+                return tip = "11";
                 break;
-            case "Diciembre": return tip = "12";
+            case "Diciembre":
+                return tip = "12";
                 break;
-            default: return tip;
+            default:
+                return tip;
         }
     }
-    handleSetGender =(gender)=>{
+    handleSetGender = (gender) => {
         let tip = gender;
         switch (gender) {
-            case "Femenino": return tip = "FEMALE";
+            case "Femenino":
+                return tip = "FEMALE";
                 break;
-            case "Masculino": return tip = "MALE";
-                break;            
-            default: return tip;
+            case "Masculino":
+                return tip = "MALE";
+                break;
+            default:
+                return tip;
         }
     }
+
+    handleSetNationality = (nationality) => {
+        let tip = nationality;
+        return tip;
+    }
+    handleDataSourceAvailableLocal =(e) =>{
+        
+        let dataNewArrayLocal =[];
+        let local ='';
+        let provincias ='';
+        let provincia = this.state.province;
+        for (let index = 0; index < dataSourceAvailableLocal.length; index++) {
+             let element = dataSourceAvailableLocal[index];
+            local = element.nombre;
+            console.log(local)
+            provincias = element["provincia"]["nombre"]; 
+            console.log(provincias)
+            if (provincia === provincias){
+                dataNewArrayLocal.push(local)
+            }
+            
+        }
+        console.log(dataNewArrayLocal)
+        return dataNewArrayLocal;
+    }
+
     componentDidMount() {
         let textip = this.getIpClient();
         console.log("mi ip publica " + textip);
         window.addEventListener("resize", this.handleResize);
     }
+
     handleResize = (e) => {
         this.setState({ windowWidth: window.innerWidth });
     };
     handleDayChange = e => {
 
-        this.setState({ day: e.target.value })
+        this.setState({
+            day: e.target.value,
+            dayError: false
+        })
         console.log(e.target.value)
     }
-    handleMonthsChange = e => {       
-        this.setState({ months: e.target.value })
+    handleMonthsChange = e => {
+        this.setState({
+            months: e.target.value,
+            monthError: false
+        })
         console.log(e.target.value)
     }
     handleYearChange = e => {
 
-        this.setState({ years: e.target.value })
+        this.setState({
+            years: e.target.value,
+            yearError: false
+        })
         console.log(e.target.value)
     }
     handleGenderChange = e => {
-       
-        this.setState({ gender: e.target.value })
+
+        this.setState({
+            gender: e.target.value,
+            genderError: false
+        })
         console.log(e.target.value)
     }
     handleNumberChange = e => {
         e.preventDefault();
-        this.setState({ number: e.target.value })
+        this.setState({
+            number: e.target.value,
+            numberError: false
+        })
         console.log(e.target.value)
     }
     handleLocalChange = e => {
         e.preventDefault();
-        this.setState({ local: e.target.value })
+        this.setState({
+            local: e.target.value,
+            locationError: false
+        })
         console.log(e.target.value)
     }
     handleProvinceChange = e => {
         e.preventDefault();
-        this.setState({ province: e.target.value })
+        this.setState({
+            province: e.target.value,
+            provinceError: false
+        })
         console.log(e.target.value)
     }
     handleNationalityChange = e => {
-
-        this.setState({ nationality: e.target.value })
+        e.preventDefault();
+        this.setState({
+            nationality: e.target.value,
+            nationalityError: false
+        })
         console.log(e.target.value)
     }
     handleDir = e => {
         e.preventDefault();
-        this.setState({ adress: e.target.value })
+        this.setState({
+            adress: e.target.value,
+            dirError: false
+        })
         console.log(e.target.value)
     }
 
@@ -927,12 +1029,106 @@ class RegisterSecond extends Component {
         let birthDate = this.state.years + '-' + this.handleSetMonths(this.state.months) + '-' + this.state.day;
         let ipPublic = this.state.ipPublic;
 
-        this.setState({
-            show: true,
-            enabledComponent: true
-        })
+        let adress = this.state.adress;
+        let number = this.state.number;
+        let province = this.state.province;
+        let gender = this.state.gender;
+        let nationality = this.state.nationality;
+        let location = this.state.local;
 
+        let day = this.state.day;
+        let months = this.state.months;
+        let years = this.state.years;
+
+        this.state.error = false;
         ////dataRegister //
+
+        let today = new Date();
+        let date = (today.getFullYear() - 18) + '-' + pad((today.getMonth() + 1), 2) + '-' + pad(today.getDate(), 2);
+
+
+
+        if (day !== "Dia" && months !== "Mes" && years !== "Año" && date < birthDate) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Debes ser mayor de 18 años para usar Truster',
+                footer: 'Truster App'
+            })
+            this.setState({
+                yearError: true,
+                error: true
+            })
+
+
+        }
+
+        if (day === "Dia") {
+            this.setState({
+                dayError: true,
+                error: true
+            })
+        }
+        if (months === "Mes") {
+            this.setState({
+                monthError: true,
+                error: true
+            })
+        }
+        if (years === "Año") {
+            this.setState({
+                yearError: true,
+                error: true
+            })
+        }
+
+        if (gender === 'Género') {
+            this.setState({
+                genderError: true,
+                error: true
+
+            })
+        }
+        if (nationality === 0) {
+            this.setState({
+                nationalityError: true,
+                error: true
+
+            })
+        }
+        if (province === 0) {
+            this.setState({
+                provinceError: true,
+                error: true
+
+            })
+        }
+        if (location === 0) {
+            this.setState({
+                locationError: true,
+                error: true
+            })
+        }
+        if (adress === '') {
+            this.setState({
+                dirError: true,
+                error: true
+            })
+        }
+        if (number === '') {
+            this.setState({
+                numberError: true,
+                error: true
+            })
+        }
+        else if (this.state.error === false) {
+            this.setState({
+                show: true,
+                enabledComponent: true
+            })
+
+        }
+
 
         const dataRegister = {
             "activated": true,
@@ -940,7 +1136,6 @@ class RegisterSecond extends Component {
             "authorities": [
                 "ROLE_USER"
             ],
-            //TODO: only one of the "lastModifiedBy" is correct, delete the other one
             "birthDate": birthDate,
             "cellphone": "string",
             "cuit": "string",
@@ -950,6 +1145,7 @@ class RegisterSecond extends Component {
             "email": email,
             "firstName": name,
             "gender": this.handleSetGender(this.state.gender),
+            "nationality": this.handleSetNationality(this.state.nationality),
             "langKey": "es",
             "imageUrl": "string",
             "ip": ipPublic,
@@ -957,16 +1153,15 @@ class RegisterSecond extends Component {
             "login": email,
             "password": password,
             "phone": "string",
-            "lastModifiedBy": "string",
             "lastModifiedDate": "2021-05-19T04:23:28.205Z",
             "points": 1,
             "userType": "INDIVIDUAL"
         }
         ////dataAdress //
-        
+
         console.log(dataRegister);
-       
-        auth.login("admin", "Truster2021")
+
+        auth.login("administrator", "Truster2021App")
             .then(() => {
                 const token = getToken();
                 console.log(token);
@@ -975,49 +1170,34 @@ class RegisterSecond extends Component {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
-                    }                
+                    }
                 }).then(response => {
                     console.log(response)
                     return response
-                    
-                }).then(response => { 
-                    console.log(response)  
-                   const dataAdress = {
+
+                }).then(response => {
+                    console.log(response)
+                    const dataAdress = {
                         "apartment": "string",
                         "city": this.state.local,
                         "country": this.state.province,
-                        "customer": {
-                            "active": true,
-                            "birthDate": birthDate,
-                            "cellphone": "string",
-                            "cuit": "string",
-                            "dni": "string",
-                            "email": email,
-                            "gender": this.handleSetGender(this.state.gender),
-                            "ip": ipPublic,
-                            "id":parseInt(response.data.id),
-                            "phone": "string",
-                            "points": 1,
-                            "user": {
-                                "id":parseInt(response.data.id),
-                                "login": email
-                            },
-                            "userType": "INDIVIDUAL"
-                        },            
+                        "user": {
+                            "id": parseInt(response.data.id),
+                            "login": email
+                        },
                         "postalCode": "string",
                         "streetName": this.state.adress,
                         "streetNumber": this.state.number
-                    }  
-                    console.log(dataAdress)  ;              
-                    cliente.post(AddressOperations(), dataAdress, {
+                    }
+                    console.log(dataAdress);
+                    cliente.post(AddressOperationsFull(), dataAdress, {
                         headers: {
                             'Accept': 'application/json',
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${token}`
                         }
                     }).then(response => {
-                       // console.log(response);
-                    
+                        console.log(response);
                         this.setState({
                             show: false,
                             enabledComponent: false
@@ -1025,10 +1205,44 @@ class RegisterSecond extends Component {
                         window.open("/verificationemail", '_self');
                     })
                 })
-                
+
 
             }).catch(error => console.error('Error:', error));
     }
+
+
+    inputChange = (e) => {
+        e.preventDefault();
+
+        switch (e.target.id) {
+            case 'direction':
+                if (e.target.value === '') {
+                    this.setState({
+                        dirError: true,
+                        error: true
+                    })
+                }
+                break;
+            case 'numero':
+                if (e.target.value === '') {
+                    this.setState({
+                        numberError: true,
+                        error: true
+                    })
+                }
+                break;
+            // case 'password':
+            //     if (e.target.value === '') {
+            //         this.setState({
+            //             passError: true,
+            //             error: true
+            //         })
+            //     }
+            //     break;
+        }
+
+    }
+
     render() {
         function getWindowDimensions() {
             const { innerWidth: width } = window;
@@ -1036,6 +1250,7 @@ class RegisterSecond extends Component {
                 width
             };
         }
+
         const { width } = getWindowDimensions();
         const { classes } = this.props;
         let $show = this.state.show;
@@ -1044,24 +1259,42 @@ class RegisterSecond extends Component {
             $wait = (<LoopCircleLoading size='large' color='#ACFD00
             '/>);
         }
+       // let $departments = this.handleDataSourceAvailableLocal(this.state.province)
+
+        let $dirError = this.state.dirError ? '*no olvides poner tu dirección' : '';
+        let $numberError = this.state.numberError ? '*ingresa el número' : '';
+        let $genderError = this.state.genderError ? '*Por favor selecciona una opción' : '';
+        let $nationalityError = this.state.nationalityError ? '*Por favor selecciona una opción' : '';
+        let $provinceError = this.state.provinceError ? '*Por favor selecciona una opción' : '';
+        let $locationError = this.state.locationError ? '*Por favor selecciona una opción' : '';
+        let $dayError = this.state.dayError ? '*Por favor selecciona una opción' : '';
+        let $monthError = this.state.monthError ? '*Por favor selecciona una opción' : '';
+        let $yearError = this.state.yearError ? '*Por favor selecciona una opción' : '';
+
+        const isEnabled = this.state.number !== '' && this.state.direction !== ''
+            && this.state.day !== 'Dia' && this.state.months !== 'Mes' && this.state.years !== 'Año'
+            && this.state.nationality !== 0 && this.state.province !== 0
+            && this.state.local !== 0
+
+
         return (
             <div style={{ backgroundColor: '#000000' }}>
 
                 <Grid container className={classes.root} component="main" maxWidth="md">
-                    <Container component="main" maxWidth="md" >
-                        <Grid item container xs={12} className={classes.paperContainer} >
+                    <Container component="main" maxWidth="md">
+                        <Grid item container xs={12} className={classes.paperContainer}>
                             <NavBar active={1} />
                         </Grid>
-                        <Container component="main" maxWidth="md" style={{ alignItems: 'center' }} >
-                            <Box className={classes.authWrapper}   >
+                        <Container component="main" maxWidth="md" style={{ alignItems: 'center' }}>
+                            <Box className={classes.authWrapper}>
                                 <CssBaseline />
-                                <Box mx="auto"  >
+                                <Box mx="auto">
                                     <Box className={classes.authHeader}>
                                         <img src={Logo} alt='logo' width="50" height="50" />
                                     </Box>
                                 </Box>
                                 <div className={classes.paper}>
-                                    <Box >
+                                    <Box>
                                         <Typography className={classes.paperWelcome}>
                                             Estás a punto de tener tu cuenta Truster. </Typography>
                                     </Box>
@@ -1079,14 +1312,14 @@ class RegisterSecond extends Component {
                                                     Fecha de Nacimiento
                                                 </Typography>
                                                 <Grid container justify='flex-start'>
-                                                    <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 30 }} >
+                                                    <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 30 }}>
                                                         <SelectBase
                                                             disableUnderline
                                                             native
                                                             value={this.state.day}
                                                             disabled={this.state.enabledComponent}
                                                             onChange={this.handleDayChange}
-                                                            className={classes.select}
+                                                            className={this.state.dayError ? classes.errorSelect : classes.selectEx}
                                                             style={{ paddingLeft: 20 }}
                                                             inputProps={{
                                                                 classes: {
@@ -1094,18 +1327,23 @@ class RegisterSecond extends Component {
                                                                 },
                                                             }}
                                                         >
-                                                            {days.map(days => <option key={days.value} value={days.value}>{days.name}</option>)}
+                                                            {days.map(days => <option key={days.value}
+                                                                value={days.value} >{days.name}</option>)}
 
                                                         </SelectBase>
+                                                        <Typography className={classes.inputTitle2}>
+                                                            {$dayError}
+                                                        </Typography>
                                                     </Grid>
-                                                    <Grid container xs={5} xl={5} sm={5} style={{ marginLeft: -10, paddingRight: 10 }}>
+                                                    <Grid container xs={5} xl={5} sm={5}
+                                                        style={{ marginLeft: -10, paddingRight: 10 }}>
                                                         <SelectBase
                                                             disableUnderline
                                                             native
                                                             value={this.state.months}
                                                             disabled={this.state.enabledComponent}
                                                             onChange={this.handleMonthsChange}
-                                                            className={classes.select}
+                                                            className={this.state.dayError ? classes.errorSelect : classes.selectEx}
                                                             style={{ paddingLeft: 20, }}
                                                             inputProps={{
                                                                 classes: {
@@ -1113,17 +1351,22 @@ class RegisterSecond extends Component {
                                                                 },
                                                             }}
                                                         >
-                                                            {months.map(months => <option key={months.value} value={months.value}>{months.name}</option>)}
+                                                            {months.map(months => <option key={months.value}
+                                                                value={months.value}>{months.name}</option>)}
                                                         </SelectBase>
+                                                        <Typography className={classes.inputTitle2}>
+                                                            {$monthError}
+                                                        </Typography>
                                                     </Grid>
-                                                    <Grid container xs={3} xl={3} sm={3} style={{ marginLeft: 10, paddingRight: 0 }}>
+                                                    <Grid container xs={3} xl={3} sm={3}
+                                                        style={{ marginLeft: 10, paddingRight: 0 }}>
                                                         <SelectBase
                                                             disableUnderline
                                                             native
                                                             value={this.state.years}
                                                             disabled={this.state.enabledComponent}
                                                             onChange={this.handleYearChange}
-                                                            className={classes.select}
+                                                            className={this.state.dayError ? classes.errorSelect : classes.selectEx}
                                                             style={{ paddingLeft: 10 }}
                                                             inputProps={{
                                                                 classes: {
@@ -1131,32 +1374,46 @@ class RegisterSecond extends Component {
                                                                 },
                                                             }}
                                                         >
-                                                            {years.map(years => <option key={years.value} value={years.value}>{years.name}</option>)}
+                                                            {years.map(years => <option key={years.value}
+                                                                value={years.value}>{years.name}</option>)}
 
                                                         </SelectBase>
+                                                        <Typography className={classes.inputTitle2}>
+                                                            {$yearError}
+                                                        </Typography>
                                                     </Grid>
                                                 </Grid>
 
                                                 <Typography className={classes.inputTitle}>
                                                     Género
-                                            </Typography>
+                                                </Typography>
                                                 <SelectBase
                                                     disableUnderline
                                                     native
-                                                    disabled={this.state.enabledComponent}
+                                                    justifyContent="center"
+                                                    //disabled={this.state.enabledComponent}
                                                     value={this.state.gender}
                                                     onChange={this.handleGenderChange}
-                                                    className={classes.select}
+                                                    className={this.state.genderError ? classes.errorSelect : classes.select}
                                                     inputProps={{
                                                         classes: {
                                                             icon: classes.icon,
                                                         },
                                                     }}
-                                                    style={{ paddingLeft: 140 }}
+                                                    style={{ paddingLeft: 20 }}
                                                 >
-                                                    {gender.map(gender => <option key={gender.value} value={gender.value}>{gender.name}</option>)}
+                                                    {gender.map(gender => <option key={gender.value}
+                                                        value={gender.value} style={{
+                                                            width: '150px',
+                                                            whiteSpace: 'pre-wrap',
+                                                            wordWrap: ' break-word'
+                                                        }}>
+                                                        {gender.name}</option>)}
 
                                                 </SelectBase>
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$genderError}
+                                                </Typography>
                                                 <Typography className={classes.inputTitle}>
                                                     Nacionalidad
                                                 </Typography>
@@ -1167,39 +1424,47 @@ class RegisterSecond extends Component {
                                                     justifyContent="center"
                                                     value={this.state.nationality}
                                                     onChange={this.handleNationalityChange}
-                                                    className={classes.select}
+                                                    className={this.state.nationalityError ? classes.errorSelect : classes.select}
                                                     inputProps={{
                                                         classes: {
                                                             icon: classes.icon,
                                                         },
                                                     }}
-                                                    style={{ paddingLeft: 140 }}
+                                                    style={{ paddingLeft: 20 }}
 
                                                 >
-                                                    {countries.map(country => <option key={country.value} value={country.value}>{country.name}</option>)}
+                                                    {countries.map(country => <option key={country.value}
+                                                        value={country.value}>{country.name}</option>)}
                                                 </SelectBase>
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$nationalityError}
+                                                </Typography>
                                                 <Typography className={classes.inputTitle}>
                                                     Provincia
                                                 </Typography>
                                                 <SelectBase
                                                     disableUnderline
                                                     native
-                                                    disabled={this.state.enabledComponent}
+                                                    //disabled={this.state.enabledComponent}
                                                     justifyContent="center"
                                                     value={this.state.province}
                                                     onChange={this.handleProvinceChange}
-                                                    className={classes.select}
+                                                    className={this.state.provinceError ? classes.errorSelect : classes.select}
                                                     inputProps={{
                                                         classes: {
                                                             icon: classes.icon,
                                                         },
                                                     }}
-                                                    style={{ paddingLeft: 160 }}
+                                                    style={{ paddingLeft: 20 }}
 
                                                 >
-                                                    {provinces.map(provinces => <option key={provinces.value} value={provinces.value}>{provinces.name}</option>)}
+                                                    {dataSourceAvailable.map(provinces => <option key={provinces.nombre}
+                                                        value={provinces.value} >{provinces.nombre}</option>)}  
 
                                                 </SelectBase>
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$provinceError}
+                                                </Typography>
                                                 <Typography className={classes.inputTitle}>
                                                     Localidad
                                                 </Typography>
@@ -1209,19 +1474,23 @@ class RegisterSecond extends Component {
                                                     disabled={this.state.enabledComponent}
                                                     value={this.state.local}
                                                     onChange={this.handleLocalChange}
-                                                    className={classes.select}
+                                                    className={this.state.locationError ? classes.errorSelect : classes.select}
                                                     inputProps={{
                                                         classes: {
                                                             icon: classes.icon,
-
                                                         },
 
                                                     }}
-                                                    style={{ paddingLeft: 160 }}
+                                                    style={{ paddingLeft: 20 }}
                                                 >
-                                                    {locality.map(locality => <option key={locality.value} value={locality.value}>{locality.name}</option>)}
+                                                    {locality.map(locality => <option key={locality.value}
+                                                        value={locality.value}>{locality.name}</option>)}
 
                                                 </SelectBase>
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$locationError}
+                                                </Typography>
+
                                                 <Typography style={{ color: '#999999', fontSize: 11 }}>
                                                     12 caracteres máx
                                                 </Typography>
@@ -1233,23 +1502,41 @@ class RegisterSecond extends Component {
                                                         <InputBase
                                                             placeholder="Calle"
                                                             fullWidth
-                                                            disabled={this.state.enabledComponent}
-                                                            id="email"
+                                                            id="direction"
+                                                            name="direccion"
+
                                                             inputProps={{ style: { textAlign: 'center' } }}
-                                                            className={classes.formButton}
+                                                            className={this.state.dirError ? classes.errorFormButton : classes.formButton}
                                                             onChange={this.handleDir}
+                                                            required
+                                                            onBlur={(e) => {
+                                                                this.inputChange(e)
+                                                            }}
                                                         />
+                                                        <Typography className={classes.inputTitle2}>
+                                                            {$dirError}
+                                                        </Typography>
+
+
                                                     </Grid>
                                                     <Grid container xs={3} xl={3} sm={3}>
-                                                        <InputBase
+                                                        <RegexTextField
                                                             placeholder="Nº"
                                                             fullWidth
-                                                            disabled={this.state.enabledComponent}
                                                             id="numero"
+                                                            name="numero"
+                                                            regex={onlyNumbersRegex}
                                                             inputProps={{ style: { textAlign: 'center' } }}
-                                                            className={classes.formButton}
+                                                            className={this.state.numberError ? classes.errorFormButton : classes.formButton}
                                                             onChange={this.handleNumberChange}
+                                                            required
+                                                            onBlur={(e) => {
+                                                                this.inputChange(e)
+                                                            }}
                                                         />
+                                                        <Typography className={classes.inputTitle2}>
+                                                            {$numberError}
+                                                        </Typography>
                                                     </Grid>
                                                 </Grid>
 
@@ -1261,7 +1548,7 @@ class RegisterSecond extends Component {
                                                             <Link
                                                                 style={{ color: '#999999' }}>
                                                                 ¿Por qué me solicitan esta información?
-                                                        </Link>
+                                                            </Link>
                                                         </Typography>
                                                     </Grid>
                                                     {$wait}
@@ -1269,11 +1556,12 @@ class RegisterSecond extends Component {
                                                         type="submit"
                                                         variant="contained"
                                                         fullWidth
-                                                        disabled={this.state.enabledComponent}
-                                                        className={classes.login}
+                                                        disabled={this.state.enabledComponent || !isEnabled}
+                                                        className={this.state.error ? classes.loginError : classes.login}
+
                                                     >
                                                         Finalizar registro
-                                        </Button>
+                                                    </Button>
                                                 </Grid>
 
                                             </form>
@@ -1298,17 +1586,23 @@ class RegisterSecond extends Component {
                                                             native
                                                             disabled={this.state.enabledComponent}
                                                             value={this.state.day}
-                                                            onChange={(e) => { this.handleDayChange(e) }}
-                                                            className={classes.selectMobile}
+                                                            onChange={(e) => {
+                                                                this.handleDayChange(e)
+                                                            }}
+                                                            className={this.state.dayError ? classes.errorSelectMobile : classes.selectMobile}
                                                             inputProps={{
                                                                 classes: {
                                                                     icon: classes.icon,
                                                                 },
                                                             }}
                                                         >
-                                                            {days.map(days => <option key={days.value} value={days.value}>{days.name}</option>)}
+                                                            {days.map(days => <option key={days.value}
+                                                                value={days.value}>{days.name}</option>)}
 
                                                         </SelectBase>
+                                                        <Typography className={classes.inputTitle2}>
+                                                            {$dayError}
+                                                        </Typography>
                                                     </Grid>
                                                     <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 0 }}>
                                                         <SelectBase
@@ -1316,8 +1610,10 @@ class RegisterSecond extends Component {
                                                             native
                                                             value={this.state.months}
                                                             disabled={this.state.enabledComponent}
-                                                            onChange={(e) => { this.handleMonthsChange(e) }}
-                                                            className={classes.selectMobile}
+                                                            onChange={(e) => {
+                                                                this.handleMonthsChange(e)
+                                                            }}
+                                                            className={this.state.monthError ? classes.errorSelectMobile : classes.selectMobile}
                                                             style={{ paddingLeft: 15, width: '100%' }}
                                                             inputProps={{
                                                                 classes: {
@@ -1325,8 +1621,12 @@ class RegisterSecond extends Component {
                                                                 },
                                                             }}
                                                         >
-                                                            {months.map(months => <option key={months.value} value={months.value}>{months.name}</option>)}
+                                                            {months.map(months => <option key={months.value}
+                                                                value={months.value}>{months.name}</option>)}
                                                         </SelectBase>
+                                                        <Typography className={classes.inputTitle2}>
+                                                            {$monthError}
+                                                        </Typography>
                                                     </Grid>
                                                     <Grid container xs={4} xl={4} sm={4} style={{ paddingLeft: 30 }}>
                                                         <SelectBase
@@ -1335,17 +1635,23 @@ class RegisterSecond extends Component {
                                                             native
                                                             disabled={this.state.enabledComponent}
                                                             value={this.state.years}
-                                                            onChange={(e) => { this.handleYearChange(e) }}
-                                                            className={classes.selectMobile}
+                                                            onChange={(e) => {
+                                                                this.handleYearChange(e)
+                                                            }}
+                                                            className={this.state.yearError ? classes.errorSelectMobile : classes.selectMobile}
                                                             inputProps={{
                                                                 classes: {
                                                                     icon: classes.icon,
                                                                 },
                                                             }}
                                                         >
-                                                            {years.map(years => <option key={years.value} value={years.value}>{years.name}</option>)}
+                                                            {years.map(years => <option key={years.value}
+                                                                value={years.value}>{years.name}</option>)}
 
                                                         </SelectBase>
+                                                        <Typography className={classes.inputTitle2}>
+                                                            {$yearError}
+                                                        </Typography>
                                                     </Grid>
                                                 </Grid>
 
@@ -1357,8 +1663,10 @@ class RegisterSecond extends Component {
                                                     native
                                                     disabled={this.state.enabledComponent}
                                                     value={this.state.nationality}
-                                                    onChange={(e) => { this.handleNationalityChange(e) }}
-                                                    className={classes.selectMobile}
+                                                    onChange={(e) => {
+                                                        this.handleNationalityChange(e)
+                                                    }}
+                                                    className={this.state.nationalityError ? classes.errorSelectMobile : classes.selectMobile}
                                                     inputProps={{
                                                         classes: {
                                                             icon: classes.icon,
@@ -1366,9 +1674,13 @@ class RegisterSecond extends Component {
                                                     }}
                                                     style={{ paddingLeft: 10 }}
                                                 >
-                                                    {countries.map(country => <option key={country.value} value={country.value}>{country.name}</option>)}
+                                                    {countries.map(country => <option key={country.value}
+                                                        value={country.value}>{country.name}</option>)}
 
                                                 </SelectBase>
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$nationalityError}
+                                                </Typography>
                                                 <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
                                                     Género
                                                 </Typography>
@@ -1377,8 +1689,10 @@ class RegisterSecond extends Component {
                                                     native
                                                     disabled={this.state.enabledComponent}
                                                     value={this.state.gender}
-                                                    onChange={(e) => { this.handleGenderChange(e) }}
-                                                    className={classes.selectMobile}
+                                                    onChange={(e) => {
+                                                        this.handleGenderChange(e)
+                                                    }}
+                                                    className={this.state.genderError ? classes.errorSelectMobile : classes.selectMobile}
                                                     inputProps={{
                                                         classes: {
                                                             icon: classes.icon,
@@ -1386,9 +1700,13 @@ class RegisterSecond extends Component {
                                                     }}
                                                     style={{ paddingLeft: 10 }}
                                                 >
-                                                    {gender.map(gender => <option key={gender.value} value={gender.value}>{gender.name}</option>)}
+                                                    {gender.map(gender => <option key={gender.value}
+                                                        value={gender.value}>{gender.name}</option>)}
 
                                                 </SelectBase>
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$genderError}
+                                                </Typography>
                                                 <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
                                                     Provincia
                                                 </Typography>
@@ -1397,8 +1715,10 @@ class RegisterSecond extends Component {
                                                     native
                                                     disabled={this.state.enabledComponent}
                                                     value={this.state.province}
-                                                    onChange={(e) => { this.handleProvinceChange(e) }}
-                                                    className={classes.selectMobile}
+                                                    onChange={(e) => {
+                                                        this.handleProvinceChange(e)
+                                                    }}
+                                                    className={this.state.provinceError ? classes.errorSelectMobile : classes.selectMobile}
                                                     inputProps={{
                                                         classes: {
                                                             icon: classes.icon,
@@ -1406,9 +1726,13 @@ class RegisterSecond extends Component {
                                                     }}
 
                                                 >
-                                                    {provinces.map(provinces => <option key={provinces.value} value={provinces.value}>{provinces.name}</option>)}
-
+                                                  
+                                                   {dataSourceAvailable.map(provinces => <option key={provinces.nombre}
+                                                        value={provinces.value}>{provinces.nombre}</option>)}  
                                                 </SelectBase>
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$provinceError}
+                                                </Typography>
                                                 <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
                                                     Localidad
                                                 </Typography>
@@ -1417,8 +1741,10 @@ class RegisterSecond extends Component {
                                                     native
                                                     disabled={this.state.enabledComponent}
                                                     value={this.state.local}
-                                                    onChange={(e) => { this.handleLocalChange(e) }}
-                                                    className={classes.selectMobile}
+                                                    onChange={(e) => {
+                                                        this.handleLocalChange(e)
+                                                    }}
+                                                    className={this.state.locationError ? classes.errorSelectMobile : classes.selectMobile}
                                                     inputProps={{
                                                         classes: {
                                                             icon: classes.icon,
@@ -1426,17 +1752,23 @@ class RegisterSecond extends Component {
                                                     }}
 
                                                 >
-                                                    {locality.map(locality => <option key={locality.value} value={locality.value}>{locality.name}</option>)}
+                                                    {locality.map(locality => <option key={locality.value}
+                                                        value={locality.value}>{locality.name}</option>)}
 
                                                 </SelectBase>
+                                                <Typography className={classes.inputTitle2}>
+                                                    {$locationError}
+                                                </Typography>
                                                 <Grid container justify='flex-start'>
                                                     <Grid container xs={9} xl={9} sm={9} style={{ paddingRight: 10 }}>
-                                                        <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                        <Typography className={classes.inputTitle}
+                                                            style={{ textAlign: 'left' }}>
                                                             Dirección
                                                         </Typography>
                                                     </Grid>
                                                     <Grid container xs={3} xl={3} sm={3}>
-                                                        <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                        <Typography className={classes.inputTitle}
+                                                            style={{ textAlign: 'left' }}>
                                                             Número
                                                         </Typography>
                                                     </Grid>
@@ -1446,27 +1778,63 @@ class RegisterSecond extends Component {
                                                         <InputBase
                                                             placeholder="Calle, Avenida, etc"
                                                             fullWidth
-                                                            disabled={this.state.enabledComponent}
-                                                            id="email"
+                                                            id="direction"
                                                             name="direccion"
-                                                            inputProps={{ style: { textAlign: 'left' } }}
-                                                            className={classes.formButtonMobile}
+
+                                                            inputProps={{ style: { textAlign: 'center' } }}
+                                                            className={this.state.dirError ? classes.errorFormButton : classes.formButton}
                                                             onChange={this.handleDir}
+                                                            required
+                                                            onBlur={(e) => {
+                                                                this.inputChange(e)
+                                                            }}
                                                         />
+                                                        <Typography className={classes.inputTitle2}>
+                                                            {$dirError}
+                                                        </Typography>
+
+                                                        {/*<InputBase*/}
+                                                        {/*    placeholder="Calle, Avenida, etc"*/}
+                                                        {/*    fullWidth*/}
+                                                        {/*    disabled={this.state.enabledComponent}*/}
+                                                        {/*    id="email"*/}
+                                                        {/*    name="direccion"*/}
+                                                        {/*    inputProps={{ style: { textAlign: 'left' } }}*/}
+                                                        {/*    className={classes.formButtonMobile}*/}
+                                                        {/*    onChange={this.handleDir}*/}
+                                                        {/*/>*/}
                                                     </Grid>
                                                     <Grid container xs={3} xl={3} sm={3}>
-                                                        <InputBase
+
+                                                        <RegexTextField
                                                             placeholder="XXXX"
-                                                            disabled={this.state.enabledComponent}
-                                                            onChange={(e) => { this.handleNumberChange(e) }}
-                                                            className={classes.formButtonMobile}
-                                                            inputProps={{
-                                                                classes: {
-                                                                    icon: classes.icon,
-                                                                },
+                                                            fullWidth
+                                                            id="numero"
+                                                            name="numero"
+                                                            regex={onlyNumbersRegex}
+                                                            inputProps={{ style: { textAlign: 'center' } }}
+                                                            className={this.state.numberError ? classes.errorFormButton : classes.formButton}
+                                                            onChange={this.handleNumberChange}
+                                                            required
+                                                            onBlur={(e) => {
+                                                                this.inputChange(e)
                                                             }}
-                                                        >
-                                                        </InputBase>
+                                                        />
+                                                        <Typography className={classes.inputTitle2}>
+                                                            {$numberError}
+                                                        </Typography>
+                                                        {/*<InputBase*/}
+                                                        {/*    placeholder="XXXX"*/}
+                                                        {/*    disabled={this.state.enabledComponent}*/}
+                                                        {/*    onChange={(e) => { this.handleNumberChange(e) }}*/}
+                                                        {/*    className={classes.formButtonMobile}*/}
+                                                        {/*    inputProps={{*/}
+                                                        {/*        classes: {*/}
+                                                        {/*            icon: classes.icon,*/}
+                                                        {/*        },*/}
+                                                        {/*    }}*/}
+                                                        {/*>*/}
+                                                        {/*</InputBase>*/}
                                                     </Grid>
                                                 </Grid>
 
@@ -1477,7 +1845,7 @@ class RegisterSecond extends Component {
                                                             <Link
                                                                 style={{ color: '#999999' }}>
                                                                 ¿Por qué me solicitan esta información?
-                                                    </Link>
+                                                            </Link>
                                                         </Typography>
                                                     </Grid>
                                                     {$wait}
@@ -1486,8 +1854,9 @@ class RegisterSecond extends Component {
                                                         variant="contained"
                                                         fullWidth
                                                         disabled={this.state.enabledComponent}
-                                                        className={classes.login}
-                                                        onSubmit={this.handleCreateAccountSubmit}
+                                                        className={this.state.error ? classes.loginError : classes.login}
+                                                       //onSubmit={this.handleCreateAccountSubmit}
+                                                        disabled={!isEnabled}
                                                     >
                                                         Finalizar registro
                                                     </Button>
@@ -1498,14 +1867,14 @@ class RegisterSecond extends Component {
                                         </Grid>}
 
 
-
                                 </div>
                             </Box>
                         </Container>
                     </Container>
                 </Grid>
-            </div >
+            </div>
         );
     }
 }
+
 export default withStyles(styles, { withTheme: true })(RegisterSecond);

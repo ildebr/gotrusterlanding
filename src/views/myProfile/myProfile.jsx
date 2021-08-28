@@ -10,8 +10,11 @@ import PassWord from '../../components/myProfile/PassWord'
 import Back from '../../asset/images/myProfile/back.svg'
 import Profile from '../../components/myProfile/Profile'
 import MyEmail from '../../components/myProfile/MyEmail'
-
-
+import CustomizedSwitches from '../../components/myProfile/Linkages'
+import Cliente from './../../setting/cliente'
+import { AddressOperations } from './../../services/hostConfig';
+import { getToken } from './../../setting/auth-helpers';
+const { localStorage } = global.window;
 const styles = theme => ({
     root: {
         background: '#000000',
@@ -34,30 +37,63 @@ const styles = theme => ({
         color: "#ACFD00",
         font: 'normal normal normal 18px/18px Poppins',
         fontWeight: '500',
-        cursor:'pointer',
+        cursor: 'pointer',
     },
     unselectedText: {
         color: '#5F5F5F',
         font: 'normal normal normal 18px/18px Poppins',
         fontWeight: '500',
-        cursor:'pointer',
+        cursor: 'pointer',
     }
 });
 
 class MyProfile extends Component {
     constructor(props) {
         super(props);
-        this.state = { windowWidth: window.innerWidth, tab: 0 };
+        this.state = {
+            windowWidth: window.innerWidth,
+            tab: 0,
+
+        };
     }
     handleResize = (e) => {
         this.setState({ windowWidth: window.innerWidth });
     };
     componentDidMount() {
+        this.handleLoadDataAdresses();
         window.addEventListener("resize", this.handleResize);
+        
     }
     Tabf = (value) => {
         this.setState({ tab: value });
         console.log(this.state.tab)
+    }
+    handleLoadDataAdresses = () => {
+
+        const token = getToken();
+        let adress = '';
+        let nacional = '';
+        Cliente.get(AddressOperations(), {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                return response.data
+            }).then(response => {
+                console.log(response);
+                response.forEach(function (currentValue, index, arr) {
+                    adress += currentValue.streetName + ' ' + currentValue.streetNumber;
+                    nacional += currentValue.country;
+
+                });
+
+                localStorage.setItem("Adresses", adress)
+                localStorage.setItem("Nacinality", nacional)
+
+            })
     }
     render() {
         function getWindowDimensions() {
@@ -68,11 +104,11 @@ class MyProfile extends Component {
         }
         const { width } = getWindowDimensions();
         const { classes } = this.props;
-        const componentArray = [<Profile />, <PassWord />, <MyEmail />, '']
+        const componentArray = [<Profile adresses={this.state.adresses} nacionality={this.state.nacionality} />, <PassWord />, <MyEmail />, <CustomizedSwitches />]
         return (<React.Fragment>
             <Grid container className={classes.root} component="main" maxWidth="md" style={{ display: 'flex', justifyContent: 'center' }}>
                 {width >= 600 ? <div className={classes.background} >
-                    <img src={Rectangle} alt='background' width={'100%'} height={'475px'} />
+                    <img src={Rectangle} alt='background' width={'100%'} height={'100%'} />
                 </div> : ''}
                 <Grid className={classes.test} container maxWidth="md" component="main" >
                     <Container component="main" maxWidth="md" container  >
@@ -93,7 +129,7 @@ class MyProfile extends Component {
                                         font: " normal normal 40px/40px Poppins",
                                     }}>
                                         Truster
-                                </Typography>
+                                    </Typography>
                                 </Grid> :
                                 <Grid xs={6} xl={6} sm={6} container alignItems='center'>
                                     <Grid xs={11} xl={11} sm={11} container justify='flex-start'>
@@ -176,7 +212,7 @@ class MyProfile extends Component {
                                     </Grid>
                                 </Grid>
 
-                            </Grid> : <MyProfileMobile />}
+                            </Grid> : <MyProfileMobile adresses={this.state.adresses} nacionality={this.state.nacionality} />}
                             <Grid container justify="center" xs={9} xl={9} sm={9}>
                                 {width >= 600 ? componentArray[this.state.tab] : ''}
                             </Grid>

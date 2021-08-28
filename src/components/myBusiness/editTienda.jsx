@@ -7,6 +7,9 @@ import {Typography} from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
+import {AllCategory} from "../../services/hostConfig";
+import { getToken } from './../../setting/auth-helpers';
+import Cliente from "../../setting/cliente";
 
 
 // const useStyles = withStyles({
@@ -173,7 +176,6 @@ function EditTienda(props) {
                         <CssTextField placeholder="Elegí tu nombre"/>
                     </div>
                 </Grid>
-
 
                 <Grid item style={{width: '100%', paddingTop: '32px'}}>
                     <Typography className={classes.titulo}>

@@ -11,12 +11,13 @@ const useStyles = makeStyles({
 const BorderLinearProgress = withStyles((theme) => ({
     root: {
         height: 5,
+        borderRadius: 60
     },
     colorPrimary: {
-        backgroundColor: '#666666',
+        backgroundColor: '#303030',
     },
     bar: {
-        borderRadius: 0,
+        borderRadius: 50,
         backgroundColor: '#ACFD00',
     }
 }))(LinearProgress);

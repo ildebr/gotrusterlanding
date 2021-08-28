@@ -75,7 +75,9 @@ function MobileBotonera(props) {
                         textTransform:'None',
                         height:'53px',
                         width:'100%'
-                    }}>
+                    }}
+                    href={'/editmybusiness'}
+                    >
                         <Typography style={{
                             align: "center",
                             color: '#252525',

@@ -6,7 +6,7 @@ import Link from '@material-ui/core/Link';
 import InputBase from '@material-ui/core/InputBase';
 import { ReactComponent as Logo } from '../../asset/images/logo.svg';
 import auth from './../../setting/auth';
-import { LoopCircleLoading } from 'react-loadingg';
+import  Loading from './../../components/Loading';
 import { getToken, deleteToken } from './../../setting/auth-helpers';
 import { Account, CustomerResource } from './../../services/hostConfig';
 //import WindowDimensions from "../../components/UtilityComponents/WindowDimension"
@@ -148,12 +148,16 @@ const styles = theme => ({
         borderColor: '#999999',
         borderRadius: 15,
         color: "white",
+        autoComplete :"off",
         font: 'normal normal normal 16px/22px Poppins',
         "&:hover": {
             border: '2px solid',
             borderColor: '#ACFD00',
             borderRadius: 15,
         },
+        "& .MuiFilledInput-root": {
+            background: "rgb(232, 241, 250)"
+          }
     },
     errorFormButton: {
         marginTop: theme.spacing(1),
@@ -171,6 +175,12 @@ const styles = theme => ({
         fontSize: 12,
         color: '#999999',
         fontFamily: 'Poppins',
+        marginTop: theme.spacing(2),
+    },
+    inputTitle2: {
+        color: '#E94342',
+        font: 'normal normal normal 14px/14px Poppins',
+        fontSize: '14px',
         marginTop: theme.spacing(2),
     }
 });
@@ -212,6 +222,7 @@ class Login extends Component {
         localStorage.clear();
         localStorage.setItem("formato", "undefined");
         localStorage.setItem("thisEmail", "undefined");
+        localStorage.setItem("logueado", false);
         window.addEventListener("resize", this.handleResize);
     }
 
@@ -238,7 +249,8 @@ class Login extends Component {
             auth.login(name, pass)
                 .then(() => {
                     const token = getToken();
-                    if (typeof token !== 'undefined') {
+                    console.log(token);
+                    if (token !== 'undefined') {
                         fetch(Account(), {
                             method: 'get',
                             headers: {
@@ -247,18 +259,31 @@ class Login extends Component {
                                 'Authorization': `Bearer ${token}`
                             }
                         }).then(response => {
-                            console.log(response)
+                            console.log(response.status)
+                            /*  if (response.status == 401 ||
+                                  response.status== 400){
+                                      this.setState({
+                                          error: 'error',
+                                          textError: '*Tu usuario o contraseña no son correctos, por favor revisa tus datos',
+                                          name: '',
+                                          show: false,
+                                          enabledComponent: false
+                                      })
+                              } else{
+                              return response.json();
+                              }*/
                             return response.json();
-
                         }).then(response => {
                             console.log(response)
+                          
                             this.setState({
                                 firtsName: response.firstName,
                                 LastName: response.lastName
                             })
                             return response.id;
                         }).then(response => {
-
+                            idUser = response;
+                            localStorage.setItem('userId', response);
                             Cliente.get(CustomerResource() + '/' + response, {
                                 headers: {
                                     'Accept': 'application/json',
@@ -270,7 +295,7 @@ class Login extends Component {
                                     return response.data
                                 }).then(response => {
                                     console.log(response);
-                                    idUser = response.id;
+                                    
                                     loginvar = response.email;
                                     emailUser = response.email;
                                     this.setState({
@@ -280,11 +305,23 @@ class Login extends Component {
                                         email: emailUser,
                                     })
                                     localStorage.setItem('userType', this.state.userType);
-                                    localStorage.setItem('userId', this.state.idUser);
+                                    
                                     localStorage.setItem('userLogin', this.state.userLogin);
                                     localStorage.setItem('nombre', this.state.firtsName);
                                     localStorage.setItem('apellido', this.state.LastName);
                                     localStorage.setItem('email', this.state.email);
+                                    ///////////////////////////////////////
+                                    localStorage.setItem('birthDate', response.birthDate);
+                                    localStorage.setItem('cellphone', response.cellphone);
+                                    localStorage.setItem('cuit', response.cuit);
+                                    localStorage.setItem('dni', response.dni);
+                                    localStorage.setItem('gender', response.gender);
+                                    localStorage.setItem('occupation', response.occupation);
+                                    localStorage.setItem('points', response.points);
+                                    //////////////////////////////////////
+
+                                    localStorage.setItem('logueado', true);
+                                    console.log(this.state.userType);
                                     if (this.state.userType === 'INDIVIDUAL') {
                                         window.open("/reputation", '_self');
                                         this.setState({
@@ -292,15 +329,13 @@ class Login extends Component {
                                             enabledComponent: false
                                         })
 
-                                    } else if (this.state.userType === 'SHOP') {
-                                        window.open("/reputation", '_self');
+                                    }  else if (this.state.userType === 'ADMIN') {
+                                        window.open("/admin/user", '_self');
                                         this.setState({
                                             show: false,
                                             enabledComponent: false
                                         })
-
                                     }
-
                                 }).catch(error => {
                                     console.error('Error:', error)
                                     this.setState({
@@ -317,7 +352,8 @@ class Login extends Component {
                             show: false,
                             enabledComponent: false
                         })
-                        deleteToken(e);
+
+                        // deleteToken(e);
                     }
                 }).catch(error => console.error('Error:', error));
         }
@@ -335,9 +371,10 @@ class Login extends Component {
         let $show = this.state.show;
         let $wait = '';
         let $textError = this.state.textError;
-        if ($show) {
-            $wait = (<LoopCircleLoading size='large' color='#ACFD00
-            '/>);
+        if ($show) {           
+            $wait = (<Loading />);        
+        } else{
+            $wait = (<Logo width="50" height="50" />); 
         }
         return (
             <div style={{ backgroundColor: '#000000' }}>
@@ -351,7 +388,7 @@ class Login extends Component {
                                 <CssBaseline />
                                 <Box mx="auto"  >
                                     <Box className={classes.authHeader}>
-                                        <Logo width="50" height="50" />
+                                       {$wait}
                                     </Box>
                                 </Box>
                                 <div className={classes.paper}>
@@ -381,6 +418,20 @@ class Login extends Component {
                                                 className={classes.formButton}
                                                 disabled={this.state.enabledComponent}
                                                 onChange={this._handleChangeValue}
+                                                onClick={
+                                                    (e) => {
+                                                        e.preventDefault();
+                                                        const token = getToken();
+                                                        console.log(token);
+                                                        if (token == 'undefined') {
+                                                            deleteToken(e)
+                                                            this.setState({
+                                                                error: '',
+                                                                textError: '',
+                                                            })
+                                                        }
+                                                    }
+                                                }
                                             />
                                             <InputBase
                                                 placeholder="Contraseña"
@@ -392,6 +443,22 @@ class Login extends Component {
                                                 inputProps={{ style: { textAlign: 'center' } }}
                                                 className={classes.formButton}
                                                 onChange={this._handleChangeValuePass}
+                                                onClick={
+                                                    (e) => {
+                                                        e.preventDefault();
+                                                        const token = getToken();
+                                                        console.log(token);
+                                                        if (token == 'undefined' && this.state.name == '') {
+                                                            deleteToken(e)
+                                                            this.setState({
+                                                                error: '',
+                                                                textError: '',
+                                                            })
+                                                        }
+
+
+                                                    }
+                                                }
                                             />
 
                                             <button
@@ -400,15 +467,15 @@ class Login extends Component {
                                                 className={classes.login}
                                             >
                                                 Log In
-                                        </button>
+                                            </button>
                                             <Grid container>
                                                 <Grid item xs>
                                                     <Link href="/passrecover" style={{ textDecoration: 'none' }} >
-                                                        {$wait}
+                                                        
                                                         <Typography
                                                             className={classes.normaltext}>
                                                             ¿Olvidaste contraseña?
-                                                    </Typography>
+                                                        </Typography>
                                                     </Link>
                                                 </Grid>
 
@@ -424,6 +491,17 @@ class Login extends Component {
                                                             style={{ color: '#ACFD00' }}>
                                                             Registrate
                                                         </Link>
+                                                    </Typography>
+
+                                                </Grid>
+
+                                            </Grid>
+                                            <Grid container>
+                                                <Grid item xs>
+
+                                                    <Typography
+                                                        className={classes.inputTitle2}>
+                                                        {$textError}
                                                     </Typography>
 
                                                 </Grid>
@@ -449,6 +527,20 @@ class Login extends Component {
                                                     className={classes.formButton}
                                                     disabled={this.state.enabledComponent}
                                                     onChange={this._handleChangeValue}
+                                                    onClick={
+                                                        (e) => {
+                                                            e.preventDefault();
+                                                            const token = getToken();
+                                                            console.log(token);
+                                                            if (token == 'undefined') {
+                                                                deleteToken(e)
+                                                                this.setState({
+                                                                    error: '',
+                                                                    textError: '',
+                                                                })
+                                                            }
+                                                        }
+                                                    }
 
                                                 />
                                                 <InputBase
@@ -461,6 +553,20 @@ class Login extends Component {
                                                     className={classes.formButton}
                                                     disabled={this.state.enabledComponent}
                                                     onChange={this._handleChangeValuePass}
+                                                    onClick={
+                                                        (e) => {
+                                                            e.preventDefault();
+                                                            const token = getToken();
+                                                            console.log(token);
+                                                            if (token == 'undefined' && this.state.name == '') {
+                                                                deleteToken(e)
+                                                                this.setState({
+                                                                    error: '',
+                                                                    textError: '',
+                                                                })
+                                                            }
+                                                        }
+                                                    }
                                                 />
                                                 <button
                                                     type="submit"
@@ -468,15 +574,15 @@ class Login extends Component {
                                                     className={classes.login}
                                                 >
                                                     Log In
-                                        </button>
+                                                </button>
                                                 <Grid container>
                                                     <Grid item xs>
-                                                        <Link style={{ textDecoration: 'none' }} >
-                                                            {$wait}
+                                                        <Link href="/passrecover" style={{ textDecoration: 'none' }} >
+                                                            
                                                             <Typography
                                                                 className={classes.normaltext}>
                                                                 ¿Olvidaste contraseña?
-                                                    </Typography>
+                                                            </Typography>
                                                         </Link>
                                                     </Grid>
 
@@ -491,7 +597,18 @@ class Login extends Component {
                                                                 href="/register"
                                                                 style={{ color: '#ACFD00' }}>
                                                                 Registrate
-                                                        </Link>
+                                                            </Link>
+                                                        </Typography>
+
+                                                    </Grid>
+
+                                                </Grid>
+                                                <Grid container>
+                                                    <Grid item xs>
+
+                                                        <Typography
+                                                            className={classes.inputTitle2}>
+                                                            {$textError}
                                                         </Typography>
 
                                                     </Grid>
