@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component, useEffect, useState} from 'react'
 import { Container, Grid, Typography, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Rectangle from '../../asset/images/Rectangle 71.svg'
@@ -12,7 +12,7 @@ import Profile from '../../components/myProfile/Profile'
 import MyEmail from '../../components/myProfile/MyEmail'
 import CustomizedSwitches from '../../components/myProfile/Linkages'
 import Cliente from './../../setting/cliente'
-import { AddressOperations } from './../../services/hostConfig';
+import {AddressOperations, GetImage, UriServices} from './../../services/hostConfig';
 import { getToken } from './../../setting/auth-helpers';
 const { localStorage } = global.window;
 const styles = theme => ({
@@ -47,13 +47,17 @@ const styles = theme => ({
     }
 });
 
+
+
 class MyProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
             windowWidth: window.innerWidth,
             tab: 0,
-
+            imagesArray: null,
+            user: null,
+            modifiedCover: false
         };
     }
     handleResize = (e) => {
@@ -62,14 +66,34 @@ class MyProfile extends Component {
     componentDidMount() {
         this.handleLoadDataAdresses();
         window.addEventListener("resize", this.handleResize);
+        if (this.state.user === null) {
+            this.state.user = localStorage.getItem('userLogin')
+        }
+
+        if (this.state.imagesArray === null && this.state.user !== null) {
+            Cliente.get(GetImage(), {
+                params: {
+                    'user': this.state.user,
+                    'folder': 'cover'
+                }
+            },).then(
+                res => {
+                    this.setState({imagesArray: res['data']['fileNames']})
+                }
+            )
+        }
+
         
     }
+
+
+
     Tabf = (value) => {
         this.setState({ tab: value });
         console.log(this.state.tab)
     }
-    handleLoadDataAdresses = () => {
-
+    handleLoadDataAdresses = (e) => {
+        
         const token = getToken();
         let adress = '';
         let nacional = '';
@@ -105,10 +129,33 @@ class MyProfile extends Component {
         const { width } = getWindowDimensions();
         const { classes } = this.props;
         const componentArray = [<Profile adresses={this.state.adresses} nacionality={this.state.nacionality} />, <PassWord />, <MyEmail />, <CustomizedSwitches />]
+
+
+
+        //
+        //
+
+
+        function modifyActive() {
+            this.setState({ modifiedCover: true });
+        }
+
         return (<React.Fragment>
             <Grid container className={classes.root} component="main" maxWidth="md" style={{ display: 'flex', justifyContent: 'center' }}>
                 {width >= 600 ? <div className={classes.background} >
-                    <img src={Rectangle} alt='background' width={'100%'} height={'100%'} />
+
+                    {this.state.imagesArray !== null && this.state.imagesArray.length > 0  ?
+                        <img src={
+                            UriServices() + '/' + this.state.user + '/images/cover/' + this.state.imagesArray[0]}
+                             alt='background' width={'100%'} height={'100%'}
+                             style={{objectFit:'cover'}}
+                        />
+
+
+                        :
+                        <img src={Rectangle} alt='background' width={'100%'} height={'100%'} />
+                    }
+
                 </div> : ''}
                 <Grid className={classes.test} container maxWidth="md" component="main" >
                     <Container component="main" maxWidth="md" container  >
@@ -151,7 +198,7 @@ class MyProfile extends Component {
                                 </Grid>}
                         </Grid>
                         <Grid container justify="center">
-                            {width >= 600 ? <MyProfileInfo /> : ''}
+                            {width >= 600 ? <MyProfileInfo modifiedCover={this.componentDidMount()}/> : ''}
                         </Grid>
                         <Grid container justify="center" alignItems='flex-start' xs={12} xl={12} sm={12} style={{ marginTop: 150 }}>
                             {width >= 600 ? <Grid container justify="flex-start" alignItems='flex-start' xs={3} xl={3} sm={3}>

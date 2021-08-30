@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
 import {Container, Grid, Typography} from "@material-ui/core";
 import LandingImage from '../../asset/images/myBusiness/Rectangle 71.png'
@@ -16,6 +16,9 @@ import MobileHeader from "../../components/myBusiness/mobileHeader";
 import MobileTienda from "../../components/myBusiness/mobileTienda";
 import MobileBotonera from "../../components/myBusiness/mobileBotonera";
 import Switch from "@material-ui/core/Switch";
+import { AllCategory } from "../../services/hostConfig";
+import { getToken } from './../../setting/auth-helpers';
+
 
 
 const styles = theme => ({
@@ -78,8 +81,8 @@ class Business extends Component {
     constructor(props) {
         super(props);
         this.state = {windowWidth: window.innerWidth};
-        this.state = {switchState: false};
-
+        this.state = {switchState: false , categorys:[]};
+       
     }
 
     handleResize = (e) => {
@@ -87,7 +90,33 @@ class Business extends Component {
     };
 
     componentDidMount() {
+        this.loadCategory();
         window.addEventListener("resize", this.handleResize);
+    }
+    loadCategory = (e) => {
+        let URI = AllCategory();
+        const token = getToken();
+        
+        fetch(URI, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                console.log(response)
+                return response.json();
+            }).then(response => {
+              this.setState({
+                categorys:response
+              })
+               return response;
+            })
+            .catch(e => {
+                console.log(e);
+            })
+
     }
 
     render() {
@@ -238,7 +267,7 @@ class Business extends Component {
 
 
                                 <Grid item xs md={6}>
-                                    <Tienda/>
+                                    <Tienda categorys={this.state.categorys}/>
                                     <Ubicacion/>
                                 </Grid>
 

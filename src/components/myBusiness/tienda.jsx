@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
+import SelectBase from '@material-ui/core/Select';
 import Typography from "@material-ui/core/Typography";
 import button1 from "../../asset/images/myBusiness/button1.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,9 +10,9 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import Switch from "@material-ui/core/Switch";
 import Select from "@material-ui/core/Select";
-import { AllCategory } from "../../services/hostConfig";
+import { selectSubCategory } from "../../services/hostConfig";
 import { getToken } from './../../setting/auth-helpers';
-import Cliente from "../../setting/cliente";
+let subCateg =[];
 
 const useStyles = makeStyles(theme => ({
     titulo: {
@@ -179,37 +180,15 @@ const CssTextField_Alt = withStyles({
 })(TextField);
 
 
-function Tienda() {
+function Tienda(props) {
+    const [months, setMonths] = React.useState(' ');
+    const [idCat, setIDCat] = React.useState('');
+    const [subCat, setSubCat] = React.useState([]); 
+    const [active, setActive] = React.useState(true)
     const classes = useStyles();
 
-    const handleSubmit = (e) => {
-        let URI = AllCategory();
-        const token = getToken();
-        let category = [];
-
-        Cliente.get(URI, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(response => {
-                console.log(response.data)
-                return response.data.json();
-            }).then(response => {
-                for (let index = 0; index < response.length; index++) {
-                    const element = response[index];
-                    category.push(element)
-                }
-                return category
-            }).then(response => {
-                console.log(response)
-            })
-            .catch(e => {
-                console.log(e);
-            })
-
+    const handleMonths = (e) => {
+        setMonths(e.target.value);
     }
 
     return (
@@ -244,32 +223,57 @@ function Tienda() {
                     <div style={{ display: 'grid', paddingTop: '4px' }}>
 
 
-                        <Select defaultValue='none' className={classes.select}>
-                            {/*handleSubmit.map(category => {
-                                return (<option value="none" disabled key={category.id}
-                                    value={category.id} >
-                                    {category.description}
-                                </option>)
-                            }
-                            )
-                        */}
-                         <option value="none" disabled style={{
-                                '& .MuiInputBase-root': {
-                                    color: '#fff',
-                                    align: "center",
-                                    fontFamily: "Poppins",
-                                    fontSize: '15px',
-                                    fontWeight: 500,
-                                    textAlign: 'left',
-                                    letterSpacing: '-0.02em',
-                                },
-                            }}>
-                                Elegí la categoría
-                            </option>
-                            <option value="1">Option 1</option>
-                            <option value="2">Option 2</option>
-                            <option value="3">Option 3</option>
-                        </Select>
+                        <SelectBase defaultValue='none'
+                            className={classes.select}
+                            value={months}
+                            onChange={handleMonths}
+                        >
+                            {props.categorys.map(category => {
+                                return (<option value="none" key={category.id}
+                                    value={category.id} style={{
+                                        '& .MuiInputBase-root': {
+                                            color: '#fff',
+                                            align: "center",
+                                            fontFamily: "Poppins",
+                                            fontSize: '15px',
+                                            cursor: 'pointer',
+                                            fontWeight: 500,
+                                            textAlign: 'left',
+                                            letterSpacing: '-0.02em',
+                                        }
+                                    }} onClick={(e) => {
+                                        e.preventDefault()
+                                        setIDCat(category.id)
+                                        
+                                        console.log(idCat)
+                                        let URI = selectSubCategory();
+                                        const token = getToken();
+                                        fetch(URI+'/'+idCat, {
+                                            headers: {
+                                                'Accept': 'application/json',
+                                                'Content-Type': 'application/json',
+                                                'Authorization': `Bearer ${token}`
+                                            }
+                                        }).then(response => {
+                                                console.log(response)
+                                                return response.json();
+                                            }).then(response => { 
+                                                subCateg = response;                                           
+                                                console.log(subCateg)
+                                                setActive(false)
+                                                return response;
+                                            })
+                                            .catch(e => {
+                                                console.log(e);
+                                            })
+
+                                    }}>
+                                    {category.name}
+                                </option>
+                                )
+                            })}
+
+                        </SelectBase>
                     </div>
 
                 </Grid>
@@ -280,10 +284,10 @@ function Tienda() {
                         Subcategorìa
                     </Typography>
                     <div style={{ display: 'grid', paddingTop: '4px' }}>
-
-
-                        <Select defaultValue='none' className={classes.select}>
-                            <option value="none" disabled style={{
+                        <Select defaultValue='none' className={classes.select} disabled={active}>
+                        {/*subCateg.map(subCategory => {
+                            <option value="none" key={subCategory.id}
+                            value={subCategory.id} style={{
                                 '& .MuiInputBase-root': {
                                     color: '#fff',
                                     fontFamily: "Poppins",
@@ -293,11 +297,11 @@ function Tienda() {
                                     letterSpacing: '-0.02em',
                                 },
                             }}>
-                                Elegí la subcategoría
+                                 {subCategory.name}
                             </option>
-                            <option value="1">Option 1</option>
-                            <option value="2">Option 2</option>
-                            <option value="3">Option 3</option>
+                          
+                        })*/}
+
                         </Select>
 
 

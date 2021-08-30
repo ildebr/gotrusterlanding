@@ -99,10 +99,11 @@ const AllCategory =()=>{
    let REACT_CATEGORY = `https://truster-back-end.herokuapp.com/api/category-types`;
    return REACT_CATEGORY;
 }
-const AllSubCategory =()=>{
-   let REACT_SUBCATEGORY = `https://truster-back-end.herokuapp.com/api/category-types`;
+const selectSubCategory =()=>{
+   let REACT_SUBCATEGORY = `https://truster-back-end.herokuapp.com/api/sub-category-types`;
    return REACT_SUBCATEGORY;
 }
+
 
    module.exports = {
       Account,
@@ -125,7 +126,7 @@ const AllSubCategory =()=>{
       AddressOperationsFull,
       UriServices,
       AllCategory,
-      AllSubCategory
+      selectSubCategory
    }
 
 

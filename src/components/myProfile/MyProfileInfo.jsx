@@ -6,6 +6,7 @@ import Cover from '../../asset/images/myProfile/cover.svg'
 import Logo from '../../asset/images/reputation/logo.svg'
 import Cliente from "../../setting/cliente";
 import {Fileload, GetImage,UriServices} from "../../services/hostConfig";
+import {LoopCircleLoading} from "react-loadingg";
 
 
 const {localStorage} = global.window;
@@ -41,18 +42,23 @@ const styles = theme => ({
 });
 
 
-const MyProfileInfo = () => {
+const MyProfileInfo = ({modifiedCover}) => {
     const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
 
     const [file, setFile] = useState(null)
     const [user, setUser] = useState(null)
     const [imagesArray, setImagesArray] = useState(null)
+    const [imagesArrayCover, setImagesArrayCover] = useState(null)
+    const [loading, setLoading] = useState(false);
+
 
     const onFileChange = (event) => {
+
         let fileName = event.target.files[0].name
         const reader = new FileReader();
         let _file = event.target.files[0];
 
+        setLoading(true)
         reader.onload = function (event) {
             setFile(event.target.result)
             Cliente.post(Fileload(), {
@@ -61,20 +67,58 @@ const MyProfileInfo = () => {
                     'user': user,
                     'destination': 'perfil'
                 }
-            ).then(() => getImages())
+            ).then(() => {
+
+                    getImages('perfil')
+                    setLoading(false)
+
+            }
+            )
         };
+
         reader.readAsDataURL(_file);
     }
 
-    function getImages() {
+    const onFileChangeCover = (event) => {
+
+        let fileName = event.target.files[0].name
+        const reader = new FileReader();
+        let _file = event.target.files[0];
+
+        setLoading(true)
+        reader.onload = function (event) {
+            setFile(event.target.result)
+            Cliente.post(Fileload(), {
+                    'file': event.target.result,
+                    'fileName': fileName,
+                    'user': user,
+                    'destination': 'cover'
+                }
+            ).then(() => {
+                    setLoading(false)
+                    window.location.reload();
+                }
+            )
+        };
+
+        reader.readAsDataURL(_file);
+    }
+
+    function getImages(folder) {
         Cliente.get(GetImage(), {
             params: {
                 'user': user,
-                'folder': 'perfil'
+                'folder': folder
             }
         },).then(
             res => {
-                setImagesArray(res['data']['fileNames'])
+                if (folder === 'cover') {
+                    setImagesArrayCover(res['data']['fileNames'])
+                }
+                else{
+                    setImagesArray(res['data']['fileNames'])
+                }
+
                 console.log(res)
             }
         )
@@ -87,11 +131,15 @@ const MyProfileInfo = () => {
         }
 
         if (imagesArray === null && user !== null) {
-            getImages();
+            getImages('perfil');
         }
+
+        // if (imagesArrayCover === null && user !== null) {
+        //     getImages('cover');
+        // }
         //let user = JSON.parse(localStorage.getItem('currentUser'));
 
-    }, [imagesArray, file, user]);
+    }, [imagesArray, file, user, loading]);
     let occupation = localStorage.getItem('occupation')=='null'? '': localStorage.getItem('occupation');
     return (
         <Grid position="static" color="transparent" style={{
@@ -134,14 +182,26 @@ const MyProfileInfo = () => {
                             Miembro Truster desde Septiembre / 2021
                         </Typography>
                     </Grid>
-                    <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center'>
+                    <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center' component="label">
                         <img src={Cover} alt='cover'/>
+
+
+
+                        <input
+                            id="file"
+                            name="file"
+                            type="file"
+                            hidden
+                            onChange={(e) => onFileChangeCover(e)}
+                        />
+
                         <Typography style={{
                             marginLeft: 20,
                             align: "center",
                             color: "#A3A3A3",
                             font: " normal normal 14px/14px Poppins",
-                            paddingRight: 10
+                            paddingRight: 10,
+                            cursor: 'pointer'
                         }}>
                             Editar Cover
                         </Typography>
@@ -150,22 +210,31 @@ const MyProfileInfo = () => {
                 <Grid container justify='flex-end' xs={3} xl={3} sm={3} style={{marginTop: -10}}>
                     <Grid container justify='flex-end'>
 
-                        {imagesArray !== null && imagesArray.length > 0 ?
-                            <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
+                        {loading ? <LoopCircleLoading size='large' color='#ACFD00'/>
+                        :
+                            (imagesArray !== null && imagesArray.length > 0 ?
 
-                                <img
-                                    src={UriServices() + '/' + user + '/images/perfil/' + imagesArray[0]}
-                                    width='160px' height='160px' style={{
+
+
+                                <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
+
+                                    <img
+                                        src={
+                                            UriServices() + '/' + user + '/images/perfil/' + imagesArray[0]}
+                                        width='160px' height='160px' style={{
                                         borderRadius:'50%',
-                                    objectFit:'cover'
-                                }}
-                                />
+                                        objectFit:'cover'
+                                    }}
+                                    />
 
-                            </Grid>
-                            : <Grid container justify='flex-end' xs={11} xl={11} sm={11}> 
-                                <img src={ReputationImg} alt='test' width='160px' height='160px' />
-                             </Grid>
+                                </Grid>
+
+                                : <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
+                                    <img src={ReputationImg} alt='test' width='160px' height='160px' />
+                                </Grid>
+                            )
                         }
+
 
 
                         <Grid container justify='flex-end' xs={1} xl={1} sm={1}

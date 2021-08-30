@@ -7,22 +7,10 @@ import {Typography} from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
-import {AllCategory} from "../../services/hostConfig";
+import { selectSubCategory } from "../../services/hostConfig";
 import { getToken } from './../../setting/auth-helpers';
-import Cliente from "../../setting/cliente";
+let subCateg =[];
 
-
-// const useStyles = withStyles({
-//     select:{
-//         "& ul": {
-//             backgroundColor: "#cccccc",
-//         },
-//         "& li": {
-//             fontSize: 12,
-//         },
-//     }
-//
-// })(Select);
 
 
 const CssTextField = withStyles({
@@ -149,10 +137,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function EditTienda(props) {
-
-    const classes = useStyles();
-
     const [currency, setCurrency] = React.useState(' ');
+    const [idCat, setIDCat] = React.useState('');
+    const [subCat, setSubCat] = React.useState([]); 
+    const [active, setActive] = React.useState(true)
+    const classes = useStyles();
 
     const handleChange = (event) => {
         setCurrency(event.target.value);
@@ -192,24 +181,55 @@ function EditTienda(props) {
                     </Typography>
                     <div style={{display: 'grid', paddingTop: '4px'}}>
 
-
                         <Select defaultValue='none' className={classes.select}>
-                            <option value="none" disabled style={{
-                                '& .MuiInputBase-root': {
-                                    color: '#fff',
-                                    align: "center",
-                                    fontFamily: "Poppins",
-                                    fontSize: '15px',
-                                    fontWeight: 500,
-                                    textAlign: 'left',
-                                    letterSpacing: '-0.02em',
-                                },
-                            }}>
-                                Elegí la categoría
-                            </option>
-                            <option value="1">Option 1</option>
-                            <option value="2">Option 2</option>
-                            <option value="3">Option 3</option>
+                        {props.categorys.map(category => {
+                                return (<option value="none" key={category.id}
+                                    value={category.id} style={{
+                                        '& .MuiInputBase-root': {
+                                            color: '#fff',
+                                            align: "center",
+                                            fontFamily: "Poppins",
+                                            fontSize: '15px',
+                                            cursor:'pointer',
+                                            fontWeight: 500,
+                                            textAlign: 'left',
+                                            letterSpacing: '-0.02em',
+                                        }}}
+                                        
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            setIDCat(category.id)
+                                            
+                                            console.log(idCat)
+                                            let URI = selectSubCategory();
+                                            const token = getToken();
+                                            fetch(URI+'/'+idCat, {
+                                                headers: {
+                                                    'Accept': 'application/json',
+                                                    'Content-Type': 'application/json',
+                                                    'Authorization': `Bearer ${token}`
+                                                }
+                                            }).then(response => {
+                                                    console.log(response)
+                                                    return response.json();
+                                                }).then(response => { 
+                                                    subCateg = response;                                           
+                                                    console.log(subCateg)
+                                                    setActive(false)
+                                                    return response;
+                                                })
+                                                .catch(e => {
+                                                    console.log(e);
+                                                })
+    
+                                        }}>
+                                    {category.description}
+                                </option>
+                                
+                                )
+                            }
+                            )
+                        }
                         </Select>
 
 
@@ -223,8 +243,10 @@ function EditTienda(props) {
                     <div style={{display: 'grid', paddingTop: '4px'}}>
 
 
-                        <Select defaultValue='none' className={classes.select}>
-                            <option value="none" disabled style={{
+                        <Select defaultValue='none' className={classes.select} disabled={active}>
+                            {/*subCateg.map(subCategory => {
+                            <option value="none" key={subCategory.id}
+                            value={subCategory.id} style={{
                                 '& .MuiInputBase-root': {
                                     color: '#fff',
                                     align: "center",
@@ -235,11 +257,10 @@ function EditTienda(props) {
                                     letterSpacing: '-0.02em',
                                 },
                             }}>
-                                Elegí la subcategoría
+                                 {subCategory.name}
                             </option>
-                            <option value="1">Option 1</option>
-                            <option value="2">Option 2</option>
-                            <option value="3">Option 3</option>
+                          
+                        })*/}
                         </Select>
 
 

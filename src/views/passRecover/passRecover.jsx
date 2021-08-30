@@ -190,7 +190,7 @@ class PassRecover extends Component {
             windowWidth: window.innerWidth,
             sent: false,
             email: '',
-            error: '',
+            // error: '',
             textError: '',
             ruta: '/',
             show: false,
