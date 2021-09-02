@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { CssBaseline, Grid, Box, Container, Typography, Button, TextField } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import NavBar from '../../components/navBar/navbar.jsx'
+import NavBar from '../../components/navBar/navBarRegister'
 import Link from '@material-ui/core/Link';
 import InputBase from '@material-ui/core/InputBase';
 //import Swal from "sweetalert2";
@@ -829,7 +829,9 @@ class RegisterSecond extends Component {
             dayError: false,
             monthError: false,
             yearError: false,
-            windowWidth: window.innerWidth
+            municipality:[],
+            windowWidth: window.innerWidth,
+            enabledComponentLocality:true
         };
     }
 
@@ -895,7 +897,7 @@ class RegisterSecond extends Component {
         return tip;
     }
     handleDataSourceAvailableLocal =(e) =>{
-        
+        e.preventDefault();
         let dataNewArrayLocal =[];
         let local ='';
         let provincias ='';
@@ -912,6 +914,9 @@ class RegisterSecond extends Component {
             
         }
         console.log(dataNewArrayLocal)
+        this.setState({
+            municipality:dataNewArrayLocal
+        })
         return dataNewArrayLocal;
     }
 
@@ -1270,7 +1275,7 @@ class RegisterSecond extends Component {
         let $dayError = this.state.dayError ? '*Por favor selecciona una opción' : '';
         let $monthError = this.state.monthError ? '*Por favor selecciona una opción' : '';
         let $yearError = this.state.yearError ? '*Por favor selecciona una opción' : '';
-
+        
         const isEnabled = this.state.number !== '' && this.state.direction !== ''
             && this.state.day !== 'Dia' && this.state.months !== 'Mes' && this.state.years !== 'Año'
             && this.state.nationality !== 0 && this.state.province !== 0
@@ -1474,6 +1479,7 @@ class RegisterSecond extends Component {
                                                     disabled={this.state.enabledComponent}
                                                     value={this.state.local}
                                                     onChange={this.handleLocalChange}
+                                                    onClick={this.handleDataSourceAvailableLocal}
                                                     className={this.state.locationError ? classes.errorSelect : classes.select}
                                                     inputProps={{
                                                         classes: {
@@ -1483,8 +1489,8 @@ class RegisterSecond extends Component {
                                                     }}
                                                     style={{ paddingLeft: 20 }}
                                                 >
-                                                    {locality.map(locality => <option key={locality.value}
-                                                        value={locality.value}>{locality.name}</option>)}
+                                                    {this.state.municipality.map(locality => <option 
+                                                        value={locality}>{locality}</option>)}
 
                                                 </SelectBase>
                                                 <Typography className={classes.inputTitle2}>
@@ -1741,6 +1747,7 @@ class RegisterSecond extends Component {
                                                     native
                                                     disabled={this.state.enabledComponent}
                                                     value={this.state.local}
+                                                    onClick={this.handleDataSourceAvailableLocal}
                                                     onChange={(e) => {
                                                         this.handleLocalChange(e)
                                                     }}
@@ -1752,8 +1759,8 @@ class RegisterSecond extends Component {
                                                     }}
 
                                                 >
-                                                    {locality.map(locality => <option key={locality.value}
-                                                        value={locality.value}>{locality.name}</option>)}
+                                                    {this.state.municipality.map(locality => <option 
+                                                        value={locality}>{locality}</option>)}
 
                                                 </SelectBase>
                                                 <Typography className={classes.inputTitle2}>

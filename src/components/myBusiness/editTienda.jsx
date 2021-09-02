@@ -196,7 +196,7 @@ function EditTienda(props) {
                                             letterSpacing: '-0.02em',
                                         }}}
                                         
-                                        onClick={(e) => {
+                                        onChange={(e) => {
                                             e.preventDefault()
                                             setIDCat(category.id)
                                             

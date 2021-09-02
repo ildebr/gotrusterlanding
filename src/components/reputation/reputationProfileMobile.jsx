@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { withStyles } from "@material-ui/core/styles";
-import { Grid, Typography } from '@material-ui/core';
-import ReputationImg from '../../asset/images/reputation/Ellipse 6.png'
+import { Grid, Typography, Button} from '@material-ui/core';
+import ReputationImg from '../../asset/images/reputation/perfil.jpg'
 import ShareButton from '../../asset/images/reputation/Group 25.svg'
 import Logo from '../../asset/images/reputation/logo.svg'
 import GreyLogo from '../../asset/images/reputation/greylogo.svg'
@@ -215,16 +215,16 @@ const ReputationProfileMobile = () => {
                             borderColor: '#ACFD00',
                             borderRadius: 5,
                             textTransform: 'none',
-                        }}>Master</button>
+                        }}>Rookie</button>
                     </Grid>
                     <Grid container justify="flex-end" align='center' xs={4} xl={4} sm={4} style={{ marginTop: -30 }}>
-                        <button style={{
+                        <Button href ={'/sharemyprofile'} style={{
                             backgroundColor: 'rgba(0,0,0,0)',
                             border: '1px solid',
                             borderColor: 'rgba(0,0,0,0)',
                         }}>
                             <img src={ShareButton} alt='share button' />
-                        </button>
+                        </Button>
                     </Grid>
                 </Grid>
             </Grid>

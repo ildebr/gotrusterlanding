@@ -285,8 +285,10 @@ function Tienda(props) {
                     </Typography>
                     <div style={{ display: 'grid', paddingTop: '4px' }}>
                         <Select defaultValue='none' className={classes.select} disabled={active}>
-                        {/*subCateg.map(subCategory => {
-                            <option value="none" key={subCategory.id}
+
+                        { 
+                        subCateg!== null ? subCateg.map(subCategory => {
+                            <option  key={subCategory.id}
                             value={subCategory.id} style={{
                                 '& .MuiInputBase-root': {
                                     color: '#fff',
@@ -300,7 +302,22 @@ function Tienda(props) {
                                  {subCategory.name}
                             </option>
                           
-                        })*/}
+                        })
+                      :<option value="none" 
+                      value='1' style={{
+                          '& .MuiInputBase-root': {
+                              color: '#fff',
+                              fontFamily: "Poppins",
+                              fontSize: '15px',
+                              fontWeight: 500,
+                              textAlign: 'left',
+                              letterSpacing: '-0.02em',
+                          },
+                      }}>
+                           Seleccione la categorìa
+                      </option>
+                    
+                    }
 
                         </Select>
 

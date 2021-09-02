@@ -46,7 +46,7 @@ const styles = theme => ({
 
 
 const ReputationNavbar = () => {
-
+    const nameUser = localStorage.getItem("nombre");
     return (
         <Grid position="static" color="transparent" style={{
             flexGrow: 1,
@@ -90,7 +90,7 @@ const ReputationNavbar = () => {
                                     fontWeight: 700,
                                     font: " normal normal 40px/60px Poppins"
                                 }}>
-                                    USER
+                                    {nameUser}
                                     </Typography>
                                 <ul style={{ paddingLeft: '40px' }}>
                                     <li><Link underline='hover' href='/' style={{ color: "#ACFD00" }} ><img src={Inicio} alt='inicio' style={{ paddingRight: 10, width: '12px' }} /> Inicio</Link></li>

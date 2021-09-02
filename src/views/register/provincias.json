@@ -291,13 +291,13 @@
         }
     },
     {
-        "nombre_completo": "Provincia de Buenos Aires",
+        "nombre_completo": "Gran Buenos Aires",
         "fuente": "IGN",
         "iso_id": "AR-B",
-        "nombre": "Buenos Aires",
+        "nombre": "Gran Buenos Aires",
         "id": "06",
         "categoria": "Provincia",
-        "iso_nombre": "Buenos Aires",
+        "iso_nombre": "Gran Buenos Aires",
         "centroide": {
             "lat": -36.6769415180527,
             "lon": -60.5588319815719

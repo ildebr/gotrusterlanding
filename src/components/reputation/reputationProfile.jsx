@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { withStyles } from "@material-ui/core/styles";
-import { Grid, Typography } from '@material-ui/core';
-import ReputationImg from '../../asset/images/reputation/Ellipse 6.png'
+import { Grid, Typography, Button} from '@material-ui/core';
+import ReputationImg from '../../asset/images/reputation/perfil.jpg'
 import ShareButton from '../../asset/images/reputation/Group 25.svg'
 import Logo from '../../asset/images/reputation/logo.svg'
 import GreyLogo from '../../asset/images/reputation/greylogo.svg'
@@ -44,7 +44,8 @@ const styles = theme => ({
 const ReputationProfile = () => {
     const [user, setUser] = useState(null)
     const [imagesArray, setImagesArray] = useState(null)
-
+     
+    
 
     function getImages() {
         Cliente.get(GetImage(), {
@@ -97,7 +98,10 @@ const ReputationProfile = () => {
 
                             </Grid>
                             : <Grid container justify='flex-end' xs={11} xl={11} sm={11}> 
-                            <img src={ReputationImg} alt='test' width='250px' height='250px' />
+                            <img src={ReputationImg} alt='test' width='250px' height='250px'style={{
+                                        borderRadius:'50%',
+                                        objectFit:'cover'
+                                }}/>
                             </Grid>
                         }
                    
@@ -123,7 +127,7 @@ const ReputationProfile = () => {
                                 borderRadius: 5,
                                 marginTop: 5,
                                 textTransform: 'none',
-                            }}>Master</button>
+                            }}>Rookie</button>
                         </Grid >
                         <Grid container justify='flex-end' xs={4} xl={4} sm={4} alignItems='center'>
                             <Typography style={{
@@ -135,13 +139,13 @@ const ReputationProfile = () => {
                             }}>
                                 Compartir Perfil
                             </Typography>
-                            <button style={{
+                            <Button href ={'/sharemyprofile'} style={{
                                 backgroundColor: 'rgba(0,0,0,0)',
                                 border: '1px solid',
                                 borderColor: 'rgba(0,0,0,0)',
                             }}>
                                 <img src={ShareButton} alt='share button' />
-                            </button>
+                            </Button>
                         </Grid>
                     </Grid>
                     <Grid container justify='flex-start' style={{ marginTop: 5 }}>

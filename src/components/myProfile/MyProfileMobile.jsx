@@ -1,7 +1,7 @@
 import React, {useEffect, useState}from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Link, Button } from '@material-ui/core';
-import ReputationImg from '../../asset/images/reputation/Ellipse 6.png'
+import ReputationImg from '../../asset/images/reputation/perfil.jpg'
 import Ok from '../../asset/images/myProfile/ok.svg'
 import Add from '../../asset/images/myProfile/add.svg'
 import Verify from '../../asset/images/myProfile/verify.svg'
@@ -445,7 +445,11 @@ export default function MyProfileMobile(props) {
                     </Grid>
                      : 
                      <Grid container xs={12} xl={12} sm={12}>
-                        <img src={ReputationImg} alt='reputationimg' width='100%' />
+                        <img src={ReputationImg} alt='reputationimg' height='110px' width='100%'
+                        style={{
+                            borderRadius: '50%',                            
+                            objectFit: 'cover'
+                        }} />
                     </Grid>
                      }
                     <Grid container xs={12} xl={12} sm={12}>

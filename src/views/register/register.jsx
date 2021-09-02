@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { CssBaseline, Grid, Box, Container, Typography, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import NavBar from '../../components/navBar/navbar.jsx';
+import NavBar from '../../components/navBar/navBarRegister';
 import EmailCheck from '../../components/helpers/emailCheck.jsx'
 import Swal from "sweetalert2";
 import Link from '@material-ui/core/Link';

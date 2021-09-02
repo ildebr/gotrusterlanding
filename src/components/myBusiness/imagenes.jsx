@@ -121,7 +121,7 @@ function Imagenes(props) {
                 {imagesArray !== null && imagesArray.length > 0 ?
 
                     <React.Fragment>
-                        <Grid item container style={{marginTop: '10px'}}>
+                        <Grid item container style={{marginTop: '10px' }}>
                             <div>
                                 <div>
                                     <button style={{position: 'absolute', marginLeft: '160px', marginTop: '10px', backgroundColor: 'rgba(0,0,0,0)', border: '1px solid rgba(255,255,255,0)'}}><img src={Cross} alt=''/></button>

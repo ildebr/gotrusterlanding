@@ -189,23 +189,7 @@ const Navbar = ({ active, recover }) => {
                             textAlign: 'left'
                         }} >&nbsp;&nbsp;&nbsp;       </Typography>
 
-                    <Typography style={{
-
-                        marginTop: 15,
-
-                    }}
-                    > <Link href="/register" style={{
-                        color: '#FFFFFF',
-                        fontFamily: 'Poppins',
-                        fontSize: '16px',
-                        fontStyle: ' normal',
-                        marginTop: 15,
-                        fontWeight: '700',
-                        lineHeight: '24px',
-                        letterSpacing: ' -0.02em',
-                        textAlign: 'center',
-                        marginRight: 0,
-                    }}>Registrate</Link></Typography>
+                   
 
                 </Toolbar>
             </Grid> : <Grid container position="static" color="transparent" style={{

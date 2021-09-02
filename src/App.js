@@ -36,7 +36,7 @@ import SelfieValidation from "./views/manualValidations/selfieValidation";
 import AutomaticValidationPhone from "./views/automaticValidation/automaticValidationPhone";
 import AutomaticValidationMercadoLibre from "./views/automaticValidation/automaticValidationMercadoLibre";
 import AutomaticValidationLinkedIn from "./views/automaticValidation/automaticValidationLinkedIn";
-
+import AutomaticValidationFacebook from "./views/automaticValidation/automaticValidationFacebook";
 
 function App() {
   return (
@@ -93,7 +93,7 @@ function App() {
           <GuardedRoute path="/automaticvalidationphone" component={AutomaticValidationPhone} auth={auth.loggedIn()} />
           <GuardedRoute path="/automaticvalidationmercadolibre" component={AutomaticValidationMercadoLibre} auth={auth.loggedIn()} />
           <GuardedRoute path="/automaticvalidationlinkedin" component={AutomaticValidationLinkedIn} auth={auth.loggedIn()} />
-
+          <GuardedRoute path="/automaticValidationFacebook" component={AutomaticValidationFacebook} auth={auth.loggedIn()} />
           
         </Switch>
       </Router>

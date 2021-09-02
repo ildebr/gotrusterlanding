@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {withStyles} from "@material-ui/core/styles";
 import {Grid, Typography, Button} from '@material-ui/core';
-import ReputationImg from '../../asset/images/reputation/Ellipse 6.png'
+import ReputationImg from '../../asset/images/reputation/perfil.jpg'
 import Cover from '../../asset/images/myProfile/cover.svg'
 import Logo from '../../asset/images/reputation/logo.svg'
 import Cliente from "../../setting/cliente";
@@ -230,7 +230,10 @@ const MyProfileInfo = ({modifiedCover}) => {
                                 </Grid>
 
                                 : <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
-                                    <img src={ReputationImg} alt='test' width='160px' height='160px' />
+                                    <img src={ReputationImg} alt='test' width='160px' height='160px' style={{
+                                        borderRadius:'50%',
+                                        objectFit:'cover'
+                                    }} />
                                 </Grid>
                             )
                         }
