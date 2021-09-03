@@ -138,7 +138,8 @@ const styles = theme => ({
         textTransform: 'none',
         marginTop: theme.spacing(3),
         "&:disabled": {
-            backgroundColor: '#597c1e',
+            backgroundColor: '#292929',
+            color:'#474747'
         }
     },
 
@@ -234,9 +235,16 @@ const styles = theme => ({
         fontSize: '14px',
         marginTop: theme.spacing(2),
     },
+    inputTitle3: {
+        color: '#666666',
+        font: 'normal normal normal 14px/14px Poppins',
+        fontSize: '10px',
+        marginTop: theme.spacing(1),
+    },
     checkTerminos: {
         color: '#ACFD00',
-        marginTop: 3
+        marginTop: 3,
+        
     },
     checkTerminosError: {
         color: '#ACFD00',
@@ -572,7 +580,7 @@ class Register extends Component {
         let $lastError = this.state.lastNameError ? '*no olvides poner tu Apellido' : '';
         let $emailError = this.state.emailError ? '*no olvides poner tu email' : '';
         let $passError = this.state.passError ? '*las contraseña no coinciden' : '';
-        
+        let $acotation = this.state.incompletePassError ? '' : '12 caracteres máx';
         let $incompletePassError = this.state.incompletePassError ? '*La contraseña debe contener 8 caracteres mínimo,' : '';
         let $incompletePassErrorEx = this.state.incompletePassError ? '*una minúscula, una mayúscula y un número' : '';
         let $emailAvailable = this.state.emailAvailable ? '*Correo no disponible' : '';
@@ -671,7 +679,7 @@ class Register extends Component {
                                                     {$emailError} {$emailAvailable}
                                                 </Typography>
                                                 <Typography className={classes.inputTitle}>
-                                                Repetir Email(Teclear)
+                                                Repetir Email
                                                 </Typography>
                                                 <InputBase
                                                     placeholder="Email"
@@ -753,6 +761,9 @@ class Register extends Component {
                                                     required
 
                                                 />
+                                                 <Typography className={classes.inputTitle3}>
+                                                    {$acotation}
+                                                </Typography>
                                                 <Typography className={classes.inputTitle2}>
                                                     {$incompletePassError}
                                                 </Typography>
@@ -902,7 +913,7 @@ class Register extends Component {
                                                     {$emailError} {$emailAvailable}
                                                 </Typography>
                                                 <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
-                                                    Repetir Email(Teclear)
+                                                    Repetir Email
                                                 </Typography>
                                                 <InputBase
                                                     placeholder="Repetir Email"
@@ -962,7 +973,7 @@ class Register extends Component {
                                                         xl={6} sm={6}>
                                                         <Typography
                                                             style={{ color: '#999999', fontSize: 10, marginTop: 15 }}>
-                                                            8 caracteres min
+                                                            12 caracteres máx
                                                         </Typography>
                                                     </Grid>
                                                 </Grid>

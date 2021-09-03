@@ -147,7 +147,8 @@ const styles = theme => ({
         textTransform: 'none',
         marginTop: theme.spacing(3),
         "&:disabled": {
-            backgroundColor: '#597c1e',
+            backgroundColor: '#292929',
+            color:'#474747'
         }
     },
     formButton: {
@@ -343,7 +344,7 @@ const styles = theme => ({
 const countries = [
     {
         value: 'Paises',
-        name: 'Paises'
+        name: 'Elegí tu nacionalidad'
     },    
     {
         value: 'Argentina',
@@ -351,32 +352,7 @@ const countries = [
     },
 ];
 
-const locality = [
-    {
-        value: 'Localidades',
-        name: 'Localidades'
-    },
-    {
-        value: 'Belgrano',
-        name: 'Belgrano'
-    },
-    {
-        value: 'Palermo',
-        name: 'Palermo'
-    },
-    {
-        value: 'Flores',
-        name: 'Flores'
-    },
-    {
-        value: 'Villa lugano',
-        name: 'Villa lugano'
-    },
-    {
-        value: 'Congreso',
-        name: 'Congreso'
-    },
-]
+
 const days = [
     {
         value: 'Día',
@@ -566,7 +542,7 @@ const months = [
 const gender = [
     {
         value: 'Género',
-        name: 'Género'
+        name: 'Elegí tu género'
     },
     {
         value: 'Masculino',
@@ -1553,7 +1529,7 @@ class RegisterSecond extends Component {
                                                             className={classes.normaltext}>
                                                             <Link
                                                                 style={{ color: '#999999' }}>
-                                                                ¿Por qué me solicitan esta información?
+                                                               {/* ¿Por qué me solicitan esta información?*/}
                                                             </Link>
                                                         </Typography>
                                                     </Grid>
@@ -1783,7 +1759,7 @@ class RegisterSecond extends Component {
                                                 <Grid container justify='center'>
                                                     <Grid container xs={9} xl={9} sm={9} style={{ paddingRight: 10 }}>
                                                         <InputBase
-                                                            placeholder="Calle, Avenida, etc"
+                                                            placeholder="Calle"
                                                             fullWidth
                                                             id="direction"
                                                             name="direccion"
@@ -1814,7 +1790,7 @@ class RegisterSecond extends Component {
                                                     <Grid container xs={3} xl={3} sm={3}>
 
                                                         <RegexTextField
-                                                            placeholder="XXXX"
+                                                            placeholder="Nº"
                                                             fullWidth
                                                             id="numero"
                                                             name="numero"
@@ -1851,7 +1827,7 @@ class RegisterSecond extends Component {
                                                             className={classes.normaltext}>
                                                             <Link
                                                                 style={{ color: '#999999' }}>
-                                                                ¿Por qué me solicitan esta información?
+                                                                {/* ¿Por qué me solicitan esta información?*/}
                                                             </Link>
                                                         </Typography>
                                                     </Grid>

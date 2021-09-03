@@ -89,7 +89,7 @@ const Navbar = ({ active, recover }) => {
                 height: 217,
                 zIndex: 100
             }} >
-                  <Toolbar>
+                <Toolbar>
                     <div class="menu-wrap">
                         <input type="checkbox" class="toggler" />
                         <div class="hamburger"><div></div></div>
@@ -117,7 +117,7 @@ const Navbar = ({ active, recover }) => {
                                     }}>
                                         BIENVENIDO
                                     </Typography>
-                                    {/*<Typography style={{
+                                   {/* <Typography style={{
                                         marginLeft: 40,
                                         flexGrow: 1,
                                         align: "center",
@@ -146,13 +146,13 @@ const Navbar = ({ active, recover }) => {
                                         <li><Link href='/' style={{ color: "#5e5e5d" }}>Términos y Condiciones</Link></li>
                                         <li><Link href='/' style={{ color: "#5e5e5d" }}>Política</Link></li>
                                         <li><Link href='/' style={{ color: "#5e5e5d", fontSize: 13 }}><img src={CerrarSesion} alt='cerrarsesion' style={{ paddingRight: 5, width: '7%' }} /> Cerrar Sesión</Link></li>
-                                </ul>*/}
+                                    </ul>*/}
                                 </div>
                             </div>
                         </div>
                     </div>
                     {isActive ? <Typography variant="h6" style={{
-                        marginLeft: 75,
+                        marginLeft: 145,
                         flexGrow: 1,
                         marginTop: 15,
                         align: "center",
@@ -189,9 +189,25 @@ const Navbar = ({ active, recover }) => {
                             textAlign: 'left'
                         }} >&nbsp;&nbsp;&nbsp;       </Typography>
 
-                   
+                    <Typography style={{
 
-                    </Toolbar>
+                        marginTop: 15,
+
+                    }}
+                    > <Link href="/register" style={{
+                        color: '#FFFFFF',
+                        fontFamily: 'Poppins',
+                        fontSize: '16px',
+                        fontStyle: ' normal',
+                        marginTop: 15,
+                        fontWeight: '700',
+                        lineHeight: '24px',
+                        letterSpacing: ' -0.02em',
+                        textAlign: 'center',
+                        marginRight: 0,
+                    }}>Registrate</Link></Typography>
+
+                </Toolbar>
             </Grid> : <Grid container position="static" color="transparent" style={{
                 flexGrow: 1,
                 border: 0,

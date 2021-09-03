@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { CssBaseline, Grid, Box, Container, Typography } from '@material-ui/core';
+import { CssBaseline, Grid, Box, Container, Typography} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import NavBar from '../../components/navBar/navbar.jsx';
+import NavBar from '../../components/navBar/navbarLogin';
 import Link from '@material-ui/core/Link';
 import InputBase from '@material-ui/core/InputBase';
 import { ReactComponent as Logo } from '../../asset/images/logo.svg';
@@ -172,7 +172,7 @@ const styles = theme => ({
     },
 
     normaltext: {
-        fontSize: 12,
+        fontSize: 16,
         color: '#999999',
         fontFamily: 'Poppins',
         marginTop: theme.spacing(2),
@@ -374,7 +374,7 @@ class Login extends Component {
         if ($show) {           
             $wait = (<Loading />);        
         } else{
-            $wait = (<Logo width="50" height="50" />); 
+            $wait = (<Link href='/'><Logo width="50" height="50" /></Link>); 
         }
         return (
             <div style={{ backgroundColor: '#000000' }}>

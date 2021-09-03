@@ -46,7 +46,7 @@ const styles = theme => ({
     }
   },
   iconSuccess: {
-    fill: 'green',
+    fill: '#ACFD00',
     position: 'absolute',
     top: '25px',
     right: '8px',
