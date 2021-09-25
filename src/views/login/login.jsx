@@ -8,7 +8,7 @@ import { ReactComponent as Logo } from '../../asset/images/logo.svg';
 import auth from './../../setting/auth';
 import  Loading from './../../components/Loading';
 import { getToken, deleteToken } from './../../setting/auth-helpers';
-import { Account, CustomerResource } from './../../services/hostConfig';
+import { Account, CustomerResource, loaderServices } from './../../services/hostConfig';
 //import WindowDimensions from "../../components/UtilityComponents/WindowDimension"
 import Cliente from './../../setting/cliente'
 const { localStorage } = global.window;
@@ -219,10 +219,12 @@ class Login extends Component {
         this.setState({ windowWidth: window.innerWidth });
     };
     componentDidMount() {
+        fetch(loaderServices());
         localStorage.clear();
         localStorage.setItem("formato", "undefined");
         localStorage.setItem("thisEmail", "undefined");
         localStorage.setItem("logueado", false);
+        
         window.addEventListener("resize", this.handleResize);
     }
 
@@ -259,19 +261,7 @@ class Login extends Component {
                                 'Authorization': `Bearer ${token}`
                             }
                         }).then(response => {
-                            console.log(response.status)
-                            /*  if (response.status == 401 ||
-                                  response.status== 400){
-                                      this.setState({
-                                          error: 'error',
-                                          textError: '*Tu usuario o contraseña no son correctos, por favor revisa tus datos',
-                                          name: '',
-                                          show: false,
-                                          enabledComponent: false
-                                      })
-                              } else{
-                              return response.json();
-                              }*/
+                            console.log(response.status)                            
                             return response.json();
                         }).then(response => {
                             console.log(response)
@@ -305,7 +295,7 @@ class Login extends Component {
                                         email: emailUser,
                                     })
                                     localStorage.setItem('userType', this.state.userType);
-                                    
+                                    localStorage.setItem('customerId', response.id);
                                     localStorage.setItem('userLogin', this.state.userLogin);
                                     localStorage.setItem('nombre', this.state.firtsName);
                                     localStorage.setItem('apellido', this.state.LastName);

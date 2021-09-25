@@ -92,7 +92,7 @@ const Navbar = ({ active, recover }) => {
                   <Toolbar>
                     <div class="menu-wrap">
                         <input type="checkbox" class="toggler" />
-                        <div class="hamburger"><div></div></div>
+                       {/*  <div class="hamburger"><div></div></div>
                         <div class="menu">
                             <div>
                                 <div>
@@ -146,10 +146,10 @@ const Navbar = ({ active, recover }) => {
                                         <li><Link href='/' style={{ color: "#5e5e5d" }}>Términos y Condiciones</Link></li>
                                         <li><Link href='/' style={{ color: "#5e5e5d" }}>Política</Link></li>
                                         <li><Link href='/' style={{ color: "#5e5e5d", fontSize: 13 }}><img src={CerrarSesion} alt='cerrarsesion' style={{ paddingRight: 5, width: '7%' }} /> Cerrar Sesión</Link></li>
-                                </ul>*/}
+                                </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div>*/}
                     </div>
                     {isActive ? <Typography variant="h6" style={{
                         marginLeft: 75,
@@ -199,8 +199,8 @@ const Navbar = ({ active, recover }) => {
                 height: 80,
             }} >
                 <Grid container xs={2} xl={2} sm={2} justify='center' style={{ alignContent: 'flex-start' }}>
-                    <TemporaryDrawer />
-                    {/* <div class="menu-wrap">
+                    {/*  <TemporaryDrawer />
+                   <div class="menu-wrap">
                         <input type="checkbox" class="toggler" />
                         <div class="hamburger"><div></div></div>
                         <div class="menu">

@@ -6,6 +6,7 @@ import SelfieRow from "../../components/admin/selfieRow";
 import SelfieImage from "../../asset/images/admin/selfie/selfieImage.png";
 import DniFront from "../../asset/images/admin/dni/dniFront.png";
 
+
 const styles = theme => ({
     navBar: {
         height: '110px',

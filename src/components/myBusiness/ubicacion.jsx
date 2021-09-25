@@ -1,15 +1,16 @@
-import React, {useState} from 'react';
-import {makeStyles} from "@material-ui/core/styles";
-import {Typography} from "@material-ui/core";
+import React, { useState } from 'react';
+import { makeStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faToggleOn, faAngleDown} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faToggleOn, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Switch from "@material-ui/core/Switch";
 import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
-
-
+import SelectBase from "@material-ui/core/Select";
+const dataSourceAvailable = require('./../../services/provincias.json');
+const dataSourceAvailableLocal = require('./../../services/municipios.json');
+const { localStorage } = global.window;
 const useStyles = makeStyles(theme => ({
     texto: {
         color: '#666666',
@@ -22,15 +23,15 @@ const useStyles = makeStyles(theme => ({
     select: {
 
         '& .MuiSelect-select':
-            {
-                color: '#666666',
-                align: "center",
-                fontFamily: "Poppins",
-                fontSize: '15px',
-                fontWeight: 600,
-                textAlign: 'left',
-                letterSpacing: '-0.02em',
-            },
+        {
+            color: '#666666',
+            align: "center",
+            fontFamily: "Poppins",
+            fontSize: '15px',
+            fontWeight: 600,
+            textAlign: 'left',
+            letterSpacing: '-0.02em',
+        },
 
         "& .MuiSvgIcon-root": {
             color: "#999999",
@@ -132,6 +133,54 @@ const CssTextField = withStyles({
 function Ubicacion(props) {
     const classes = useStyles();
     const [switchState, setSwitchState] = useState(false)
+    const [province, setProvince] = React.useState([]);
+    const [localidad, setLocalidad] = React.useState([]);
+    const [local, setLocal] = React.useState([]);
+    const [Adress, setAdress] = React.useState('');
+    const [postal, setPostal] = React.useState('');
+    const [number, setNumber] = React.useState('');
+
+    const handleProvinceChange = (e) => {      
+        setProvince(e.target.value)       
+       
+    }
+    const handleLocal=(e)=>{
+        setLocal(e.target.value)        
+    }  
+    const handleAdresses =(e)=>{
+        setAdress(e.target.value)
+        localStorage.setItem("adressBussines",e.target.value)
+    }
+    const handlePostal =(e)=>{
+        setPostal(e.target.value)
+        localStorage.setItem("postalBussines",e.target.value)
+    }
+    const handleNumber =(e)=>{
+        setNumber(e.target.value)
+        localStorage.setItem("numberBussines",e.target.value)
+    }
+    
+    const handleDataSourceAvailableLocal =(e) =>{
+        e.preventDefault();
+        let dataNewArrayLocal =[];
+        let local ='';
+        let provincias ='';
+        let provincia = province;
+        for (let index = 0; index < dataSourceAvailableLocal.length; index++) {
+             let element = dataSourceAvailableLocal[index];
+            local = element.nombre;
+            console.log(local)
+            provincias = element["provincia"]["nombre"]; 
+            console.log(provincias)
+            if (provincia === provincias){
+                dataNewArrayLocal.push(local)
+            }
+            
+        }
+       // console.log(dataNewArrayLocal)
+        setLocalidad(dataNewArrayLocal)
+        return dataNewArrayLocal;
+    }
     return (
         <React.Fragment>
             <Grid container direction={'row'} style={{
@@ -178,79 +227,98 @@ function Ubicacion(props) {
                         Dirección
                     </Typography>
 
-                    <Grid container direction={"column"} style={{paddingTop: '34px'}}>
-                        <Grid container direction={"row"} style={{display: 'flex'}}>
+                    <Grid container direction={"column"} style={{ paddingTop: '34px' }}>
+                        <Grid container direction={"row"} style={{ display: 'flex' }}>
                             <Grid item xs={9}>
-                                <div style={{display: 'grid', paddingRight: '16px'}}>
-                                    <CssTextField placeholder="Calle"/>
+                                <div style={{ display: 'grid', paddingRight: '16px' }}>
+                                    <CssTextField placeholder="Calle" onChange={handleAdresses} value={Adress} />
                                 </div>
 
                             </Grid>
                             <Grid item xs={3}>
-                                <div style={{display: 'grid',}}>
-                                    <CssTextField placeholder="Numero"/>
+                                <div style={{ display: 'grid', }}>
+                                    <CssTextField placeholder="Numero" onChange={handleNumber} value={number}/>
                                 </div>
                             </Grid>
                         </Grid>
 
-                        <Grid item style={{paddingTop: '44px'}}>
-                            <div style={{display: 'grid', paddingTop: '4px'}}>
+                        <Grid item style={{ paddingTop: '44px' }}>
+                            <div style={{ display: 'grid', paddingTop: '4px' }}>
 
-                                <Select defaultValue='none' className={classes.select}>
-                                    <option value="none" disabled style={{
-                                        '& .MuiInputBase-root': {
-                                            color: '#fff',
-                                            fontFamily: "Poppins",
-                                            fontSize: '15px',
-                                            fontWeight: 500,
-                                            textAlign: 'left',
-                                            letterSpacing: '-0.02em',
-                                        },
-                                    }}>
-                                        Localidad
-                                    </option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                </Select>
-
-                            </div>
-                        </Grid>
-
-                        <Grid item style={{paddingTop: '44px'}}>
-                            <div style={{display: 'grid', paddingTop: '4px'}}>
-
-                                <Select defaultValue='none' className={classes.select}>
-                                    <option value="none" disabled style={{
-                                        '& .MuiInputBase-root': {
-                                            color: '#fff',
-                                            fontFamily: "Poppins",
-                                            fontSize: '15px',
-                                            fontWeight: 500,
-                                            textAlign: 'left',
-                                            letterSpacing: '-0.02em',
-                                        },
-                                    }}>
-                                        Provincia
-                                    </option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                </Select>
+                                <SelectBase defaultValue='Provincias'
+                                    onChange={handleProvinceChange}
+                                    value={province}
+                                    
+                                    className={classes.select}>
+                                    {dataSourceAvailable.map(provinces => {
+                                       return ( <option key={provinces.nombre}
+                                            value={provinces.nombre}  style={{
+                                                '& .MuiInputBase-root': {
+                                                    color: '#fff',
+                                                    fontFamily: "Poppins",
+                                                    fontSize: '15px',
+                                                    fontWeight: 500,
+                                                    textAlign: 'left',
+                                                    letterSpacing: '-0.02em',
+                                                },
+                                            }}
+                                         onClick={(e)=>{
+                                            localStorage.setItem("provinceBussines",provinces.nombre)
+                                         }}>
+                                             {provinces.nombre}</option>)
+                                        
+                                    })
+                                  
+                                
+                                }
+                                        
+                                </SelectBase>
 
                             </div>
                         </Grid>
 
+                        <Grid item style={{ paddingTop: '44px' }}>
+                            <div style={{ display: 'grid', paddingTop: '4px' }}>
 
-                        <div style={{display: 'grid', paddingTop: '48px'}}>
-                            <CssTextField placeholder="Código Postal"/>
+                                <SelectBase
+                                    className={classes.select}
+                                    onChange={handleLocal}
+                                    value={local}
+                                    onClick={handleDataSourceAvailableLocal}
+                                >
+                                    {localidad.map(locality => {
+                                       return ( <option key={locality}
+                                            value={locality} 
+                                             style={{
+                                                '& .MuiInputBase-root': {
+                                                    color: '#fff',
+                                                    fontFamily: "Poppins",
+                                                    fontSize: '15px',
+                                                    fontWeight: 500,
+                                                    textAlign: 'left',
+                                                    letterSpacing: '-0.02em',
+                                                }
+                                            }}  onClick={(e)=>{
+                                                localStorage.setItem("localBussines",locality.nombre)
+                                             }}>{locality}</option>)})
+                                        }
+
+
+                                </SelectBase>
+
+                            </div>
+                        </Grid>
+
+
+                        <div style={{ display: 'grid', paddingTop: '48px' }}>
+                            <CssTextField placeholder="Código Postal" onChange={handlePostal} value={postal}/>
                         </div>
 
 
                     </Grid>
                 </div>
                 :
-                <a/>
+                <a />
             }
 
         </React.Fragment>

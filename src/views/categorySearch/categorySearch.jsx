@@ -14,6 +14,8 @@ import MostazaImage from '../../asset/images/categorySearch/dummy/mostazaLomas.p
 import RapanuiImage from '../../asset/images/categorySearch/dummy/rapanuiLomas.png'
 import SelectBase from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
+import { selectSubCategory, AllCategory } from "../../services/hostConfig";
+import { getToken } from '../../setting/auth-helpers';
 
 const useStyles = makeStyles({
     navBar: {
@@ -167,8 +169,11 @@ function CategorySearch(props) {
     const Value = props.value
     const classes = useStyles();
     const [openCategories, setOpenCategories] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState('');
-    const [selectedSubCategory, setSelectedSubCategory] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState([]);
+    const [selectedSubCategory, setSelectedSubCategory] = useState([]);
+
+
+    
 
     return (
         <div>

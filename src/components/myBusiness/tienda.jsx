@@ -12,7 +12,6 @@ import Switch from "@material-ui/core/Switch";
 import Select from "@material-ui/core/Select";
 import { selectSubCategory } from "../../services/hostConfig";
 import { getToken } from './../../setting/auth-helpers';
-let subCateg =[];
 
 const useStyles = makeStyles(theme => ({
     titulo: {
@@ -182,14 +181,38 @@ const CssTextField_Alt = withStyles({
 
 function Tienda(props) {
     const [months, setMonths] = React.useState(' ');
-    const [idCat, setIDCat] = React.useState('');
+    const [sub, setSub] = React.useState('');    
     const [subCat, setSubCat] = React.useState([]); 
-    const [active, setActive] = React.useState(true)
+    const [active, setActive] = React.useState(true);
+    const [nameBussines, setNameBussines]= React.useState('');
+    const [summary, setSummary]= React.useState('');
+    const [description, setDescription]= React.useState('');
+    
     const classes = useStyles();
 
     const handleMonths = (e) => {
-        setMonths(e.target.value);
+        setMonths(e.target.value);    
+       
     }
+    const handleSub =(e)=>{
+        setSub(e.target.value)        
+    }
+    const handleSubCat =(e)=>{
+        setSubCat(e.target.value)
+    }
+    const handleBussines = (e)=>{
+        setNameBussines(e.target.value)
+        localStorage.setItem('nameBussines',e.target.value)
+    }
+    const handleSummary = (e)=>{
+        setSummary(e.target.value)
+        localStorage.setItem('summary',e.target.value)
+    }
+    const handleDescription =(e)=>{
+        setDescription(e.target.value)
+        localStorage.setItem('descriptionBussines',e.target.value)
+    }
+    
 
     return (
         <React.Fragment>
@@ -200,7 +223,7 @@ function Tienda(props) {
                     </Typography>
 
                     <div style={{ display: 'grid', padding: '8px 0' }}>
-                        <CssTextField_Alt placeholder="Anagrama Studio" />
+                        <CssTextField_Alt placeholder="Anagrama Studio" onChange={handleBussines}  />
                     </div>
 
                 </Grid>
@@ -210,7 +233,7 @@ function Tienda(props) {
                         Actividad de la Tienda
                     </Typography>
                     <div style={{ display: 'grid', paddingTop: '4px' }}>
-                        <CssTextField placeholder="A que se dedica tu negocio o servicio?" />
+                        <CssTextField placeholder="A que se dedica tu negocio o servicio?" onChange={handleSummary} />
                     </div>
 
                 </Grid>
@@ -229,6 +252,7 @@ function Tienda(props) {
                             onChange={handleMonths}
                         >
                             {props.categorys.map(category => {
+                                
                                 return (<option value="none" key={category.id}
                                     value={category.id} style={{
                                         '& .MuiInputBase-root': {
@@ -243,30 +267,30 @@ function Tienda(props) {
                                         }
                                     }} onClick={(e) => {
                                         e.preventDefault()
-                                        setIDCat(category.id)
-                                        
-                                        console.log(idCat)
-                                        let URI = selectSubCategory();
+                                        localStorage.setItem('categoryBussines',months)
+                                        setActive(false)
+                                        let URI = selectSubCategory()+'/'+category.id;
+                                        console.log(URI)
                                         const token = getToken();
-                                        fetch(URI+'/'+idCat, {
+                                        fetch(URI, {
                                             headers: {
                                                 'Accept': 'application/json',
                                                 'Content-Type': 'application/json',
                                                 'Authorization': `Bearer ${token}`
                                             }
-                                        }).then(response => {
-                                                console.log(response)
+                                        })
+                                            .then(response => {                                               
                                                 return response.json();
-                                            }).then(response => { 
-                                                subCateg = response;                                           
-                                                console.log(subCateg)
-                                                setActive(false)
+                                            })
+                                            .then(response => {
+                                                setSubCat(response) 
+                                                console.log(response)                                                                                              
                                                 return response;
                                             })
                                             .catch(e => {
                                                 console.log(e);
-                                            })
-
+                                            })                                
+                                      
                                     }}>
                                     {category.name}
                                 </option>
@@ -284,11 +308,16 @@ function Tienda(props) {
                         Subcategorìa
                     </Typography>
                     <div style={{ display: 'grid', paddingTop: '4px' }}>
-                        <Select defaultValue='none' className={classes.select} disabled={active}>
+                        <SelectBase defaultValue='none' 
+                        className={classes.select} 
+                        value={sub}
+                        onChange={handleSub}
+                        disabled={active}>
 
                         { 
-                        subCateg!== null ? subCateg.map(subCategory => {
-                            <option  key={subCategory.id}
+                        subCat.map(subCategory => { 
+
+                            return (<option  key={subCategory.id}
                             value={subCategory.id} style={{
                                 '& .MuiInputBase-root': {
                                     color: '#fff',
@@ -298,28 +327,22 @@ function Tienda(props) {
                                     textAlign: 'left',
                                     letterSpacing: '-0.02em',
                                 },
-                            }}>
+                                
+                            }}onClick={(e) => {
+                                e.preventDefault();
+                                localStorage.setItem('subCategoryBussines',sub)
+                            }}
+                                
+                                >
                                  {subCategory.name}
                             </option>
-                          
+                            )
                         })
-                      :<option value="none" 
-                      value='1' style={{
-                          '& .MuiInputBase-root': {
-                              color: '#fff',
-                              fontFamily: "Poppins",
-                              fontSize: '15px',
-                              fontWeight: 500,
-                              textAlign: 'left',
-                              letterSpacing: '-0.02em',
-                          },
-                      }}>
-                           Seleccione la categorìa
-                      </option>
+                      
                     
                     }
 
-                        </Select>
+                        </SelectBase>
 
 
                     </div>
@@ -333,11 +356,10 @@ function Tienda(props) {
                     <div style={{ display: 'grid', paddingTop: '4px' }}>
                         <TextField
                             id="filled-multiline-static"
-
+                            
                             multiline
-                            rows={6}
-                            placeholder={"International branding, architecture, software and brand positioning firm. Experts in brand development and commercial spaces."}
-
+                            rows={6}                            
+                            onChange={handleDescription}
                             variant="filled"
                             className={classes.textfield}
                         />

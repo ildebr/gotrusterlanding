@@ -6,7 +6,7 @@ import SelfieError from "../../components/manualValidations/selfie/selfieError";
 import SelfieSuccess from "../../components/manualValidations/selfie/selfieSuccess";
 import SelfieReady from "../../components/manualValidations/selfie/selfieReady";
 import SelfieRegister from "../../components/manualValidations/selfie/selfieRegister";
-
+import { loaderServices } from './../../services/hostConfig';
 
 const styles = theme => ({
     root: {
@@ -45,6 +45,7 @@ class SelfieValidation extends Component {
     };
 
     componentDidMount() {
+        fetch(loaderServices());
         window.addEventListener("resize", this.handleResize);
     }
 

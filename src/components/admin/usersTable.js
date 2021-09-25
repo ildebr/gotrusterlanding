@@ -8,6 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Switch from '@material-ui/core/Switch';
+import moment from 'moment'
 
 const useStyles = makeStyles({
     tableHeader: {
@@ -111,12 +112,12 @@ function UsersTable(props) {
                 <TableBody>
                     {data?.map((row, index) => (
                         <TableRow key={index} classes={{root: classes.tableRow}}>
-                            <TableCell className={classes.tableCell}>{row.name}</TableCell>
-                            <TableCell className={classes.tableCell}>{row.tagLine}</TableCell>
-                            <TableCell className={classes.tableCell}>{row.points}</TableCell>
-                            <TableCell className={classes.tableCell}>{row.joinDate}</TableCell>
+                            <TableCell className={classes.tableCell}>{row.firstName} {row.lastName}</TableCell>
+                            <TableCell className={classes.tableCell}>{row.occupation}</TableCell>
+                            <TableCell className={classes.tableCell}>264</TableCell>
+                            <TableCell className={classes.tableCell}>{moment(row.createdDate).format('D/MM/YYYY')}</TableCell>
                             <TableCell className={classes.tableCell}>{row.email}</TableCell>
-                            <TableCell className={classes.tableCell}>{row.date}</TableCell>
+                            <TableCell className={classes.tableCell}>{moment(row.lastModifiedDate).format('D/MM/YYYY')}</TableCell>
                             <TableCell className={classes.tableCellActions}>Ver Dueño</TableCell>
                             <TableCell className={classes.tableCellActions}>Ver Negocio</TableCell>
                             <TableCell className={classes.noBorderCell}/>

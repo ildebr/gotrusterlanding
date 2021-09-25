@@ -85,7 +85,7 @@ function ShareProfileMobile(props) {
                         </Grid>
                         <Grid item style={{padding:'30px 0 10px 0'}}>
                             <FontAwesomeIcon icon={faShareAlt} style={{color:'#C6FF00',
-                                fontSize:'38px'}}/>
+                                fontSize:'38px'}} href={'/reputation'}/>
                         </Grid>
 
                         <Grid item>

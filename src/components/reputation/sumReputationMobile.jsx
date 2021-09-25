@@ -1,7 +1,9 @@
 import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, Link} from '@material-ui/core';
 import SmallLogo from '../../asset/images/reputation/smalllog.svg'
+import Amazon from '../../asset/images/reputation/sumReputation/amazon.svg'
+import GreyLogo from '../../asset/images/reputation/greyeyLogo.svg'
 import DNI from '../../asset/images/reputation/sumReputationMobile/dni.svg'
 import Cuit from '../../asset/images/reputation/sumReputationMobile/cuit.svg'
 import Direction from '../../asset/images/reputation/sumReputationMobile/direction.svg'
@@ -62,7 +64,7 @@ const SumReputationMobile = () => {
                             letterSpacing: '-0.02em',
                             color: '#ffffff'
                         }}>
-                            Validá tu teléfono
+                          <Link href={'/automaticvalidationphone'} style={{ textDecoration: 'none', color: 'white' }}>  Validá tu teléfono</Link>
                         </Typography>
                     </Grid>
                 </Grid>
@@ -78,7 +80,7 @@ const SumReputationMobile = () => {
                                 letterSpacing: '-0.02em',
                                 color: '#ACFD00'
                             }}>
-                                +2
+                                +5
                             </Typography>
                         </Grid>
                     </Grid>
@@ -96,7 +98,7 @@ const SumReputationMobile = () => {
                             letterSpacing: '-0.02em',
                             color: '#ffffff'
                         }}>
-                            Validá tu DNI
+                           <Link href={'/validation/dni'} style={{ textDecoration: 'none', color: 'white' }}>Validá tu DNI</Link>
                         </Typography>
                     </Grid>
                 </Grid>
@@ -112,7 +114,7 @@ const SumReputationMobile = () => {
                                 letterSpacing: '-0.02em',
                                 color: '#ACFD00'
                             }}>
-                                +2
+                                +5
                             </Typography>
                         </Grid>
                     </Grid>
@@ -130,7 +132,7 @@ const SumReputationMobile = () => {
                             letterSpacing: '-0.02em',
                             color: '#ffffff'
                         }}>
-                            Validá tu dirección
+                            <Link href={'/validation/direccion'} style={{ textDecoration: 'none', color: 'white' }}>Validá tu dirección</Link>
                         </Typography>
                     </Grid>
                 </Grid>
@@ -146,7 +148,7 @@ const SumReputationMobile = () => {
                                 letterSpacing: '-0.02em',
                                 color: '#ACFD00'
                             }}>
-                                +2
+                                +5
                             </Typography>
                         </Grid>
                     </Grid>
@@ -164,7 +166,7 @@ const SumReputationMobile = () => {
                             letterSpacing: '-0.02em',
                             color: '#ffffff'
                         }}>
-                            Validá tu CUIT
+                            <Link href={'/validation/direccion'} style={{ textDecoration: 'none', color: 'white' }}> Validá tu CUIT</Link>
                         </Typography>
                     </Grid>
                 </Grid>
@@ -175,12 +177,12 @@ const SumReputationMobile = () => {
                         </Grid>
                         <Grid container xs={6} xl={6} sm={6} justify='flex-end'>
                             <Typography style={{
-                                font: 'normal normal normal 36px/36px PoppinsBold',
+                                font: 'normal normal normal 30px/30px PoppinsBold',
                                 marginLeft: 5,
                                 letterSpacing: '-0.02em',
                                 color: '#ACFD00'
                             }}>
-                                +2
+                                +10
                             </Typography>
                         </Grid>
                     </Grid>
@@ -196,7 +198,7 @@ const SumReputationMobile = () => {
                             font: 'normal normal normal 16px/16px Poppins',
                             marginLeft: 5,
                             letterSpacing: '-0.02em',
-                            color: '#ffffff'
+                            color: '#A3A3A3'
                         }}>
                             Validá tu Facebook
                         </Typography>
@@ -205,22 +207,22 @@ const SumReputationMobile = () => {
                 <Grid container xs={4} xl={4} sm={4} justify='flex-end' alignItems='center'>
                     <Grid container xs={12} xl={12} sm={12} justify='flex-end' alignItems='center'>
                         <Grid container xs={6} xl={6} sm={6} justify='flex-end' >
-                            <img src={SmallLogo} alt='logo' width={'25px'} />
+                            <img src={GreyLogo} alt='logo' width={'25px'} />
                         </Grid>
                         <Grid container xs={6} xl={6} sm={6} justify='flex-end' style={{ marginTop: -5 }}>
                             <Typography style={{
                                 font: 'normal normal normal 36px/36px PoppinsBold',
                                 marginLeft: 5,
                                 letterSpacing: '-0.02em',
-                                color: '#ACFD00'
+                                color: '#A3A3A3'
                             }}>
-                                +2
+                                +4
                             </Typography>
                             <Typography style={{
                                 font: 'normal normal normal 12px/12px PoppinsBold',
                                 marginLeft: 5,
                                 letterSpacing: '-0.02em',
-                                color: '#ffffff'
+                                color: '#A3A3A3'
                             }}>
                                 O MAS
                             </Typography>
@@ -231,38 +233,38 @@ const SumReputationMobile = () => {
             <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
                 <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
                     <Grid container xs={2} xl={2} sm={2} justify='center' >
-                        <img src={Facebook} alt='logo' width={'10px'} />
+                        <img src={Amazon} alt='logo' width={'15px'} />
                     </Grid>
                     <Grid container xs={10} xl={10} sm={10} justify='flex-start' >
                         <Typography style={{
                             font: 'normal normal normal 16px/16px Poppins',
                             marginLeft: 5,
                             letterSpacing: '-0.02em',
-                            color: '#ffffff'
+                            color: '#A3A3A3'
                         }}>
-                            Validá tu Facebook
+                            Validá tu Mercado Libre
                         </Typography>
                     </Grid>
                 </Grid>
                 <Grid container xs={4} xl={4} sm={4} justify='flex-end' alignItems='center'>
                     <Grid container xs={12} xl={12} sm={12} justify='flex-end' alignItems='center'>
                         <Grid container xs={6} xl={6} sm={6} justify='flex-end' >
-                            <img src={SmallLogo} alt='logo' width={'25px'} />
+                            <img src={GreyLogo} alt='logo' width={'25px'} />
                         </Grid>
                         <Grid container xs={6} xl={6} sm={6} justify='flex-end' style={{ marginTop: -5 }}>
                             <Typography style={{
                                 font: 'normal normal normal 36px/36px PoppinsBold',
                                 marginLeft: 5,
                                 letterSpacing: '-0.02em',
-                                color: '#ACFD00'
+                                color: '#A3A3A3'
                             }}>
-                                +2
+                                +4
                             </Typography>
                             <Typography style={{
                                 font: 'normal normal normal 12px/12px PoppinsBold',
                                 marginLeft: 5,
                                 letterSpacing: '-0.02em',
-                                color: '#ffffff'
+                                color: '#A3A3A3'
                             }}>
                                 O MAS
                             </Typography>

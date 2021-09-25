@@ -69,8 +69,8 @@ const useStyles = makeStyles(theme => ({
 const PublicInfo = ({selected}) => {
     const classes = useStyles();
     const [Trust, setTrust] = React.useState(false);
-    const TrusterPoints = 122
-    const TrusterUsers = 86
+    const TrusterPoints = localStorage.getItem('points')
+    const TrusterUsers = 0
     const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
     function toggleTrust(){
         setTrust(!Trust)

@@ -10,8 +10,10 @@ import Logo from '../../asset/images/reputation/logo.svg'
 import { CustomerResource } from '../../services/hostConfig';
 import Cliente from './../../setting/cliente'
 import { getToken } from './../../setting/auth-helpers';
-import {Fileload, GetImage, UriServices} from "../../services/hostConfig";
+
+import {Fileload, GetImage, UriServices, GetJson} from "../../services/hostConfig";
 import Loading from '../Loading';
+import { LoopCircleLoading } from "react-loadingg";
 const { localStorage } = global.window;
 const useStyles = makeStyles(theme => ({
     root: {
@@ -84,6 +86,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
+function waiter() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve('resolved');
+        }, 7000);
+    });
+}
 export default function MyProfileMobile(props) {
     const [profession, setProfession] = React.useState('');
     const [cuil, setCuil] = React.useState('');
@@ -94,13 +103,17 @@ export default function MyProfileMobile(props) {
     const [file, setFile] = useState(null)
     const [user, setUser] = useState(null)
     const [imagesArray, setImagesArray] = useState(null)
+    const [loading, setLoading] = useState(false);
+    const [haveImage, setHaveImage] = useState(false);
+    const [haveImageCover, setHaveImageCover] = useState(false);
 
-    const onFileChange = (event) => {
+     const onFileChange = (event) => {
         let fileName = event.target.files[0].name
         const reader = new FileReader();
         let _file = event.target.files[0];
 
-        reader.onload = function (event) {
+        setLoading(true)
+        reader.onload = async function (event) {
             setFile(event.target.result)
             Cliente.post(Fileload(), {
                     'file': event.target.result,
@@ -108,23 +121,43 @@ export default function MyProfileMobile(props) {
                     'user': user,
                     'destination': 'perfil'
                 }
-            ).then(() => getImages())
+            )
+            //     .then(() => {
+            //         getImages()
+            //     }
+            // )
+            await waiter()
+            getImages()
+            window.location.reload()
         };
+
         reader.readAsDataURL(_file);
+
     }
 
     function getImages() {
-        Cliente.get(GetImage(), {
-            params: {
-                'user': user,
-                'folder': 'perfil'
+
+        let json = '';
+        let coverPerfil = '';
+        Cliente.get(GetJson(), {}).then((res) => {
+            //
+            // console.log(res['data']['content']['images'])
+
+            json = res['data']['content']['images']['perfil']
+            coverPerfil = res['data']['content']['images']['coverPerfil']
+
+            if (json.includes(String(localStorage.getItem('userLogin')))) {
+                setHaveImage(true)
             }
-        },).then(
-            res => {
-                setImagesArray(res['data']['fileNames'])
-                console.log(res)
+            else if ( coverPerfil.includes(String(localStorage.getItem('userLogin')))) {
+                setHaveImageCover(true)
             }
-        )
+
+            setLoading(false)
+        }).catch(e => {
+            console.log(e);
+        })
+        
     }
 
 
@@ -435,9 +468,12 @@ export default function MyProfileMobile(props) {
                     {show}
                 </Grid>
                 <Grid container justify="flex-end" xs={5} xl={5} sm={5} style={{ paddingLeft: 20 }}>
-                {imagesArray !== null && imagesArray.length > 0 ?
+                {loading ? <LoopCircleLoading size='large' color='#ACFD00' />
+                            :
+                            (haveImage ?
+
                     <Grid container xs={12} xl={12} sm={12}>
-                        <img src={UriServices() + '/' + user + '/images/perfil/' + imagesArray[0]} alt='reputationimg' width='100px' height='100px' style={{
+                        <img src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'} alt='reputationimg' width='100px' height='100px' style={{
                                 borderRadius: '50%',
                                 
                                 objectFit: 'cover'
@@ -451,8 +487,16 @@ export default function MyProfileMobile(props) {
                             objectFit: 'cover'
                         }} />
                     </Grid>
-                     }
-                    <Grid container xs={12} xl={12} sm={12}>
+                     )
+                    }
+                    <Grid container xs={12} xl={12} sm={12} component="label">
+                         <input
+                            id="file"
+                            name="file"
+                            type="file"
+                            hidden
+                            onChange={(e) => onFileChange(e)}
+                        />
                         <Typography style={{
                             flexGrow: 1,
                             marginTop: 10,
@@ -503,7 +547,7 @@ export default function MyProfileMobile(props) {
                         Género
                     </Typography>
                 </Grid>
-                {forValidatedGender}
+                {validated}
                 <Grid container xs={12} xl={12} sm={12}>
                     <InputBase
                         defaultValue={newGender}
@@ -644,7 +688,7 @@ export default function MyProfileMobile(props) {
                         Nacionalidad
                     </Typography>
                 </Grid>
-                {forValidatedNacionality}
+                {validated}
                 <Grid container xs={12} xl={12} sm={12}>
                     <InputBase
                         defaultValue={nacionality}
@@ -669,7 +713,7 @@ export default function MyProfileMobile(props) {
                         color: "#666666",
                         font: " normal normal 12px/12px Poppins",
                     }}>
-                        Fecha de Vencimiento
+                        Fecha de nacimiento
                     </Typography>
                 </Grid>
                 {toValidate}

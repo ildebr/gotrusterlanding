@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {Grid} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-
+const { localStorage } = global.window;
 const useStyles = makeStyles(theme => ({
     titulo: {
         color: '#ACFD00',
@@ -59,6 +59,12 @@ const useStyles = makeStyles(theme => ({
 
 
 function Consultas(props) {
+    const [consulta, setConsulta] = React.useState('');
+
+    const handleConsulta = (e)=>{
+        setConsulta(e.target.value);
+        localStorage.setItem("consultaBussines", e.target.value)
+    }
     const classes = useStyles();
     return (
         <React.Fragment>
@@ -77,11 +83,11 @@ function Consultas(props) {
 
                 <TextField
                     id="filled-multiline-static"
-
+                    onChange={handleConsulta}
                     multiline
                     rows={10}
                     placeholder={"Escribí el mensaje que van a recibir tus clientes a la hora de hacerte una consulta"}
-
+                    value={consulta}
                     variant="filled"
                     className={classes.textfield}
                 />

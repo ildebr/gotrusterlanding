@@ -4,8 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import ReputatioNavBar from '../../components/navBar/reputationNavbar'
 import TemporaryDrawer from '../../components/navBar/mobileDrawer'
 import Back from '../../asset/images/myProfile/back.svg'
-import ValidationPhone from '../../components/automaticValidation/telephoneValidation/validationPhone'
-
+import ValidationPhone from '../../components/automaticValidation/telephoneValidation/welcomeAgainPhone'
 
 const styles = theme => ({
   root: {
@@ -166,7 +165,7 @@ class AutomaticValidation extends Component {
                 </Grid>}
             </Grid>
             <Grid>
-              {this.state.validatedPhone === true ? 'asdfasdfasd' : <ValidationPhone />  }
+              <ValidationPhone />
             </Grid>
           </Container>
         </Grid>

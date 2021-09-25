@@ -162,6 +162,7 @@ export default function Profile(props) {
     }
     const handleCuil = (e) => {
         setCuil(e.target.value);
+        localStorage.setItem('dniCuit',e.target.value)
     }
     const handlePhone = (e) => {
         setPhone(e.target.value);
@@ -365,13 +366,13 @@ export default function Profile(props) {
     );
     let forValidatedGender = (
         <Grid container xs={8} xl={8} sm={8} justify='flex-end'>
-            <Link href='validation/dni'> <img src={Add} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute', marginLeft: -19,cursor: 'pointer', zIndex: 5 }}/></Link>
+             <img src={Ok} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute' }}/>
         </Grid>
     );
     let forValidatedNacinality= (
         <Grid container xs={8} xl={8} sm={8} justify='flex-end'>
-             <Link href='validation/dni'><img src={Add} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute', marginLeft: -19,cursor: 'pointer', zIndex: 5 }}/></Link>
-        </Grid>
+             <img src={Ok} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute' }} />
+         </Grid>
     );
  
 

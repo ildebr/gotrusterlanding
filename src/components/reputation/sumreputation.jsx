@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, Link } from '@material-ui/core';
 import Airbnb from '../../asset/images/reputation/sumReputation/airbnb.svg'
 import Amazon from '../../asset/images/reputation/sumReputation/amazon.svg'
 import Arrow from '../../asset/images/reputation/sumReputation/caret-right.svg'
@@ -79,18 +79,19 @@ const SumReputation = () => {
                                     paddingLeft: 10,
                                     marginTop: 5
                                 }}>
-                                    Teléfono
+                                    <Link href={'/automaticvalidationphone'} style={{ textDecoration: 'none', color: 'white' }}>
+                                        Teléfono  </Link>
                                 </Typography>
                             </Grid>
                             <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
                                 <Typography style={{
                                     align: "center",
-                                    color: "#FFFFFF",
+                                    color: "#ACFD00",
                                     font: " normal normal 20px/20px PoppinsBold",
                                     paddingLeft: 10,
                                     marginRight: 8
                                 }}>
-                                    +4
+                                    +5
                                 </Typography>
                                 <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
                                 <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
@@ -102,7 +103,7 @@ const SumReputation = () => {
                                 <img src={Facebook} alt='facebook' />
                                 <Typography style={{
                                     align: "center",
-                                    color: "#FFFFFF",
+                                    color: "#A3A3A3",
                                     font: " normal normal 14px/14px Poppins",
                                     paddingLeft: 10,
                                     marginTop: 5
@@ -113,7 +114,7 @@ const SumReputation = () => {
                             <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
                                 <Typography style={{
                                     align: "center",
-                                    color: "#FFFFFF",
+                                    color: "#A3A3A3",
                                     font: " normal normal 20px/20px PoppinsBold",
                                     paddingLeft: 10,
                                     marginRight: 8
@@ -130,7 +131,7 @@ const SumReputation = () => {
                                 <img src={Paypal} alt='paypal' />
                                 <Typography style={{
                                     align: "center",
-                                    color: "#FFFFFF",
+                                    color: "#A3A3A3",
                                     font: " normal normal 14px/14px Poppins",
                                     paddingLeft: 10,
                                     marginTop: 5
@@ -141,7 +142,7 @@ const SumReputation = () => {
                             <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
                                 <Typography style={{
                                     align: "center",
-                                    color: "#FFFFFF",
+                                    color: "#A3A3A3",
                                     font: " normal normal 20px/20px PoppinsBold",
                                     paddingLeft: 10,
                                     marginRight: 8
@@ -165,18 +166,19 @@ const SumReputation = () => {
                                     paddingLeft: 10,
                                     marginTop: 5
                                 }}>
-                                    DNI
+                                    <Link href={'/validation/dni'} style={{ textDecoration: 'none', color: 'white' }}>
+                                        DNI </Link>
                                 </Typography>
                             </Grid>
                             <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
                                 <Typography style={{
                                     align: "center",
-                                    color: "#FFFFFF",
+                                    color: "#ACFD00",
                                     font: " normal normal 20px/20px PoppinsBold",
                                     paddingLeft: 10,
                                     marginRight: 8
                                 }}>
-                                    +4
+                                    +5
                                 </Typography>
                                 <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
                                 <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
@@ -188,7 +190,7 @@ const SumReputation = () => {
                                 <img src={LinkedIn} alt='LinkedIn' />
                                 <Typography style={{
                                     align: "center",
-                                    color: "#FFFFFF",
+                                    color: "#A3A3A3",
                                     font: " normal normal 14px/14px Poppins",
                                     paddingLeft: 10,
                                     marginTop: 5
@@ -199,7 +201,7 @@ const SumReputation = () => {
                             <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
                                 <Typography style={{
                                     align: "center",
-                                    color: "#FFFFFF",
+                                    color: "#A3A3A3",
                                     font: " normal normal 20px/20px PoppinsBold",
                                     paddingLeft: 10,
                                     marginRight: 8
@@ -221,18 +223,18 @@ const SumReputation = () => {
                                     paddingLeft: 10,
                                     marginTop: 5
                                 }}>
-                                    AFIP
+                                  <Link href={'/validation/afip'} style={{ textDecoration: 'none', color: 'white' }}>  AFIP</Link>
                                 </Typography>
                             </Grid>
                             <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
                                 <Typography style={{
                                     align: "center",
-                                    color: "#FFFFFF",
+                                    color: "#ACFD00",
                                     font: " normal normal 20px/20px PoppinsBold",
                                     paddingLeft: 10,
                                     marginRight: 8
                                 }}>
-                                    +4
+                                    +10
                                 </Typography>
                                 <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
                                 <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
@@ -257,12 +259,12 @@ const SumReputation = () => {
                             <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
                                 <Typography style={{
                                     align: "center",
-                                    color: "#FFFFFF",
+                                    color: "#ACFD00",
                                     font: " normal normal 20px/20px PoppinsBold",
                                     paddingLeft: 10,
                                     marginRight: 8
                                 }}>
-                                    +4
+                                    +10
                                 </Typography>
                                 <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
                                 <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
@@ -274,7 +276,7 @@ const SumReputation = () => {
                                 <img src={Amazon} alt='mercadolibre' />
                                 <Typography style={{
                                     align: "center",
-                                    color: "#FFFFFF",
+                                    color: "#A3A3A3",
                                     font: " normal normal 14px/14px Poppins",
                                     paddingLeft: 10,
                                     marginTop: 5
@@ -285,7 +287,7 @@ const SumReputation = () => {
                             <Grid container justify='flex-end' xs={5} xl={5} sm={5} alignItems='center'>
                                 <Typography style={{
                                     align: "center",
-                                    color: "#FFFFFF",
+                                    color: "#A3A3A3",
                                     font: " normal normal 20px/20px PoppinsBold",
                                     paddingLeft: 10,
                                     marginRight: 8
@@ -302,7 +304,7 @@ const SumReputation = () => {
                                 <img src={Airbnb} alt='airbnb' />
                                 <Typography style={{
                                     align: "center",
-                                    color: "#FFFFFF",
+                                    color: "#A3A3A3",
                                     font: " normal normal 14px/14px Poppins",
                                     paddingLeft: 10,
                                     marginTop: 5
@@ -313,7 +315,7 @@ const SumReputation = () => {
                             <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
                                 <Typography style={{
                                     align: "center",
-                                    color: "#FFFFFF",
+                                    color: "#A3A3A3",
                                     font: " normal normal 20px/20px PoppinsBold",
                                     paddingLeft: 10,
                                     marginRight: 8
@@ -337,18 +339,19 @@ const SumReputation = () => {
                                     paddingLeft: 10,
                                     marginTop: 5
                                 }}>
-                                    Dirección
+                                  <Link href={'/validation/direccion'} style={{ textDecoration: 'none', color: 'white' }}>
+                                        Dirección </Link>
                                 </Typography>
                             </Grid>
                             <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
                                 <Typography style={{
                                     align: "center",
-                                    color: "#FFFFFF",
+                                    color: "#ACFD00",
                                     font: " normal normal 20px/20px PoppinsBold",
                                     paddingLeft: 10,
                                     marginRight: 8
                                 }}>
-                                    +4
+                                    +5
                                 </Typography>
                                 <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
                                 <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
@@ -360,7 +363,7 @@ const SumReputation = () => {
                                 <img src={Instagram} alt='instagram' />
                                 <Typography style={{
                                     align: "center",
-                                    color: "#FFFFFF",
+                                    color: "#A3A3A3",
                                     font: " normal normal 14px/14px Poppins",
                                     paddingLeft: 10,
                                     marginTop: 5
@@ -371,7 +374,7 @@ const SumReputation = () => {
                             <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
                                 <Typography style={{
                                     align: "center",
-                                    color: "#FFFFFF",
+                                    color: "#A3A3A3",
                                     font: " normal normal 20px/20px PoppinsBold",
                                     paddingLeft: 10,
                                     marginRight: 8

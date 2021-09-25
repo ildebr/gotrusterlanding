@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { CssBaseline, Grid, Box, Container, Typography, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import auth from './../../setting/auth';
-import NavBar from '../../components/navBar/navbar.jsx';
+import NavBar from '../../components/navBar/navbarRecover';
 import InputBase from '@material-ui/core/InputBase';
 import Logo from '../../asset/images/logo.svg';
 import Link from '@material-ui/core/Link';

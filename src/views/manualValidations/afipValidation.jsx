@@ -10,6 +10,8 @@ import AfipRegister from "../../components/manualValidations/afip/afipRegister";
 import AfipReady from "../../components/manualValidations/afip/afipReady";
 import AfipSuccess from "../../components/manualValidations/afip/afipSuccess";
 import AfipError from "../../components/manualValidations/afip/afipError";
+import { loaderServices } from './../../services/hostConfig';
+
 
 
 const styles = theme => ({
@@ -49,6 +51,7 @@ class AfipValidation extends Component {
     };
 
     componentDidMount() {
+        fetch(loaderServices());
         window.addEventListener("resize", this.handleResize);
     }
 

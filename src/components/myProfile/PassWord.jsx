@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Grid, Typography, Button } from '@material-ui/core';
 import InputBase from '@material-ui/core/InputBase';
 import { makeStyles } from "@material-ui/core/styles";
-import Eye from '../../asset/images/myProfile/eye.svg'
-import UnEye from '../../asset/images/myProfile/uneye.svg'
+import { LoopCircleLoading } from 'react-loadingg';
 import Ok from '../../asset/images/myProfile/ok.svg'
 import { AccountChancePass } from './../../services/hostConfig';
 import { getToken } from './../../setting/auth-helpers';
 import cliente from "./../../setting/cliente";
 import auth from './../../setting/auth';
+import Image from './Image';
 const { localStorage } = global.window;
 
 const useStyles = makeStyles(theme => ({
@@ -116,10 +116,12 @@ const PassWord = () => {
     const [incompletePassError, setncompletePassError] = React.useState('');
     const [active, setActive] = React.useState(false);
     const [maxPass, setMaxPass] = React.useState('');
-    const [on, setOn] = React.useState(false);
-
-
+    const passwordRef = useRef();
+    const passwordRepRef = useRef();
+    const password2Ref = useRef();
     const classes = useStyles();
+    const [show, setShow] = React.useState(false);
+
     const handlePass = (e) => {
         setPassword(e.target.value)
     }
@@ -130,8 +132,10 @@ const PassWord = () => {
     const handlePassRep = (e) => {
         setPassword2(e.target.value)
     }
-    const securityPassword = e => {
+
+    const securityPassword = (e) => {
         const targetVal = e.target.value;
+        console.log(targetVal)
         const longitudAct = targetVal.length;
         let security = false;
         let securityUp = 0;
@@ -175,102 +179,90 @@ const PassWord = () => {
 
         console.log("total seguridad " + security)
         return security
-
     }
 
+    const handleSwitch = (refe, type) => {
+        refe.current.type = type
+    }
 
-    const handleSubmit = e => {
-        setActive(true);
-
+    const handleSubmit = async () => {
         const newPass = {
             "currentPassword": password,
             "newPassword": password2
         }
-        console.log(newPass);
         if ((password === '') || (password2 === '') || (passwordRep !== password2)) {
             setError(true);
             setPassError(true);
             setTexError('*Debe ingresa la contraseña en ambos campos');
-        } else {
-            /*this.setState({
-                 show: true
-             })*/
-
+            return;
+        }
+        setShow(true);
+        setActive(true);
+        try {
             const token = getToken();
-            console.log(token);
+            const data = await
             cliente.post(AccountChancePass(), newPass, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 }
             }).then(response => {
                 console.log(response.status)
                 if (response.status === 200) {
-                    /*this.setState({
-                        sent: true,
-                        active: true,
-                        show: false
-                    })*/
-                    setActive(true)
-                } else {
-                    /*this.setState({
-                        sent: false,
-                        active: false,
-                        show: true
-                    })*/
-                    setActive(false)
+                    passwordRef.current.value = '';
+                    passwordRepRef.current.value = '';
+                    password2Ref.current.value = '';
                 }
-
-            }).catch(error => console.error('Error:', error));;
-
+            }).catch(error => console.error('Error:', error));
+            setShow(false);
+            setActive(false);
+        } catch(e) {
+            console.log(e);
         }
     }
 
     let $incompletePassError = incompletePassError ? '*La contraseña debe contener 8 caracteres mínimo' : '';
     let $incompletePassErrorEx = incompletePassError ? '*una minúscula, una mayúscula y un número' : '';
     let $passError = passError ? '*las contraseña no coinciden' : '';
-    let $onShow = on ? Eye : UnEye;
-   
-    const isEnabled = password !== '' && password2 !== ''
-        && passwordRep !== '';
+    const isEnabled = password !== '' && password2 !== '' && passwordRep !== '';
 
     return (
         <Grid position="static" color="transparent" style={{
             flexGrow: 1,
             border: 0,
             paddingLeft: 50,
-        }} >
+        }}>
             <Grid container justify='flex-start'>
                 <Grid container>
                     <Grid container xs={11} xl={11} sm={11} >
-                        <Typography className={classes.inputTitle}>
-                            Contraseña
+                        <Typography className={classes.lightext}>
+                            Contraseña actual
                         </Typography>
                     </Grid>
                     <Grid xs={1} xl={1} sm={1}>
-                        <img src={$onShow} alt='eye' style={{ marginTop: 60, position: 'absolute' }} />
+                        <Image refe={passwordRef} handleSwitch={handleSwitch} />
                     </Grid>
                 </Grid>
-                <Grid container >
+                <Grid container xs={11} xl={11} sm={11}>
                     <InputBase
                         fullWidth
                         type="password"
-                        id="password"
+                        inputRef={passwordRef}
                         name="password"
                         disabled={active}
-                        inputProps={{ style: { textAlign: 'left' }, type: "password", minlength: 8 }}
+                        inputProps={{ style: { textAlign: 'left' }, minlength: 8 }}
                         className={classes.formButton}
                         onChange={handlePass}
                         onBlur={(e) => {
                             if (securityPassword(e) == false) {
                                 setncompletePassError(true);
                                 setPassError(true)
-                            } else if (this.securityPassword(e) == true) {
+                            } else if (securityPassword(e) == true) {
                                 setncompletePassError(false);
                                 setPassError(false)
                             }
                         }}
-
                         required
                     />
                 </Grid>
@@ -280,37 +272,33 @@ const PassWord = () => {
                     </Typography>
                 </Grid>
             </Grid>
-            <Grid container justify='flex-start' style={{ marginTop: 100 }}>
+            { show ? <LoopCircleLoading size='large' color='#ACFD00' /> : null }
+            <Grid container justify='flex-start' style={{ marginTop: 30 }}>
                 <Grid container>
-                    <Grid container xs={12} xl={12} sm={12} >
-                        <Typography className={classes.inputTitle}>
-                            Cambiar contraseña
+                    <Grid container xs={11} xl={11} sm={11} >
+                        <Typography className={classes.lightext}>
+                            Nueva contraseña
                         </Typography>
                     </Grid>
+                    <Grid xs={1} xl={1} sm={1}>
+                        <Image refe={passwordRepRef} handleSwitch={handleSwitch} />
+                    </Grid>
                 </Grid>
-                <Grid container xs={11} xl={11} sm={11} style={{ marginTop: 30 }}>
-                    <Typography className={classes.lightext}>
-                        Nueva contraseña
-                    </Typography>
-                </Grid>
-                <Grid container xs={1} xl={1} sm={1} >
-                    <img src={$onShow} alt='uneye' style={{ marginTop: 65, marginLeft: 28, position: 'absolute' }} />
-                </Grid>
-                <Grid container >
+                <Grid container xs={11} xl={11} sm={11}>
                     <InputBase
                         fullWidth
                         type="password"
-                        id="password"
-                        name="password"
+                        inputRef={passwordRepRef}
+                        name="passwordRep"
                         disabled={active}
-                        inputProps={{ style: { textAlign: 'left' }, type: "password", minlength: 8 }}
+                        inputProps={{ style: { textAlign: 'left' }, minlength: 8 }}
                         className={classes.formButton}
                         onChange={handlePass2}
                         onBlur={(e) => {
                             if (securityPassword(e) == false) {
                                 setncompletePassError(true);
                                 setPassError(true)
-                            } else if (this.securityPassword(e) == true) {
+                            } else if (securityPassword(e) == true) {
                                 setncompletePassError(false);
                                 setPassError(false)
                             }
@@ -318,55 +306,53 @@ const PassWord = () => {
                         required
                     />
                 </Grid>
-                <Grid container justify="flex-start" style={{ marginTop: 10 }}>
-                    <img src={Ok} alt='ok' />
-                </Grid>
                 <Grid container xs={12} xl={12} sm={12} >
                     <Typography className={classes.lightextEx}>
                         {$incompletePassError}{$incompletePassErrorEx}
                     </Typography>
                 </Grid>
-                <Grid container xs={11} xl={11} sm={11} style={{ marginTop: 30 }}>
-                    <Typography className={classes.lightext}>
-                        Repetir contraseña
-                    </Typography>
+            </Grid>
+            <Grid container justify='flex-start' style={{ marginTop: 30 }}>
+                <Grid container>
+                    <Grid container xs={11} xl={11} sm={11} >
+                        <Typography className={classes.lightext}>
+                            Repetir contraseña
+                        </Typography>
+                    </Grid>
+                    <Grid xs={1} xl={1} sm={1}>
+                        <Image refe={password2Ref} handleSwitch={handleSwitch} />
+                    </Grid>
                 </Grid>
-                <Grid container xs={1} xl={1} sm={1} >
-                    <img src={$onShow} alt='uneye' style={{ marginTop: 65, marginLeft: 28, position: 'absolute' }} />
-                </Grid>
-                <Grid container >
+                <Grid container xs={11} xl={11} sm={11}>
                     <InputBase
                         fullWidth
                         type="password"
-                        id="password"
-                        name="password"
+                        inputRef={password2Ref}
+                        name="password2"
                         disabled={active}
-                        inputProps={{ style: { textAlign: 'left' }, type: "password", minlength: 8 }}
+                        inputProps={{ style: { textAlign: 'left' }, minlength: 8 }}
                         className={classes.formButton}
                         onChange={handlePassRep}
                         onBlur={(e) => {
                             if (password2 !== passwordRep) {
                                 setPassError(true)
-                            } else if (this.securityPassword(e) == true) {
+                            } else if (securityPassword(e) == true) {
                                 setPassError(false)
                             }
                         }}
                         required
                     />
                 </Grid>
-                <Grid container justify="flex-start">
-                    <img src={Ok} alt='ok' style={{ marginTop: 10 }} />
-                </Grid>
                 <Grid container xs={12} xl={12} sm={12} >
                     <Typography className={classes.lightextEx}>
-                        {$passError}
+                        {$incompletePassError}{$incompletePassErrorEx}
                     </Typography>
                 </Grid>
-                <Grid container xs={12} xl={12} sm={12} style={{ marginTop: 30, marginBottom: 30 }}>
-                    <Button className={classes.button} disabled={!isEnabled} onClick={handleSubmit}>
-                        Cambiar contraseña
-                    </Button>
-                </Grid>
+            </Grid>
+            <Grid container xs={12} xl={12} sm={12} style={{ marginTop: 30, marginBottom: 30 }}>
+                <Button className={classes.button} disabled={!isEnabled} onClick={handleSubmit}>
+                    Cambiar contraseña
+                </Button>
             </Grid>
         </Grid >)
 }

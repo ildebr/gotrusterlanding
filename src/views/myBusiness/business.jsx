@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
-import {Container, Grid, Typography} from "@material-ui/core";
+import { Container, Grid, Typography } from "@material-ui/core";
 import LandingImage from '../../asset/images/myBusiness/Rectangle 71.png'
 import ReputatioNavBar from "../../components/navBar/reputationNavbar";
 import TemporaryDrawer from "../../components/navBar/mobileDrawer";
@@ -10,16 +10,18 @@ import Ubicacion from "../../components/myBusiness/ubicacion";
 import Button from "@material-ui/core/Button";
 import Imagenes from "../../components/myBusiness/imagenes";
 import Consultas from "../../components/myBusiness/consultas";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faAngleLeft, faTimes} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleLeft, faTimes } from "@fortawesome/free-solid-svg-icons";
 import MobileHeader from "../../components/myBusiness/mobileHeader";
 import MobileTienda from "../../components/myBusiness/mobileTienda";
 import MobileBotonera from "../../components/myBusiness/mobileBotonera";
 import Switch from "@material-ui/core/Switch";
-import { AllCategory } from "../../services/hostConfig";
+import { AllCategory, GetImage,  ShopResource, ShopAdress} from "../../services/hostConfig";
 import { getToken } from './../../setting/auth-helpers';
-
-
+import Cliente from "../../setting/cliente";
+import { LoopCircleLoading } from 'react-loadingg';
+import cliente from "./../../setting/cliente";
+const { localStorage } = global.window;
 
 const styles = theme => ({
     root: {
@@ -80,23 +82,51 @@ const AntSwitch = withStyles((theme) => ({
 class Business extends Component {
     constructor(props) {
         super(props);
-        this.state = {windowWidth: window.innerWidth};
-        this.state = {switchState: false , categorys:[]};
-       
+        this.state = {
+            switchState: false,
+            categorys: [],
+            windowWidth: window.innerWidth,
+            imagesArray: null,
+            user: null,
+            modifiedCover: false,
+            enabledComponent: false,
+            ipPublic: '',
+            show:false
+        };
+
     }
+    
 
     handleResize = (e) => {
-        this.setState({windowWidth: window.innerWidth});
+        this.setState({ windowWidth: window.innerWidth });
     };
 
     componentDidMount() {
         this.loadCategory();
+
         window.addEventListener("resize", this.handleResize);
+        if (this.state.user === null) {
+            this.state.user = localStorage.getItem('userLogin')
+        }
+        if (this.state.imagesArray === null && this.state.user !== null) {
+            Cliente.get(GetImage(), {
+                params: {
+                    'user': this.state.user,
+                    'folder': 'coverNegocio'
+                }
+            }).then(
+                res => {
+                    // console.log(res)
+                    this.setState({ imagesArray: res['data']['fileNames'] })
+                }
+            )
+        }
     }
+
     loadCategory = (e) => {
         let URI = AllCategory();
         const token = getToken();
-        
+
         fetch(URI, {
             headers: {
                 'Accept': 'application/json',
@@ -105,23 +135,84 @@ class Business extends Component {
             }
         })
             .then(response => {
-                console.log(response)
                 return response.json();
-            }).then(response => {
-              this.setState({
-                categorys:response
-              })
-               return response;
+            })
+            .then(response => {
+                this.setState({
+                    categorys: response,
+                })
+                return response;
             })
             .catch(e => {
                 console.log(e);
             })
 
     }
+    handlenSubmit =(e)=>{
+        let UriShop = ShopResource();
+        let UriShopAdress = ShopAdress();
+        let nameBussines= localStorage.getItem("nameBussines");
+        let summary = localStorage.getItem("summary");
+        let descrpition = localStorage.getItem("descriptionBussines");       
+        const token = getToken();
+        //// Customer
+        const dataRegister = {            
+                "categoryType": {
+                    "id": parseInt(localStorage.getItem("categoryBussines")),
+                },
+                "creationDate": "string",
+                "customers": [{
+                    "id": parseInt(localStorage.getItem("customerId")),
+                    "user": {
+                        "id": parseInt(localStorage.getItem("customerId")),
+                        "login": localStorage.getItem("userLogin"),
+                    }
+                }],
+                "description": descrpition,
+                "enabled": true,
+                "images": "string",
+                "isPublic": true,
+                "modificationDate": Date.now(),
+                "name": nameBussines,
+                "subCategoryType": {
+                    "id": parseInt(localStorage.getItem("subCategoryBussines")),
+                    "categoryType": {
+                        "id": parseInt(localStorage.getItem("subCategoryBussines")),
+                    }
+                },
+                "summary": summary
+            }
+        
+          //////adreeeshop
+          const addressShop= {            
+                "apartment": "string",  
+                "city": localStorage.getItem("provinceBussines"),
+                "country": localStorage.getItem("localBussines"),                
+                "postalCode": localStorage.getItem("postalBussines"),
+                "shop": {                 
+                  "id": localStorage.getItem("idShop"),                 
+                },
+                "streetName": localStorage.getItem("adressBussines"),
+                "streetNumber": localStorage.getItem("numberBussines")
+            }
+            cliente.post(UriShop(), dataRegister, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then(response => {
+                console.log(response);
+               
+            })  
+        
+
+    }
+
 
     render() {
         function getWindowDimensions() {
-            const {innerWidth: width} = window;
+            const { innerWidth: width } = window;
             return {
                 width
             };
@@ -130,22 +221,33 @@ class Business extends Component {
         // const [switchState, setSwitchState] = useState(false)
 
 
-
-
-        const {width} = getWindowDimensions();
-        const {classes} = this.props;
+        const { width } = getWindowDimensions();
+        const { classes } = this.props;
         return (
             <React.Fragment>
                 <Grid container className={classes.root} component="main" maxWidth="md"
-                      style={{display: 'flex', justifyContent: 'center'}}>
+                    style={{ display: 'flex', justifyContent: 'center' }}>
                     {width >= 600 ? <div className={classes.background}>
-                        <img src={LandingImage} alt='background' width={'100%'} height={'550px'}/>
+
+
+                        {this.state.imagesArray !== null && this.state.imagesArray.length > 0 ?
+                            <img src={
+                                'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverNegocio/' + this.state.user + '.png'
+                            }
+                                alt='background' width={'1935px'} height={'550px'}
+                                style={{ objectFit: 'cover' }}
+                            />
+
+
+                            :
+                            <img src={LandingImage} alt='background' width={'100%'} height={'550px'} />
+                        }
                     </div> : ''}
                     <Grid className={classes.test} container maxWidth="md" component="main">
                         <Container component="main" maxWidth="md">
-                            <Grid container style={{display: 'flex', justifyContent: 'center'}}>
+                            <Grid container style={{ display: 'flex', justifyContent: 'center' }}>
                                 <Grid item container xs={2} xl={4} sm={4} className={classes.paperContainer}>
-                                    {width >= 600 ? <ReputatioNavBar/> : <TemporaryDrawer/>}
+                                    {width >= 600 ? <ReputatioNavBar /> : <TemporaryDrawer />}
                                 </Grid>
                                 {width >= 600 ? <Grid xs={8} container>
                                     <Typography style={{
@@ -175,12 +277,12 @@ class Business extends Component {
                                 </Grid>}
 
                                 {width >= 600 ?
-                                    <Grid xs={2}> <a/> </Grid>
+                                    <Grid xs={2}> <a /> </Grid>
                                     :
                                     <Grid item xs={2} container justify='flex-end' alignItems={"center"}>
                                         <FontAwesomeIcon icon={faAngleLeft} style={{
                                             color: '#777777', fontSize: "26px", align: 'right', marginRight: '20px'
-                                        }}/>
+                                        }} />
                                     </Grid>
                                 }
 
@@ -189,9 +291,9 @@ class Business extends Component {
                                     display: 'flex', justifyContent: 'center'
                                 }} xs={12}>
                                     {width >= 600 ?
-                                        <Header/>
+                                        <Header />
                                         :
-                                        <MobileHeader/>
+                                        <MobileHeader />
                                     }
                                 </Grid>
                             </Grid>
@@ -203,8 +305,8 @@ class Business extends Component {
 
                 </Grid>
                 {width >= 600 ?
-                    <Grid container component="main" maxWidth="md" style={{display: 'flex', justifyContent: 'center'}}>
-                        <Container component="main" maxWidth="md" style={{paddingBottom: '40px'}}>
+                    <Grid container component="main" maxWidth="md" style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Container component="main" maxWidth="md" style={{ paddingBottom: '40px' }}>
 
 
                             <Grid container direction={"row"}>
@@ -255,7 +357,7 @@ class Business extends Component {
 
                                         <AntSwitch
                                             checked={this.state.switchState}
-                                            onChange={() => this.setState({ switchState: !this.state.switchState})}
+                                            onChange={() => this.setState({ switchState: !this.state.switchState })}
                                             name="checkedA"
                                         />
 
@@ -265,21 +367,20 @@ class Business extends Component {
                             </Grid>
                             <Grid container direction={"row"} maxWidth="md" spacing={10}>
 
-
                                 <Grid item xs md={6}>
-                                    <Tienda categorys={this.state.categorys}/>
-                                    <Ubicacion/>
+                                    <Tienda categorys={this.state.categorys} />
+                                    <Ubicacion />
                                 </Grid>
 
 
                                 {/*{this.state.switchState ?*/}
                                 <Grid item xs>
 
-                                    <Imagenes width={width}/>
-                                    <Consultas/>
+                                    <Imagenes width={width} />
+                                    <Consultas />
 
 
-                                    <div style={{display: 'flex', justifyContent: 'flex-end', paddingTop: '69px'}}>
+                                    <div style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: '69px' }}>
                                         <Button style={{
                                             background: '#ACFD00',
                                             boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
@@ -297,47 +398,31 @@ class Business extends Component {
                                                 padding: '10px 15px 9px ',
 
                                             }}>
-                                                Guardar cambios y Ver Perfil
+                                                Guardar cambios 
                                             </Typography>
                                         </Button>
                                     </div>
 
                                 </Grid>
-                                    // : <a/>
+                                // : <a />
 
 
                             </Grid>
 
-                            <div style={{display: 'flex', justifyContent: 'flex-start', paddingTop: '69px'}}>
+                            <div style={{ display: 'flex', justifyContent: 'flex-start', paddingTop: '69px' }}>
 
-                                <Button style={{
-                                    //width:'260px',
-                                    border: '2px solid #333333',
-                                    borderRadius: '14px'
-                                }}>
-                                    <Typography style={{
-                                        align: "center",
-                                        color: '#fff',
-                                        fontFamily: "Poppins",
-                                        fontSize: '16px',
-                                        fontWeight: 'normal',
-                                        textAlign: 'center',
-                                        letterSpacing: '-0.02em',
-                                        padding: '14px 80px 13px ',
-                                        textTransform: 'None'
-                                    }}>Cancelar</Typography>
-                                </Button>
+
                             </div>
                         </Container>
                     </Grid>
                     :
                     <Grid container direction={"column"} component="main" maxWidth="md"
-                          style={{display: 'flex', justifyContent: 'center'}}>
+                        style={{ display: 'flex', justifyContent: 'center' }}>
                         <Grid item>
-                            <MobileTienda/>
+                            <MobileTienda />
                         </Grid>
-                        <Grid item style={{padding: '18px 22px', marginBottom: '40px'}}>
-                            <MobileBotonera/>
+                        <Grid item style={{ padding: '18px 22px', marginBottom: '40px' }}>
+                            <MobileBotonera />
                         </Grid>
 
                     </Grid>
@@ -353,4 +438,4 @@ class Business extends Component {
 
 }
 
-export default withStyles(styles, {withTheme: true})(Business);
+export default withStyles(styles, { withTheme: true })(Business);

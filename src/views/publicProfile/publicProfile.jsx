@@ -28,8 +28,9 @@ import Airtm from '../../asset/images/publicProfile/companyIcons/airtm.svg'
 import Facebook from '../../asset/images/publicProfile/companyIcons/facebook.svg'
 import LinkedIn from '../../asset/images/publicProfile/companyIcons/linked.svg'
 import Meli from '../../asset/images/publicProfile/companyIcons/meli.svg'
-
-
+import {GetImage} from './../../services/hostConfig';
+import Cliente from './../../setting/cliente'
+const { localStorage } = global.window;
 
 const styles = theme => ({
     root: {
@@ -115,13 +116,33 @@ const styles = theme => ({
 class PublicProfile extends Component {
     constructor(props) {
         super(props);
-        this.state = { windowWidth: window.innerWidth, tab: 0, woBussiness: false };
+        this.state = { windowWidth: window.innerWidth, tab: 0, woBussiness: false , 
+            imagesArray: null,
+            user: null};
     }
     handleResize = (e) => {
         this.setState({ windowWidth: window.innerWidth });
     };
     componentDidMount() {
         window.addEventListener("resize", this.handleResize);
+        if (this.state.user === null) {
+            this.state.user = localStorage.getItem('userLogin')
+        }
+
+        if (this.state.user !== null) {
+            Cliente.get(GetImage(), {
+                params: {
+                    'user': this.state.user,
+                    'folder': 'coverPerfil'
+                }
+            }).then(
+                res => {
+                    this.setState({ imagesArray: res['data']['fileNames'] })
+                    console.log(res)
+                }
+
+            )
+        }
     }
     Tabf = (value) => {
         this.setState({ tab: value });
@@ -257,8 +278,19 @@ class PublicProfile extends Component {
         return (<React.Fragment>
             <Grid container className={classes.root} component="main" maxWidth="md" style={{ display: 'flex', justifyContent: 'center' }}>
                 {width >= 600 ? <div className={classes.background} >
-                    <img src={Rectangle} alt='background' width={'100%'} height={'100%'} />
-                </div> : ''}
+                {this.state.imagesArray !== null && this.state.imagesArray.length > 0 ?
+                        <img src={
+                            'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverPerfil/' + this.state.user + '.png'
+                        }
+                            alt='background' width={'1935px'} height={'430px'}
+                            style={{ objectFit: 'cover' }}
+                        />
+
+
+                        :
+                        <img src={Rectangle} alt='background' width={'100%'} height={'100%'} />
+                    }
+                </div> : ''}                    
                 <Grid className={classes.test} container maxWidth="md" component="main" >
                     <Container component="main" maxWidth="md" container  >
                         <Grid container >

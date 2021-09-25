@@ -27,16 +27,42 @@ import BusinessAdmin from "./views/admin/bussines";
 import PublicBusiness from "./views/myBusiness/publicBusiness";
 import PublicProfile from "./views/publicProfile/publicProfile";
 import SlantedPublicBusiness from "./views/myBusiness/slantedPublicBusiness";
-import DniValidation from "./views/manualValidations/dniValidation";
+
+
+import DniValidation from "./views/manualValidations/dni/dniValidation";
+import DniValidationSuccess from "./views/manualValidations/dni/dniValidationSuccess";
+import DniValidationReady from "./views/manualValidations/dni/dniValidationReady";
+import DniValidationError from "./views/manualValidations/dni/dniValidationFail";
+
 import AfipValidation from "./views/manualValidations/afipValidation";
 import SecurityMobile from "./views/seccurity/securityMobile";
 import Sesgado from "./views/sesgado/sesgado";
 import DireccionValidation from "./views/manualValidations/direccionValidation";
 import SelfieValidation from "./views/manualValidations/selfieValidation";
-import AutomaticValidationPhone from "./views/automaticValidation/automaticValidationPhone";
-import AutomaticValidationMercadoLibre from "./views/automaticValidation/automaticValidationMercadoLibre";
-import AutomaticValidationLinkedIn from "./views/automaticValidation/automaticValidationLinkedIn";
-import AutomaticValidationFacebook from "./views/automaticValidation/automaticValidationFacebook";
+
+import AutomaticValidationPhone from "./views/automaticValidation/AutomaticValidationPhone/automaticValidationPhone";
+import WelcomeAgainAutomaticValidationPhone from "./views/automaticValidation/AutomaticValidationPhone/welcomeAgainAutomaticValidationPhone";
+import CompletedAutomaticValidationPhone from "./views/automaticValidation/AutomaticValidationPhone/completedAutomaticValidationPhone";
+
+import AutomaticValidationMercadoLibre from "./views/automaticValidation/AutomaticValidationMercadoLibre/automaticValidationMercadoLibre";
+import FailedAutomaticValidationMercadoLibre from "./views/automaticValidation/AutomaticValidationMercadoLibre/failedAutomaticValidationMercadoLibre";
+import ReadyAutomaticValidationMercadoLibre from "./views/automaticValidation/AutomaticValidationMercadoLibre/readyAutomaticValidationMercadoLibre";
+import SuccessAutomaticValidationMercadoLibre from "./views/automaticValidation/AutomaticValidationMercadoLibre/successAutomaticValidationMercadoLibre";
+
+import AutomaticValidationLinkedIn from "./views/automaticValidation/AutomaticValidationLinkedIn/automaticValidationLinkedIn";
+import FailedAutomaticValidationLinkedIn from "./views/automaticValidation/AutomaticValidationLinkedIn/failedAutomaticValidationLinkedIn";
+import ReadyAutomaticValidationLinkedIn from "./views/automaticValidation/AutomaticValidationLinkedIn/readyAutomaticValidationLinkedIn";
+import SuccessAutomaticValidationLinkedIn from "./views/automaticValidation/AutomaticValidationLinkedIn/successAutomaticValidationLinkedIn";
+
+import AutomaticValidationFacebook from "./views/automaticValidation/AutomaticValidationFacebook/automaticValidationFacebook";
+import FailedAutomaticValidationFacebook from "./views/automaticValidation/AutomaticValidationFacebook/failedAutomaticValidationFacebook";
+import ReadyAutomaticValidationFacebook from "./views/automaticValidation/AutomaticValidationFacebook/readyAutomaticValidationFacebook";
+import SuccessAutomaticValidationFacebook from "./views/automaticValidation/AutomaticValidationFacebook/successAutomaticValidationFacebook";
+
+import AutomaticValidationBinance from "./views/automaticValidation/AutomaticValidationBinance/automaticValidationBinance";
+import FailedAutomaticValidationBinance from "./views/automaticValidation/AutomaticValidationBinance/failedAutomaticValidationBinance";
+import ReadyAutomaticValidationBinance from "./views/automaticValidation/AutomaticValidationBinance/readyAutomaticValidationBinance";
+import SuccessAutomaticValidationBinance from "./views/automaticValidation/AutomaticValidationBinance/successAutomaticValidationBinance";
 
 function App() {
   return (
@@ -84,16 +110,46 @@ function App() {
           <GuardedRoute path="/admin/cuils" exact component={AdminCuil} auth={auth.loggedIn()}/>
 
            {/*manual validations*/}
-          <GuardedRoute path="/validation/dni" exact component={DniValidation} auth={auth.loggedIn()}/>
+         
           <GuardedRoute path="/validation/afip" exact component={AfipValidation} auth={auth.loggedIn()}/>
           <GuardedRoute path="/validation/direccion" exact component={DireccionValidation} auth={auth.loggedIn()}/>
           <GuardedRoute path="/validation/selfie" exact component={SelfieValidation} auth={auth.loggedIn()}/> 
           
-            {/*automatic validations*/}
-          <GuardedRoute path="/automaticvalidationphone" component={AutomaticValidationPhone} auth={auth.loggedIn()} />
-          <GuardedRoute path="/automaticvalidationmercadolibre" component={AutomaticValidationMercadoLibre} auth={auth.loggedIn()} />
-          <GuardedRoute path="/automaticvalidationlinkedin" component={AutomaticValidationLinkedIn} auth={auth.loggedIn()} />
-          <GuardedRoute path="/automaticValidationFacebook" component={AutomaticValidationFacebook} auth={auth.loggedIn()} />
+          {/*automatic validations*/}
+            {/*Phone*/}
+              <GuardedRoute path="/automaticValidationphone" component={AutomaticValidationPhone} auth={auth.loggedIn()} />
+              <GuardedRoute path="/welcomeAgainAutomaticvalidationphone" component={WelcomeAgainAutomaticValidationPhone} auth={auth.loggedIn()} />
+              <GuardedRoute path="/completedAutomaticvalidationphone" component={CompletedAutomaticValidationPhone} auth={auth.loggedIn()} />
+
+            {/*MercadoLibre*/}
+              <GuardedRoute path="/automaticValidationmercadolibre" component={AutomaticValidationMercadoLibre} auth={auth.loggedIn()} />
+              <GuardedRoute path="/failedAutomaticvalidationmercadolibre" component={FailedAutomaticValidationMercadoLibre} auth={auth.loggedIn()} />
+              <GuardedRoute path="/readyAutomaticvalidationmercadolibre" component={ReadyAutomaticValidationMercadoLibre} auth={auth.loggedIn()} />
+              <GuardedRoute path="/successAutomaticvalidationmercadolibre" component={SuccessAutomaticValidationMercadoLibre} auth={auth.loggedIn()} />
+
+            {/*LinkedIn*/}
+              <GuardedRoute path="/automaticValidationlinkedin" component={AutomaticValidationLinkedIn} auth={auth.loggedIn()} />
+              <GuardedRoute path="/failedAutomaticvalidationlinkedin" component={FailedAutomaticValidationLinkedIn} auth={auth.loggedIn()} />
+              <GuardedRoute path="/readyAutomaticvalidationlinkedin" component={ReadyAutomaticValidationLinkedIn} auth={auth.loggedIn()} />
+              <GuardedRoute path="/successAutomaticvalidationlinkedin" component={SuccessAutomaticValidationLinkedIn} auth={auth.loggedIn()} />
+
+            {/*Facebook*/}
+              <GuardedRoute path="/automaticValidationFacebook" component={AutomaticValidationFacebook} auth={auth.loggedIn()} />
+              <GuardedRoute path="/failedAutomaticValidationFacebook" component={FailedAutomaticValidationFacebook} auth={auth.loggedIn()} />
+              <GuardedRoute path="/readyAutomaticValidationFacebook" component={ReadyAutomaticValidationFacebook} auth={auth.loggedIn()} />
+              <GuardedRoute path="/successAutomaticValidationFacebook" component={SuccessAutomaticValidationFacebook} auth={auth.loggedIn()} />
+
+            {/*Binance*/}
+              <GuardedRoute path="/automaticValidationBinance" component={AutomaticValidationBinance} auth={auth.loggedIn()} />
+              <GuardedRoute path="/failedAutomaticValidationBinance" component={FailedAutomaticValidationBinance} auth={auth.loggedIn()} />
+              <GuardedRoute path="/readyAutomaticValidationBinance" component={ReadyAutomaticValidationBinance} auth={auth.loggedIn()} />
+              <GuardedRoute path="/successAutomaticValidationBinance" component={SuccessAutomaticValidationBinance} auth={auth.loggedIn()} />
+
+                {/*DNI*/}
+                <GuardedRoute path="/validation/dni" exact component={DniValidation} auth={auth.loggedIn()}/>
+                <GuardedRoute path="/validation/dniSuccess" exact component={DniValidationSuccess} auth={auth.loggedIn()}/>
+                <GuardedRoute path="/validation/dniReady" exact component={DniValidationReady} auth={auth.loggedIn()}/>
+                <GuardedRoute path="/validation/dniError" exact component={DniValidationError} auth={auth.loggedIn()}/>
           
         </Switch>
       </Router>

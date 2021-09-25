@@ -8,7 +8,7 @@ import EditTienda from "../../components/myBusiness/editTienda";
 import MobileUbicacion from "../../components/myBusiness/mobileUbicacion";
 import MobileConsultas from "../../components/myBusiness/mobileConsultas";
 import Imagenes from "../../components/myBusiness/imagenes";
-import { AllCategory } from "../../services/hostConfig";
+import { AllCategory, selectSubCategory } from "../../services/hostConfig";
 import { getToken } from './../../setting/auth-helpers';
 
 const styles = theme => ({
@@ -37,7 +37,7 @@ const styles = theme => ({
 class EditMyBusiness extends Component {
     constructor(props) {
         super(props);
-        this.state = {  categorys: [] };
+        this.state = {  categorys: [], subCateg:[] };
     }
 
     componentDidMount() {
@@ -60,6 +60,7 @@ class EditMyBusiness extends Component {
                 return response.json();
             }).then(response => {
                 this.setState({categorys:response})
+                this.loadSubCategory()
                 return response;
             })
             .catch(e => {
@@ -67,7 +68,28 @@ class EditMyBusiness extends Component {
             })
 
     }
-
+    loadSubCategory = (e) => {
+        let URI = selectSubCategory();
+        const token = getToken();
+        fetch(URI, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(response => {
+            console.log(response)
+            return response.json();
+        }).then(response => {
+            this.setState({
+                subCateg: response
+            })
+            return response;
+        })
+            .catch(e => {
+                console.log(e);
+            })
+    }
     
     render() {
         const {classes} = this.props;

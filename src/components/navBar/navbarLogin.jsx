@@ -92,8 +92,8 @@ const Navbar = ({ active, recover }) => {
                 <Toolbar>
                     <div class="menu-wrap">
                         <input type="checkbox" class="toggler" />
-                        <div class="hamburger"><div></div></div>
-                        <div class="menu">
+                       {/* <div class="hamburger"><div></div></div>
+                         <div class="menu">
                             <div>
                                 <div>
                                     <Typography variant="h6" style={{
@@ -117,7 +117,7 @@ const Navbar = ({ active, recover }) => {
                                     }}>
                                         BIENVENIDO
                                     </Typography>
-                                   {/* <Typography style={{
+                                   <Typography style={{
                                         marginLeft: 40,
                                         flexGrow: 1,
                                         align: "center",
@@ -146,10 +146,10 @@ const Navbar = ({ active, recover }) => {
                                         <li><Link href='/' style={{ color: "#5e5e5d" }}>Términos y Condiciones</Link></li>
                                         <li><Link href='/' style={{ color: "#5e5e5d" }}>Política</Link></li>
                                         <li><Link href='/' style={{ color: "#5e5e5d", fontSize: 13 }}><img src={CerrarSesion} alt='cerrarsesion' style={{ paddingRight: 5, width: '7%' }} /> Cerrar Sesión</Link></li>
-                                    </ul>*/}
+                                    </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div>*/}
                     </div>
                     {isActive ? <Typography variant="h6" style={{
                         marginLeft: 145,
@@ -215,8 +215,8 @@ const Navbar = ({ active, recover }) => {
                 height: 80,
             }} >
                 <Grid container xs={2} xl={2} sm={2} justify='center' style={{ alignContent: 'flex-start' }}>
-                    <TemporaryDrawer />
-                    {/* <div class="menu-wrap">
+                    {/*<TemporaryDrawer />
+                     <div class="menu-wrap">
                         <input type="checkbox" class="toggler" />
                         <div class="hamburger"><div></div></div>
                         <div class="menu">
@@ -282,7 +282,7 @@ const Navbar = ({ active, recover }) => {
                     <Grid container xs={10} xl={10} sm={10} >
                         <Grid container xs={2} xl={2} sm={2} justify='flex-start' >
                             <Typography variant="h6" style={{
-                                marginLeft: 10,
+                                marginLeft: 50,
                                 flexGrow: 1,
                                 marginTop: 20,
                                 color: "#FFFFFF",

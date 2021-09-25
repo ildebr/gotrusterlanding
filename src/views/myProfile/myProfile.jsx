@@ -1,6 +1,6 @@
 import React, {Component, useEffect, useState} from 'react'
-import { Container, Grid, Typography, Button } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import {Container, Grid, Typography, Button} from '@material-ui/core';
+import {withStyles} from '@material-ui/core/styles';
 import Rectangle from '../../asset/images/Rectangle 71.svg'
 import ReputatioNavBar from '../../components/navBar/reputationNavbar'
 import TemporaryDrawer from '../../components/navBar/mobileDrawer'
@@ -13,8 +13,9 @@ import MyEmail from '../../components/myProfile/MyEmail'
 import CustomizedSwitches from '../../components/myProfile/Linkages'
 import Cliente from './../../setting/cliente'
 import {AddressOperations, GetImage, UriServices} from './../../services/hostConfig';
-import { getToken } from './../../setting/auth-helpers';
-const { localStorage } = global.window;
+import {getToken} from './../../setting/auth-helpers';
+
+const {localStorage} = global.window;
 const styles = theme => ({
     root: {
         background: '#000000',
@@ -44,9 +45,15 @@ const styles = theme => ({
         font: 'normal normal normal 18px/18px Poppins',
         fontWeight: '500',
         cursor: 'pointer',
+    },
+    disablegrid: {
+        pointerEvents: 'none',
+        opacity: '0.4',
+    },
+    wrapper: {
+        cursor: 'not-allowed',
     }
 });
-
 
 
 class MyProfile extends Component {
@@ -60,9 +67,11 @@ class MyProfile extends Component {
             modifiedCover: false
         };
     }
+
     handleResize = (e) => {
-        this.setState({ windowWidth: window.innerWidth });
+        this.setState({windowWidth: window.innerWidth});
     };
+
     componentDidMount() {
         this.handleLoadDataAdresses();
         window.addEventListener("resize", this.handleResize);
@@ -74,26 +83,25 @@ class MyProfile extends Component {
             Cliente.get(GetImage(), {
                 params: {
                     'user': this.state.user,
-                    'folder': 'cover'
+                    'folder': 'coverPerfil'
                 }
             },).then(
                 res => {
                     this.setState({imagesArray: res['data']['fileNames']})
+                    console.log(res)
                 }
+                
             )
         }
-
-        
     }
-
 
 
     Tabf = (value) => {
-        this.setState({ tab: value });
+        this.setState({tab: value});
         console.log(this.state.tab)
     }
     handleLoadDataAdresses = (e) => {
-        
+
         const token = getToken();
         let adress = '';
         let nacional = '';
@@ -107,169 +115,184 @@ class MyProfile extends Component {
             .then(response => {
                 return response.data
             }).then(response => {
-                console.log(response);
-                response.forEach(function (currentValue, index, arr) {
-                    adress += currentValue.streetName + ' ' + currentValue.streetNumber;
-                    nacional += currentValue.country;
+            console.log(response);
+            response.forEach(function (currentValue, index, arr) {
+                adress += currentValue.streetName + ' ' + currentValue.streetNumber;
+                nacional += currentValue.country;
 
-                });
+            });
 
-                localStorage.setItem("Adresses", adress)
-                localStorage.setItem("Nacinality", nacional)
+            localStorage.setItem("Adresses", adress)
+            localStorage.setItem("Nacinality", nacional)
 
-            })
+        })
     }
+
     render() {
         function getWindowDimensions() {
-            const { innerWidth: width } = window;
+            const {innerWidth: width} = window;
             return {
                 width
             };
         }
-        const { width } = getWindowDimensions();
-        const { classes } = this.props;
-        const componentArray = [<Profile adresses={this.state.adresses} nacionality={this.state.nacionality} />, <PassWord />, <MyEmail />, <CustomizedSwitches />]
 
-
-
-        //
-        //
-
+        const {width} = getWindowDimensions();
+        const {classes} = this.props;
+        const componentArray = [<Profile adresses={this.state.adresses} nacionality={this.state.nacionality}/>,
+            <PassWord/>, <MyEmail/>, <CustomizedSwitches/>]
 
         function modifyActive() {
-            this.setState({ modifiedCover: true });
+            this.setState({modifiedCover: true});
         }
 
         return (<React.Fragment>
-            <Grid container className={classes.root} component="main" maxWidth="md" style={{ display: 'flex', justifyContent: 'center' }}>
-                {width >= 600 ? <div className={classes.background} >
+                <Grid container className={classes.root} component="main" maxWidth="md"
+                      style={{display: 'flex', justifyContent: 'center'}}>
+                    {width >= 600 ? <div className={classes.background}>
 
-                    {this.state.imagesArray !== null && this.state.imagesArray.length > 0  ?
-                        <img src={
-                            UriServices() + '/' + this.state.user + '/images/cover/' + this.state.imagesArray[0]}
-                             alt='background' width={'100%'} height={'100%'}
-                             style={{objectFit:'cover'}}
-                        />
+                        {this.state.imagesArray !== null && this.state.imagesArray.length > 0 ?
+                            <img src={
+                                'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverPerfil/' + this.state.user + '.png#'
+                            }
+                                 alt='background' width={'1935px'} height={'470px'}
+                                 style={{objectFit: 'cover'}}
+                            />
 
 
-                        :
-                        <img src={Rectangle} alt='background' width={'100%'} height={'100%'} />
-                    }
+                            :
+                            <img src={Rectangle} alt='background' width={'100%'} height={'100%'}/>
+                        }
 
-                </div> : ''}
-                <Grid className={classes.test} container maxWidth="md" component="main" >
-                    <Container component="main" maxWidth="md" container  >
-                        <Grid container >
-                            {width >= 600 ? <Grid item container xs={4} xl={4} sm={4} className={classes.paperContainer} >
-                                <ReputatioNavBar />
-                            </Grid> : <Grid item container xs={6} xl={6} sm={6} style={{ marginTop: 10, marginLeft: -20 }} alignItems='center'>
-                                <TemporaryDrawer />
-                            </Grid>}
+                    </div> : ''}
+                    <Grid className={classes.test} container maxWidth="md" component="main">
+                        <Container component="main" maxWidth="md" container>
+                            <Grid container>
+                                {width >= 600 ?
+                                    <Grid item container xs={4} xl={4} sm={4} className={classes.paperContainer}>
+                                        <ReputatioNavBar/>
+                                    </Grid> :
+                                    <Grid item container xs={6} xl={6} sm={6} style={{marginTop: 10, marginLeft: -20}}
+                                          alignItems='center'>
+                                        <TemporaryDrawer/>
+                                    </Grid>}
 
-                            {width >= 600 ?
-                                <Grid xs={4} xl={4} sm={4} container justify='center' >
-                                    <Typography style={{
-                                        flexGrow: 1,
-                                        marginTop: 40,
-                                        align: "center",
-                                        color: "#FFFFFF",
-                                        font: " normal normal 40px/40px Poppins",
-                                    }}>
-                                        Truster
-                                    </Typography>
-                                </Grid> :
-                                <Grid xs={6} xl={6} sm={6} container alignItems='center'>
-                                    <Grid xs={11} xl={11} sm={11} container justify='flex-start'>
+                                {width >= 600 ?
+                                    <Grid xs={4} xl={4} sm={4} container justify='center'>
                                         <Typography style={{
-                                            marginLeft: '-80%',
                                             flexGrow: 1,
-                                            marginTop: 15,
-                                            fontWeight: '400',
+                                            marginTop: 40,
                                             align: "center",
-                                            color: "#999999",
-                                            font: " normal normal 19px/19px Poppins",
+                                            color: "#FFFFFF",
+                                            font: " normal normal 40px/40px Poppins",
                                         }}>
-                                            Mi Perfil
+                                            Truster
                                         </Typography>
-                                    </Grid>
-                                    <Grid xs={1} xl={1} sm={1} container justify='flex-end' style={{ marginTop: 10 }}>
-                                        <Button href="/"> <img src={Back} alt="Back" width="12px" style={{ marginRight: '-60px' }} /></Button>
-                                    </Grid>
-                                </Grid>}
-                        </Grid>
-                        <Grid container justify="center">
-                            {width >= 600 ? <MyProfileInfo modifiedCover={this.componentDidMount()}/> : ''}
-                        </Grid>
-                        <Grid container justify="center" alignItems='flex-start' xs={12} xl={12} sm={12} style={{ marginTop: 150 }}>
-                            {width >= 600 ? <Grid container justify="flex-start" alignItems='flex-start' xs={3} xl={3} sm={3}>
-                                <Grid container justify="flex-start" xs={12} xl={12} sm={12} onClick={() => this.Tabf(0)}>
-                                    <Grid container justify="flex-start" xs={2} xl={2} sm={2}>
-                                        {this.state.tab === 0 ?
-                                            <Typography className={classes.selectedText}>
-                                                |
-                                            </Typography> :
-                                            ''}
-                                    </Grid>
-                                    <Grid container justify="flex-start" xs={10} xl={10} sm={10}>
-                                        <Typography className={this.state.tab === 0 ? classes.selectedText : classes.unselectedText}>
-                                            Mi perfil
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                                <Grid container justify="flex-start" xs={12} xl={12} sm={12} style={{ marginTop: 40 }} onClick={() => this.Tabf(1)}>
-                                    <Grid container justify="flex-start" xs={2} xl={2} sm={2}>
-                                        {this.state.tab === 1 ?
-                                            <Typography className={classes.selectedText}>
-                                                |
-                                            </Typography> :
-                                            ''}
-                                    </Grid>
-                                    <Grid container justify="flex-start" xs={10} xl={10} sm={10}>
-                                        <Typography className={this.state.tab === 1 ? classes.selectedText : classes.unselectedText}>
-                                            Mi contraseña
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                                <Grid container justify="flex-start" xs={12} xl={12} sm={12} style={{ marginTop: 40 }} onClick={() => this.Tabf(2)}>
-                                    <Grid container justify="flex-start" xs={2} xl={2} sm={2}>
-                                        {this.state.tab === 2 ?
-                                            <Typography className={classes.selectedText}>
-                                                |
-                                            </Typography> :
-                                            ''}
-                                    </Grid>
-                                    <Grid container justify="flex-start" xs={10} xl={10} sm={10}>
-                                        <Typography className={this.state.tab === 2 ? classes.selectedText : classes.unselectedText}>
-                                            Mi correo
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                                <Grid container justify="flex-start" xs={12} xl={12} sm={12} style={{ marginTop: 40 }} onClick={() => this.Tabf(3)}>
-                                    <Grid container justify="flex-start" xs={2} xl={2} sm={2}>
-                                        {this.state.tab === 3 ?
-                                            <Typography className={classes.selectedText}>
-                                                |
-                                            </Typography> :
-                                            ''}
-                                    </Grid>
-                                    <Grid container justify="flex-start" xs={10} xl={10} sm={10}>
-                                        <Typography className={this.state.tab === 3 ? classes.selectedText : classes.unselectedText}>
-                                            Vinculaciones
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-
-                            </Grid> : <MyProfileMobile adresses={this.state.adresses} nacionality={this.state.nacionality} />}
-                            <Grid container justify="center" xs={9} xl={9} sm={9}>
-                                {width >= 600 ? componentArray[this.state.tab] : ''}
+                                    </Grid> :
+                                    <Grid xs={6} xl={6} sm={6} container alignItems='center'>
+                                        <Grid xs={11} xl={11} sm={11} container justify='flex-start'>
+                                            <Typography style={{
+                                                marginLeft: '-80%',
+                                                flexGrow: 1,
+                                                marginTop: 15,
+                                                fontWeight: '400',
+                                                align: "center",
+                                                color: "#999999",
+                                                font: " normal normal 19px/19px Poppins",
+                                            }}>
+                                                Mi Perfil
+                                            </Typography>
+                                        </Grid>
+                                        <Grid xs={1} xl={1} sm={1} container justify='flex-end' style={{marginTop: 10}}>
+                                            <Button href="/reputation"> <img src={Back} alt="Back" width="12px"
+                                                                   style={{marginRight: '-60px'}}/></Button>
+                                        </Grid>
+                                    </Grid>}
                             </Grid>
-                        </Grid>
+                            <Grid container justify="center">
+                                {width >= 600 ? <MyProfileInfo modifiedCover={this.componentDidMount()}/> : ''}
+                            </Grid>
+                            <Grid container justify="center" alignItems='flex-start' xs={12} xl={12} sm={12}
+                                  style={{marginTop: 150}}>
+                                {width >= 600 ?
+                                    <Grid container justify="flex-start" alignItems='flex-start' xs={3} xl={3} sm={3}>
+                                        <Grid container justify="flex-start" xs={12} xl={12} sm={12}
+                                              onClick={() => this.Tabf(0)}>
+                                            <Grid container justify="flex-start" xs={2} xl={2} sm={2}>
+                                                {this.state.tab === 0 ?
+                                                    <Typography className={classes.selectedText}>
+                                                        |
+                                                    </Typography> :
+                                                    ''}
+                                            </Grid>
+                                            <Grid container justify="flex-start" xs={10} xl={10} sm={10}>
+                                                <Typography
+                                                    className={this.state.tab === 0 ? classes.selectedText : classes.unselectedText}>
+                                                    Mi perfil
+                                                </Typography>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid container justify="flex-start" xs={12} xl={12} sm={12}
+                                              style={{marginTop: 40}} onClick={() => this.Tabf(1)}>
+                                            <Grid container justify="flex-start" xs={2} xl={2} sm={2}>
+                                                {this.state.tab === 1 ?
+                                                    <Typography className={classes.selectedText}>
+                                                        |
+                                                    </Typography> :
+                                                    ''}
+                                            </Grid>
+                                            <Grid container justify="flex-start" xs={10} xl={10} sm={10}>
+                                                <Typography
+                                                    className={this.state.tab === 1 ? classes.selectedText : classes.unselectedText}>
+                                                    Mi contraseña
+                                                </Typography>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid container justify="flex-start" xs={12} xl={12} sm={12}
+                                              className={classes.wrapper} style={{marginTop: 40}} onClick={{/*() => this.Tabf(2)*/}}>
+                                            <Grid container justify="flex-start" xs={2} xl={2} sm={2}>
+                                                {this.state.tab === 2 ?
+                                                    <Typography className={classes.selectedText}>
+                                                        |
+                                                    </Typography> :
+                                                    ''}
+                                            </Grid>
+                                            <Grid container justify="flex-start" xs={10} xl={10} sm={10} className={classes.disablegrid}>
+                                                <Typography
+                                                    className={this.state.tab === 2 ? classes.selectedText : classes.unselectedText}>
+                                                    Mi correo
+                                                </Typography>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid container justify="flex-start" xs={12} xl={12} sm={12}
+                                              className={classes.wrapper} style={{marginTop: 40}} onClick={{/*() => this.Tabf(3)*/}}>
+                                            <Grid container justify="flex-start" xs={2} xl={2} sm={2}>
+                                                {this.state.tab === 3 ?
+                                                    <Typography className={classes.selectedText}>
+                                                        |
+                                                    </Typography> :
+                                                    ''}
+                                            </Grid>
+                                            <Grid container justify="flex-start" xs={10} xl={10} sm={10} className={classes.disablegrid}>
+                                                <Typography
+                                                    className={this.state.tab === 3 ? classes.selectedText : classes.unselectedText}>
+                                                    Vinculaciones
+                                                </Typography>
+                                            </Grid>
+                                        </Grid>
 
-                    </Container>
+                                    </Grid> : <MyProfileMobile adresses={this.state.adresses}
+                                                               nacionality={this.state.nacionality}/>}
+                                <Grid container justify="center" xs={9} xl={9} sm={9}>
+                                    {width >= 600 ? componentArray[this.state.tab] : ''}
+                                </Grid>
+                            </Grid>
+
+                        </Container>
+                    </Grid>
                 </Grid>
-            </Grid >
-        </React.Fragment>
+            </React.Fragment>
         )
     }
 }
-export default withStyles(styles, { withTheme: true })(MyProfile);
+
+export default withStyles(styles, {withTheme: true})(MyProfile);

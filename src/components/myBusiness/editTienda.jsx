@@ -9,8 +9,6 @@ import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import { selectSubCategory } from "../../services/hostConfig";
 import { getToken } from './../../setting/auth-helpers';
-let subCateg =[];
-
 
 
 const CssTextField = withStyles({
@@ -138,14 +136,40 @@ const useStyles = makeStyles(theme => ({
 
 function EditTienda(props) {
     const [currency, setCurrency] = React.useState(' ');
-    const [idCat, setIDCat] = React.useState('');
+    const [months, setMonths] = React.useState(' ');
+    const [sub, setSub] = React.useState('');    
     const [subCat, setSubCat] = React.useState([]); 
     const [active, setActive] = React.useState(true)
+    const [nameBussines, setNameBussines]= React.useState('');
+    const [summary, setSummary]= React.useState('');
+    const [description, setDescription]= React.useState('');
     const classes = useStyles();
 
     const handleChange = (event) => {
         setCurrency(event.target.value);
     };
+    const handleMonths = (e) => {
+        setMonths(e.target.value);
+       
+    }
+    const handleSub =(e)=>{
+        setSub(e.target.value)
+    }
+    const handleSubCat =(e)=>{
+        setSubCat(e.target.value)
+    }
+    const handleBussines = (e)=>{
+        setNameBussines(e.target.value)
+        localStorage.setItem('nameBussines',e.target.value)
+    }
+    const handleSummary = (e)=>{
+        setSummary(e.target.value)
+        localStorage.setItem('summary',e.target.value)
+    }
+    const handleDescription =(e)=>{
+        setDescription(e.target.value)
+        localStorage.setItem('descriptionBussines',e.target.value)
+    }
 
     return (
         <React.Fragment>
@@ -162,7 +186,7 @@ function EditTienda(props) {
                         Nombre de la Tienda
                     </Typography>
                     <div style={{display: 'grid', paddingTop: '4px'}}>
-                        <CssTextField placeholder="Elegí tu nombre"/>
+                        <CssTextField placeholder="Elegí tu nombre" onChange={handleBussines}/>
                     </div>
                 </Grid>
 
@@ -171,7 +195,7 @@ function EditTienda(props) {
                         Actividad de la tienda
                     </Typography>
                     <div style={{display: 'grid', paddingTop: '4px'}}>
-                        <CssTextField placeholder="Software & Development Services"/>
+                        <CssTextField placeholder="Software & Development Services" onChange={handleSummary} />
                     </div>
                 </Grid>
 
@@ -181,7 +205,11 @@ function EditTienda(props) {
                     </Typography>
                     <div style={{display: 'grid', paddingTop: '4px'}}>
 
-                        <Select defaultValue='none' className={classes.select}>
+                        <Select defaultValue='none' 
+                        className={classes.select}
+                        value={months}
+                        onChange={handleMonths}
+                        >
                         {props.categorys.map(category => {
                                 return (<option value="none" key={category.id}
                                     value={category.id} style={{
@@ -194,34 +222,33 @@ function EditTienda(props) {
                                             fontWeight: 500,
                                             textAlign: 'left',
                                             letterSpacing: '-0.02em',
-                                        }}}
-                                        
-                                        onChange={(e) => {
+                                        }}}                                        
+                                        onClick={(e) => {
                                             e.preventDefault()
-                                            setIDCat(category.id)
-                                            
-                                            console.log(idCat)
-                                            let URI = selectSubCategory();
+                                            localStorage.setItem('categoryBussines',months)
+                                            setActive(false)
+                                            let URI = selectSubCategory()+'/'+category.id;
+                                            console.log(URI)
                                             const token = getToken();
-                                            fetch(URI+'/'+idCat, {
+                                            fetch(URI, {
                                                 headers: {
                                                     'Accept': 'application/json',
                                                     'Content-Type': 'application/json',
                                                     'Authorization': `Bearer ${token}`
                                                 }
-                                            }).then(response => {
-                                                    console.log(response)
+                                            })
+                                                .then(response => {                                               
                                                     return response.json();
-                                                }).then(response => { 
-                                                    subCateg = response;                                           
-                                                    console.log(subCateg)
-                                                    setActive(false)
+                                                })
+                                                .then(response => {
+                                                    setSubCat(response) 
+                                                    console.log(response)                                                                                              
                                                     return response;
                                                 })
                                                 .catch(e => {
                                                     console.log(e);
-                                                })
-    
+                                                })                                
+                                          
                                         }}>
                                     {category.description}
                                 </option>
@@ -243,9 +270,13 @@ function EditTienda(props) {
                     <div style={{display: 'grid', paddingTop: '4px'}}>
 
 
-                        <Select defaultValue='none' className={classes.select} disabled={active}>
-                            {/*subCateg.map(subCategory => {
-                            <option value="none" key={subCategory.id}
+                        <Select defaultValue='none' 
+                        className={classes.select} 
+                        value={sub}
+                        onChange={handleSub}
+                        disabled={active}>
+                            {subCat.map(subCategory => {
+                            return (<option value="none" key={subCategory.id}
                             value={subCategory.id} style={{
                                 '& .MuiInputBase-root': {
                                     color: '#fff',
@@ -256,11 +287,15 @@ function EditTienda(props) {
                                     textAlign: 'left',
                                     letterSpacing: '-0.02em',
                                 },
-                            }}>
+                            }} onClick={(e) => {
+                                e.preventDefault();
+                                localStorage.setItem('subCategoryBussines',sub)
+                            }}
+                                >
                                  {subCategory.name}
-                            </option>
+                            </option>)
                           
-                        })*/}
+                        })}
                         </Select>
 
 
@@ -278,7 +313,7 @@ function EditTienda(props) {
                     multiline
                     rows={6}
                     placeholder={"Contanos un poco de tu marca, tu local, tu estudio, tu empresa..."}
-
+                    onChange={handleDescription}
                     variant="filled"
                     className={classes.textfield}
                 />

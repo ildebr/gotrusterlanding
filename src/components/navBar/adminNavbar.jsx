@@ -7,7 +7,7 @@ import TemporaryDrawer from './mobileDrawer'
 import Ok from '../../asset/images/myProfile/ok.svg'
 import ProfilePicture from '../../asset/images/admin/profilePicture.png'
 import Cliente from "../../setting/cliente";
-import {GetImage, UriServices} from "../../services/hostConfig";
+import { GetJson } from "../../services/hostConfig";
 
 const { localStorage } = global.window;
 const userActive = localStorage.getItem('logueado');
@@ -54,33 +54,41 @@ const AdminNavbar = ({ active, recover }) => {
     } else {
         $Show = ''
     }
-    const [user, setUser] = useState(null)
-    const [imagesArray, setImagesArray] = useState(null)
+    const [user, setUser] = useState(null)    
+    const [haveImage, setHaveImage] = useState(false); 
+    const [haveImageCover, setHaveImageCover] = useState(false);
+
     function getImages() {
-        Cliente.get(GetImage(), {
-            params: {
-                'user': user,
-                'folder': 'perfil'
+
+        let json = '';
+        let coverPerfil = '';
+        Cliente.get(GetJson(), {}).then((res) => {
+          
+            json = res['data']['content']['images']['perfil']
+            coverPerfil = res['data']['content']['images']['coverPerfil']
+
+            if (json.includes(String(localStorage.getItem('userLogin')))) {
+                setHaveImage(true)
+                console.log()
             }
-        },).then(
-            res => {
-                setImagesArray(res['data']['fileNames'])
-                console.log(res)
+            else if ( coverPerfil.includes(String(localStorage.getItem('userLogin')))) {
+                setHaveImageCover(true)
             }
-        )
+
+        }).catch(e => {
+            console.log(e);
+        })
+
     }
+
     useEffect(() => {
 
         if (user === null) {
             setUser(localStorage.getItem('userLogin'))
-        }
+            getImages()
+        }    
 
-        if (imagesArray === null && user !== null) {
-            getImages();
-        }
-        //let user = JSON.parse(localStorage.getItem('currentUser'));
-
-    }, [imagesArray, user]);
+    }, [haveImage, user])
 
     return (
         <Grid position="static" color="primary" style={{
@@ -191,9 +199,9 @@ const AdminNavbar = ({ active, recover }) => {
                         }} >&nbsp;&nbsp;&nbsp;       </Typography>
 
 
-                    {imagesArray !== null && imagesArray.length > 0 ?
+                    {haveImage ? 
                         <img
-                            src={UriServices() + '/' + user + '/images/perfil/' + imagesArray[0]}
+                            src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'}
                             style={{marginTop: 30, marginRight: 15, height: 50, width: 50,
                             borderRadius:'50%', objectFit:'cover'
                             }}/>

@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Grid, Typography } from '@material-ui/core';
 import GreyLogo from '../../asset/images/reputation/greyeyLogo.svg'
 import LinearDeterminate from './progressBarArchMobile'
+const { localStorage } = global.window;
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -36,7 +37,7 @@ const styles = theme => ({
 
 
 const NextArch = () => {
-
+    let points = localStorage.getItem('points')=='null'? '': localStorage.getItem('points');
     return (
         <Grid container justify="center" position="static" color="transparent" style={{
             flexGrow: 1,
@@ -54,7 +55,7 @@ const NextArch = () => {
                         lineHeight: '15px',
                         color: '#E5E5E5'
                     }}>
-                        Sumá <b style={{ color: 'white' }}>4 puntos</b> para compartir tu perfil
+                        Sumá <b style={{ color: 'white' }}>22 puntos</b> para compartir tu perfil
                     </Typography>
                 </Grid>
                 <Grid container xs={2} xl={2} sm={2} >
@@ -70,12 +71,12 @@ const NextArch = () => {
                             letterSpacing: '-0.02em',
                             color: '#E5E5E5'
                         }}>
-                            4
+                         22
                         </Typography>
                     </Grid>
                 </Grid>
                 <Grid container xs={12} xl={12} sm={12} justify='center' style={{ marginTop: 20 }}>
-                    <LinearDeterminate value={10} />
+                    <LinearDeterminate value={points} />
                 </Grid>
             </Grid>
             <Grid container xs={12} xl={12} sm={12} align='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 100, padding: 25, marginBottom: 15 }}>
@@ -88,7 +89,7 @@ const NextArch = () => {
                         lineHeight: '15px',
                         color: '#E5E5E5'
                     }}>
-                        Sumá <b style={{ color: 'white' }}>12 puntos</b> para publicar tu negocio
+                        Sumá <b style={{ color: 'white' }}>22 puntos</b> para publicar tu negocio
                     </Typography>
                 </Grid>
                 <Grid container xs={2} xl={2} sm={2} >
@@ -104,7 +105,7 @@ const NextArch = () => {
                             letterSpacing: '-0.02em',
                             color: '#E5E5E5'
                         }}>
-                            12
+                            22
                         </Typography>
                     </Grid>
                 </Grid>

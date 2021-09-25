@@ -73,8 +73,9 @@ function DireccionReady(props) {
                     textTransform: 'None',
                     width: '300px',
                     marginTop: '35px',
-                    marginBottom: '80px'
-                }}>
+                    marginBottom: '80px',
+                    cursor:'pointer'
+                }} href={'/reputation'}>
                     <Typography style={{
                         align: "center",
                         color: '#252525',

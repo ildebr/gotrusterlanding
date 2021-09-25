@@ -7,7 +7,7 @@ import Logo from '../../asset/images/reputation/logo.svg'
 import GreyLogo from '../../asset/images/reputation/greylogo.svg'
 import CircularDeterminate from './progressBarMobile'
 import Cliente from "../../setting/cliente";
-import { GetImage, UriServices } from "../../services/hostConfig";
+import {GetJson} from "../../services/hostConfig";
 const { localStorage } = global.window;
 const styles = theme => ({
     root: {
@@ -48,37 +48,46 @@ const styles = theme => ({
 const ReputationProfileMobile = () => {
     const [user, setUser] = useState(null)
     const [imagesArray, setImagesArray] = useState(null)
-
+    const [haveImage, setHaveImage] = useState(false); 
+    const [haveImageCover, setHaveImageCover] = useState(false);
 
     function getImages() {
-        Cliente.get(GetImage(), {
-            params: {
-                'user': user,
-                'folder': 'perfil'
+
+        let json = '';
+        let coverPerfil = '';
+        Cliente.get(GetJson(), {}).then((res) => {
+            //
+            // console.log(res['data']['content']['images'])
+
+            json = res['data']['content']['images']['perfil']
+            coverPerfil = res['data']['content']['images']['coverPerfil']
+
+            if (json.includes(String(localStorage.getItem('userLogin')))) {
+                setHaveImage(true)
+                console.log()
             }
-        }).then(
-            res => {
-                setImagesArray(res['data']['fileNames'])
-                console.log(res)
+            else if ( coverPerfil.includes(String(localStorage.getItem('userLogin')))) {
+                setHaveImageCover(true)
             }
-        )
+
+        }).catch(e => {
+            console.log(e);
+        })
+
     }
+
     useEffect(() => {
 
         if (user === null) {
             setUser(localStorage.getItem('userLogin'))
-        }
+            getImages()
+        }    
 
-        if (imagesArray === null && user !== null) {
-            getImages();
-        }
-        //let user = JSON.parse(localStorage.getItem('currentUser'));
-
-    }, [imagesArray, user]);
+    }, [haveImage, user])
     let occupation = localStorage.getItem('occupation') === 'null' ? 'Agregue su ocupación' : localStorage.getItem('occupation');
     const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
     let points = localStorage.getItem('points')=='null'? '': localStorage.getItem('points');
-    let nextLevel = localStorage.getItem('points')=='null'? '': parseInt(localStorage.getItem('points'))+4;
+    let nextLevel = localStorage.getItem('points')=='null'? '': 54-parseInt(localStorage.getItem('points'));
     
     return (
         <Grid position="static" color="transparent" style={{
@@ -118,12 +127,12 @@ const ReputationProfileMobile = () => {
 
                 <Grid container justify="center" xs={4} xl={4} sm={4} style={{ marginTop: -30 }}>
                     <div style={{ zIndex: -1, marginTop: -8.2 }}>
-                        <CircularDeterminate givenValue={5} />
+                        <CircularDeterminate givenValue={points} />
                     </div>
-                    {imagesArray !== null && imagesArray.length > 0 ?
+                    {haveImage ?
                     <div style={{ zIndex: 1 }}>
                         <img
-                            src={UriServices() + '/' + user + '/images/perfil/' + imagesArray[0]}
+                            src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'}
                             width='120px' height='120px' style={{
                                 borderRadius: '50%',
                                 objectFit: 'cover'

@@ -219,7 +219,8 @@ const styles = theme => ({
     },
     normaltext: {
         fontSize: 12,
-        color: '#999999',
+        fontWeight: 'bold',
+        color: '#FFFFFF',
         fontFamily: 'Poppins',
         marginTop: theme.spacing(2),
     },
@@ -829,7 +830,8 @@ class Register extends Component {
                                                         <Typography
                                                             className={classes.normaltext}>
                                                             Acepto los{' '}
-                                                            <Link
+                                                            <Link href='https://gotruster.com/terminos-y-condiciones-generales-de-uso-del-sitio'
+                                                               
                                                                 style={{ color: '#ACFD00' }}>
                                                                 Condiciones de Uso
                                                             </Link>
@@ -1065,7 +1067,7 @@ class Register extends Component {
                                                         <Typography
                                                             className={classes.normaltext}>
                                                             Acepto los{' '}
-                                                            <Link
+                                                            <Link href='https://gotruster.com/terminos-y-condiciones-generales-de-uso-del-sitio'
                                                                 style={{ color: '#ACFD00' }}>
                                                                 Condiciones de Uso
                                                             </Link>

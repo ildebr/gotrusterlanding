@@ -126,18 +126,18 @@ class shareMyProfile extends Component {
                                             </Typography>
                                         </Grid>
                                         <Grid xs={1} xl={1} sm={1} container justify='flex-end' style={{ marginTop: 10 }}>
-                                            <Button href="/"> <img src={Back} alt="Back" width="12px" style={{ marginRight: '-60px' }} /></Button>
+                                            <Button href="/reputation"> <img src={Back} alt="Back" width="12px" style={{ marginRight: '-60px' }} /></Button>
                                         </Grid>
                                     </Grid>}
 
                                 {width >= 600 ?
                                     <Grid container direction={"row"} xs={3}
                                           style={{display: 'flex', justifyContent: 'flex-end'}}>
-                                        <Button className={classes.boton1}>
+                                       {/* <Button className={classes.boton1}>
                                             <Typography className={classes.textoBoton}>
                                                 Registrate
                                             </Typography>
-                                        </Button>
+                                </Button>*/}
 
 
                                     </Grid>

@@ -128,11 +128,11 @@ const Navbar = ({ active, recover }) => {
                                         {nameUser}
                                     </Typography>
                                     <ul style={{ paddingLeft: '40px' }}>
-                                        <li><Link underline='hover' href='/' style={{ color: "#ACFD00" }} ><img src={Inicio} alt='inicio' style={{ paddingRight: 10, width: '12%' }} /> Inicio</Link></li>
+                                        <li><Link href={userActive ?'/reputation':'/'}><img src={MiReputacion} alt='mireputacion' style={{ paddingRight: 10, width: '12%' }} /> Mi Reputación</Link></li>
                                         <li><Link href={userActive ?'/search':'/'}><img src={Busqueda} alt='busqueda' style={{ paddingRight: 10, width: '12%' }} /> Búsqueda</Link></li>
                                         <li><Link href={userActive ?'/myprofile':'/'}><img src={MiPerfil} alt='miperfil' style={{ paddingRight: 10, width: '11%' }} /> Mi Perfíl</Link></li>
                                         <li><Link href={userActive ?'/mybusiness':'/'}><img src={MiNegocio} alt='minegocio' style={{ paddingRight: 10, width: '13%' }} /> Mi Negocio</Link></li>
-                                        <li><Link href={userActive ?'/reputation':'/'}><img src={MiReputacion} alt='mireputacion' style={{ paddingRight: 10, width: '12%' }} /> Mi Reputación</Link></li>
+                                        
                                     </ul>
                                     <hr width={'100%'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30, marginLeft: 20 }} />
                                     <ul style={{ paddingLeft: '40px' }}>

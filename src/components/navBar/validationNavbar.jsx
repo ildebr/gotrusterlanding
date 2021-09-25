@@ -2,13 +2,23 @@ import React, {useEffect, useState} from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import { Grid, Toolbar, Typography, Button, Hidden, Link } from '@material-ui/core';
 import WindowDimensions from "../../components/UtilityComponents/WindowDimension"
-import CerrarSesion from '../../asset/images/sidemenu/cerrarsesion.svg'
-import TemporaryDrawer from './mobileDrawer'
+
+
 import Ok from '../../asset/images/myProfile/ok.svg'
 import ProfilePicture from '../../asset/images/admin/profilePicture.png'
-import Cliente from "../../setting/cliente";
-import {GetImage, UriServices} from "../../services/hostConfig";
+import Busqueda from '../../asset/images/sidemenu/busqueda.svg'
+import MiPerfil from '../../asset/images/sidemenu/miperfil.svg'
+import MiNegocio from '../../asset/images/sidemenu/minegocio.svg'
+import MiReputacion from '../../asset/images/sidemenu/mireputacion.svg'
+import Compartir from '../../asset/images/sidemenu/compartir.svg'
+import Insertar from '../../asset/images/sidemenu/insertar.svg'
+import Ajustes from '../../asset/images/sidemenu/ajustes.svg'
+import Soporte from '../../asset/images/sidemenu/soporte.svg'
+import CerrarSesion from '../../asset/images/sidemenu/cerrarsesion.svg'
+import TemporaryDrawer from './mobileDrawer'
 
+import Cliente from "../../setting/cliente";
+import { GetJson } from "../../services/hostConfig";
 const { localStorage } = global.window;
 const userActive = localStorage.getItem('logueado');
 const styles = theme => ({
@@ -56,33 +66,39 @@ const ValidationNavbar = ({ active, recover }) => {
     }
 
     const [user, setUser] = useState(null)
-    const [imagesArray, setImagesArray] = useState(null)
+    const [haveImage, setHaveImage] = useState(false); 
+    const [haveImageCover, setHaveImageCover] = useState(false);
+
     function getImages() {
-        Cliente.get(GetImage(), {
-            params: {
-                'user': user,
-                'folder': 'perfil'
+        let json = '';
+        let coverPerfil = '';
+        Cliente.get(GetJson(), {}).then((res) => {
+          
+            json = res['data']['content']['images']['perfil']
+            coverPerfil = res['data']['content']['images']['coverPerfil']
+
+            if (json.includes(String(localStorage.getItem('userLogin')))) {
+                setHaveImage(true)
+                console.log()
             }
-        },).then(
-            res => {
-                setImagesArray(res['data']['fileNames'])
-                console.log(res)
+            else if ( coverPerfil.includes(String(localStorage.getItem('userLogin')))) {
+                setHaveImageCover(true)
             }
-        )
+
+        }).catch(e => {
+            console.log(e);
+        })
+
     }
+
     useEffect(() => {
 
         if (user === null) {
             setUser(localStorage.getItem('userLogin'))
-        }
+            getImages()
+        }    
 
-        if (imagesArray === null && user !== null) {
-            getImages();
-        }
-        //let user = JSON.parse(localStorage.getItem('currentUser'));
-
-    }, [imagesArray, user]);
-
+    }, [haveImage, user])
 
     return (
         <Grid position="static" color="primary" style={{
@@ -137,19 +153,24 @@ const ValidationNavbar = ({ active, recover }) => {
                                         {nameUser}
                                     </Typography>
                                     <ul style={{ paddingLeft: '40px' }}>
-                                        <li><Link href={userActive ? '/admin/user' : '/'}>Usuarios</Link></li>
-                                        <li><Link href={userActive ? '/admin/business' : '/'}>Negocios</Link></li>
+                                        <li><Link href={userActive ?'/reputation':'/'}><img src={MiReputacion} alt='mireputacion' style={{ paddingRight: 10, width: '12%' }} /> Mi Reputación</Link></li>
+                                        <li><Link href={userActive ?'/search':'/'}><img src={Busqueda} alt='busqueda' style={{ paddingRight: 10, width: '12%' }} /> Búsqueda</Link></li>
+                                        <li><Link href={userActive ?'/myprofile':'/'}><img src={MiPerfil} alt='miperfil' style={{ paddingRight: 10, width: '11%' }} /> Mi Perfíl</Link></li>
+                                        <li><Link href={userActive ?'/mybusiness':'/'}><img src={MiNegocio} alt='minegocio' style={{ paddingRight: 10, width: '13%' }} /> Mi Negocio</Link></li>
+                                        
                                     </ul>
                                     <hr width={'100%'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30, marginLeft: 20 }} />
                                     <ul style={{ paddingLeft: '40px' }}>
-                                        <li><Link href={userActive ? '/admin/dnis' : '/'}>DNI's</Link></li>
-                                        <li><Link href={userActive ? '/admin/selfies' : '/'}>Selfies</Link></li>
-                                        <li><Link href={userActive ? '/admin/direcciones' : '/'}>Direcciones</Link></li>
-                                        <li><Link href={userActive ? '/admin/cuils' : '/'}>CUIL's</Link></li>
+                                        <li><Link href='/sharemyprofile'><img src={Compartir} alt='compartir' style={{ paddingRight: 10, width: '11%' }} /> Compartir Perfíl</Link></li>
+                                        <li><Link href='/'><img src={Insertar} alt='insertar' style={{ paddingRight: 10, width: '13%' }} /> Insertar Perfíl</Link></li>
+                                        <li><Link href='/'><img src={Ajustes} alt='ajustes' style={{ paddingRight: 10, width: '12%' }} /> Ajustes</Link></li>
+                                        <li><Link href='/'><img src={Soporte} alt='soporte' style={{ paddingRight: 10, width: '11%' }} /> Soporte</Link></li>
                                     </ul>
                                     <hr width={'100%'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30, marginLeft: 20 }} />
                                     <ul style={{ paddingLeft: '40px' }}>
-                                        <li><Link href='/' style={{ color: "#5e5e5d", fontSize: 12 }}><img src={CerrarSesion} alt='cerrarsesion' style={{ paddingRight: 5, width: '7%' }} /> Cerrar Sesión</Link></li>
+                                        <li><Link href='/' style={{ color: "#5e5e5d" }}>Términos y Condiciones</Link></li>
+                                        <li><Link href='/' style={{ color: "#5e5e5d" }}>Política</Link></li>
+                                        <li><Link href='/' style={{ color: "#5e5e5d", fontSize: 13 }}><img src={CerrarSesion} alt='cerrarsesion' style={{ paddingRight: 5, width: '7%' }} /> Cerrar Sesión</Link></li>
                                     </ul>
                                 </div>
                             </div>
@@ -195,9 +216,9 @@ const ValidationNavbar = ({ active, recover }) => {
                             textAlign: 'left'
                         }} >&nbsp;&nbsp;&nbsp;       </Typography>
 
-                    {imagesArray !== null && imagesArray.length > 0 ?
+                     {haveImage ? 
                         <img
-                            src={UriServices() + '/' + user + '/images/perfil/' + imagesArray[0]}
+                            src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'}
                             style={{marginTop: 30, marginRight: 15, height: 50, width: 50,
                                 borderRadius:'50%', objectFit:'cover'
                             }}/>

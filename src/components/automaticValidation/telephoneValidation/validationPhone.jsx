@@ -3,7 +3,7 @@ import { Container, Grid, Typography, Button } from '@material-ui/core';
 import { withStyles, makeStyles} from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import eyePhone from '../../../asset/images/automaticvalidation/phone/eyePhone.png';
-
+import WindowDimensions from "../../../components/UtilityComponents/WindowDimension"
 
 
 const { localStorage } = global.window;
@@ -18,6 +18,17 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     color: "#FFFFFF",
     width: '60%'
+  },
+  mainTextMobile: {
+    fontFamily: "Poppins",
+    fontWeight: 700,
+    fontStyle: "normal",
+    fontSize: "25px",
+    lineHeight: '30px',
+    letterSpacing: '-0.02',
+    textAlign: 'center',
+    color: "#FFFFFF",
+    width: '80%'
   },
   register: {
     textAlign: 'left',
@@ -57,6 +68,17 @@ const useStyles = makeStyles(theme => ({
     color: '#666666',
     width: '25%'
   },
+  ubtextMobile: {
+    textAlign: 'center',
+    fontFamily: "Poppins",
+    fontWeight: 500,
+    fontStyle: "normal",
+    fontSize: "10px",
+    lineHeight: "15px",
+    letterSpacing: '-0.02',
+    color: '#666666',
+    width: '90%'
+  },
   formButton2: {
     marginTop: theme.spacing(1),
     height: 50,
@@ -91,6 +113,25 @@ const useStyles = makeStyles(theme => ({
     cursor: 'pointer', 
     width: '300px'
   },
+  buttonMobile: {
+    marginTop: theme.spacing(1),
+    backgroundColor: '#ACFD00',
+    borderRadius: 15,
+    padding: 10,
+    textAlignLast: 'center',
+    textTransform: 'none',
+    border: '1px solid',
+    borderColor: '#ACFD00',
+    fontFamily: "Poppins",
+    fontWeight: 600,
+    fontStyle: "normal",
+    fontSize: "18px",
+    lineHeight: '27px',
+    letterSpacing: '-0.02',
+    color: '#252525',
+    cursor: 'pointer',
+    width: '90%'
+  },
   cbutton: {
     marginTop: theme.spacing(1),
     backgroundColor: 'rgba(0,0,0,0)',
@@ -109,6 +150,25 @@ const useStyles = makeStyles(theme => ({
     color: '#FFFFFF',
     cursor: 'pointer',
     width: '150px'
+  },
+  cbuttonMobile: {
+    marginTop: theme.spacing(1),
+    backgroundColor: 'rgba(0,0,0,0)',
+    borderRadius: 15,
+    padding: 10,
+    textAlignLast: 'center',
+    textTransform: 'none',
+    border: '2px solid',
+    borderColor: '#FFFFFF',
+    fontFamily: "Poppins",
+    fontWeight: 500,
+    fontStyle: "normal",
+    fontSize: "18px",
+    lineHeight: '27px',
+    letterSpacing: '-0.02',
+    color: '#FFFFFF',
+    cursor: 'pointer',
+    width: '90%'
   },
   nomsg: {
     textAlign: 'center',
@@ -137,6 +197,7 @@ const Text = 'Utiliza el formato 54-11-67880000, solo son válidos teléfonos ar
 const SentText = 'No utilices guiones o caracteres especiales, el código es valido durante 10 minutos'
 
 const ValidationPhone = () => {
+  const { width } = WindowDimensions();
   const [Sent, setSent] = useState(false)
   const classes = useStyles();
   const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
@@ -153,14 +214,20 @@ const ValidationPhone = () => {
         <img src={eyePhone} alt='eyePhone' width='120px'/>
       </Grid>
       <Grid xs={12} xl={12} sm={12} container style={{ marginTop: '30px' }} justify="center">
+        {width >= 600 ? 
         <Typography className={classes.mainText}>
           {MainText}
+        </Typography> 
+        :
+        <Typography className={classes.mainTextMobile}>
+          {MainText}
         </Typography>
+        }
       </Grid>
       {!Sent ? 
       <Grid xs={12} xl={12} sm={12} container style={{ marginTop: '30px' }} justify="center">
         <form style={{
-          width: '40%',
+          width: width >= 600 ? '40%' : '90%',
           marginTop: 10,
           justifyContent: "center",
           alignContent: "center",
@@ -188,7 +255,7 @@ const ValidationPhone = () => {
       : 
       <Grid xs={12} xl={12} sm={12} container style={{ marginTop: '30px' }} justify="center">
           <form style={{
-            width: '40%',
+            width: width >= 600 ? '40%' : '90%',
             marginTop: 10,
             justifyContent: "center",
             alignContent: "center",
@@ -215,33 +282,67 @@ const ValidationPhone = () => {
         </Grid>}
       
       <Grid xs={12} xl={12} sm={12} container style={{ marginTop: '10px' }} justify="center">
+        {width >= 600 ? 
         <Typography className={classes.ubtext}>
           {!Sent ? Text : SentText}
         </Typography>
+        :
+        <Typography className={classes.ubtextMobile}>
+          {!Sent ? Text : SentText}
+        </Typography>
+        }
       </Grid>
       <Grid xs={12} xl={12} sm={12} container style={{ marginTop: '20px' }} justify="center">
-        <Grid xs={5} xl={5} sm={5} container style={{ marginTop: '10px', marginLeft: '-30px' }} justify="flex-end">
-          {!Sent ?
-            <button className={classes.cbutton}>
-              Cancelar
-            </button>
-            :
-            <button className={classes.cbutton}>
-              Atras
-            </button>
-          }
-        </Grid>
-        <Grid xs={7} xl={7} sm={7} container style={{ marginTop: '10px', marginLeft: '30px' }} justify="flex-start">
-          {!Sent ? 
-          <button className={classes.button} onClick={toggleSend}>
-            Enviar SMS
-          </button>
+        {width >= 600 ? 
+          <Grid xs={5} xl={5} sm={5} container style={{ marginTop: '10px', marginLeft: '-30px' }} justify="flex-end">
+            {!Sent ?
+              <button className={classes.cbutton}>
+                Cancelar
+              </button>
+              :
+              <button className={classes.cbutton}>
+                Atras
+              </button>
+            }
+          </Grid>
           :
-            <button className={classes.button} onClick={toggleSend}>
-            Reenviar SMS
-          </button>
-          }
-        </Grid>
+          <Grid xs={12} xl={12} sm={12} container style={{ marginTop: '10px'}} justify="center">
+            {!Sent ?
+              <button className={classes.buttonMobile} onClick={toggleSend}>
+                Enviar SMS
+              </button>
+              :
+              <button className={classes.buttonMobile} onClick={toggleSend}>
+                Reenviar SMS
+              </button>
+            }
+          </Grid>
+      }
+      {width >= 600 ?
+          <Grid xs={7} xl={7} sm={7} container style={{ marginTop: '10px', marginLeft: '30px' }} justify="flex-start">
+            {!Sent ?
+              <button className={classes.button} onClick={toggleSend}>
+                Enviar SMS
+              </button>
+              :
+              <button className={classes.button} onClick={toggleSend}>
+                Reenviar SMS
+              </button>
+            }
+          </Grid>
+          :
+          <Grid xs={12} xl={12} sm={12} container style={{ marginTop: '10px' }} justify="center">
+            {!Sent ?
+              <button className={classes.cbuttonMobile}>
+                Cancelar
+              </button>
+              :
+              <button className={classes.cbuttonMobile}>
+                Atras
+              </button>
+            }
+          </Grid>
+      }
       </Grid>
       <Grid xs={12} xl={12} sm={12} container style={{ marginTop: '40px', marginBottom: '50px'}} justify="center">
         <Typography className={classes.nomsg} style={{ marginRight: '5px'}}>

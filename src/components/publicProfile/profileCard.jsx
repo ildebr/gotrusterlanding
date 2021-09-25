@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState}from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 import ReputationImg from '../../asset/images/reputation/Ellipse 6.png'
 import GreenCircle from '../../asset/images/publicProfile/greencircle.svg'
-
+import Cliente from "../../setting/cliente";
+import {GetJson} from "../../services/hostConfig";
 const { localStorage } = global.window;
 const useStyles = makeStyles(theme => ({
     name: {
@@ -53,8 +54,46 @@ const useStyles = makeStyles(theme => ({
 
 
 const ProfileCard = () => {
+    const [user, setUser] = useState(null)
+    const [haveImage, setHaveImage] = useState(false); 
+    const [haveImageCover, setHaveImageCover] = useState(false);
+
+    function getImages() {
+
+        let json = '';
+        let coverPerfil = '';
+        Cliente.get(GetJson(), {}).then((res) => {
+            //
+            // console.log(res['data']['content']['images'])
+
+            json = res['data']['content']['images']['perfil']
+            coverPerfil = res['data']['content']['images']['coverPerfil']
+
+            if (json.includes(String(localStorage.getItem('userLogin')))) {
+                setHaveImage(true)
+                console.log()
+            }
+            else if ( coverPerfil.includes(String(localStorage.getItem('userLogin')))) {
+                setHaveImageCover(true)
+            }
+
+        }).catch(e => {
+            console.log(e);
+        })
+
+    }
+
+    useEffect(() => {
+
+        if (user === null) {
+            setUser(localStorage.getItem('userLogin'))
+            getImages()
+        }    
+
+    }, [haveImage, user])
     const classes = useStyles();
     const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
+    let occupation = localStorage.getItem('occupation') ;
     return (
         <Grid position="static" color="transparent" style={{
             flexGrow: 1,
@@ -67,7 +106,7 @@ const ProfileCard = () => {
                         <button className={classes.protrusterb}>
                             <Grid item container  justify='flex-end' xs={12} xl={12} sm={12}>
                                 <img src={GreenCircle} alt='greencircle' />
-                                <Typography className={classes.protrustert}>Pro Truster</Typography>
+                                <Typography className={classes.protrustert}>Rookie</Typography>
                             </Grid>
                         </button>
                     </Grid>
@@ -78,7 +117,7 @@ const ProfileCard = () => {
                     </Grid>
                     <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center' style={{ marginBottom: 20 }}>
                         <Typography className={classes.ocupation}>
-                            Front End Developer
+                            {occupation}
                         </Typography>
                     </Grid>
                     <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center' style={{ marginBottom: 20 }}>
@@ -89,9 +128,27 @@ const ProfileCard = () => {
                 </Grid>
                 <Grid container justify='flex-end' xs={3} xl={3} sm={3} style={{ marginTop: -10 }}>
                     <Grid container justify='flex-end'>
-                        <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
-                            <img src={ReputationImg} alt='test' width='160px' height='160px' />
-                        </Grid>
+                    {haveImage ? 
+                            <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
+
+                                <img
+                                    src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'}
+                                    width='250px' height='250px' style={{
+                                        borderRadius:'50%',
+                                    objectFit:'cover'
+                                }}
+                                />
+
+                            </Grid>
+                            : <Grid container justify='flex-end' xs={11} xl={11} sm={11}> 
+                            <img src={ReputationImg} alt='test'  width='160px' height='160px' style={{
+                                        borderRadius:'50%',
+                                        objectFit:'cover'
+                                }}/>
+                            </Grid>
+                        }
+
+                        
                     </Grid>
                 </Grid>
             </Grid>

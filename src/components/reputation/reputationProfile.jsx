@@ -7,7 +7,7 @@ import Logo from '../../asset/images/reputation/logo.svg'
 import GreyLogo from '../../asset/images/reputation/greylogo.svg'
 import LinearDeterminate from './progressBarArchMobile'
 import Cliente from "../../setting/cliente";
-import {GetImage, UriServices} from "../../services/hostConfig";
+import {GetJson} from "../../services/hostConfig";
 const { localStorage } = global.window;
 const styles = theme => ({
     root: {
@@ -44,38 +44,46 @@ const styles = theme => ({
 const ReputationProfile = () => {
     const [user, setUser] = useState(null)
     const [imagesArray, setImagesArray] = useState(null)
-     
-    
+    const [haveImage, setHaveImage] = useState(false); 
+    const [haveImageCover, setHaveImageCover] = useState(false);
 
     function getImages() {
-        Cliente.get(GetImage(), {
-            params: {
-                'user': user,
-                'folder': 'perfil'
+
+        let json = '';
+        let coverPerfil = '';
+        Cliente.get(GetJson(), {}).then((res) => {
+            //
+            // console.log(res['data']['content']['images'])
+
+            json = res['data']['content']['images']['perfil']
+            coverPerfil = res['data']['content']['images']['coverPerfil']
+
+            if (json.includes(String(localStorage.getItem('userLogin')))) {
+                setHaveImage(true)
+                console.log()
             }
-        },).then(
-            res => {
-                setImagesArray(res['data']['fileNames'])
-                console.log(res)
+            else if ( coverPerfil.includes(String(localStorage.getItem('userLogin')))) {
+                setHaveImageCover(true)
             }
-        )
+
+        }).catch(e => {
+            console.log(e);
+        })
+
     }
+
     useEffect(() => {
 
         if (user === null) {
             setUser(localStorage.getItem('userLogin'))
-        }
+            getImages()
+        }    
 
-        if (imagesArray === null && user !== null) {
-            getImages();
-        }
-        //let user = JSON.parse(localStorage.getItem('currentUser'));
-
-    }, [imagesArray, user]);
+    }, [haveImage, user])
     const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
     let occupation = localStorage.getItem('occupation')=='null'? '': localStorage.getItem('occupation');
     let points = localStorage.getItem('points')=='null'? '': localStorage.getItem('points');
-    let nextLevel = localStorage.getItem('points')=='null'? '': parseInt(localStorage.getItem('points'))+4;
+    let nextLevel = localStorage.getItem('points')=='null'? '': 54 - parseInt(localStorage.getItem('points'));
     return (
         <Grid position="static" color="transparent" style={{
             flexGrow: 1,
@@ -85,11 +93,11 @@ const ReputationProfile = () => {
 
             <Grid container>
                 <Grid container justify='flex-start' xs={4} xl={4} sm={4}>
-                {imagesArray !== null && imagesArray.length > 0 ?
+                {haveImage ? 
                             <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
 
                                 <img
-                                    src={UriServices() + '/' + user + '/images/perfil/' + imagesArray[0]}
+                                    src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'}
                                     width='250px' height='250px' style={{
                                         borderRadius:'50%',
                                     objectFit:'cover'
@@ -169,7 +177,7 @@ const ReputationProfile = () => {
                         </Typography>
                     </Grid>
                     <Grid container justify='flex-start' alignItems='center'>
-                        <LinearDeterminate value={5} />
+                        <LinearDeterminate value={points} />
                     </Grid>
                     <Grid container alignItems='center'>
                         <Grid container justify='flex-start' xs={6} xl={6} sm={6} alignItems='center'>

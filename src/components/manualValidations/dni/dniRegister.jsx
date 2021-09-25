@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useEffect, useState } from 'react';
+import { makeStyles } from "@material-ui/core/styles";
 import image from '../../../asset/images/manualValidations/dniRegister.png';
-import {Typography, Button, Grid} from "@material-ui/core";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPaperclip} from "@fortawesome/free-solid-svg-icons";
-import {Input} from 'rsuite';
+import { Typography, Button, Grid } from "@material-ui/core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
+import { Input } from 'rsuite';
 import Cliente from "../../../setting/cliente";
-import {Fileload} from "../../../services/hostConfig";
+import { Fileload } from "../../../services/hostConfig";
 
 const useStyles = makeStyles(theme => ({
     titulo: {
@@ -60,6 +60,27 @@ const useStyles = makeStyles(theme => ({
             marginTop: '30px'
         },
     },
+    login: {
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        backgroundColor: '#ACFD00',
+        borderRadius: '14px',
+        textTransform: 'None',
+        width: '300px',
+        marginTop: '20px',
+        marginBottom: '80px',       
+        cursor:'pointer',        
+    },
+    login2: {
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        backgroundColor: '#666666',
+        borderRadius: '14px',
+        textTransform: 'None',
+        width: '300px',
+        marginTop: '20px',
+        marginBottom: '80px',       
+        cursor:'pointer',        
+    },
+
 }))
 
 
@@ -69,7 +90,7 @@ function DniRegister(props) {
     const [file, setFile] = useState(null)
     const [user, setUser] = useState(null)
     const [name, setName] = useState(null)
-
+    const [active, setActive] = useState(true)
 
     const onFileChange = (event, nombre) => {
         let fileName = event.target.files[0].name
@@ -82,12 +103,12 @@ function DniRegister(props) {
         reader.onload = function (event) {
             setFile(event.target.result)
             Cliente.post(Fileload(), {
-                    'file': event.target.result,
-                    'fileName': _name,
-                    'user': user,
-                    'destination': 'DNI'
-                }
-            ).then(alert('carga exitosa'))
+                'file': event.target.result,
+                'fileName': _name,
+                'user': user,
+                'destination': 'DNI'
+            }
+            ).then(setActive(false))
         };
         reader.readAsDataURL(_file);
     }
@@ -102,7 +123,7 @@ function DniRegister(props) {
     return (
         <React.Fragment>
             <div className={classes.rootDiv}>
-                <img src={image} width={200} height={'100%'}/>
+                <img src={image} width={200} height={'100%'} />
                 <Typography className={classes.titulo}>
                     Para validar tu dni, te pedimos una foto del frente y dorso del mismo, donde la información sea
                     legible
@@ -111,7 +132,7 @@ function DniRegister(props) {
                 <Typography className={classes.subtitulo}>
                     Numero de DNI o Libreta Civica
                 </Typography>
-                <div style={{width: '300px', marginTop: '4px'}}>
+                <div style={{ width: '300px', marginTop: '4px' }}>
 
                     <Input style={{
                         backgroundColor: '#000',
@@ -126,14 +147,14 @@ function DniRegister(props) {
                         textAlign: 'center',
                         marginTop: '4px',
                         padding: '10px 0 10px 0'
-                    }} placeholder="DNI"/>
+                    }} placeholder="DNI" />
                 </div>
 
-                <Typography className={classes.subtitulo} style={{color: '#ACFD00'}}>
+                <Typography className={classes.subtitulo} style={{ color: '#ACFD00' }}>
                     Esta información es solo para propositos de validación y no sera compartida con ningún usuario.
                 </Typography>
 
-                <Typography className={classes.subtitulo} style={{paddingTop: '27px'}}>
+                <Typography className={classes.subtitulo} style={{ paddingTop: '27px' }}>
                     Adjunte foto del frente del DNI
                 </Typography>
 
@@ -154,8 +175,8 @@ function DniRegister(props) {
                         onChange={
                             (e) => onFileChange(e, 'FrenteDNI')}
                     />
-                    <Grid container direction={'row'} style={{padding: '10px 0 10px 0', cursor: 'pointer'}}>
-                        <Grid item xs={2}/>
+                    <Grid container direction={'row'} style={{ padding: '10px 0 10px 0', cursor: 'pointer' }}>
+                        <Grid item xs={2} />
                         <Grid item xs={8}>
                             <Typography className={classes.boton}>Adjuntar Frente</Typography>
                         </Grid>
@@ -165,7 +186,7 @@ function DniRegister(props) {
                                 fontSize: '18px',
                                 textAlign: 'center',
                                 marginRight: '5px'
-                            }}/>
+                            }} />
                         </Grid>
                     </Grid>
 
@@ -175,7 +196,7 @@ function DniRegister(props) {
                     Los jpg, png, pdf son válidos.
                 </Typography>
 
-                <Typography className={classes.subtitulo} style={{paddingTop: '20px'}}>
+                <Typography className={classes.subtitulo} style={{ paddingTop: '20px' }}>
                     Adjunte foto del dorso del dorso DNI
                 </Typography>
 
@@ -195,8 +216,8 @@ function DniRegister(props) {
                         hidden
                         onChange={(e) => onFileChange(e, 'DorsoDNI')}
                     />
-                    <Grid container direction={'row'} style={{padding: '10px 0 10px 0', cursor: 'pointer'}}>
-                        <Grid item xs={2}/>
+                    <Grid container direction={'row'} style={{ padding: '10px 0 10px 0', cursor: 'pointer' }}>
+                        <Grid item xs={2} />
                         <Grid item xs={8}>
                             <Typography className={classes.boton}>Adjuntar Dorso</Typography>
                         </Grid>
@@ -206,7 +227,7 @@ function DniRegister(props) {
                                 fontSize: '18px',
                                 textAlign: 'center',
                                 marginRight: '5px'
-                            }}/>
+                            }} />
                         </Grid>
 
 
@@ -215,15 +236,10 @@ function DniRegister(props) {
                 </Button>
 
 
-                <Button style={{
-                    background: '#ACFD00',
-                    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-                    borderRadius: '14px',
-                    textTransform: 'None',
-                    width: '300px',
-                    marginTop: '20px',
-                    marginBottom: '80px'
-                }}>
+                <Button className={active ? classes.login2: classes.login}
+                    disabled={active}
+                    href={'/validation/dniReady'}
+                >
                     <Typography style={{
                         align: "center",
                         color: '#252525',

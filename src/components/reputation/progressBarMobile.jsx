@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CircularDeterminate = ({ givenValue, color }) => {
     const classes = useStyles();
+    let points = localStorage.getItem('points')=='null'? '': localStorage.getItem('points');
     return (
         <div className={classes.root}>
             { color ? <CircularProgress size={135} variant="determinate" value={givenValue} thickness={1.5} style={{ 'color': color, 'border': '#666666' }} /> : 

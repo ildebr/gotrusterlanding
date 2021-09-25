@@ -16,8 +16,8 @@ import auth from './../../setting/auth';
 import RegexTextField from "../../components/helpers/regexTextField";
 import Swal from "sweetalert2";
 
-const dataSourceAvailable = require('./provincias.json');
-const dataSourceAvailableLocal= require('./municipios.json');
+const dataSourceAvailable = require('./../../services/provincias.json');
+const dataSourceAvailableLocal= require('./../../services/municipios.json');
 const onlyLettersRegex = /[^a-zA-Z]/gi;
 const onlyNumbersRegex = /[^0-9]/gi;
 
@@ -950,6 +950,7 @@ class RegisterSecond extends Component {
             local: e.target.value,
             locationError: false
         })
+     
         console.log(e.target.value)
     }
     handleProvinceChange = e => {
@@ -1135,7 +1136,7 @@ class RegisterSecond extends Component {
             "password": password,
             "phone": "string",
             "lastModifiedDate": "2021-05-19T04:23:28.205Z",
-            "points": 1,
+            "points": 2,
             "userType": "INDIVIDUAL"
         }
         ////dataAdress //

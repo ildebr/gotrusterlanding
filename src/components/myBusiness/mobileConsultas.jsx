@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import {Typography} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-
+const { localStorage } = global.window;
 
 const useStyles = makeStyles(theme => ({
     titulo1: {
@@ -42,6 +42,12 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function MobileConsultas(props) {
+    const [consulta, setConsulta] = React.useState('');
+
+    const handleConsulta = (e)=>{
+        setConsulta(e.target.value);
+        localStorage.setItem("consultaBussines", e.target.value)
+    }
     const classes = useStyles();
     return (
         <React.Fragment>
@@ -65,7 +71,8 @@ function MobileConsultas(props) {
                     multiline
                     rows={6}
                     placeholder={"Escribí el mensaje que van a recibir tus clientes a la hora de hacerte una consulta"}
-
+                    onChange={handleConsulta}
+                    value={consulta}
                     variant="filled"
                     className={classes.textfield}
                 />

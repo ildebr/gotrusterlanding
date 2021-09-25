@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from 'react';
+import React, {useState, Fragment, useEffect, useRef} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import {
     CssBaseline,
@@ -8,17 +8,23 @@ import {
     InputBase,
     Menu,
     MenuItem,
-    ListItemIcon,
-    ListItemText
+    ListItemText,
+    InputAdornment,
+    List
 } from '@material-ui/core';
 import AdminNavbar from "../../components/navBar/adminNavbar";
 import UsersTable from "../../components/admin/usersTable";
 import SearchIcon from "../../asset/images/admin/searchIcon.svg"
+import SearchIconGreen from "../../asset/images/admin/searchIconGreen.svg"
+import Cross from '../../asset/images/admin/cross.svg'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import PersonIcon from '@material-ui/icons/Person';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import EmailIcon from '@material-ui/icons/Email';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import { UserAdminPlusResource } from './../../services/hostConfig';
+import { getToken } from './../../setting/auth-helpers';
+import moment from 'moment'
 
 const styles = theme => ({
     navBar: {
@@ -87,37 +93,10 @@ const styles = theme => ({
         }
     },
     iconActive:{
-          color:'#FFFFFF',
-        '&:focus': {
-            color:'#141414',  
-            '&:hover': {               
-                color:'#141414',
-            } 
-        }
+        color:'#FFFFFF',
+        marginRight: "14px",
     },
-    whiteColor:{
-        color: '#9e9e9e' ,
-        '&:focus': {
-            color:'#FFFFFF',  
-           
-        }
-    }
 });
-
-const dummyData = [
-    {name: 'Daniel Pavon', tagLine: 'Software Arquitect', points: 243, joinDate: '23/02/2028', email: 'ald@adnn.com',date:'23/02/2028'},
-    {name: 'Daniel Pavon', tagLine: 'Software Arquitect', points: 243, joinDate: '23/02/2028', email: 'ald@adnn.com',date:'23/02/2028'},
-    {name: 'Daniel Pavon', tagLine: 'Software Arquitect', points: 243, joinDate: '23/02/2028', email: 'ald@adnn.com',date:'23/02/2028'},
-    {name: 'Daniel Pavon', tagLine: 'Software Arquitect', points: 243, joinDate: '23/02/2028', email: 'ald@adnn.com',date:'23/02/2028'},
-    {name: 'Daniel Pavon', tagLine: 'Software Arquitect', points: 243, joinDate: '23/02/2028', email: 'ald@adnn.com',date:'23/02/2028'},
-    {name: 'Daniel Pavon', tagLine: 'Software Arquitect', points: 243, joinDate: '23/02/2028', email: 'ald@adnn.com', date:'23/02/2028'},
-    {name: 'Daniel Pavon', tagLine: 'Software Arquitect', points: 243, joinDate: '23/02/2028', email: 'ald@adnn.com',date:'23/02/2028'},
-    {name: 'Daniel Pavon', tagLine: 'Software Arquitect', points: 243, joinDate: '23/02/2028', email: 'ald@adnn.com',date:'23/02/2028'},
-    {name: 'Daniel Pavon', tagLine: 'Software Arquitect', points: 243, joinDate: '23/02/2028', email: 'ald@adnn.com',date:'23/02/2028'},
-    {name: 'Daniel Pavon', tagLine: 'Software Arquitect', points: 243, joinDate: '23/02/2028', email: 'ald@adnn.com',date:'23/02/2028'},
-    {name: 'Daniel Pavon', tagLine: 'Software Arquitect', points: 243, joinDate: '23/02/2028', email: 'ald@adnn.com',date:'23/02/2028'},
-    {name: 'Daniel Pavon', tagLine: 'Software Arquitect', points: 243, joinDate: '23/02/2028', email: 'ald@adnn.com',date:'23/02/2028'},
-];
 
 const StyledMenu = withStyles({
     paper: {
@@ -146,33 +125,118 @@ const StyledMenuItem = withStyles((theme) => ({
         color:'#97EA3B',
         fontFamily: 'Poppins',
         fontStyle: 'normal',
-        fontSize: '11px',
-        lineHeight: '8px',        
+        fontSize: '12px',
+        lineHeight: '13px', 
+        "& #primary": {
+            fontWeight: 'bold',
+        },  
+        "& #secondary1": {
+            color: "#5F5F5F",
+        },     
         '&:focus': {
-            backgroundColor: "#ACFD00",
+            backgroundColor: "#97EA3B",
             borderRadius:"10px",
+            color:'#141414',
+            "& #arrowDown": {
+                color: "#97EA3B",
+            },
+            "& #primary": {
+                color: "#141414",
+            },
+            "& #secondary1": {
+                color: "#FEFEFE",
+            },
+            "& #icon": {
+                color: "#141414",
+            },
             '&:hover': {
-                backgroundColor: "#ACFD00",
-                color:'#141414',
+                backgroundColor: "#97EA3B",
             }
         },
     },
 }))(MenuItem);
 
+const USER_TYPE = "INDIVIDUAL";
+const ROWS_INDIVIDUAL = "rows_individual";
+
 function Users(props) {
     const {classes} = props;
-    const [rows, setRows] = useState(dummyData);
+    const [rows, setRows] = useState([]);
+    const [total, setTotal] = useState(13);
     const [anchorEl, setAnchorEl] = React.useState(null);
     // Selected search filter
     const [selectedSearch, setSelectedSearch] = React.useState("NOMBRE");
+    const [valueSearch, setValueSearch] = React.useState('');
+    const searchIconRef = useRef();
+    const arrowIconRef = useRef();
 
     const handleOpen = (event) => {
         setAnchorEl(event.currentTarget);
+        searchIconRef.current.src = SearchIconGreen;
+        arrowIconRef.current.style.color = "#97EA3B";
     };
 
     const handleClose = () => {
         setAnchorEl(null);
+        searchIconRef.current.src = SearchIcon;
+        arrowIconRef.current.style.color = "#555555";
     };
+    function loadDataUser(){
+        
+    }
+
+    const handleClearSearch = (ev) => {
+        ev.target.value = '';
+        setValueSearch('');
+        setRows(JSON.parse(localStorage.getItem(ROWS_INDIVIDUAL)));
+    }
+
+    const handleFilter = (value, curSelectedSearch) => {
+        setValueSearch(value);
+        const rowsAux = JSON.parse(localStorage.getItem(ROWS_INDIVIDUAL));
+        const newRows = value.length == 0 ? rowsAux : rowsAux.filter((row) => {
+            switch (curSelectedSearch? curSelectedSearch : selectedSearch) {
+                case "NOMBRE":
+                    if((row.firstName + ' ' + row.lastName)?.toLowerCase().includes(value.toLowerCase())) return true;
+                    return false;
+                case "TAGLINE":
+                    if(row.occupation?.toLowerCase().includes(value.toLowerCase())) return true;
+                    return false;
+                case "CORREO":
+                    if(row.email?.toLowerCase().includes(value.toLowerCase()))  return true;
+                    return false;
+                case "FECHAMODIFICACION":
+                    if(moment(row.lastModifiedDate).format('D/MM/YYYY')?.toLowerCase().includes(value.toLowerCase())) return true;
+                    return false;
+            }
+        });
+        setRows(newRows);
+    }
+
+    useEffect(() => {
+        const token = getToken();
+        if (token !== 'undefined') {
+            fetch(UserAdminPlusResource() + '/' + USER_TYPE + `?size=${total}`, {
+                method: 'get',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then(response => {
+                if (response.status == 401 ||
+                    response.status == 400 || 
+                    response.status == 500) {
+                        setRows([]);
+                } else{
+                    return response.json();
+                }
+            }).then(response => {
+                setRows(response);
+                localStorage.setItem(ROWS_INDIVIDUAL, JSON.stringify(response));
+            })
+        }
+    }, [total]);
 
     return (
         <Fragment>
@@ -191,21 +255,28 @@ function Users(props) {
                             </Grid>
                             <Grid item>
                                 <Typography className={classes.resultsText}>
-                                    243 Resultados
+                                    {rows.length} Resultados
                                 </Typography>
                             </Grid>
                             <div style={{flexGrow: 1}}/>
                             <Grid item>
                                 <div className={classes.searchBar}>
-                                    <img src={SearchIcon}/>
-                                    <ArrowDropDownIcon
+                                    <img ref={searchIconRef} id="searchIcon" src={SearchIcon} />
+                                    <ArrowDropDownIcon ref={arrowIconRef} id="arrowDown"
                                         style={{color: "#555555", cursor: "pointer"}}
                                         onClick={handleOpen}
                                     />
                                     <InputBase
                                         className={classes.input}
                                         placeholder="Usuarios"
+                                        value={valueSearch}
+                                        onChange={e => handleFilter(e.target.value)}
                                         inputProps={{'aria-label': 'usuarios'}}
+                                        endAdornment={
+                                            <InputAdornment position="end" onClick={handleClearSearch} style={{ cursor: 'pointer' }}>
+                                                <img src={Cross} alt='logo' className={classes.input} />
+                                            </InputAdornment>
+                                        }
                                     />
                                     <StyledMenu
                                         id="customized-menu"
@@ -214,49 +285,45 @@ function Users(props) {
                                         open={Boolean(anchorEl)}
                                         onClose={handleClose}
                                     >
-                                        <StyledMenuItem>
-                                            <ListItemIcon
-                                                onClick={() => setSelectedSearch("NOMBRE")}
-                                                selected={selectedSearch === "NOMBRE"}
-                                            >
-                                                <PersonIcon fontSize="small" className={classes.iconActive}/>
-                                            </ListItemIcon>
-                                            <ListItemText
-                                            classes={{ secondary: classes.whiteColor }}
-                                             primary="Nombre" secondary="Búsqueda por nombre" />
+                                        <StyledMenuItem onClick={() => {setSelectedSearch("NOMBRE");handleFilter(valueSearch, "NOMBRE");handleClose();}}
+                                                selected={selectedSearch === "NOMBRE"}>
+                                            <PersonIcon id="icon" fontSize="default" className={classes.iconActive}/>
+                                            <List>
+                                                <ListItemText id="primary" disableTypography
+                                                    primary="Nombre" />
+                                                <ListItemText id="secondary1" disableTypography
+                                                    secondary="Búsqueda de usuarios por nombre" />
+                                            </List>
                                         </StyledMenuItem>
-                                        <StyledMenuItem
-                                            onClick={() => setSelectedSearch("TAGLINE")}
-                                            selected={selectedSearch === "TAGLINE"}
-                                        >
-                                            <ListItemIcon>
-                                                <LocalOfferIcon fontSize="small"  className={classes.iconActive}/>
-                                            </ListItemIcon>
-                                            <ListItemText
-                                            classes={{ secondary: classes.whiteColor }}
-                                             primary="Tagline" secondary="Búsqueda por tagline" />
+                                        <StyledMenuItem onClick={() => {setSelectedSearch("TAGLINE");handleFilter(valueSearch, "TAGLINE");handleClose();}}
+                                                selected={selectedSearch === "TAGLINE"}>
+                                            <LocalOfferIcon id="icon" fontSize="default" className={classes.iconActive}/>
+                                            <List>
+                                                <ListItemText id="primary" disableTypography
+                                                    primary="Tagline" />
+                                                <ListItemText id="secondary1" disableTypography
+                                                    secondary="Búsqueda de usuarios por tagline" />
+                                            </List>
                                         </StyledMenuItem>
-                                        <StyledMenuItem
-                                            onClick={() => setSelectedSearch("CORREO")}
-                                            selected={selectedSearch === "CORREO"}
-                                        >
-                                            <ListItemIcon>
-                                                <EmailIcon fontSize="small"  className={classes.iconActive}/>
-                                            </ListItemIcon>
-                                            <ListItemText 
-                                            classes={{ secondary: classes.whiteColor }}
-                                            primary="Correo" secondary="Búsqueda por email" />
+                                        <StyledMenuItem onClick={() => {setSelectedSearch("CORREO");handleFilter(valueSearch, "CORREO");handleClose();}}
+                                                selected={selectedSearch === "CORREO"}>
+                                            <EmailIcon id="icon" fontSize="default" className={classes.iconActive}/>
+                                            <List>
+                                                <ListItemText id="primary" disableTypography
+                                                    primary="Correo" />
+                                                <ListItemText id="secondary1" disableTypography
+                                                    secondary="Búsqueda de usuarios por email" />
+                                            </List>
                                         </StyledMenuItem>
-                                        <StyledMenuItem
-                                            onClick={() => setSelectedSearch("CORREO")}
-                                            selected={selectedSearch === "CORREO"}
-                                        >
-                                            <ListItemIcon>
-                                                <EventAvailableIcon fontSize="small" className={classes.iconActive}/>
-                                            </ListItemIcon>
-                                            <ListItemText 
-                                            classes={{ secondary: classes.whiteColor }}
-                                            primary="Última fecha modificación" secondary="Búsqueda por Última fecha modificación" />
+                                        <StyledMenuItem onClick={() => {setSelectedSearch("FECHAMODIFICACION");handleFilter(valueSearch, "FECHAMODIFICACION");handleClose();}}
+                                                selected={selectedSearch === "FECHAMODIFICACION"}>
+                                            <EventAvailableIcon id="icon" fontSize="default" className={classes.iconActive}/>
+                                            <List>
+                                                <ListItemText id="primary" disableTypography
+                                                    primary="Última fecha modificación" />
+                                                <ListItemText id="secondary1" disableTypography
+                                                    secondary="Búsqueda de usuarios por fecha" />
+                                            </List>
                                         </StyledMenuItem>
                                     </StyledMenu>
                                 </div>
@@ -268,15 +335,16 @@ function Users(props) {
                         <Grid item>
                             <UsersTable data={rows}/>
                         </Grid>
-                        <Grid item container justify='flex-start'>
+                        <Grid item container justify='flex-start' >
                             <Grid item>
                                 <Typography
                                     className={classes.loadMore}
                                     onClick={() => {
                                         // Dummy Data to simulate load more button
                                         let data = rows;
-                                        data = [...data, ...dummyData];
-                                        setRows(data)
+                                        //data = [...data, ...data];
+                                        setTotal(total+total);
+                                        setRows(data);
                                     }}
                                 >
                                     Cargar Más

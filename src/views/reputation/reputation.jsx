@@ -11,7 +11,9 @@ import NextArchMobile from '../../components/reputation/nextArchMobile'
 import SumReputationMobile from '../../components/reputation/sumReputationMobile'
 import SumReputation from '../../components/reputation/sumreputation'
 import Validations from '../../components/reputation/validations'
-
+import {GetImage} from './../../services/hostConfig';
+import Cliente from './../../setting/cliente'
+const { localStorage } = global.window;
 
 const styles = theme => ({
     root: {
@@ -36,13 +38,34 @@ const styles = theme => ({
 class Reputation extends Component {
     constructor(props) {
         super(props);
-        this.state = { windowWidth: window.innerWidth, tab: false };
+        this.state = {
+            windowWidth: window.innerWidth, tab: false, imagesArray: null,
+            user: null
+        };
     }
     handleResize = (e) => {
         this.setState({ windowWidth: window.innerWidth });
     };
     componentDidMount() {
         window.addEventListener("resize", this.handleResize);
+        if (this.state.user === null) {
+            this.state.user = localStorage.getItem('userLogin')
+        }
+
+        if (this.state.user !== null) {
+            Cliente.get(GetImage(), {
+                params: {
+                    'user': this.state.user,
+                    'folder': 'coverPerfil'
+                }
+            }).then(
+                res => {
+                    this.setState({ imagesArray: res['data']['fileNames'] })
+                    console.log(res)
+                }
+
+            )
+        }
     }
     Tabf = () => {
         this.setState({ tab: !this.state.tab });
@@ -60,7 +83,18 @@ class Reputation extends Component {
         return (<React.Fragment>
             <Grid container className={classes.root} component="main" maxWidth="md" style={{ display: 'flex', justifyContent: 'center' }}>
                 {width >= 600 ? <div className={classes.background} >
-                    <img src={Rectangle} alt='background' width={'100%'} height={'100%'} />
+                    {this.state.imagesArray !== null && this.state.imagesArray.length > 0 ?
+                        <img src={
+                            'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverPerfil/' + this.state.user + '.png'
+                        }
+                            alt='background' width={'1935px'} height={'470px'}
+                            style={{ objectFit: 'cover' }}
+                        />
+
+
+                        :
+                        <img src={Rectangle} alt='background' width={'100%'} height={'100%'} />
+                    }
                 </div> : ''}
                 <Grid className={classes.test} container maxWidth="md" component="main" >
                     <Container component="main" maxWidth="md" container justify='center' >
@@ -78,7 +112,7 @@ class Reputation extends Component {
                                         font: " normal normal 40px/40px Poppins",
                                     }}>
                                         Truster
-                                </Typography>
+                                    </Typography>
                                 </Grid> :
                                 <Grid xs={8} xl={8} sm={8} container justify='flex-start'>
                                     <Typography style={{
@@ -90,7 +124,7 @@ class Reputation extends Component {
                                         font: " normal normal 26px/26px Poppins",
                                     }}>
                                         Mi Reputación
-                                </Typography>
+                                    </Typography>
                                 </Grid>}
                         </Grid>
                         <Grid container justify='center'>
@@ -118,7 +152,7 @@ class Reputation extends Component {
                                             font: " normal normal 16px/16px PoppinsBold",
                                         }}>
                                             Próximos Logros
-                                </Typography>
+                                        </Typography>
                                         <hr style={{ width: '100%' }} color='#ffffff' />
                                     </Grid>
                                 </Grid> : <Grid container xs={12} xl={12} sm={12} justify='center' style={{ maxWidth: '100%', marginTop: 40, paddingLeft: '10%', paddingRight: '10%' }} alignItems='center'>
@@ -141,7 +175,7 @@ class Reputation extends Component {
                                             font: " normal normal 16px/16px PoppinsBold",
                                         }}>
                                             Próximos Logros
-                                </Typography>
+                                        </Typography>
                                         <hr style={{ width: '100%' }} color='#333333' />
                                     </Grid>
                                 </Grid> : ''}

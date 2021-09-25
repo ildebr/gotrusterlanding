@@ -77,7 +77,7 @@ const NextArch = () => {
                                 marginTop: 30,
                                 color: '#ACFD00'
                             }}>
-                                Te faltan solo 4 puntos
+                                Necesitas  22 puntos
                             </Typography>
                         </Grid>
                         <Grid container justify='flex-end' xs={4} xl={4} sm={4} alignItems='baseline' style={{ marginTop: 35 }}>
@@ -89,7 +89,7 @@ const NextArch = () => {
                                 letterSpacing: '-0.02em',
                                 color: '#ACFD00'
                             }}>
-                                4
+                                22
                             </Typography>
                         </Grid>
                     </Grid>
@@ -151,7 +151,7 @@ const NextArch = () => {
                                 marginTop: 30,
                                 color: '#ACFD00'
                             }}>
-                                Te faltan solo 6 puntos
+                                Necesitas 22 puntos
                             </Typography>
                         </Grid>
                         <Grid container justify='flex-end' xs={4} xl={4} sm={4} alignItems='baseline' style={{ marginTop: 35 }}>
@@ -163,7 +163,7 @@ const NextArch = () => {
                                 letterSpacing: '-0.02em',
                                 color: '#ACFD00'
                             }}>
-                                6
+                                22
                             </Typography>
                         </Grid>
                     </Grid>
