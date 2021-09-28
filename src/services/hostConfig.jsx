@@ -67,9 +67,14 @@ const UserAdminPlusResource = () => {
    let REACT_APP_USER_ADMIN_PLUS = ' https://truster-bk.herokuapp.com/api/admin/usersPlus';
    return REACT_APP_USER_ADMIN_PLUS;
 }
+//// admin Customer User
+const AdminCustomer = () => {
+   let REACT_APP_USER_ADMIN = ' https://truster-bk.herokuapp.com/api/customersaddress';
+   return REACT_APP_USER_ADMIN;
+}
 //////////////Shop
 const ShopResource = () => {
-   let REACT_APP_SHOP = ' https://truster-bk.herokuapp.com/api/shop';
+   let REACT_APP_SHOP = ' https://truster-bk.herokuapp.com/api/shops';
    return REACT_APP_SHOP;
 }
 
@@ -158,5 +163,6 @@ const loaderServices =()=>{
       selectSubCategory,
       GetJson,
       loaderServices,
-      ShopAdress
+      ShopAdress,
+      AdminCustomer
    }

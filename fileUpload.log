@@ -1,0 +1,27 @@
+10:30:09.991 INFO  Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\images\avatars\undefined.undefined'
+{"errno":-4058,"code":"ENOENT","syscall":"open","path":"C:\\Users\\octav\\Documents\\Trabajo\\IVAN\\trusterdev\\public\\images\\avatars\\undefined.undefined"}
+Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\images\avatars\undefined.undefined' 
+20:56:01.798 INFO  Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\octa.dimarco\images\avatars\22 (1).jpg'
+{"errno":-4058,"code":"ENOENT","syscall":"open","path":"C:\\Users\\octav\\Documents\\Trabajo\\IVAN\\trusterdev\\public\\octa.dimarco\\images\\avatars\\22 (1).jpg"}
+Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\octa.dimarco\images\avatars\22 (1).jpg' 
+20:58:05.831 INFO  Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\octa.dimarco\images\avatars\809fce9c5043c076122437100846cc390fe99f54_hq.jpg'
+{"errno":-4058,"code":"ENOENT","syscall":"open","path":"C:\\Users\\octav\\Documents\\Trabajo\\IVAN\\trusterdev\\public\\octa.dimarco\\images\\avatars\\809fce9c5043c076122437100846cc390fe99f54_hq.jpg"}
+Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\octa.dimarco\images\avatars\809fce9c5043c076122437100846cc390fe99f54_hq.jpg' 
+20:58:08.894 INFO  Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\octa.dimarco\images\avatars\c7859b4f-a0e9-4f74-8559-62f43bdcabea.jpeg'
+{"errno":-4058,"code":"ENOENT","syscall":"open","path":"C:\\Users\\octav\\Documents\\Trabajo\\IVAN\\trusterdev\\public\\octa.dimarco\\images\\avatars\\c7859b4f-a0e9-4f74-8559-62f43bdcabea.jpeg"}
+Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\octa.dimarco\images\avatars\c7859b4f-a0e9-4f74-8559-62f43bdcabea.jpeg' 
+20:58:34.562 INFO  Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\octa.dimarco\images\avatars\809fce9c5043c076122437100846cc390fe99f54_hq.jpg'
+{"errno":-4058,"code":"ENOENT","syscall":"open","path":"C:\\Users\\octav\\Documents\\Trabajo\\IVAN\\trusterdev\\public\\octa.dimarco\\images\\avatars\\809fce9c5043c076122437100846cc390fe99f54_hq.jpg"}
+Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\octa.dimarco\images\avatars\809fce9c5043c076122437100846cc390fe99f54_hq.jpg' 
+20:58:57.464 INFO  Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\octa.dimarco\images\avatars\c7859b4f-a0e9-4f74-8559-62f43bdcabea.jpeg'
+{"errno":-4058,"code":"ENOENT","syscall":"open","path":"C:\\Users\\octav\\Documents\\Trabajo\\IVAN\\trusterdev\\public\\octa.dimarco\\images\\avatars\\c7859b4f-a0e9-4f74-8559-62f43bdcabea.jpeg"}
+Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\octa.dimarco\images\avatars\c7859b4f-a0e9-4f74-8559-62f43bdcabea.jpeg' 
+21:00:03.016 INFO  Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\octa.dimarco\images\avatars\809fce9c5043c076122437100846cc390fe99f54_hq.jpg'
+{"errno":-4058,"code":"ENOENT","syscall":"open","path":"C:\\Users\\octav\\Documents\\Trabajo\\IVAN\\trusterdev\\public\\octa.dimarco\\images\\avatars\\809fce9c5043c076122437100846cc390fe99f54_hq.jpg"}
+Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\octa.dimarco\images\avatars\809fce9c5043c076122437100846cc390fe99f54_hq.jpg' 
+21:01:00.223 INFO  Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\octaviodimarco\images\avatars\c7859b4f-a0e9-4f74-8559-62f43bdcabea.jpeg'
+{"errno":-4058,"code":"ENOENT","syscall":"open","path":"C:\\Users\\octav\\Documents\\Trabajo\\IVAN\\trusterdev\\public\\octaviodimarco\\images\\avatars\\c7859b4f-a0e9-4f74-8559-62f43bdcabea.jpeg"}
+Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\octaviodimarco\images\avatars\c7859b4f-a0e9-4f74-8559-62f43bdcabea.jpeg' 
+21:02:02.190 INFO  Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\octaviodimarco\images\avatars\809fce9c5043c076122437100846cc390fe99f54_hq.jpg'
+{"errno":-4058,"code":"ENOENT","syscall":"open","path":"C:\\Users\\octav\\Documents\\Trabajo\\IVAN\\trusterdev\\public\\octaviodimarco\\images\\avatars\\809fce9c5043c076122437100846cc390fe99f54_hq.jpg"}
+Error: ENOENT: no such file or directory, open 'C:\Users\octav\Documents\Trabajo\IVAN\trusterdev\public\octaviodimarco\images\avatars\809fce9c5043c076122437100846cc390fe99f54_hq.jpg' 

@@ -173,27 +173,7 @@ function MobileUbicacion(props) {
         localStorage.setItem("numberBussines",e.target.value)
     }
     
-    const handleDataSourceAvailableLocal =(e) =>{
-        e.preventDefault();
-        let dataNewArrayLocal =[];
-        let local ='';
-        let provincias ='';
-        let provincia = province;
-        for (let index = 0; index < dataSourceAvailableLocal.length; index++) {
-             let element = dataSourceAvailableLocal[index];
-            local = element.nombre;
-            console.log(local)
-            provincias = element["provincia"]["nombre"]; 
-            console.log(provincias)
-            if (provincia === provincias){
-                dataNewArrayLocal.push(local)
-            }
-            
-        }
-       // console.log(dataNewArrayLocal)
-        setLocalidad(dataNewArrayLocal)
-        return dataNewArrayLocal;
-    }
+   
 
     return (
         <React.Fragment>
@@ -252,7 +232,28 @@ function MobileUbicacion(props) {
                                                     letterSpacing: '-0.02em',
                                                 },
                                             }}
-                                        >{provinces.nombre}</option>)
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                localStorage.setItem("provinceBussines", province)
+                                                let dataNewArrayLocal = [];
+                                                let local = '';
+                                                let provincias = '';
+                                                let provincia = province;
+                                                for (let index = 0; index < dataSourceAvailableLocal.length; index++) {
+                                                    let element = dataSourceAvailableLocal[index];
+                                                    local = element.nombre;
+                                                    console.log(local)
+                                                    provincias = element["provincia"]["nombre"];
+                                                    console.log(provincias)
+                                                    if (provincia === provincias) {
+                                                        dataNewArrayLocal.push(local)
+                                                    }
+
+                                                }
+                                                // console.log(dataNewArrayLocal)
+                                                setLocalidad(dataNewArrayLocal)
+                                                return dataNewArrayLocal;
+                                            }}>{provinces.nombre}</option>)
                                         
                                     })
                                 }
@@ -267,7 +268,7 @@ function MobileUbicacion(props) {
                             className={classes.select}
                             onChange={handleLocal}
                             value={local}
-                            onClick={handleDataSourceAvailableLocal}                      
+                                                 
                             >
                                 {localidad.map(locality => {
                                        return ( <option key={locality}
@@ -282,9 +283,9 @@ function MobileUbicacion(props) {
                                                     textAlign: 'left',
                                                     letterSpacing: '-0.02em',
                                                 },
-                                            }} onClick={(e)=>{
-                                                localStorage.setItem("localBussines",locality.nombre)
-                                             }}>{locality}</option>)})
+                                            }}  onClick={(e) => {
+                                                localStorage.setItem("localBussines", local)
+                                            }}>{locality}</option>)})
                                         }
                               
                             </Select>
@@ -300,75 +301,7 @@ function MobileUbicacion(props) {
                             {/*    Galería*/}
                             {/*</Typography>*/}
                         </Grid>
-                        {/*<Button*/}
-                        {/*    onClick={*/}
-                        {/*        () => setUser([user, <User/>])*/}
-                        {/*    }*/}
-                        {/*>*/}
-                        {/*    <Typography style={{color: '#fff'}}>*/}
-                        {/*        +1*/}
-                        {/*    </Typography>*/}
-
-                        {/*</Button>*/}
-
-                        {/*<div style={{overflowX: 'scroll', whiteSpace: 'nowrap', width: '200px'}}>*/}
-
-                        {/*    {user}*/}
-
-                        {/*</div>*/}
-
-
-                    {/*<div style={{width:'100vw',*/}
-                    {/*    position:'relative',*/}
-                    {/*    marginLeft: '-50vw',*/}
-                    {/*    left:'50%',*/}
-                    {/*    overflow:'scroll'}}>*/}
-                    {/*<Grid container direction={"row"} style={{*/}
-                    {/*    width:'max-content',*/}
-                    {/*    marginTop:'16px'*/}
-                    {/*    }}>*/}
-                    {/*    <img src={imagen}*/}
-                    {/*    style={{*/}
-                    {/*        width:'168px',*/}
-                    {/*        height:'133px',*/}
-                    {/*        marginLeft:'22px'*/}
-                    {/*    }}*/}
-                    {/*    />*/}
-                    {/*    <div style={{*/}
-                    {/*        width:'168px',*/}
-                    {/*        height:'133px',*/}
-                    {/*        borderRadius:'18px',*/}
-                    {/*        backgroundColor:'#202020',*/}
-                    {/*        margin:'0 22px',*/}
-                    {/*        display:'flex',*/}
-                    {/*        justifyContent:'center',*/}
-                    {/*        alignItems:'center'*/}
-                    {/*    }}>*/}
-                    {/*        <FontAwesomeIcon icon={faPlus} style={{*/}
-                    {/*            color: '#999999', fontSize: 18*/}
-                    {/*        }}/>*/}
-                    {/*    </div>*/}
-                    {/*    <div style={{*/}
-                    {/*        width:'168px',*/}
-                    {/*        height:'133px',*/}
-                    {/*        borderRadius:'18px',*/}
-                    {/*        backgroundColor:'#202020',*/}
-                    {/*        marginRight:'22px',*/}
-                    {/*        display:'flex',*/}
-                    {/*        justifyContent:'center',*/}
-                    {/*        alignItems:'center'*/}
-                    {/*    }}>*/}
-                    {/*        <FontAwesomeIcon icon={faPlus} style={{*/}
-                    {/*            color: '#999999', fontSize: 18*/}
-                    {/*        }}/>*/}
-                    {/*    </div>*/}
-
-
-                    {/*</Grid>*/}
-                    {/*</div>*/}
-
-                    {/*<Imagenes/>*/}
-
+                        
                     </Grid>
                     :
                     <a/>

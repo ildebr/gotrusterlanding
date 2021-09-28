@@ -356,9 +356,6 @@ class Register extends Component {
         let emailocal = localStorage.getItem("thisEmail");
         let format = localStorage.getItem("formato");
         let ter = this.state.checkTer;
-
-
-
         if (checkTerError !== true) {
             Swal.fire({
                 icon: 'error',

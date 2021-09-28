@@ -308,6 +308,7 @@ class Login extends Component {
                                     localStorage.setItem('gender', response.gender);
                                     localStorage.setItem('occupation', response.occupation);
                                     localStorage.setItem('points', response.points);
+                                    localStorage.setItem("Level", response.level );
                                     //////////////////////////////////////
 
                                     localStorage.setItem('logueado', true);

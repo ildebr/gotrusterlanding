@@ -105,7 +105,6 @@ const ReputationNavbar = () => {
                                 <hr width={'100%'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30, marginLeft: 20 }} />
                                 <ul style={{ paddingLeft: '40px' }}>
                                     <li><Link href='/sharemyprofile'><img src={Compartir} alt='compartir' style={{ paddingRight: 10, width: '12px' }} /> Compartir Perfil</Link></li>
-                                    <li><Link href='/'><img src={Insertar} alt='insertar' style={{ paddingRight: 10, width: '14px' }} /> Insertar Perfil</Link></li>
                                     <li><Link href='/'><img src={Ajustes} alt='ajustes' style={{ paddingRight: 10, width: '13px' }} /> Ajustes</Link></li>
                                     <li><Link href='/'><img src={Soporte} alt='soporte' style={{ paddingRight: 10, width: '12px' }} /> Soporte</Link></li>
                                 </ul>

@@ -431,16 +431,21 @@ function Search(props) {
                                     className={classes.searchBar}
                                     id="input-with-icon-adornment"
                                     onChange={(event) => setValue(event.target.value)}
+                                    onKeyPress ={(e) => {                                        
+                                           if (e.key === 'Enter'){
+                                           setSearch(true)
+                                         }
+                                    }}
                                     startAdornment={
                                         <InputAdornment position="start">
                                             <img src={SearchIcon} alt='logo' />
                                         </InputAdornment>
                                     }
-                                    endAdornment={
+                                    /* endAdornment={
                                         <InputAdornment position="end" onClick={() => setSearch(true)} style={{ cursor: 'pointer' }}>
                                             <img src={Scope} alt='logo' />
                                         </InputAdornment>
-                                    }
+                                    } */
                                 />
                             </Grid>
                         </Grid>
@@ -482,7 +487,7 @@ function Search(props) {
                             </Grid>
                             <Grid item container xs={12} alignItems='center' >
                                 <Grid item container xs={6} xl={6} sm={6} justify='flex-start'>
-                                    <img src={LocationIcon} alt='logo' /> <Typography className={classes.catSubTitles}>Lomas de Zamora</Typography>
+                                   
                                 </Grid>
                                 <Grid item container xs={6} xl={6} sm={6} justify='flex-end'>
                                     <img src={LArrow} alt='logo' style={{ marginLeft: - 30, marginRight: 30 }} />
@@ -497,8 +502,8 @@ function Search(props) {
                         </Grid>
                     </div> : ''}
                     {!Search ? <div>
-                        {width >= 600 ? <div className={classes.backgroundCut} style={{ zIndex: 0, marginTop: 30 }} >
-                            <img src={SearchCutImage} alt='background' width={'100%'} height={'100%'} />
+                        {width >= 600 ? <div className={classes.backgroundCut} style={{ zIndex: 0, marginTop: 0 }} >
+                            <img src={SearchCutImage} alt='background' width={'100%'} height={'60%'} />
                         </div> : ''}
                         <Grid item container xs={12} justify='center' alignItems='center' style={{ marginTop: 90 }}>
                             <Typography className={classes.secondTitle}> Alcanzá más público registrando gratis tu negocio en truster.</Typography>
@@ -510,7 +515,7 @@ function Search(props) {
                             </Grid>
                             <Grid item container xs={12} alignItems='center' >
                                 <Grid item container xs={6} xl={6} sm={6} justify='flex-start'>
-                                    <img src={LocationIcon} alt='logo' /> <Typography className={classes.catSubTitles}>Lomas de Zamora</Typography>
+                                    
                                 </Grid>
                                 <Grid item container xs={6} xl={6} sm={6} justify='flex-end'>
                                     <img src={LArrow} alt='logo' style={{ marginLeft: - 30, marginRight: 30 }} />
@@ -529,7 +534,7 @@ function Search(props) {
                             </Grid>
                             <Grid item container xs={12} alignItems='center' >
                                 <Grid item container xs={6} xl={6} sm={6} justify='flex-start'>
-                                    <img src={LocationIcon} alt='logo' /> <Typography className={classes.catSubTitles}>Buenos Aires</Typography>
+                                    
                                 </Grid>
                                 <Grid item container xs={6} xl={6} sm={6} justify='flex-end'>
                                     <img src={LArrow} alt='logo' style={{ marginLeft: - 30, marginRight: 30 }} onClick={() => test(0)} />
@@ -543,7 +548,7 @@ function Search(props) {
                             )}
                         </Grid>
                         <Grid item container xs={12} justify='center' style={{ marginBottom: 40 }}>
-                            <Typography className={classes.loadMore}>Cargar Más</Typography>
+                            
                         </Grid>
                     </div> 
                     : 
@@ -554,7 +559,7 @@ function Search(props) {
                             </Grid>
                             <Grid item container xs={12} alignItems='center' >
                                 <Grid item container xs={6} xl={6} sm={6} justify='flex-start'>
-                                    <img src={LocationIcon} alt='logo' /> <Typography className={classes.catSubTitles}>Lomas de Zamora</Typography>
+                                    
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -571,7 +576,7 @@ function Search(props) {
                             </Grid>
                             <Grid item container xs={12} alignItems='center' >
                                 <Grid item container xs={6} xl={6} sm={6} justify='flex-start'>
-                                    <img src={LocationIcon} alt='logo' /> <Typography className={classes.catSubTitles}>Buenos Aires</Typography>
+                                    
                                 </Grid>
                             </Grid>
                         </Grid>

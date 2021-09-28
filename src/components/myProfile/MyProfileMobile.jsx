@@ -205,20 +205,12 @@ export default function MyProfileMobile(props) {
         setActive(true);
         const token = getToken();
         let ipPub = getIpClient;
+        let dni = cuil ;
         let idUser = localStorage.getItem("userId")
         const dataUpdate = {
-            "birthDate": localStorage.getItem('birthDate'),
-            "cellphone": phone,
-            "cuit": cuil,
-            "phone": phone,
-            "dni": cuil,
-            "email": localStorage.getItem('email'),
             "id": idUser,
-            "userType": "INDIVIDUAL" ,
-            "gender": localStorage.getItem('gender'),
-            "points": 1,
-            "active": true,
-            "ip": ipPub,
+            "dni":dni,
+            "email":"iportuondo37@gmail.com",
             "occupation": profession,
             "user": {
                 "id": idUser,
@@ -268,7 +260,7 @@ export default function MyProfileMobile(props) {
     let goTOAfip = countChart(cuil);
     let fecha = new Date(localStorage.getItem('birthDate'));
     let options = { day: 'numeric', month: 'long', year: 'numeric' };
-    const isEnabled = profession !== '' && cuil !== '' && phone !== '';
+    const isEnabled = profession !== '' && cuil !== '' ;
     let inProcess = (
         <Grid container xs={12} xl={12} sm={12} justify='flex-start' style={{marginBottom: 25}}>
             <Grid container xs={11} xl={11} sm={11} justify='flex-start'>

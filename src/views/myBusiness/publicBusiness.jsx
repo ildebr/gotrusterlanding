@@ -16,8 +16,8 @@ import MobileHeader from "../../components/publicBusiness/mobileHeader";
 import Contact from "../../components/publicBusiness/contact";
 import MobileTrustUsers from "../../components/publicBusiness/mobileTrustUsers";
 import MobileImage from "../../components/publicBusiness/mobileImage";
-
-
+import cliente from "./../../setting/cliente";
+import {  GetImage } from "../../services/hostConfig";
 const styles = theme => ({
     root: {
         background: '#000000',
@@ -74,7 +74,12 @@ const styles = theme => ({
 class PublicBusiness extends Component {
     constructor(props) {
         super(props);
-        this.state = {windowWidth: window.innerWidth};
+        this.state = {
+            windowWidth: window.innerWidth,
+            user: null,
+            modifiedCover: false,
+            imagesArray: null,        
+        };
     }
 
     handleResize = (e) => {
@@ -83,7 +88,23 @@ class PublicBusiness extends Component {
 
     componentDidMount() {
         window.addEventListener("resize", this.handleResize);
-    }
+        if (this.state.user === null) {
+            this.state.user = localStorage.getItem('userLogin')
+        }
+        if (this.state.imagesArray === null && this.state.user !== null) {
+            cliente.get(GetImage(), {
+                params: {
+                    'user': this.state.user,
+                    'folder': 'coverNegocio'
+                }
+            }).then(
+                res => {
+                    // console.log(res)
+                    this.setState({ imagesArray: res['data']['fileNames'] })
+                }
+            )
+        }    
+    }   
 
     render() {
         function getWindowDimensions() {
@@ -100,7 +121,17 @@ class PublicBusiness extends Component {
                 <Grid container className={classes.root} component="main" maxWidth="md"
                       style={{display: 'flex', justifyContent: 'center'}}>
                     {width >= 600 ? <div className={classes.background}>
-                        <img src={LandingImage} alt='background' width={'100%'} height={'460px'}/>
+                    {this.state.imagesArray !== null && this.state.imagesArray.length > 0 ?
+                            <img src={
+                                'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverNegocio/' + this.state.user + '.png'
+                            }
+                                alt='background' width={'1935px'} height={'500px'}
+                                style={{ objectFit: 'cover' }}
+                            />
+                            :
+                            <img src={LandingImage} alt='background' width={'100%'} height={'460px'}/>
+                        }
+                        
                     </div> : ''}
                     <Grid className={classes.test} container maxWidth="lg" component="main">
                         <Container component="main" maxWidth="lg">
@@ -111,7 +142,7 @@ class PublicBusiness extends Component {
                                 {width >= 600 ? <Grid xs={8} container>
                                     <Typography style={{
                                         //flexGrow: 1,
-                                        paddingLeft: 85,
+                                        paddingLeft: 95,
                                         marginTop: 35,
                                         //align: "center",
                                         color: "#FFFFFF",
@@ -123,7 +154,7 @@ class PublicBusiness extends Component {
                                     <Typography style={{
                                         flexGrow: 1,
                                         marginTop: 34,
-                                        paddingLeft: '10px',
+                                        paddingLeft: '15px',
                                         align: "center",
                                         color: "#999999",
                                         fontFamily: "Poppins",

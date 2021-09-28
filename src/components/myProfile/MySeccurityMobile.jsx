@@ -92,9 +92,9 @@ export default function MyProfileMobile(props) {
       </Grid>
       <Grid container justify="flex-start" alignItems='center' xs={12} xl={12} sm={12} style={{  padding: '10px', marginTop: '20px' }}>
         <Grid container justify="flex-start" alignItems='center' xs={9} xl={9} sm={9} style={{ cursor: 'pointer' }}>
-          <Typography className={classes.fields}>
-            Cambiar mis datos básicos
-          </Typography>
+        <Link href={'/myprofile'}><Typography className={classes.fields}>
+             Cambiar mis datos básicos 
+          </Typography></Link>
         </Grid>
         <Grid container justify="flex-end" alignItems='center' xs={3} xl={3} sm={3}>
           <img src={Arrow} alt='arrow'/>
@@ -103,9 +103,9 @@ export default function MyProfileMobile(props) {
       </Grid>
       <Grid container justify="flex-start" alignItems='center' xs={12} xl={12} sm={12} style={{ padding: '10px', marginTop: '20px' }}>
         <Grid container justify="flex-start" alignItems='center' xs={9} xl={9} sm={9} style={{ cursor: 'pointer' }}>
-          <Typography className={classes.fields}>
+        <Link href={'/myprofile'}> <Typography className={classes.fields}>
             Modificar contraseña
-          </Typography>
+          </Typography></Link>
         </Grid>
         <Grid container justify="flex-end" alignItems='center' xs={3} xl={3} sm={3}>
           <img src={Arrow} alt='arrow' />
@@ -114,7 +114,7 @@ export default function MyProfileMobile(props) {
       </Grid>
       <Grid container justify="flex-start" alignItems='center' xs={12} xl={12} sm={12} style={{ padding: '10px', marginTop: '20px' }}>
         <Grid container justify="flex-start" alignItems='center' xs={9} xl={9} sm={9} style={{cursor:'pointer'}}>
-          <Typography className={classes.fields}>
+        <Typography className={classes.fields}>
             Modificar correo
           </Typography>
         </Grid>
@@ -140,7 +140,7 @@ export default function MyProfileMobile(props) {
         </Grid>
         <Grid container justify="flex-end" xs={10} xl={10} sm={10}>
           <Typography className={classes.mydata}>
-            {Face ? ActivatedText : DeactivatedText}
+            {Face ?  DeactivatedText : ActivatedText}
           </Typography>
         </Grid>
         <hr width="100%" color={'#2C2C2C'} />
@@ -156,7 +156,7 @@ export default function MyProfileMobile(props) {
         </Grid>
         <Grid container justify="flex-end" xs={10} xl={10} sm={10}>
           <Typography className={classes.mydata}>
-            {Meli ? ActivatedText : DeactivatedText}
+            {Meli ?  DeactivatedText: ActivatedText}
           </Typography>
         </Grid>
         <hr width="100%" color={'#2C2C2C'} />
@@ -172,7 +172,7 @@ export default function MyProfileMobile(props) {
         </Grid>
         <Grid container justify="flex-end" xs={10} xl={10} sm={10}>
           <Typography className={classes.mydata}>
-            {Linked ? ActivatedText : DeactivatedText}
+            {Linked ? DeactivatedText : ActivatedText }
           </Typography>
         </Grid>
       </Grid>

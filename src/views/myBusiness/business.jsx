@@ -16,12 +16,14 @@ import MobileHeader from "../../components/myBusiness/mobileHeader";
 import MobileTienda from "../../components/myBusiness/mobileTienda";
 import MobileBotonera from "../../components/myBusiness/mobileBotonera";
 import Switch from "@material-ui/core/Switch";
-import { AllCategory, GetImage,  ShopResource, ShopAdress} from "../../services/hostConfig";
+import { AllCategory, GetImage, ShopResource, ShopAdress } from "../../services/hostConfig";
 import { getToken } from './../../setting/auth-helpers';
-import Cliente from "../../setting/cliente";
+
 import { LoopCircleLoading } from 'react-loadingg';
 import cliente from "./../../setting/cliente";
+import Swal from "sweetalert2";
 const { localStorage } = global.window;
+
 
 const styles = theme => ({
     root: {
@@ -42,6 +44,22 @@ const styles = theme => ({
     test: {
 
         position: 'relative'
+    },
+    normal: {
+        background: '#ACFD00',
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        borderRadius: '14px',
+        textTransform: 'None',
+        color: '#FFFFFF',
+        cursor: 'Pointer',
+    },
+    error:{
+        background: '#666666',
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        borderRadius: '14px',
+        textTransform: 'None',
+        color: '#FFFFFF',
+        cursor: 'Pointer',
     }
 
 });
@@ -89,13 +107,15 @@ class Business extends Component {
             imagesArray: null,
             user: null,
             modifiedCover: false,
-            enabledComponent: false,
+            enabledComponent: true,
             ipPublic: '',
-            show:false
+            show: false,
+            active: true,
+
         };
 
     }
-    
+
 
     handleResize = (e) => {
         this.setState({ windowWidth: window.innerWidth });
@@ -109,7 +129,7 @@ class Business extends Component {
             this.state.user = localStorage.getItem('userLogin')
         }
         if (this.state.imagesArray === null && this.state.user !== null) {
-            Cliente.get(GetImage(), {
+            cliente.get(GetImage(), {
                 params: {
                     'user': this.state.user,
                     'folder': 'coverNegocio'
@@ -148,64 +168,132 @@ class Business extends Component {
             })
 
     }
-    handlenSubmit =(e)=>{
+    handlenSubmit = (e) => {
         let UriShop = ShopResource();
         let UriShopAdress = ShopAdress();
-        let nameBussines= localStorage.getItem("nameBussines");
+        let nameBussines = localStorage.getItem("nameBussines");
         let summary = localStorage.getItem("summary");
-        let descrpition = localStorage.getItem("descriptionBussines");       
+        let descrpition = localStorage.getItem("descriptionBussines");
+        let idCategory = parseInt(localStorage.getItem("categoryBussines"));
+        let idCustomer = parseInt(localStorage.getItem("customerId"));
+        let userLogin = localStorage.getItem("userLogin");
+        let idSubCategory = parseInt(localStorage.getItem("subCategoryBussines"));
+        let city = localStorage.getItem("provinceBussines");
+        let country = localStorage.getItem("localBussines");
+        let postalCode = localStorage.getItem("postalBussines");
+        let streetName = localStorage.getItem("adressBussines");
+        let streetNumber = localStorage.getItem("numberBussines")
+
+        this.setState({
+            show: true,
+            enabledComponent: true,
+            active: true
+        })
+        let date = new Date();
+        date.toLocaleTimeString();
         const token = getToken();
         //// Customer
-        const dataRegister = {            
+        const dataRegister = {
+            "categoryType": {
+                "id": idCategory,
+            },
+            "creationDate": date.toLocaleTimeString(),
+            "customers": [{
+                "id": idCustomer,
+                "user": {
+                    "id": idCustomer,
+                    "login": userLogin,
+                }
+            }],
+            "description": descrpition,
+            "enabled": true,
+            "images": "string",
+            "isPublic": true,
+            "modificationDate": date.toLocaleTimeString(),
+            "name": nameBussines,
+            "subCategoryType": {
+                "id": idSubCategory,
                 "categoryType": {
-                    "id": parseInt(localStorage.getItem("categoryBussines")),
-                },
-                "creationDate": "string",
-                "customers": [{
-                    "id": parseInt(localStorage.getItem("customerId")),
-                    "user": {
-                        "id": parseInt(localStorage.getItem("customerId")),
-                        "login": localStorage.getItem("userLogin"),
-                    }
-                }],
-                "description": descrpition,
-                "enabled": true,
-                "images": "string",
-                "isPublic": true,
-                "modificationDate": Date.now(),
-                "name": nameBussines,
-                "subCategoryType": {
-                    "id": parseInt(localStorage.getItem("subCategoryBussines")),
-                    "categoryType": {
-                        "id": parseInt(localStorage.getItem("subCategoryBussines")),
-                    }
-                },
-                "summary": summary
+                    "id": idSubCategory,
+                }
+            },
+            "summary": summary
+        }
+
+        console.log(dataRegister);
+        if (
+            nameBussines !== null
+            && summary !== null
+            && descrpition !== null
+            && idCategory !== NaN 
+            && idSubCategory !== NaN
+            && city !== null
+            && country !== null
+            && postalCode !== null
+            && streetName !== null
+            && streetNumber !== null
+
+
+        ) {
+        cliente.post(UriShop, dataRegister, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
-        
-          //////adreeeshop
-          const addressShop= {            
-                "apartment": "string",  
-                "city": localStorage.getItem("provinceBussines"),
-                "country": localStorage.getItem("localBussines"),                
-                "postalCode": localStorage.getItem("postalBussines"),
-                "shop": {                 
-                  "id": localStorage.getItem("idShop"),                 
+        }).then(response => {
+            console.log(response);
+            return response
+        }).then(response => {
+            console.log("quiero ver esta data", response)
+            console.log("este es el id", response.id)
+            return response.data.id;
+        }).then(response => {
+            //////adreeeshop
+            console.log("este es el id", response)
+            const addressShop = {
+                "apartment": "string",
+                "city": city,
+                "country": country,
+                "postalCode": postalCode,
+                "shop": {
+                    "id": response,
                 },
-                "streetName": localStorage.getItem("adressBussines"),
-                "streetNumber": localStorage.getItem("numberBussines")
+                "streetName": streetName,
+                "streetNumber": streetNumber
             }
-            cliente.post(UriShop(), dataRegister, {
+            cliente.post(UriShopAdress, addressShop, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             }).then(response => {
-                console.log(response);
-               
-            })  
+                this.setState({
+                    show: false,
+                    enabledComponent: false,
+                    active: false
+                })
+                return response
+            }).catch(error => {
+                console.error('Error:', error)
+                this.setState({
+                    show: false,
+                    enabledComponent: false,
+                    active: false
+                })
+            });
+        })
+    } else {
+        this.setState({show:false})  
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Faltan datos por completar ',
+            footer: 'GoTruster'
+        }) 
         
+    }
 
     }
 
@@ -223,6 +311,16 @@ class Business extends Component {
 
         const { width } = getWindowDimensions();
         const { classes } = this.props;
+        let $show = this.state.show;
+        let $wait = '';
+        
+
+        if ($show) {
+            $wait = (<LoopCircleLoading />);
+        } else {
+            $wait = '';
+        }
+        
         return (
             <React.Fragment>
                 <Grid container className={classes.root} component="main" maxWidth="md"
@@ -297,7 +395,7 @@ class Business extends Component {
                                     }
                                 </Grid>
                             </Grid>
-
+                            
 
                         </Container>
                     </Grid>
@@ -352,6 +450,7 @@ class Business extends Component {
 
 
                                             }}>
+                                                {$wait}
                                             Mostrar tu negocio en los listados
                                         </Typography>
 
@@ -381,12 +480,10 @@ class Business extends Component {
 
 
                                     <div style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: '69px' }}>
-                                        <Button style={{
-                                            background: '#ACFD00',
-                                            boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-                                            borderRadius: '14px',
-                                            textTransform: 'None'
-                                        }}>
+                                        <Button className={classes.normal}
+                                          //disabled={this.state.active}
+                                            onClick={this.handlenSubmit}
+                                        >
                                             <Typography style={{
                                                 align: "center",
                                                 color: '#252525',
@@ -398,7 +495,7 @@ class Business extends Component {
                                                 padding: '10px 15px 9px ',
 
                                             }}>
-                                                Guardar cambios 
+                                                Guardar cambios
                                             </Typography>
                                         </Button>
                                     </div>

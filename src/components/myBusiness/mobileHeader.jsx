@@ -176,12 +176,7 @@ function MobileHeader(props) {
                                     src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverNegocio/' + user + '.png'}
                                     width='100%'
                                     style={{ width: '100%' }}
-                                //     src={
-                                //         UriServices() + '/' + user + '/images/perfil/' + imagesArray[0]}
-                                //     width='160px' height='160px' style={{
-                                //     borderRadius:'50%',
-                                //     objectFit:'cover'
-                                // }}
+                                
                                 />
 
                             </Grid>
@@ -248,7 +243,7 @@ function MobileHeader(props) {
                         (haveImage ?
 
                             <img src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/avatar/' + localStorage.getItem('userLogin') + '.png'}
-                                style={{ width: '35%', height:'60%', borderRadius: '50%', position: 'absolute', bottom: '-35px' }}
+                                style={{ width: '35%', height:'50%', borderRadius: '50%', position: 'absolute', bottom: '-35px' }}
                             />
 
 

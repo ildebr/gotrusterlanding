@@ -7,7 +7,7 @@ import Logo from '../../asset/images/reputation/logo.svg'
 import GreyLogo from '../../asset/images/reputation/greylogo.svg'
 import LinearDeterminate from './progressBarArchMobile'
 import Cliente from "../../setting/cliente";
-import {GetJson} from "../../services/hostConfig";
+import {GetJson, GetImage} from "../../services/hostConfig";
 const { localStorage } = global.window;
 const styles = theme => ({
     root: {
@@ -42,34 +42,40 @@ const styles = theme => ({
 
 
 const ReputationProfile = () => {
-    const [user, setUser] = useState(null)
-    const [imagesArray, setImagesArray] = useState(null)
+    const [user, setUser] = useState(null)   
     const [haveImage, setHaveImage] = useState(false); 
-    const [haveImageCover, setHaveImageCover] = useState(false);
+    const [imagesArray, setImagesArray] = useState(null);    
 
-    function getImages() {
-
+   /*  function getImages() {
         let json = '';
-        let coverPerfil = '';
         Cliente.get(GetJson(), {}).then((res) => {
-            //
-            // console.log(res['data']['content']['images'])
-
-            json = res['data']['content']['images']['perfil']
-            coverPerfil = res['data']['content']['images']['coverPerfil']
-
+           
+            json = res['data']['content']['images']['perfil']            
+           
+            console.log(json.includes(String(localStorage.getItem('userLogin'))))
             if (json.includes(String(localStorage.getItem('userLogin')))) {
                 setHaveImage(true)
-                console.log()
+                console.log("evaluar")
             }
-            else if ( coverPerfil.includes(String(localStorage.getItem('userLogin')))) {
-                setHaveImageCover(true)
-            }
+          
 
         }).catch(e => {
             console.log(e);
         })
 
+    } */
+    function getImages(){
+        Cliente.get(GetImage(), {
+            params: {
+                'user': user,
+                'folder': 'perfil'
+            }
+        }).then(
+            res => {
+                // console.log(res)
+                setImagesArray(res['data']['fileNames'] )
+            }
+        )
     }
 
     useEffect(() => {
@@ -84,6 +90,7 @@ const ReputationProfile = () => {
     let occupation = localStorage.getItem('occupation')=='null'? '': localStorage.getItem('occupation');
     let points = localStorage.getItem('points')=='null'? '': localStorage.getItem('points');
     let nextLevel = localStorage.getItem('points')=='null'? '': 54 - parseInt(localStorage.getItem('points'));
+    let level = localStorage.getItem('level');
     return (
         <Grid position="static" color="transparent" style={{
             flexGrow: 1,
@@ -93,7 +100,7 @@ const ReputationProfile = () => {
 
             <Grid container>
                 <Grid container justify='flex-start' xs={4} xl={4} sm={4}>
-                {haveImage ? 
+                {user!== null ? 
                             <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
 
                                 <img
@@ -135,7 +142,7 @@ const ReputationProfile = () => {
                                 borderRadius: 5,
                                 marginTop: 5,
                                 textTransform: 'none',
-                            }}>Rookie</button>
+                            }}>{level}</button>
                         </Grid >
                         <Grid container justify='flex-end' xs={4} xl={4} sm={4} alignItems='center'>
                             <Typography style={{

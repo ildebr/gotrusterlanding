@@ -881,9 +881,9 @@ class RegisterSecond extends Component {
         for (let index = 0; index < dataSourceAvailableLocal.length; index++) {
              let element = dataSourceAvailableLocal[index];
             local = element.nombre;
-            console.log(local)
+            console.log("este es local",local)
             provincias = element["provincia"]["nombre"]; 
-            console.log(provincias)
+            console.log("Esta es Provincia",provincias)
             if (provincia === provincias){
                 dataNewArrayLocal.push(local)
             }
@@ -1136,7 +1136,7 @@ class RegisterSecond extends Component {
             "password": password,
             "phone": "string",
             "lastModifiedDate": "2021-05-19T04:23:28.205Z",
-            "points": 2,
+            "points": 1,
             "userType": "INDIVIDUAL"
         }
         ////dataAdress //

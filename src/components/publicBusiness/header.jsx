@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState}from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import elipse from "../../asset/images/myBusiness/Ellipse 6.png"
@@ -10,7 +10,8 @@ import icon3 from "../../asset/images/myBusiness/icon3.svg";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faPlus} from "@fortawesome/free-solid-svg-icons";
-
+import cliente from "./../../setting/cliente";
+import {  GetImage,GetJson } from "../../services/hostConfig";
 
 const useStyles = makeStyles(theme => ({
       numberGrid: {
@@ -47,14 +48,65 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Header(props) {
+    const [user, setUser] = useState(null)   
+    const [haveImage, setHaveImage] = useState(false);    
     const classes = useStyles();
+    
+    function getImages() {
+        let json = '';
+        cliente.get(GetJson(), {}).then((res) => {
+           
+            json = res['data']['content']['images']['avatar']            
+           
+            console.log(json.includes(String(localStorage.getItem('userLogin'))))
+            if (json.includes(String(localStorage.getItem('userLogin')))) {
+                setHaveImage(true)
+                console.log("evaluar")
+            }
+          
+
+        }).catch(e => {
+            console.log(e);
+        })
+
+    }
+   
+    
+
+    useEffect(() => {
+
+        if (user === null) {
+            setUser(localStorage.getItem('userLogin'))
+            getImages()
+            
+        }    
+
+    }, [haveImage, user])
+
     return (
         <React.Fragment>
             <Grid container direction={"column"} >
-                <Grid item>
-                    <img src={elipse} style={{width:'160px'}}/>
-                </Grid>
+            {haveImage ?
+                            <Grid item>
 
+                                <img
+                                    src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/avatar/' + user + '.png'}
+                                    width='200px' height='200px' style={{
+                                        borderRadius:'50%',
+                                    objectFit:'cover'
+                                }}
+                                
+                                />
+
+                            </Grid>
+                            :
+                            <Grid item>
+                                <img src={elipse} width='160px' height='160px' style={{
+                                        borderRadius:'50%',
+                                        objectFit:'cover'
+                                }}/>
+                            </Grid>
+                       }
 
                 <Grid item>
                     <Typography style={{

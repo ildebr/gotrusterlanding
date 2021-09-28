@@ -69,15 +69,15 @@ export default function TemporaryDrawer() {
                         {nameUser}
                     </Typography>
                 </Grid>
-                <Grid container xs={12} xl={12} sm={12} style={{ marginTop: 30 }} alignItems='center'>
+                <Grid container xs={12} xl={12} sm={12} style={{ marginTop: 15 }} alignItems='center'>
                     <Grid container xs={1} xl={1} sm={1}>
-                        <Link href='/'><img src={Inicio} alt='inicio' /></Link>
+                        <Link href={userActive ?'/reputation':'/'}><img src={MiReputacion} alt='reputacion' /></Link>
                     </Grid>
                     <Grid container xs={11} xl={11} sm={11} justify='flex-start'>
-                        <Link href='/'><Typography style={{
+                        <Link href={userActive ?'/reputation':'/'}><Typography style={{
                             color: "#FFFFFF",
                             font: " normal normal 14px/14px Poppins"
-                        }}>Inicio</Typography></Link>
+                        }}>Mi Reputación</Typography></Link>
                     </Grid>
                 </Grid>
                 <Grid container xs={12} xl={12} sm={12} style={{ marginTop: 15 }} alignItems='center'>
@@ -91,17 +91,7 @@ export default function TemporaryDrawer() {
                         }}>Búsqueda</Typography></Link>
                     </Grid>
                 </Grid>
-                <Grid container xs={12} xl={12} sm={12} style={{ marginTop: 15 }} alignItems='center'>
-                    <Grid container xs={1} xl={1} sm={1}>
-                        <Link href={userActive ?'/reputation':'/'}><img src={MiReputacion} alt='reputacion' /></Link>
-                    </Grid>
-                    <Grid container xs={11} xl={11} sm={11} justify='flex-start'>
-                        <Link href={userActive ?'/reputation':'/'}><Typography style={{
-                            color: "#FFFFFF",
-                            font: " normal normal 14px/14px Poppins"
-                        }}>Mi Reputación</Typography></Link>
-                    </Grid>
-                </Grid>
+               
                 <Grid container xs={12} xl={12} sm={12} style={{ marginTop: 15 }} alignItems='center'>
                     <Grid container xs={1} xl={1} sm={1}>
                         <Link href={userActive ?'/mybusiness':'/'}><img src={MiNegocio} alt='negocio' /></Link>
@@ -137,7 +127,7 @@ export default function TemporaryDrawer() {
                         <Link href='/security'><img src={MiPerfil} alt='seguridad' /></Link>
                     </Grid>
                     <Grid container xs={11} xl={11} sm={11} justify='flex-start'>
-                        <Link href='/'><Typography style={{
+                        <Link href='/security'><Typography style={{
                             color: "#FFFFFF",
                             font: " normal normal 14px/14px Poppins"
                         }}>Seguridad</Typography></Link>
@@ -163,25 +153,7 @@ export default function TemporaryDrawer() {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid container xs={12} xl={12} sm={12} style={{ marginTop: 15 }} alignItems='center'>
-                    <Grid container xs={1} xl={1} sm={1}>
-                        <Link href='/'><img src={Insertar} alt='insertar' /></Link>
-                    </Grid>
-                    <Grid container xs={11} xl={11} sm={11} justify='flex-start'>
-                        <Grid container xs={12} xl={12} sm={12} justify='flex-start'>
-                            <Link href='/'><Typography style={{
-                                color: "#777777",
-                                font: " normal normal 14px/14px Poppins"
-                            }}>Insertar Perfil</Typography></Link>
-                        </Grid>
-                        <Grid container xs={12} xl={12} sm={12} justify='flex-start' style={{ marginTop: 3 }}>
-                            <Typography style={{
-                                color: "#777777",
-                                font: " normal normal 8px/8px Poppins"
-                            }}>Obtené 2 puntos truster para desbloquear</Typography>
-                        </Grid>
-                    </Grid>
-                </Grid>
+                
                 <Grid container xs={12} xl={12} sm={12} style={{ marginTop: 15 }} alignItems='center'>
                     <Grid container xs={1} xl={1} sm={1}>
                         <Link href='/'><img src={Ajustes} alt='ajustes' /></Link>

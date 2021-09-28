@@ -167,8 +167,10 @@ class EmailCheck extends Component {
               'Authorization': `Bearer ${token}`
             }
           }).then(response => {
+
             console.log(response)
             console.log(response.body)
+            debugger
             return response.json();
             
           }).then(response => {

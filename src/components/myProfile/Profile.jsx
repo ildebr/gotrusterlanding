@@ -173,20 +173,12 @@ export default function Profile(props) {
         setActive(true);
         const token = getToken();
         let ipPub = getIpClient;
+        let dni = cuil ;
         let idUser = localStorage.getItem("userId")
         const dataUpdate = {
-            "birthDate": localStorage.getItem('birthDate'),
-            "cellphone": phone,
-            "cuit": cuil,
-            "phone": phone,
-            "dni": cuil,
-            "email": localStorage.getItem('email'),
             "id": idUser,
-            "userType": "INDIVIDUAL",
-            "gender": localStorage.getItem('gender'),
-            "points": 1,
-            "active": true,
-            "ip": ipPub,
+            "dni":dni,
+            "email":"iportuondo37@gmail.com",
             "occupation": profession,
             "user": {
                 "id": idUser,
@@ -229,7 +221,7 @@ export default function Profile(props) {
     let goTOAfip = countChart(cuil);
     
     let options = { day: 'numeric', month: 'long', year: 'numeric' };
-    const isEnabled = profession !== '' && cuil !== '' && phone !== '';
+    const isEnabled = profession !== '' && cuil !== '' ;
 
     let inProcess = (
         <Grid container xs={8} xl={8} sm={8} justify='flex-end' >
