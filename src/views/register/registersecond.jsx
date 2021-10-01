@@ -1035,7 +1035,7 @@ class RegisterSecond extends Component {
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Debes ser mayor de 18 años para usar Truster',
-                footer: 'Truster App'
+                footer: 'GoTruster App'
             })
             this.setState({
                 yearError: true,

@@ -117,34 +117,21 @@ const MyProfileInfo = ({ modifiedCover }) => {
 
     function getImages() {
 
-        let json = '';
-        let coverPerfil = '';
-        Cliente.get(GetJson(), {}).then((res) => {
-            //
-            // console.log(res['data']['content']['images'])
-
-            json = res['data']['content']['images']['perfil']
-            coverPerfil = res['data']['content']['images']['coverPerfil']
-
-            if (json.includes(String(localStorage.getItem('userLogin')))) {
-                setHaveImage(true)
+        Cliente.get(GetImage(), {
+            params: {
+                'user': user,
+                'folder': 'perfil'
             }
-            else if (coverPerfil.includes(String(localStorage.getItem('userLogin')))) {
-                setHaveImageCover(true)
+        }).then(
+            res => {
+                // console.log(res)
+                setImagesArray(res['data']['fileNames'] )
             }
-
-            setLoading(false)
-
-
-
-        }).catch(e => {
-            console.log(e);
-        })
-
+        )
+    
     }
 
     useEffect(() => {
-
 
         if (user === null) {
             setUser(localStorage.getItem('userLogin'))
@@ -224,7 +211,7 @@ const MyProfileInfo = ({ modifiedCover }) => {
 
                         {loading ? <LoopCircleLoading size='large' color='#ACFD00' />
                             :
-                            (haveImage ?
+                            (user!== null ? 
 
 
                                 <Grid container justify='flex-end' xs={11} xl={11} sm={11}>

@@ -9,6 +9,7 @@ import { Input } from 'rsuite';
 import { Fileload, CustomerResource, ValidatioDetail } from "../../../services/hostConfig";
 //import 'rsuite/dist/styles/rsuite-default.css'
 import Cliente from "../../../setting/cliente";
+
 import { getToken } from '../../../setting/auth-helpers';
 import { LoopCircleLoading } from 'react-loadingg';
 import Button from "@material-ui/core/Button";
@@ -85,6 +86,18 @@ const useStyles = makeStyles(theme => ({
         marginBottom: '80px',
         cursor: 'pointer',
     },
+    imageColor: {
+        color: '#ACFD00',
+        fontSize: '18px',
+        textAlign: 'center',
+        marginRight: '5px'
+    },
+    imageColorGray: {
+        color: '#9b9b9b',
+        fontSize: '18px',
+        textAlign: 'center',
+        marginRight: '5px'
+    }
 
 }))
 
@@ -96,7 +109,7 @@ function DireccionRegister(props) {
     const [user, setUser] = useState(null)
     const [name, setName] = useState(null)
     const [active, setActive] = useState(true)
-
+    const [nameImage, setNameImage] = React.useState(true);
     const [show, setShow] = React.useState('');
 
     const formatDate = () => {
@@ -168,11 +181,14 @@ function DireccionRegister(props) {
                 'user': user,
                 'destination': 'documentos'
             }
-            ).then(setActive(false))
+            ).then(res =>{
+                setActive(false);
+                setNameImage(false);
+            })
         };
         reader.readAsDataURL(_file);
     }
-
+   
     useEffect(() => {
 
         if (user === null) {
@@ -218,12 +234,7 @@ function DireccionRegister(props) {
                                 <Typography className={classes.boton}>Comprobante</Typography>
                             </Grid>
                             <Grid item={2}>
-                                <FontAwesomeIcon icon={faPaperclip} style={{
-                                    color: '#ACFD00',
-                                    fontSize: '18px',
-                                    textAlign: 'center',
-                                    marginRight: '5px'
-                                }} />
+                                <FontAwesomeIcon icon={faPaperclip} className={nameImage ? classes.imageColorGray : classes.imageColor} />
                             </Grid>
                         </Grid>
 

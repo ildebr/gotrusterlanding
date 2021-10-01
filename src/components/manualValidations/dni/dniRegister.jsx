@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
 import InputBase from '@material-ui/core/InputBase';
 import Cliente from "../../../setting/cliente";
+import Swal from "sweetalert2";
 import { Fileload, CustomerResource, ValidatioDetail } from "../../../services/hostConfig";
 import { getToken } from '../../../setting/auth-helpers';
 import { LoopCircleLoading } from 'react-loadingg';
@@ -81,6 +82,18 @@ const useStyles = makeStyles(theme => ({
         marginBottom: '80px',
         cursor: 'pointer',
     },
+    imageColor: {
+        color: '#ACFD00',
+        fontSize: '18px',
+        textAlign: 'center',
+        marginRight: '5px'
+    },
+    imageColorGray: {
+        color: '#9b9b9b',
+        fontSize: '18px',
+        textAlign: 'center',
+        marginRight: '5px'
+    }
 
 }))
 
@@ -94,13 +107,14 @@ function DniRegister(props) {
     const [active, setActive] = useState(true)
     const [dni, setDni] = React.useState('');
     const [show, setShow] = React.useState('');
+    const [nameImage, setNameImage] = React.useState(true);
 
     const handleDni = (e) => {
         setDni(e.target.value);
         localStorage.setItem('dniCuit', e.target.value)
     }
     const formatDate = () => {
-        var date = new Date();
+        var date = Date();
         let formatted_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
         return formatted_date;
     }
@@ -155,7 +169,7 @@ function DniRegister(props) {
                         "user": {
                             "id": idUser,
                             "login": localStorage.getItem('email')
-                          }
+                        }
                     },
                     "points": {
                         "id": 1,
@@ -192,21 +206,25 @@ function DniRegister(props) {
 
     const onFileChange = (event, nombre) => {
         let fileName = event.target.files[0].name
+
         const reader = new FileReader();
         let _file = event.target.files[0];
 
         const _name = nombre
 
-
         reader.onload = function (event) {
             setFile(event.target.result)
+
             Cliente.post(Fileload(), {
                 'file': event.target.result,
                 'fileName': _name,
                 'user': user,
                 'destination': 'DNI'
             }
-            ).then(setActive(false))
+            ).then(res =>{
+                setActive(false);
+                setNameImage(false);
+            })
         };
         reader.readAsDataURL(_file);
     }
@@ -246,8 +264,21 @@ function DniRegister(props) {
                         textAlign: 'center',
                         marginTop: '4px',
                         padding: '10px 0 10px 0'
-                    }} placeholder="DNI" 
-                    inputProps={{ style: { textAlign: 'center' } }}
+                    }} placeholder="DNI"
+                        inputProps={{ style: { textAlign: 'center' } }}
+                        onBlur={(e)=>{ 
+                            let lengthField = e.target.value.length;
+                            if (lengthField !== 8) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'El Dni debe contener 8 caracteres',
+                                    footer: 'GoTruster App'
+                                })
+                            } 
+                        }
+                       
+                    }
                     />
                 </div>
 
@@ -282,12 +313,7 @@ function DniRegister(props) {
                             <Typography className={classes.boton}>Adjuntar Frente</Typography>
                         </Grid>
                         <Grid item={2}>
-                            <FontAwesomeIcon icon={faPaperclip} style={{
-                                color: '#ACFD00',
-                                fontSize: '18px',
-                                textAlign: 'center',
-                                marginRight: '5px'
-                            }} />
+                            <FontAwesomeIcon icon={faPaperclip} className={nameImage ? classes.imageColorGray : classes.imageColor} />
                         </Grid>
                     </Grid>
 
@@ -323,12 +349,7 @@ function DniRegister(props) {
                             <Typography className={classes.boton}>Adjuntar Dorso</Typography>
                         </Grid>
                         <Grid item={2}>
-                            <FontAwesomeIcon icon={faPaperclip} style={{
-                                color: '#ACFD00',
-                                fontSize: '18px',
-                                textAlign: 'center',
-                                marginRight: '5px'
-                            }} />
+                            <FontAwesomeIcon icon={faPaperclip} className={nameImage ? classes.imageColorGray : classes.imageColor} />
                         </Grid>
 
 
@@ -340,7 +361,7 @@ function DniRegister(props) {
                 <Button className={active ? classes.login2 : classes.login}
                     disabled={active}
                     onClick={handleSubmit}
-                    
+
                 >
                     <Typography style={{
                         align: "center",
