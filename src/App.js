@@ -28,6 +28,10 @@ import PublicBusiness from "./views/myBusiness/publicBusiness";
 import PublicProfile from "./views/publicProfile/publicProfile";
 import SlantedPublicBusiness from "./views/myBusiness/slantedPublicBusiness";
 
+import DireccionValidation from "./views/manualValidations/direccion/direccionValidation";
+import DireccionValidationSuccess from "./views/manualValidations/direccion/direccionValidationSuccess";
+import DireccionValidationReady from "./views/manualValidations/direccion/direccionValidationReady";
+import DireccionValidationError from "./views/manualValidations/direccion/direccionValidationError";
 
 import DniValidation from "./views/manualValidations/dni/dniValidation";
 import DniValidationSuccess from "./views/manualValidations/dni/dniValidationSuccess";
@@ -37,7 +41,6 @@ import DniValidationError from "./views/manualValidations/dni/dniValidationFail"
 import AfipValidation from "./views/manualValidations/afipValidation";
 import SecurityMobile from "./views/seccurity/securityMobile";
 import Sesgado from "./views/sesgado/sesgado";
-import DireccionValidation from "./views/manualValidations/direccionValidation";
 import SelfieValidation from "./views/manualValidations/selfieValidation";
 
 import AutomaticValidationPhone from "./views/automaticValidation/AutomaticValidationPhone/automaticValidationPhone";
@@ -112,8 +115,7 @@ function App() {
            {/*manual validations*/}
          
           <GuardedRoute path="/validation/afip" exact component={AfipValidation} auth={auth.loggedIn()}/>
-          <GuardedRoute path="/validation/direccion" exact component={DireccionValidation} auth={auth.loggedIn()}/>
-          <GuardedRoute path="/validation/selfie" exact component={SelfieValidation} auth={auth.loggedIn()}/> 
+           <GuardedRoute path="/validation/selfie" exact component={SelfieValidation} auth={auth.loggedIn()}/> 
           
           {/*automatic validations*/}
             {/*Phone*/}
@@ -144,12 +146,19 @@ function App() {
               <GuardedRoute path="/failedAutomaticValidationBinance" component={FailedAutomaticValidationBinance} auth={auth.loggedIn()} />
               <GuardedRoute path="/readyAutomaticValidationBinance" component={ReadyAutomaticValidationBinance} auth={auth.loggedIn()} />
               <GuardedRoute path="/successAutomaticValidationBinance" component={SuccessAutomaticValidationBinance} auth={auth.loggedIn()} />
+             {/*Manual validations*/}
 
                 {/*DNI*/}
                 <GuardedRoute path="/validation/dni" exact component={DniValidation} auth={auth.loggedIn()}/>
                 <GuardedRoute path="/validation/dniSuccess" exact component={DniValidationSuccess} auth={auth.loggedIn()}/>
                 <GuardedRoute path="/validation/dniReady" exact component={DniValidationReady} auth={auth.loggedIn()}/>
                 <GuardedRoute path="/validation/dniError" exact component={DniValidationError} auth={auth.loggedIn()}/>
+              
+               {/*Direccion*/}
+               <GuardedRoute path="/validation/direccion" exact component={DireccionValidation} auth={auth.loggedIn()}/>
+               <GuardedRoute path="/validation/direccionSuccess" exact component={DireccionValidationSuccess} auth={auth.loggedIn()}/>
+                <GuardedRoute path="/validation/direccionReady" exact component={DireccionValidationReady} auth={auth.loggedIn()}/>
+                <GuardedRoute path="/validation/direccionError" exact component={DireccionValidationError} auth={auth.loggedIn()}/>
           
         </Switch>
       </Router>

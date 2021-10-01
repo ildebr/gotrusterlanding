@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Button, Grid, Typography} from '@material-ui/core';
+import { Modal } from './Modal';
+import { BaseURLImage } from './../../services/hostConfig';
+import ProfileImage from "../../asset/images/admin/dni/profileImage.png";
+import DniFront from "../../asset/images/admin/dni/dniFront.png";
+import DniBack from "../../asset/images/admin/dni/dniBack.png";
 
 const useStyles = makeStyles({
     root: {
@@ -17,8 +22,10 @@ const useStyles = makeStyles({
         color: '#E5E5E5',
     },
     profileImage: {
+        borderRadius: "50%",
         width: 130,
-        height: 130
+        height: 130,
+        display: "block"
     },
     label: {
         fontFamily: 'Poppins',
@@ -91,9 +98,36 @@ const useStyles = makeStyles({
     }
 });
 
+const IMAGE_PROFILE_PATH = "perfil/"
+const IMAGE_DOCUMENT_PATH = "dni/";
+
 function DniRow(props) {
     const {data} = props;
     const classes = useStyles();
+    const [showModal1, setShowModal1] = useState(false);
+    const [showModal2, setShowModal2] = useState(false);
+    const docFrontImageRef = useRef();
+    const docBackImageRef = useRef();
+
+    const openModal1 = () => {
+        setShowModal1(prev => !prev);
+    };
+
+    const openModal2 = () => {
+        setShowModal2(prev => !prev);
+    };
+
+    const addDefaultPofileImage = e => {
+        e.target.src = ProfileImage
+    }
+
+    const addDefaultDocumentFrontImage = e => {
+        e.target.src = DniFront
+    }
+
+    const addDefaultDocumentBackImage = e => {
+        e.target.src = DniBack
+    }
 
     return (
         <Grid container spacing={4} direction='column' className={classes.root} alignItems='flex-start'>
@@ -104,7 +138,7 @@ function DniRow(props) {
                 <Grid item xs={7} container spacing={3} direction='column'>
                     <Grid item container spacing={2} direction='row' alignItems='center' justify='center'>
                         <Grid item xs={3}>
-                            <img src={data.image} className={classes.profileImage}/>
+                            <img src={BaseURLImage() + IMAGE_PROFILE_PATH + data.email + '.png'} onError={addDefaultPofileImage} className={classes.profileImage} />
                         </Grid>
                         <Grid item xs={9} container spacing={2} direction='row'>
                             <Grid item xs={3} container spacing={2} direction='column' justify='space-between'>
@@ -149,7 +183,7 @@ function DniRow(props) {
                                         Dirección
                                     </Typography>
                                     <Typography item className={classes.dataText}>
-                                        {data.address}
+                                        {data.streetName} {data.streetNumber} 
                                     </Typography>
                                 </Grid>
                                 <Grid item className={classes.gridDataItem}>
@@ -157,7 +191,7 @@ function DniRow(props) {
                                         Nacionalidad
                                     </Typography>
                                     <Typography item className={classes.dataText}>
-                                        {data.nationality}
+                                        {data.country}
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -175,18 +209,20 @@ function DniRow(props) {
                 <Grid item xs={5} container spacing={2} direction='row' alignItems='center' justify='center'>
                     <Grid item xs container spacing={1} direction='column'>
                         <Grid item>
-                            <img src={data.dniFront} className={classes.dniImage} />
+                            <img ref={docFrontImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email + '-frente.png'} onError={addDefaultDocumentFrontImage} className={classes.dniImage} onClick={openModal1} />
+                            <Modal showModal={showModal1} setShowModal={setShowModal1} src={DniFront} />
                         </Grid>
                         <Grid item>
-                            <Typography className={classes.ampliar}>+ Ampliar</Typography>
+                            <Typography className={classes.ampliar} onClick={openModal1}>+ Ampliar</Typography>
                         </Grid>
                     </Grid>
                     <Grid item xs container spacing={1} direction='column'>
                         <Grid item>
-                            <img src={data.dniBack} className={classes.dniImage} />
+                            <img ref={docBackImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email + '-dorso.png'} onError={addDefaultDocumentBackImage} className={classes.dniImage} onClick={openModal2} />
+                            <Modal showModal={showModal2} setShowModal={setShowModal2} src={DniBack} />
                         </Grid>
                         <Grid item>
-                            <Typography className={classes.ampliar}>+ Ampliar</Typography>
+                            <Typography className={classes.ampliar} onClick={openModal2}>+ Ampliar</Typography>
                         </Grid>
                     </Grid>
                 </Grid>

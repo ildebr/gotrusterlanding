@@ -1,12 +1,16 @@
-import React from 'react';
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useEffect, useState } from 'react';
+import { makeStyles } from "@material-ui/core/styles";
 import image from '../../../asset/images/manualValidations/direccion/direccionRegister.png';
-import {Typography} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPaperclip} from "@fortawesome/free-solid-svg-icons";
-import {Input} from 'rsuite';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
+import { Input } from 'rsuite';
+import { Fileload, CustomerResource, ValidatioDetail } from "../../../services/hostConfig";
 //import 'rsuite/dist/styles/rsuite-default.css'
+import Cliente from "../../../setting/cliente";
+import { getToken } from '../../../setting/auth-helpers';
+import { LoopCircleLoading } from 'react-loadingg';
 import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(theme => ({
@@ -29,7 +33,7 @@ const useStyles = makeStyles(theme => ({
         fontWeight: 400,
         fontSize: '18px',
         letterSpacing: '-0.01em',
-        maxWidth:'500px',
+        maxWidth: '500px',
         paddingTop: '40px',
         [theme.breakpoints.down('sm')]: {
             fontSize: '12px',
@@ -55,21 +59,131 @@ const useStyles = makeStyles(theme => ({
         letterSpacing: '-0.02em',
         marginTop: '8px'
     },
-    rootDiv:{
-        display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop:'100px',
+    rootDiv: {
+        display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',
         [theme.breakpoints.down('sm')]: {
-            marginTop:'30px'
+            marginTop: '30px'
         },
     },
+    login: {
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        backgroundColor: '#ACFD00',
+        borderRadius: '14px',
+        textTransform: 'None',
+        width: '300px',
+        marginTop: '20px',
+        marginBottom: '80px',
+        cursor: 'pointer',
+    },
+    login2: {
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        backgroundColor: '#666666',
+        borderRadius: '14px',
+        textTransform: 'None',
+        width: '300px',
+        marginTop: '20px',
+        marginBottom: '80px',
+        cursor: 'pointer',
+    },
+
 }))
 
 
 function DireccionRegister(props) {
     const classes = useStyles();
+
+    const [file, setFile] = useState(null)
+    const [user, setUser] = useState(null)
+    const [name, setName] = useState(null)
+    const [active, setActive] = useState(true)
+
+    const [show, setShow] = React.useState('');
+
+    const formatDate = () => {
+        var date = new Date();
+        let formatted_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        return formatted_date;
+    }
+
+    const handleSubmit = () => {
+        /*   let URL = CustomerResource(); */
+        let URLVal = ValidatioDetail();
+        let dateModify = formatDate;
+        console.log(dateModify);
+        setShow(<LoopCircleLoading />)
+        setActive(true);
+        const token = getToken();
+
+        let idUser = localStorage.getItem("userId")
+       
+        const newValidations = {
+            "customer": {
+                "id": idUser,
+                "user": {
+                    "id": idUser,
+                    "login": localStorage.getItem('email')
+                }
+            },
+            "points": {
+                "id": 4,
+            },
+            "validationCreationDate": formatDate,
+            "validationEnabled": true,
+            "validationExtra": "string",
+            "validationModificationDate": formatDate,
+            "validationName": "ADDRESS",
+            "validationStatus": "PENDING"
+        }
+        console.log(newValidations)
+        Cliente.post(URLVal, newValidations, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(response => {
+            return response.data
+        }).then(response => {
+            console.log(response)
+            setShow('')
+            setActive(false)
+            window.open("/validation/direccionReady", '_self');
+        }).catch(error => console.log(error));
+
+    }
+
+    const onFileChange = (event, nombre) => {
+        let fileName = event.target.files[0].name
+        const reader = new FileReader();
+        let _file = event.target.files[0];
+
+        const _name = nombre
+
+
+        reader.onload = function (event) {
+            setFile(event.target.result)
+            Cliente.post(Fileload(), {
+                'file': event.target.result,
+                'fileName': _name,
+                'user': user,
+                'destination': 'documentos'
+            }
+            ).then(setActive(false))
+        };
+        reader.readAsDataURL(_file);
+    }
+
+    useEffect(() => {
+
+        if (user === null) {
+            setUser(localStorage.getItem('userLogin'))
+        }
+    }, [user]);
+
     return (
         <React.Fragment>
             <div className={classes.rootDiv}>
-                <img src={image} width={200} height={'100%'}/>
+                <img src={image} width={200} height={'100%'} />
                 <Typography className={classes.titulo}>
                     Para validar tu dirección, te pedimos que adjuntes una factura que la valide.
                 </Typography>
@@ -77,29 +191,48 @@ function DireccionRegister(props) {
                 <Typography className={classes.subtitulo}>
                     Podes utilizar una factura de servicio, contrato de alquiler, resumen de banco, etc, etc, etc.
                 </Typography>
-                <div style={{
-                    width: '300px', marginTop: '8px',
-                    border: '2px solid #303030',
-                    filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
-                    borderRadius: '14px',
+               
+                    <Button component="label" style={{
+                        width: '300px', marginTop: '8px',
+                        border: '2px solid #303030',
+                        filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
+                        borderRadius: '14px',
+                        backgroundColor: '#000',
+                        textTransform: 'none'
 
-                }}>
-                    <Grid container direction={'row'} style={{padding: '10px 0 10px 0', cursor: 'pointer'}}>
-                        <Grid item xs={2}/>
-                        <Grid item xs={8}>
-                            <Typography className={classes.boton}>Comprobante.jpg</Typography>
-                        </Grid>
-                        <Grid item={2}>
-                            <FontAwesomeIcon icon={faPaperclip} style={{
-                                color: '#ACFD00',
-                                fontSize: '18px',
-                                textAlign: 'center',
-                                marginRight: '5px'
-                            }}/>
-                        </Grid>
-                    </Grid>
+                    }}>
+                        <input
+                            className={classes.boton}
+                            id="file"
+                            name="file"
+                            type="file"
+                            hidden
+                            onChange={
+                                (e) => onFileChange(e, 'Factura')}
 
-                </div>
+
+                        />
+                        <Grid container direction={'row'} style={{ padding: '10px 0 10px 0', cursor: 'pointer' }}>
+
+                            <Grid item xs={8}>
+                                <Typography className={classes.boton}>Comprobante</Typography>
+                            </Grid>
+                            <Grid item={2}>
+                                <FontAwesomeIcon icon={faPaperclip} style={{
+                                    color: '#ACFD00',
+                                    fontSize: '18px',
+                                    textAlign: 'center',
+                                    marginRight: '5px'
+                                }} />
+                            </Grid>
+                        </Grid>
+
+                    </Button>
+
+
+
+
+                
                 <Typography className={classes.texto}>
                     Los jpg, png, pdf son válidos.
                 </Typography>
@@ -107,15 +240,10 @@ function DireccionRegister(props) {
 
 
 
-                <Button style={{
-                    background: '#ACFD00',
-                    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-                    borderRadius: '14px',
-                    textTransform: 'None',
-                    width: '300px',
-                    marginTop: '20px',
-                    marginBottom: '80px'
-                }}>
+                <Button className={active ? classes.login2 : classes.login}
+                onClick={handleSubmit}
+                disabled={active}
+                >
                     <Typography style={{
                         align: "center",
                         color: '#252525',

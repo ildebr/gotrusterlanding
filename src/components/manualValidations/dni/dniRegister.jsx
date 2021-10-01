@@ -4,10 +4,11 @@ import image from '../../../asset/images/manualValidations/dniRegister.png';
 import { Typography, Button, Grid } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
-import { Input } from 'rsuite';
+import InputBase from '@material-ui/core/InputBase';
 import Cliente from "../../../setting/cliente";
-import { Fileload } from "../../../services/hostConfig";
-
+import { Fileload, CustomerResource, ValidatioDetail } from "../../../services/hostConfig";
+import { getToken } from '../../../setting/auth-helpers';
+import { LoopCircleLoading } from 'react-loadingg';
 const useStyles = makeStyles(theme => ({
     titulo: {
         color: "#FFF",
@@ -67,8 +68,8 @@ const useStyles = makeStyles(theme => ({
         textTransform: 'None',
         width: '300px',
         marginTop: '20px',
-        marginBottom: '80px',       
-        cursor:'pointer',        
+        marginBottom: '80px',
+        cursor: 'pointer',
     },
     login2: {
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
@@ -77,8 +78,8 @@ const useStyles = makeStyles(theme => ({
         textTransform: 'None',
         width: '300px',
         marginTop: '20px',
-        marginBottom: '80px',       
-        cursor:'pointer',        
+        marginBottom: '80px',
+        cursor: 'pointer',
     },
 
 }))
@@ -91,6 +92,103 @@ function DniRegister(props) {
     const [user, setUser] = useState(null)
     const [name, setName] = useState(null)
     const [active, setActive] = useState(true)
+    const [dni, setDni] = React.useState('');
+    const [show, setShow] = React.useState('');
+
+    const handleDni = (e) => {
+        setDni(e.target.value);
+        localStorage.setItem('dniCuit', e.target.value)
+    }
+    const formatDate = () => {
+        var date = new Date();
+        let formatted_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        return formatted_date;
+    }
+
+    const handleSubmit = () => {
+        let URL = CustomerResource();
+        let URLVal = ValidatioDetail();
+        let dateModify = formatDate;
+        console.log(dateModify);
+        setShow(<LoopCircleLoading />)
+        setActive(true);
+        const token = getToken();
+        let dni = localStorage.getItem('dniCuit');
+        let idUser = localStorage.getItem("userId")
+        const dataUpdate = {
+            "active": true,
+            "birthDate": localStorage.getItem("birthDate"),
+            "cellphone": localStorage.getItem("cellphone"),
+            "creationDate": localStorage.getItem("createDate"),
+            "cuit": dni,
+            "gender": localStorage.getItem("gender"),
+            "ip": localStorage.getItem("ip"),
+            "level": localStorage.getItem("Level"),
+            "modificationDate": formatDate,
+            "id": idUser,
+            "dni": dni,
+            "email": localStorage.getItem("email"),
+            "occupation": localStorage.getItem("occupation"),
+            "user": {
+                "id": idUser,
+                "login": localStorage.getItem('email')
+            },
+            "userType": "INDIVIDUAL"
+        }
+
+        let newState = JSON.parse(JSON.stringify(dataUpdate));
+        console.log(dataUpdate)
+        Cliente.put(URL + '/' + idUser, newState, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                return response.data
+            }).then(response => {
+                console.log(response);
+                const newValidations = {
+                    "customer": {
+                        "id": idUser,
+                        "user": {
+                            "id": idUser,
+                            "login": localStorage.getItem('email')
+                          }
+                    },
+                    "points": {
+                        "id": 1,
+                    },
+                    "validationCreationDate": "2021-09-26",
+                    "validationEnabled": true,
+                    "validationExtra": "string",
+                    "validationModificationDate": "2021-09-26",
+                    "validationName": "DNI",
+                    "validationStatus": "PENDING"
+                }
+                console.log(newValidations)
+                Cliente.post(URLVal, newValidations, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(response => {
+                    return response.data
+                }).then(response => {
+                    console.log(response)
+                    window.open("/validation/dniReady", '_self');
+                }).catch(error => console.log(error));
+
+            }).then(response => {
+                console.log(response);
+                setShow('')
+                setActive(false)
+            }).catch(error => console.log(error));
+
+
+    }
 
     const onFileChange = (event, nombre) => {
         let fileName = event.target.files[0].name
@@ -131,10 +229,11 @@ function DniRegister(props) {
 
                 <Typography className={classes.subtitulo}>
                     Numero de DNI o Libreta Civica
+                    {show}
                 </Typography>
                 <div style={{ width: '300px', marginTop: '4px' }}>
 
-                    <Input style={{
+                    <InputBase onChange={handleDni} style={{
                         backgroundColor: '#000',
                         border: '2px solid #303030',
                         filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
@@ -147,7 +246,9 @@ function DniRegister(props) {
                         textAlign: 'center',
                         marginTop: '4px',
                         padding: '10px 0 10px 0'
-                    }} placeholder="DNI" />
+                    }} placeholder="DNI" 
+                    inputProps={{ style: { textAlign: 'center' } }}
+                    />
                 </div>
 
                 <Typography className={classes.subtitulo} style={{ color: '#ACFD00' }}>
@@ -236,9 +337,10 @@ function DniRegister(props) {
                 </Button>
 
 
-                <Button className={active ? classes.login2: classes.login}
+                <Button className={active ? classes.login2 : classes.login}
                     disabled={active}
-                    href={'/validation/dniReady'}
+                    onClick={handleSubmit}
+                    
                 >
                     <Typography style={{
                         align: "center",

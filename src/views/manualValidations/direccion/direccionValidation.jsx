@@ -3,8 +3,14 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import {Container, Grid, Typography} from "@material-ui/core";
 import ValidationNavbar from "../../../components/navBar/validationNavbar";
 import DniRegister from "../../../components/manualValidations/dni/dniRegister";
+import DniReady from "../../../components/manualValidations/dni/dniReady";
+import DniSuccess from "../../../components/manualValidations/dni/dniSuccess";
+import DniError from "../../../components/manualValidations/dni/dniError";
+import DireccionRegister from "../../../components/manualValidations/direccion/direccionRegister";
+import DireccionReady from "../../../components/manualValidations/direccion/direccionReady";
+import DireccionSuccess from "../../../components/manualValidations/direccion/direccionSuccess";
+import DireccionError from "../../../components/manualValidations/direccion/direccionError";
 
-import { loaderServices } from '../../../services/hostConfig';
 
 const styles = theme => ({
     root: {
@@ -30,7 +36,7 @@ const styles = theme => ({
 });
 
 
-class DniValidation extends Component {
+class DireccionValidation extends Component {
     constructor(props) {
         super(props);
         this.state = {windowWidth: window.innerWidth};
@@ -43,7 +49,6 @@ class DniValidation extends Component {
     };
 
     componentDidMount() {
-        fetch(loaderServices());
         window.addEventListener("resize", this.handleResize);
     }
 
@@ -69,10 +74,12 @@ class DniValidation extends Component {
                             <ValidationNavbar/>
 
 
-                        <div style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
-                            <DniRegister/>
-                           
-                        </div>
+                            <div style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+                                <DireccionRegister/>
+                                {/* <DireccionSuccess/>*/}
+                                {/* <DireccionReady/>*/}
+                                {/* <DireccionError/>*/}
+                            </div>
 
                         </Container>
                     </Grid>
@@ -86,4 +93,4 @@ class DniValidation extends Component {
 
 }
 
-export default withStyles(styles, {withTheme: true})(DniValidation);
+export default withStyles(styles, {withTheme: true})(DireccionValidation);

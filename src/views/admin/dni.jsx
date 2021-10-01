@@ -1,11 +1,10 @@
-import React, {useState, Fragment} from 'react';
+import React, {useState, Fragment, useEffect} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import {CssBaseline, Grid, Container, Typography} from '@material-ui/core';
 import AdminNavbar from "../../components/navBar/adminNavbar";
 import DniRow from "../../components/admin/dniRow";
-import ProfileImage from "../../asset/images/admin/dni/profileImage.png";
-import DniFront from "../../asset/images/admin/dni/dniFront.png";
-import DniBack from "../../asset/images/admin/dni/dniBack.png";
+import { AdminCustomer } from './../../services/hostConfig';
+import { getToken } from './../../setting/auth-helpers';
 
 const styles = theme => ({
     navBar: {
@@ -55,51 +54,36 @@ const styles = theme => ({
     },
 });
 
-
-
-
-const dummyData = [
-    {
-        date: '23 de Junio 2021',
-        name: 'Laura Magdalena',
-        lastName: 'Martinez Irrutia',
-        gender: 'Femenino',
-        dni: '12232132',
-        address: 'Coronel General Santaolalla 1323',
-        nationality: 'Argentina',
-        image: ProfileImage,
-        dniFront: DniFront,
-        dniBack: DniBack
-    },
-    {
-        date: '23 de Junio 2021',
-        name: 'Laura Magdalena',
-        lastName: 'Martinez Irrutia',
-        gender: 'Femenino',
-        dni: '12232132',
-        address: 'Coronel General Santaolalla 1323',
-        nationality: 'Argentina',
-        image: ProfileImage,
-        dniFront: DniFront,
-        dniBack: DniBack
-    },
-    {
-        date: '23 de Junio 2021',
-        name: 'Laura Magdalena',
-        lastName: 'Martinez Irrutia',
-        gender: 'Femenino',
-        dni: '12232132',
-        address: 'Coronel General Santaolalla 1323',
-        nationality: 'Argentina',
-        image: ProfileImage,
-        dniFront: DniFront,
-        dniBack: DniBack
-    },
-];
-
 function AdminDni(props) {
     const {classes} = props;
-    const [rows, setRows] = useState(dummyData);
+    const pageSize = 13
+    const [total, setTotal] = useState(pageSize);
+    const [rows, setRows] = useState([]);
+
+    useEffect(() => {
+        try {
+        const token = getToken();
+            if (token !== 'undefined') {
+                fetch(AdminCustomer() + `?size=${total}`, {
+                    method: 'get',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(response => {
+                    if (response.status === 200) {
+                        return response.json()
+                    }
+                    setRows([]);
+                }).then(response => {
+                    setRows(response)
+                })
+            }
+        } catch(e) {
+            console.log(e)
+        }
+    }, [total]);
 
     return (
         <Fragment>
@@ -136,10 +120,8 @@ function AdminDni(props) {
                                 <Typography
                                     className={classes.loadMore}
                                     onClick={() => {
-                                        // Dummy Data to simulate load more button
-                                        let data = rows;
-                                        data = [...data, ...dummyData];
-                                        setRows(data)
+                                        setTotal(total + pageSize);
+                                        setRows(rows);
                                     }}
                                 >
                                     Cargar Más

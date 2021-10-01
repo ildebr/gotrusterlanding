@@ -156,13 +156,14 @@ const StyledMenuItem = withStyles((theme) => ({
     },
 }))(MenuItem);
 
-const USER_TYPE = "INDIVIDUAL";
+const USER_TYPE = "/INDIVIDUAL";
 const ROWS_INDIVIDUAL = "rows_individual";
 
 function Users(props) {
     const {classes} = props;
     const [rows, setRows] = useState([]);
-    const [total, setTotal] = useState(13);
+    const pageSize = 13
+    const [total, setTotal] = useState(pageSize);
     const [anchorEl, setAnchorEl] = React.useState(null);
     // Selected search filter
     const [selectedSearch, setSelectedSearch] = React.useState("NOMBRE");
@@ -181,9 +182,6 @@ function Users(props) {
         searchIconRef.current.src = SearchIcon;
         arrowIconRef.current.style.color = "#555555";
     };
-    function loadDataUser(){
-        
-    }
 
     const handleClearSearch = (ev) => {
         ev.target.value = '';
@@ -214,27 +212,28 @@ function Users(props) {
     }
 
     useEffect(() => {
+        try {
         const token = getToken();
-        if (token !== 'undefined') {
-            fetch(UserAdminPlusResource() + '/' + USER_TYPE + `?size=${total}`, {
-                method: 'get',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            }).then(response => {
-                if (response.status == 401 ||
-                    response.status == 400 || 
-                    response.status == 500) {
-                        setRows([]);
-                } else{
-                    return response.json();
-                }
-            }).then(response => {
-                setRows(response);
-                localStorage.setItem(ROWS_INDIVIDUAL, JSON.stringify(response));
-            })
+            if (token !== 'undefined') {
+                fetch(UserAdminPlusResource() + USER_TYPE + `?size=${total}`, {
+                    method: 'get',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(response => {
+                    if (response.status === 200) {
+                        return response.json()
+                    }
+                    setRows([]);
+                }).then(response => {
+                    setRows(response)
+                    localStorage.setItem(ROWS_INDIVIDUAL, JSON.stringify(response))
+                })
+            }
+        } catch(e) {
+            console.log(e)
         }
     }, [total]);
 
@@ -340,11 +339,8 @@ function Users(props) {
                                 <Typography
                                     className={classes.loadMore}
                                     onClick={() => {
-                                        // Dummy Data to simulate load more button
-                                        let data = rows;
-                                        //data = [...data, ...data];
-                                        setTotal(total+total);
-                                        setRows(data);
+                                        setTotal(total + pageSize);
+                                        setRows(rows);
                                     }}
                                 >
                                     Cargar Más

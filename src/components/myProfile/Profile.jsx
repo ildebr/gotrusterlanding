@@ -119,15 +119,15 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 let occupation = localStorage.getItem('occupation') === 'null' ? 'Agregue su ocupación' : localStorage.getItem('occupation');
-    let gender = localStorage.getItem('gender');
+let gender = localStorage.getItem('gender');
 
-    let cellphone = localStorage.getItem('cellphone') === 'string' ? 'xxx-xxxx-xxxx' : localStorage.getItem('cellphone');
-    let cuit = localStorage.getItem('cuit') === 'string' ? 'xx-xxxxxxxx-x (Cuil/Cuit) o xxxxxxxx (Dni)' : localStorage.getItem('cuit');
-    //let dni = localStorage.getItem('dni') === 'string' ? 'Agregue su cuit': localStorage.getItem('dni');
-    let email = localStorage.getItem('email');
-    let adresses = localStorage.getItem('Adresses') === '' ? 'Dirección' : localStorage.getItem('Adresses');
-    let nacionality = localStorage.getItem('Nacinality') === '' ? 'Nacionalidad' : localStorage.getItem('Nacinality');
-    let fecha = new Date(localStorage.getItem('birthDate'));
+let cellphone = localStorage.getItem('cellphone') === 'string' ? 'xxx-xxxx-xxxx' : localStorage.getItem('cellphone');
+let cuit = localStorage.getItem('cuit') === 'string' ? 'xx-xxxxxxxx-x (Cuil/Cuit) o xxxxxxxx (Dni)' : localStorage.getItem('cuit');
+//let dni = localStorage.getItem('dni') === 'string' ? 'Agregue su cuit': localStorage.getItem('dni');
+let email = localStorage.getItem('email');
+let adresses = localStorage.getItem('Adresses') === '' ? 'Dirección' : localStorage.getItem('Adresses');
+let nacionality = localStorage.getItem('Nacinality') === '' ? 'Nacionalidad' : localStorage.getItem('Nacinality');
+let fecha = new Date(localStorage.getItem('birthDate'));
 
 
 export default function Profile(props) {
@@ -162,33 +162,50 @@ export default function Profile(props) {
     }
     const handleCuil = (e) => {
         setCuil(e.target.value);
-        localStorage.setItem('dniCuit',e.target.value)
+        localStorage.setItem('dniCuit', e.target.value)
     }
     const handlePhone = (e) => {
         setPhone(e.target.value);
     }
+    
+   
+    const formatDate = ()=>{
+        var date = new Date();
+        let formatted_date =  date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+         return formatted_date;
+        }
+
     const handleSubmit = () => {
         let URL = CustomerResource();
         setShow(<Loading />)
-        setActive(true);
-        const token = getToken();
-        let ipPub = getIpClient;
-        let dni = cuil ;
+        setActive(true); 
+        const token = getToken();        
+        let dni = cuil;
         let idUser = localStorage.getItem("userId")
         const dataUpdate = {
+            "active": true,
+            "birthDate": localStorage.getItem("birthDate"),
+            "cellphone": localStorage.getItem("cellphone"),
+            "creationDate": localStorage.getItem("createDate"),
+            "cuit": dni, 
+            "gender": localStorage.getItem("gender"),          
+            "ip": localStorage.getItem("ip"),
+            "level": localStorage.getItem("Level"),
+            "modificationDate": formatDate,
             "id": idUser,
-            "dni":dni,
-            "email":"iportuondo37@gmail.com",
+            "dni": dni,
+            "email": localStorage.getItem("email"),
             "occupation": profession,
             "user": {
                 "id": idUser,
                 "login": localStorage.getItem('email')
-            }
+            },
+            "userType": "INDIVIDUAL"
         }
 
         let newState = JSON.parse(JSON.stringify(dataUpdate));
         console.log(dataUpdate)
-        Cliente.put(CustomerResource() + '/' + idUser, newState, {
+        Cliente.put(URL + '/' + idUser, newState, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -216,12 +233,12 @@ export default function Profile(props) {
     }
 
 
-    
+
     let newGender = '';
     let goTOAfip = countChart(cuil);
-    
+
     let options = { day: 'numeric', month: 'long', year: 'numeric' };
-    const isEnabled = profession !== '' && cuil !== '' ;
+    const isEnabled = profession !== '';
 
     let inProcess = (
         <Grid container xs={8} xl={8} sm={8} justify='flex-end' >
@@ -358,15 +375,15 @@ export default function Profile(props) {
     );
     let forValidatedGender = (
         <Grid container xs={8} xl={8} sm={8} justify='flex-end'>
-             <img src={Ok} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute' }}/>
+            <img src={Ok} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute' }} />
         </Grid>
     );
-    let forValidatedNacinality= (
+    let forValidatedNacinality = (
         <Grid container xs={8} xl={8} sm={8} justify='flex-end'>
-             <img src={Ok} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute' }} />
-         </Grid>
+            <img src={Ok} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute' }} />
+        </Grid>
     );
- 
+
 
 
     if (gender === 'MALE') {
@@ -489,9 +506,9 @@ export default function Profile(props) {
                         disabled={active}
                         // onChange={}
                         required
-                       // onBlur={(e)=>{
-                       //   if (e.target.value.length < 8 && e.target.value.length)
-                      // }}
+                    // onBlur={(e)=>{
+                    //   if (e.target.value.length < 8 && e.target.value.length)
+                    // }}
                     />
                 </Grid>
             </Grid>

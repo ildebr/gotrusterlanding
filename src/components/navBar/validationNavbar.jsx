@@ -18,7 +18,7 @@ import CerrarSesion from '../../asset/images/sidemenu/cerrarsesion.svg'
 import TemporaryDrawer from './mobileDrawer'
 
 import Cliente from "../../setting/cliente";
-import { GetJson } from "../../services/hostConfig";
+import { GetImage } from "../../services/hostConfig";
 const { localStorage } = global.window;
 const userActive = localStorage.getItem('logueado');
 const styles = theme => ({
@@ -68,28 +68,29 @@ const ValidationNavbar = ({ active, recover }) => {
     const [user, setUser] = useState(null)
     const [haveImage, setHaveImage] = useState(false); 
     const [haveImageCover, setHaveImageCover] = useState(false);
-
-    function getImages() {
-        let json = '';
-        let coverPerfil = '';
-        Cliente.get(GetJson(), {}).then((res) => {
-          
-            json = res['data']['content']['images']['perfil']
-            coverPerfil = res['data']['content']['images']['coverPerfil']
-
-            if (json.includes(String(localStorage.getItem('userLogin')))) {
-                setHaveImage(true)
-                console.log()
+    const [imagesArray, setImagesArray] = useState([]);
+    function getImages(){
+        Cliente.get(GetImage(), {
+            params: {
+                'user': user,
+                'folder': 'perfil'
             }
-            else if ( coverPerfil.includes(String(localStorage.getItem('userLogin')))) {
-                setHaveImageCover(true)
+        }).then(
+            res => {
+                // console.log(res)
+                setImagesArray(res['data']['fileNames'] )
             }
-
-        }).catch(e => {
-            console.log(e);
-        })
-
+        )
     }
+
+    useEffect(() => {
+
+        if (user === null) {
+            setUser(localStorage.getItem('userLogin'))
+            getImages()
+        }    
+
+    }, [haveImage, user])
 
     useEffect(() => {
 
@@ -216,7 +217,7 @@ const ValidationNavbar = ({ active, recover }) => {
                             textAlign: 'left'
                         }} >&nbsp;&nbsp;&nbsp;       </Typography>
 
-                     {haveImage ? 
+                     {user !== null ? 
                         <img
                             src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'}
                             style={{marginTop: 30, marginRight: 15, height: 50, width: 50,

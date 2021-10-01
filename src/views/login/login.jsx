@@ -198,6 +198,8 @@ class Login extends Component {
             userType: '',
             idUser: '',
             email: '',
+            firtsName:'',
+            lastName:'',
             userLogin: '',
             enabledComponent: false,
             windowWidth: window.innerWidth
@@ -298,7 +300,7 @@ class Login extends Component {
                                     localStorage.setItem('customerId', response.id);
                                     localStorage.setItem('userLogin', this.state.userLogin);
                                     localStorage.setItem('nombre', this.state.firtsName);
-                                    localStorage.setItem('apellido', this.state.LastName);
+                                    localStorage.setItem('apellido', this.state.lastName);
                                     localStorage.setItem('email', this.state.email);
                                     ///////////////////////////////////////
                                     localStorage.setItem('birthDate', response.birthDate);
@@ -309,6 +311,9 @@ class Login extends Component {
                                     localStorage.setItem('occupation', response.occupation);
                                     localStorage.setItem('points', response.points);
                                     localStorage.setItem("Level", response.level );
+                                    localStorage.setItem("ip", response.ip);
+                                    localStorage.setItem('createDate', response.creationDate);
+                                    localStorage.setItem('cellphone', response.cellphone);
                                     //////////////////////////////////////
 
                                     localStorage.setItem('logueado', true);

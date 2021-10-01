@@ -90,7 +90,7 @@ const ReputationProfile = () => {
     let occupation = localStorage.getItem('occupation')=='null'? '': localStorage.getItem('occupation');
     let points = localStorage.getItem('points')=='null'? '': localStorage.getItem('points');
     let nextLevel = localStorage.getItem('points')=='null'? '': 54 - parseInt(localStorage.getItem('points'));
-    let level = localStorage.getItem('level');
+    let level = localStorage.getItem('Level');
     return (
         <Grid position="static" color="transparent" style={{
             flexGrow: 1,

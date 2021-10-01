@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Button, Grid, Typography} from '@material-ui/core';
 import GoogleMapReact from 'google-map-react';
+import { Modal } from './Modal';
 
 const useStyles = makeStyles({
     acceptButton: {
@@ -89,6 +90,16 @@ const useStyles = makeStyles({
 function AddressRow(props) {
     const {data} = props;
     const classes = useStyles();
+    const [showModal1, setShowModal1] = useState(false);
+    const [showModal2, setShowModal2] = useState(false);
+
+    const openModal1 = () => {
+        setShowModal1(prev => !prev);
+    };
+
+    const openModal2 = () => {
+        setShowModal2(prev => !prev);
+    };
 
     // Default google maps props
     const defaultProps = {
@@ -133,10 +144,11 @@ function AddressRow(props) {
                         </Typography>
                     </Grid>
                     <Grid item xs>
-                        <img src={data.factura} className={classes.facturaImage}/>
+                        <img src={data.factura} className={classes.facturaImage} onClick={openModal1} />
+                        <Modal showModal={showModal1} setShowModal={setShowModal1} src={data.factura} />
                     </Grid>
                     <Grid item xs>
-                        <Typography className={classes.ampliar}>
+                        <Typography className={classes.ampliar} onClick={openModal1}>
                             + Ampliar
                         </Typography>
                     </Grid>

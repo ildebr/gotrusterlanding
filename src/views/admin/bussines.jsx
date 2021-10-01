@@ -22,7 +22,7 @@ import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import EmailIcon from '@material-ui/icons/Email';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
-import { UserAdminPlusResource } from './../../services/hostConfig';
+import { ShopResource } from './../../services/hostConfig';
 import { getToken } from './../../setting/auth-helpers';
 import moment from 'moment'
 
@@ -162,7 +162,8 @@ const ROWS_SHOP = "rows_shop";
 function Bussines(props) {
     const {classes} = props;
     const [rows, setRows] = useState([]);
-    const [total, setTotal] = useState(13);
+    const pageSize = 13
+    const [total, setTotal] = useState(pageSize);
     const [anchorEl, setAnchorEl] = React.useState(null);
     // Selected search filter
     const [selectedSearch, setSelectedSearch] = React.useState("NOMBRE");
@@ -216,7 +217,7 @@ function Bussines(props) {
     useEffect(() => {
         const token = getToken();
         if (token !== 'undefined') {
-            fetch(UserAdminPlusResource() + '/' + USER_TYPE + `?size=${total}`, {
+            fetch(ShopResource() + `?size=${total}`, {
                 method: 'get',
                 headers: {
                     'Accept': 'application/json',
@@ -340,11 +341,8 @@ function Bussines(props) {
                                 <Typography
                                     className={classes.loadMore}
                                     onClick={() => {
-                                        // Dummy Data to simulate load more button
-                                        let data = rows;
-                                        //data = [...data, ...data];
-                                        setTotal(total+total);
-                                        setRows(data);
+                                        setTotal(total + pageSize);
+                                        setRows(rows);
                                     }}
                                 >
                                     Cargar Más

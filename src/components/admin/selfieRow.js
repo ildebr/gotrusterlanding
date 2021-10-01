@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Button, Grid, Typography} from '@material-ui/core';
+import { Modal } from './Modal';
 
 const useStyles = makeStyles({
     root: {
@@ -82,6 +83,16 @@ const useStyles = makeStyles({
 function SelfieRow(props) {
     const {data} = props;
     const classes = useStyles();
+    const [showModal1, setShowModal1] = useState(false);
+    const [showModal2, setShowModal2] = useState(false);
+
+    const openModal1 = () => {
+        setShowModal1(prev => !prev);
+    };
+
+    const openModal2 = () => {
+        setShowModal2(prev => !prev);
+    };
 
     return (
         <Grid container spacing={4} direction='column' className={classes.root} alignItems='flex-start'>
@@ -96,10 +107,11 @@ function SelfieRow(props) {
                         </Typography>
                     </Grid>
                     <Grid item xs>
-                        <img src={data.selfieImage} className={classes.selfieImage}/>
+                        <img src={data.selfieImage} className={classes.selfieImage} onClick={openModal1} />
+                        <Modal showModal={showModal1} setShowModal={setShowModal1} src={data.selfieImage} />
                     </Grid>
                     <Grid item xs>
-                        <Typography className={classes.ampliar}>
+                        <Typography className={classes.ampliar} onClick={openModal1}>
                             + Ampliar
                         </Typography>
                     </Grid>
@@ -111,10 +123,11 @@ function SelfieRow(props) {
                         </Typography>
                     </Grid>
                     <Grid item xs>
-                        <img src={data.dniFront} className={classes.dniImage}/>
+                        <img src={data.dniFront} className={classes.dniImage} onClick={openModal2} />
+                        <Modal showModal={showModal2} setShowModal={setShowModal2} src={data.dniFront} />
                     </Grid>
                     <Grid item xs>
-                        <Typography className={classes.ampliar}>
+                        <Typography className={classes.ampliar} onClick={openModal2}>
                             + Ampliar
                         </Typography>
                     </Grid>
