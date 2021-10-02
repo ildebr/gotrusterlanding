@@ -135,29 +135,18 @@ export default function MyProfileMobile(props) {
 
     }
 
-    function getImages() {
-
-        let json = '';
-        let coverPerfil = '';
-        Cliente.get(GetJson(), {}).then((res) => {
-            //
-            // console.log(res['data']['content']['images'])
-
-            json = res['data']['content']['images']['perfil']
-            coverPerfil = res['data']['content']['images']['coverPerfil']
-
-            if (json.includes(String(localStorage.getItem('userLogin')))) {
-                setHaveImage(true)
+    function getImages(){
+        Cliente.get(GetImage(), {
+            params: {
+                'user': user,
+                'folder': 'perfil'
             }
-            else if ( coverPerfil.includes(String(localStorage.getItem('userLogin')))) {
-                setHaveImageCover(true)
+        }).then(
+            res => {
+                console.log(res)
+               //  setImagesArray(res['data']['fileNames'] )
             }
-
-            setLoading(false)
-        }).catch(e => {
-            console.log(e);
-        })
-        
+        )
     }
 
 
@@ -462,7 +451,7 @@ export default function MyProfileMobile(props) {
                 <Grid container justify="flex-end" xs={5} xl={5} sm={5} style={{ paddingLeft: 20 }}>
                 {loading ? <LoopCircleLoading size='large' color='#ACFD00' />
                             :
-                            (haveImage ?
+                            (user !== null ?
 
                     <Grid container xs={12} xl={12} sm={12}>
                         <img src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'} alt='reputationimg' width='100px' height='100px' style={{

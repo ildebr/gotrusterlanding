@@ -7,6 +7,7 @@ import BRectangle from '../../asset/images/sesgado/bigrectangle.svg'
 import GreyElipse from '../../asset/images/sesgado/greyelipse.svg'
 import Icons from '../../asset/images/sesgado/icons.svg'
 import User from '../../asset/images/sesgado/user.svg'
+import ReputationImg from '../../asset/images/reputation/perfil.jpg'
 
 const { localStorage } = global.window;
 const useStyles = makeStyles(theme => ({
@@ -83,7 +84,7 @@ const SesgadoCard = () => {
         <img src={GreyElipse} alt='greyelipse' width='220px' style={{ zIndex: 2, marginTop: '-230px' }} />
         </Grid>
       <Grid xs={12} xl={12} sm={12} container alignItems='center' justify='center'>
-        <img src={User} alt='greyelipse' width='160px' style={{ zIndex: 3, marginTop: '-230px' }} />
+        <img src={ReputationImg} alt='greyelipse' width='160px' height='160px' style={{ zIndex: 3, marginTop: '-230px', borderRadius:'100px' }} />
       </Grid>
       <Grid xs={12} xl={12} sm={12} container justify='center' style={{ marginTop: '50px', width: '80%' }}>
           <Grid xs={12} xl={12} sm={12} container alignItems='center' justify='center' style={{ marginBottom: '15px' }}>

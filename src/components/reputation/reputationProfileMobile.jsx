@@ -7,7 +7,7 @@ import Logo from '../../asset/images/reputation/logo.svg'
 import GreyLogo from '../../asset/images/reputation/greylogo.svg'
 import CircularDeterminate from './progressBarMobile'
 import Cliente from "../../setting/cliente";
-import {GetJson} from "../../services/hostConfig";
+import {GetImage} from "../../services/hostConfig";
 const { localStorage } = global.window;
 const styles = theme => ({
     root: {
@@ -51,29 +51,18 @@ const ReputationProfileMobile = () => {
     const [haveImage, setHaveImage] = useState(false); 
     const [haveImageCover, setHaveImageCover] = useState(false);
 
-    function getImages() {
-
-        let json = '';
-        let coverPerfil = '';
-        Cliente.get(GetJson(), {}).then((res) => {
-            //
-            // console.log(res['data']['content']['images'])
-
-            json = res['data']['content']['images']['perfil']
-            coverPerfil = res['data']['content']['images']['coverPerfil']
-
-            if (json.includes(String(localStorage.getItem('userLogin')))) {
-                setHaveImage(true)
-                console.log()
+    function getImages(){
+        Cliente.get(GetImage(), {
+            params: {
+                'user': user,
+                'folder': 'perfil'
             }
-            else if ( coverPerfil.includes(String(localStorage.getItem('userLogin')))) {
-                setHaveImageCover(true)
+        }).then(
+            res => {
+                // console.log(res)
+                setImagesArray(res['data']['fileNames'] )
             }
-
-        }).catch(e => {
-            console.log(e);
-        })
-
+        )
     }
 
     useEffect(() => {
@@ -129,7 +118,7 @@ const ReputationProfileMobile = () => {
                     <div style={{ zIndex: -1, marginTop: -8.2 }}>
                         <CircularDeterminate givenValue={points} />
                     </div>
-                    {haveImage ?
+                    {user!== null ? 
                     <div style={{ zIndex: 1 }}>
                         <img
                             src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'}

@@ -28,6 +28,17 @@ import PublicBusiness from "./views/myBusiness/publicBusiness";
 import PublicProfile from "./views/publicProfile/publicProfile";
 import SlantedPublicBusiness from "./views/myBusiness/slantedPublicBusiness";
 
+
+import SelfieValidation from "./views/manualValidations/selfie/selfieValidation";
+import SelfieValidationSuccess from "./views/manualValidations/selfie/selfieValidationSucces";
+import SelfieValidationReady from "./views/manualValidations/selfie/selfieValidationReady";
+import SelfieValidationError from "./views/manualValidations/selfie/selfieValidationError";
+
+import AfipValidation from "./views/manualValidations/afip/afipValidation";
+import AfipValidationSuccess from "./views/manualValidations/afip/afipValidationSucces";
+import AfipValidationReady from "./views/manualValidations/afip/afipValidationReady";
+import AfipValidationError from "./views/manualValidations/afip/afipValidationError";
+
 import DireccionValidation from "./views/manualValidations/direccion/direccionValidation";
 import DireccionValidationSuccess from "./views/manualValidations/direccion/direccionValidationSuccess";
 import DireccionValidationReady from "./views/manualValidations/direccion/direccionValidationReady";
@@ -38,10 +49,10 @@ import DniValidationSuccess from "./views/manualValidations/dni/dniValidationSuc
 import DniValidationReady from "./views/manualValidations/dni/dniValidationReady";
 import DniValidationError from "./views/manualValidations/dni/dniValidationFail";
 
-import AfipValidation from "./views/manualValidations/afipValidation";
+
 import SecurityMobile from "./views/seccurity/securityMobile";
 import Sesgado from "./views/sesgado/sesgado";
-import SelfieValidation from "./views/manualValidations/selfieValidation";
+
 
 import AutomaticValidationPhone from "./views/automaticValidation/AutomaticValidationPhone/automaticValidationPhone";
 import WelcomeAgainAutomaticValidationPhone from "./views/automaticValidation/AutomaticValidationPhone/welcomeAgainAutomaticValidationPhone";
@@ -66,6 +77,7 @@ import AutomaticValidationBinance from "./views/automaticValidation/AutomaticVal
 import FailedAutomaticValidationBinance from "./views/automaticValidation/AutomaticValidationBinance/failedAutomaticValidationBinance";
 import ReadyAutomaticValidationBinance from "./views/automaticValidation/AutomaticValidationBinance/readyAutomaticValidationBinance";
 import SuccessAutomaticValidationBinance from "./views/automaticValidation/AutomaticValidationBinance/successAutomaticValidationBinance";
+import afipValidationError from './views/manualValidations/afip/afipValidationError';
 
 function App() {
   return (
@@ -112,11 +124,6 @@ function App() {
           <GuardedRoute path="/admin/direcciones" exact component={AdminAddress} auth={auth.loggedIn()}/>
           <GuardedRoute path="/admin/cuils" exact component={AdminCuil} auth={auth.loggedIn()}/>
 
-           {/*manual validations*/}
-         
-          <GuardedRoute path="/validation/afip" exact component={AfipValidation} auth={auth.loggedIn()}/>
-           <GuardedRoute path="/validation/selfie" exact component={SelfieValidation} auth={auth.loggedIn()}/> 
-          
           {/*automatic validations*/}
             {/*Phone*/}
               <GuardedRoute path="/automaticValidationphone" component={AutomaticValidationPhone} auth={auth.loggedIn()} />
@@ -159,7 +166,21 @@ function App() {
                <GuardedRoute path="/validation/direccionSuccess" exact component={DireccionValidationSuccess} auth={auth.loggedIn()}/>
                 <GuardedRoute path="/validation/direccionReady" exact component={DireccionValidationReady} auth={auth.loggedIn()}/>
                 <GuardedRoute path="/validation/direccionError" exact component={DireccionValidationError} auth={auth.loggedIn()}/>
+               
+               {/*Afip*/}
+               <GuardedRoute path="/validation/afip" exact component={AfipValidation} auth={auth.loggedIn()}/>
+               <GuardedRoute path="/validation/afipSuccess" exact component={AfipValidationSuccess} auth={auth.loggedIn()}/>
+               <GuardedRoute path="/validation/afipError" exact component={afipValidationError} auth={auth.loggedIn()}/>
+               <GuardedRoute path="/validation/afipReady" exact component={AfipValidationReady} auth={auth.loggedIn()}/>
+              
+           {/*Selfie*/}       
           
+           <GuardedRoute path="/validation/selfie" exact component={SelfieValidation} auth={auth.loggedIn()}/> 
+           <GuardedRoute path="/validation/selfieSuccess" exact component={SelfieValidationSuccess} auth={auth.loggedIn()}/> 
+           <GuardedRoute path="/validation/selfieReady" exact component={SelfieValidationReady} auth={auth.loggedIn()}/> 
+           <GuardedRoute path="/validation/selfieError" exact component={SelfieValidationError} auth={auth.loggedIn()}/> 
+          
+              
         </Switch>
       </Router>
     </div>

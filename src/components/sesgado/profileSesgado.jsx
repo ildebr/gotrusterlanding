@@ -42,12 +42,12 @@ const ProfileSesgado = () => {
           </Grid>
           <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center' style={{ marginBottom: 10 }}>
             <Typography className={classes.name}>
-              {namefull}
+              {/* {namefull}Usuario */} 
             </Typography>
           </Grid>
           <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center' style={{ marginBottom: 30 }}>
             <Typography className={classes.ocupation}>
-              Front End Developer
+             {/*  Ocupación */}
             </Typography>
           </Grid>
           <Grid container justify='flex-start' alignItems='center' xs={12} xl={12} sm={12} style={{  backgroundColor: 'rgba(75, 75, 75, 0.7)', height: '20px', maxWidth: '350px', borderRadius: '10px' }}>

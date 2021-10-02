@@ -7,7 +7,7 @@ import { Typography } from "@material-ui/core";
 import elipse from "../../asset/images/myBusiness/Ellipse 6.png"
 import Grid from "@material-ui/core/Grid";
 import Cliente from "../../setting/cliente";
-import { Fileload, GetJson } from "../../services/hostConfig";
+import { Fileload, GetImage } from "../../services/hostConfig";
 import { LoopCircleLoading } from "react-loadingg";
 
 const useStyles = makeStyles(theme => ({
@@ -62,33 +62,18 @@ function MobileHeader(props) {
     const [haveImage, setHaveImage] = useState(false);
     const [haveImageCover, setHaveImageCover] = useState(false);
 
-    function getImages() {
-
-        let json = '';
-        let coverPerfil = '';
-        Cliente.get(GetJson()).then((res) => {
-            //
-            console.log(res['data']['content']['images']['coverPerfil'])
-
-            json = res['data']['content']['images']['avatar']
-            coverPerfil = res['data']['content']['images']['coverPerfil']
-            console.log(json);
-            console.log(coverPerfil);
-            if (json.includes(String(localStorage.getItem('userLogin')))) {
-                setHaveImage(true)
-
-            } else
-                if (coverPerfil.includes(String(localStorage.getItem('userLogin')))) {
-                    setHaveImageCover(true)
-                    console.log('Entre a ver')
-                }
-
-            setLoading(false)
-
-        }).catch(e => {
-            console.log(e);
-        })
-
+    function getImages(){
+        Cliente.get(GetImage(), {
+            params: {
+                'user': user,
+                'folder': 'avatar'
+            }
+        }).then(
+            res => {
+                console.log(res)
+               //  setImagesArray(res['data']['fileNames'] )
+            }
+        )
     }
 
     const onFileChange = (event) => {
@@ -169,7 +154,7 @@ function MobileHeader(props) {
                         </div>
 
                         :
-                        (haveImage ?
+                        (user !== null ?
                             <Grid item>
 
                                 <img
@@ -240,7 +225,7 @@ function MobileHeader(props) {
                         </div>
 
                         :
-                        (haveImage ?
+                        (user !== null ?
 
                             <img src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/avatar/' + localStorage.getItem('userLogin') + '.png'}
                                 style={{ width: '35%', height:'50%', borderRadius: '50%', position: 'absolute', bottom: '-35px' }}

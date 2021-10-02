@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Container, Grid, Typography, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Rectangle from '../../asset/images/Rectangle 71.svg'
-import ReputatioNavBar from '../../components/navBar/reputationNavbar'
-import TemporaryDrawer from '../../components/navBar/mobileDrawer'
+import SesgadoNavbar from '../../components/navBar/sesgadoNavbar'
+import TemporaryDrawer from '../../components/navBar/mobileDrawerRegister'
 import Back from '../../asset/images/myProfile/back.svg'
 import ProfileSesgado from '../../components/sesgado/profileSesgado'
 import ProfileSesgadoMobile from '../../components/sesgado/profileSesgadoMobile'
@@ -133,9 +133,9 @@ class Sesgado extends Component {
           <Container component="main" maxWidth="md" container  >
             <Grid container >
               {width >= 600 ? <Grid item container xs={4} xl={4} sm={4} className={classes.paperContainer} >
-                <ReputatioNavBar />
+                <SesgadoNavbar />
               </Grid> : <Grid item container xs={2} xl={2} sm={2} style={{ marginTop: 10, marginLeft: -20 }} alignItems='center'>
-                <TemporaryDrawer />
+                {/* <TemporaryDrawer /> */}
               </Grid>}
 
               {width >= 600 ?

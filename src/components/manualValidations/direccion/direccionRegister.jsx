@@ -138,7 +138,7 @@ function DireccionRegister(props) {
                 }
             },
             "points": {
-                "id": 4,
+                "id": 3,
             },
             "validationCreationDate": formatDate,
             "validationEnabled": true,
@@ -179,7 +179,7 @@ function DireccionRegister(props) {
                 'file': event.target.result,
                 'fileName': _name,
                 'user': user,
-                'destination': 'documentos'
+                'destination': 'comprobantes'
             }
             ).then(res =>{
                 setActive(false);

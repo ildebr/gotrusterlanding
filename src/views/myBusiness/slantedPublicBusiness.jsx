@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Container, Grid, Typography} from "@material-ui/core";
 import LandingImage from "../../asset/images/myBusiness/Rectangle 71.png";
-import ReputatioNavBar from "../../components/navBar/reputationNavbar";
+import SesgadoNavbar from '../../components/navBar/sesgadoNavbar'
 import TemporaryDrawer from "../../components/navBar/mobileDrawer";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft} from "@fortawesome/free-solid-svg-icons";
@@ -153,7 +153,7 @@ class SlantedPublicBusiness extends Component {
                                 alignItems: 'center'
                             }}>
                                 <Grid item container xs={2} xl={4} sm={4} className={classes.paperContainer}>
-                                    {width >= 600 ? <ReputatioNavBar/> : <TemporaryDrawer/>}
+                                    {width >= 600 ? <SesgadoNavbar/> :''}
                                 </Grid>
                                 {width >= 600 ? <Grid xs={3} container>
                                     <Typography style={{
@@ -185,15 +185,7 @@ class SlantedPublicBusiness extends Component {
                                 {width >= 600 ?
                                     <Grid container direction={"row"} xs={3}
                                           style={{display: 'flex', justifyContent: 'flex-end'}}>
-                                        <Button className={classes.boton1}>
-                                            <Typography className={classes.textoBoton}>
-                                                Inicia Sesión
-                                            </Typography>
-                                        </Button>
-                                        <Button className={classes.boton2} style={{marginLeft: '16px'}}>
-                                            <Typography className={classes.textoBoton} style={{color: '#040404'}}>
-                                                Registrate
-                                            </Typography></Button>
+                                        
 
                                     </Grid>
                                     :
@@ -244,7 +236,7 @@ class SlantedPublicBusiness extends Component {
                                     <AboutSlantedPb/>
                                 </Grid>
                                 <Grid item xs={12} md={5}
-                                      style={{display: 'flex', justifyContent: 'center', marginTop: '48px'}}>>
+                                      style={{display: 'flex', justifyContent: 'center', marginTop: '48px'}}>
                                     <Redes width={width}/>
                                 </Grid>
                                 <Grid item xs={12} className={classes.gridResponsiveXS}>

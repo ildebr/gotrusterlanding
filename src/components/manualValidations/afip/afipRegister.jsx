@@ -1,4 +1,4 @@
-import React from 'react';
+import React,  { useEffect, useState } from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import image from '../../../asset/images/manualValidations/afip/afipValidation.png';
 import {Typography} from "@material-ui/core";
@@ -6,8 +6,14 @@ import Grid from "@material-ui/core/Grid";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPaperclip} from "@fortawesome/free-solid-svg-icons";
 import {Input} from 'rsuite';
+import { Fileload, ValidatioDetail } from "../../../services/hostConfig";
 //import 'rsuite/dist/styles/rsuite-default.css'
+import Cliente from "../../../setting/cliente";
+
+import { getToken } from '../../../setting/auth-helpers';
+import { LoopCircleLoading } from 'react-loadingg';
 import Button from "@material-ui/core/Button";
+
 
 const useStyles = makeStyles(theme => ({
     titulo: {
@@ -61,11 +67,133 @@ const useStyles = makeStyles(theme => ({
             marginTop:'30px'
         },
     },
+    login: {
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        backgroundColor: '#ACFD00',
+        borderRadius: '14px',
+        textTransform: 'None',
+        width: '300px',
+        marginTop: '20px',
+        marginBottom: '80px',
+        cursor: 'pointer',
+    },
+    login2: {
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        backgroundColor: '#666666',
+        borderRadius: '14px',
+        textTransform: 'None',
+        width: '300px',
+        marginTop: '20px',
+        marginBottom: '80px',
+        cursor: 'pointer',
+    },
+    imageColor: {
+        color: '#ACFD00',
+        fontSize: '18px',
+        textAlign: 'center',
+        marginRight: '5px'
+    },
+    imageColorGray: {
+        color: '#9b9b9b',
+        fontSize: '18px',
+        textAlign: 'center',
+        marginRight: '5px'
+    }
 }))
 
 
 function AfipRegister(props) {
     const classes = useStyles();
+    const [file, setFile] = useState(null)
+    const [user, setUser] = useState(null)
+    const [name, setName] = useState(null)
+    const [active, setActive] = useState(true)
+    const [nameImage, setNameImage] = React.useState(true);
+    const [show, setShow] = React.useState('');
+
+    const formatDate = () => {
+        var date = new Date();
+        let formatted_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        return formatted_date;
+    }
+
+    const handleSubmit = () => {
+        /*   let URL = CustomerResource(); */
+        let URLVal = ValidatioDetail();
+        let dateModify = formatDate;
+        console.log(dateModify);
+        setShow(<LoopCircleLoading />)
+        setActive(true);
+        const token = getToken();
+
+        let idUser = localStorage.getItem("userId")
+       
+        const newValidations = {
+            "customer": {
+                "id": idUser,
+                "user": {
+                    "id": idUser,
+                    "login": localStorage.getItem('email')
+                }
+            },
+            "points": {
+                "id": 4,
+            },
+            "validationCreationDate": formatDate,
+            "validationEnabled": true,
+            "validationExtra": "string",
+            "validationModificationDate": formatDate,
+            "validationName": "ADDRESS",
+            "validationStatus": "PENDING"
+        }
+        console.log(newValidations)
+        Cliente.post(URLVal, newValidations, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(response => {
+            return response.data
+        }).then(response => {
+            console.log(response)
+            setShow('')
+            setActive(false)
+            window.open("/validation/afipReady", '_self');
+        }).catch(error => console.log(error));
+
+    }
+
+    const onFileChange = (event, nombre) => {
+        let fileName = event.target.files[0].name
+        const reader = new FileReader();
+        let _file = event.target.files[0];
+
+        const _name = nombre
+
+
+        reader.onload = function (event) {
+            setFile(event.target.result)
+            Cliente.post(Fileload(), {
+                'file': event.target.result,
+                'fileName': _name,
+                'user': user,
+                'destination': 'documentos'
+            }
+            ).then(res =>{
+                setActive(false);
+                setNameImage(false);
+            })
+        };
+        reader.readAsDataURL(_file);
+    }
+   
+    useEffect(() => {
+
+        if (user === null) {
+            setUser(localStorage.getItem('userLogin'))
+        }
+    }, [user]);
     return (
         <React.Fragment>
             <div className={classes.rootDiv}>
@@ -73,9 +201,6 @@ function AfipRegister(props) {
                 <Typography className={classes.titulo}>
                     Para validar tu CUIL/CUIL proporcionanos tu N°
                 </Typography>
-
-
-
                 <Typography className={classes.subtitulo} style={{color: '#ACFD00'}}>
                     Esta información es solo para propositos de validación y no sera compartida con ningún usuario.
                 </Typography>
@@ -84,47 +209,45 @@ function AfipRegister(props) {
                     Adjunte CUIL
                 </Typography>
 
-                <div style={{
-                    width: '300px', marginTop: '8px',
-                    border: '2px solid #303030',
-                    filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
-                    borderRadius: '14px',
+                <Button component="label" style={{
+                        width: '300px', marginTop: '8px',
+                        border: '2px solid #303030',
+                        filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
+                        borderRadius: '14px',
+                        backgroundColor: '#000',
+                        textTransform: 'none'
+
+                    }}>
+                        <input
+                            className={classes.boton}
+                            id="file"
+                            name="file"
+                            type="file"
+                            hidden
+                            onChange={
+                                (e) => onFileChange(e, 'Factura')}
 
 
-                }}>
-                    <Grid container direction={'row'} style={{padding: '10px 0 10px 0', cursor: 'pointer',display:'flex',
-                        alignItems:'center'}}>
-                        <Grid item xs={2}/>
-                        <Grid item xs={8}>
-                            <Typography className={classes.boton}>Adjuntar CUIL</Typography>
+                        />
+                        <Grid container direction={'row'} style={{ padding: '10px 0 10px 0', cursor: 'pointer' }}>
+
+                            <Grid item xs={8}>
+                                <Typography className={classes.boton}>Adjuntar Cuil</Typography>
+                            </Grid>
+                            <Grid item={2}>
+                                <FontAwesomeIcon icon={faPaperclip} className={nameImage ? classes.imageColorGray : classes.imageColor} />
+                            </Grid>
                         </Grid>
-                        <Grid item={2}>
-                            <FontAwesomeIcon icon={faPaperclip} style={{
-                                color: '#666666',
-                                fontSize: '20px',
-                                textAlign: 'center',
-                                marginRight: '5px'
-                            }}/>
-                        </Grid>
-                    </Grid>
 
-                </div>
+                    </Button>
 
                 <Typography className={classes.texto}>
                     Los jpg, png, pdf son válidos.
                 </Typography>
 
-
-
-                <Button style={{
-                    background: '#ACFD00',
-                    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-                    borderRadius: '14px',
-                    textTransform: 'None',
-                    width: '300px',
-                    marginTop: '30px',
-                    marginBottom: '80px'
-                }}>
+                <Button className={active ? classes.login2 : classes.login}
+                onClick={handleSubmit}
+                disabled={active}>
                     <Typography style={{
                         align: "center",
                         color: '#252525',

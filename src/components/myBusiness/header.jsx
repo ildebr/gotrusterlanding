@@ -8,7 +8,7 @@ import icon1 from "../../asset/images/myBusiness/icon1.svg";
 import icon2 from "../../asset/images/myBusiness/icon2.svg";
 import icon3 from "../../asset/images/myBusiness/icon3.svg";
 import Cliente from "../../setting/cliente";
-import {Fileload, GetJson} from "../../services/hostConfig";
+import {Fileload, GetJson, GetImage} from "../../services/hostConfig";
 import {LoopCircleLoading} from "react-loadingg";
 
 const useStyles = makeStyles(theme => ({
@@ -60,33 +60,18 @@ function Header(props) {
     const [haveImage, setHaveImage] = useState(false);
     const [haveImageCover, setHaveImageCover] = useState(false);
 
-    function getImages() {
-
-        let json = '';
-        let coverPerfil = '';
-        Cliente.get(GetJson()).then((res) => {
-            //
-             console.log(res['data']['content']['images']['coverPerfil'])
-
-            json = res['data']['content']['images']['avatar']
-            coverPerfil = res['data']['content']['images']['coverPerfil']
-            console.log(json);
-            console.log(coverPerfil);
-            if (json.includes(String(localStorage.getItem('userLogin')))) {
-                setHaveImage(true)
-                
-            } else            
-            if (coverPerfil.includes(String(localStorage.getItem('userLogin')))) {
-                setHaveImageCover(true)
-                console.log('Entre a ver')
+    function getImages(){
+        Cliente.get(GetImage(), {
+            params: {
+                'user': user,
+                'folder': 'avatar'
             }
-
-            setLoading(false)
-
-        }).catch(e => {
-            console.log(e);
-        })
-
+        }).then(
+            res => {
+                console.log(res)
+               //  setImagesArray(res['data']['fileNames'] )
+            }
+        )
     }
 
     const onFileChange = (event) => {
@@ -170,7 +155,7 @@ function Header(props) {
                     </div>
 
                     :
-                    (haveImage ?
+                    (user !== null ?
                         <Grid item>
 
                             <img
