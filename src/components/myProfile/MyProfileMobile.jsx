@@ -7,11 +7,10 @@ import Add from '../../asset/images/myProfile/add.svg'
 import Verify from '../../asset/images/myProfile/verify.svg'
 import InputBase from '@material-ui/core/InputBase';
 import Logo from '../../asset/images/reputation/logo.svg'
-import { CustomerResource } from '../../services/hostConfig';
 import Cliente from './../../setting/cliente'
 import { getToken } from './../../setting/auth-helpers';
 
-import {Fileload, GetImage, UriServices, GetJson} from "../../services/hostConfig";
+import {Fileload, CustomerResource, AddressOperations, ValidatioDetailByCustomer} from "../../services/hostConfig";
 import Loading from '../Loading';
 import { LoopCircleLoading } from "react-loadingg";
 const { localStorage } = global.window;
@@ -104,8 +103,13 @@ export default function MyProfileMobile(props) {
     const [user, setUser] = useState(null)
     const [imagesArray, setImagesArray] = useState(null)
     const [loading, setLoading] = useState(false);
-    const [haveImage, setHaveImage] = useState(false);
-    const [haveImageCover, setHaveImageCover] = useState(false);
+    
+    ////
+    const [dni, setDni] = React.useState('')   
+    const [phon, setPhon] = React.useState('')
+    const [adre, setAdresses] = React.useState('')
+    const [cui, setCui] = React.useState('')
+    const [selfie, setSelfie] = React.useState('')
 
      const onFileChange = (event) => {
         let fileName = event.target.files[0].name
@@ -127,29 +131,13 @@ export default function MyProfileMobile(props) {
             //     }
             // )
             await waiter()
-            getImages()
+          
             window.location.reload()
         };
 
         reader.readAsDataURL(_file);
 
     }
-
-    function getImages(){
-        Cliente.get(GetImage(), {
-            params: {
-                'user': user,
-                'folder': 'perfil'
-            }
-        }).then(
-            res => {
-                console.log(res)
-               //  setImagesArray(res['data']['fileNames'] )
-            }
-        )
-    }
-
-
     const getIpClient = () => {
         try {
             fetch('https://api.ipify.org?format=json')
@@ -171,13 +159,11 @@ export default function MyProfileMobile(props) {
         if (user === null) {
             setUser(localStorage.getItem('userLogin'))
         }
+      
+        handleLoadDataAdresses();        
+        loadValidation();      
 
-        if (imagesArray === null && user !== null) {
-            getImages();
-        }
-        //let user = JSON.parse(localStorage.getItem('currentUser'));
-
-    }, [imagesArray, file, user]);
+    }, [ file, user]);
 
     const handleProfession = (e) => {
         setProfession(e.target.value);
@@ -235,6 +221,161 @@ export default function MyProfileMobile(props) {
             }
         }
     }
+    const addDefaultPofileImage = e => {
+        e.target.src = ReputationImg
+    }
+
+    const handleLoadDataAdresses = (e) => {
+
+        const token = getToken();
+        let adress = '';
+        let nacional = '';
+        Cliente.get(AddressOperations(), {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                return response.data
+            }).then(response => {
+                console.log(response);
+                response.forEach(function (currentValue, index, arr) {
+                    adress += currentValue.streetName + ' ' + currentValue.streetNumber;
+                    nacional += currentValue.country;
+
+                });
+
+                localStorage.setItem("Adresses", adress)
+                localStorage.setItem("Nacinality", nacional)
+
+            })
+    }
+    function evaluateStatus(estado) {
+        let validations='';       
+        if(estado == "PENDING" ){
+            validations=(
+                <Grid container xs={1} xl={1} sm={1} justify='flex-end' style={{ marginLeft: -35 }} >
+            
+                <Typography style={{
+                     flexGrow: 1,
+                     textAlign: "right",
+                     fontWeight: 700,
+                     color: "#ACFD00",
+                     font: " normal normal 21px/21px PoppinsBold",
+                     marginTop: 30,
+                     marginRight: 20,
+                     position: 'absolute'
+                 }}>
+                     +2
+                 </Typography>
+                 <img src={Logo} alt='ok' width='20px' style={{ marginLeft: 3, marginTop: 30, position: 'absolute' }} />
+                 <Link href={goTOAfip}><img src={Add} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute', marginLeft: 15,cursor:'pointer', zIndex: 5  }}  /></Link>
+                 
+             </Grid>
+        
+            );
+        }
+        if ( estado== "APPROVED"){
+            validations = (
+                <Grid container xs={1} xl={1} sm={1} justify='flex-end'>
+                <img src={Ok} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute' }} />
+            </Grid>
+            );
+        }
+        if ( estado == "PROCESSING"){
+            validations =(
+                <Grid container xs={12} xl={12} sm={12} justify='flex-start' style={{marginBottom: 25}}>
+                <Grid container xs={11} xl={11} sm={11} justify='flex-start'>
+                    <Typography style={{
+                        flexGrow: 1,
+                        textAlign: "left",
+                        fontWeight: 600,
+                        color: "#22C5FD",
+                        font: " normal normal 12px/12px Poppins",
+                        marginTop: 15,
+                        position: 'absolute',
+                        marginRight: 50
+                    }}>
+                        En proceso de verificación
+                    </Typography>
+                </Grid>
+                <Grid container xs={1} xl={1} sm={1} justify='flex-end'>
+                    <img src={Verify} alt='ok' width='20px' style={{ marginTop: 10, position: 'absolute' }} />
+                </Grid>
+    
+            </Grid>
+              )
+        }
+        if (estado == "REJECTED"){
+            validations=(  <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginTop: 15, marginBottom: 5 }}>
+            <Grid container xs={10} xl={10} sm={10} justify='flex-start'>
+                <Typography style={{
+                    flexGrow: 1,
+                    textAlign: "left",
+                    fontWeight: 600,
+                    color: "#E94342",
+                    font: " normal normal 12px/12px Poppins",
+                    marginRight: 25,
+                }}>
+                    No se pudo verificar esta información. <Link underline='always' style={{
+                        color: "#E94342",
+                    }}>Para saber mas clickeá aquí </Link>
+                </Typography>
+            </Grid>
+            <Grid container xs={2} xl={2} sm={2} justify='flex-end'>
+                <img src={Add} alt='ok' width='20px' />
+            </Grid>
+        </Grid>);
+            
+        } 
+        console.log("Entre 2")
+       return validations;
+    }
+    function loadValidation() {
+        const token = getToken();
+        const idCustomer = localStorage.getItem("customerId")
+        Cliente.get(ValidatioDetailByCustomer() + '/' + idCustomer, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                return response.data
+            }).then(response => {
+              
+                console.log("validation", response)
+                for (let index = 0; index < response.length; index++) {
+                    const element = response[index].validationName;  
+                    console.log("Este es el elemento ",element)                   
+                    if (element == "DNI") {
+                       
+                        setDni(evaluateStatus(response[index].validationStatus));
+                    }
+                    if (element == "ADDRESS") {
+                        
+                        setAdresses(evaluateStatus(response[index].validationStatus));
+                    }
+                    if (element == "SELFIE") {
+                        setSelfie(evaluateStatus(response[index].validationStatus));
+                       
+                    }
+                    if (element == "CELLPHONE") {
+                       
+                        setPhon(evaluateStatus(response[index].validationStatus))
+                    }
+                    if (element == "CUIL") {
+                       
+                        setCui(evaluateStatus(response[index].validationStatus));
+                    }
+                    
+                }
+               
+            })
+    } 
 
     let occupation = localStorage.getItem('occupation') === 'null' ? 'Agregue su ocupación' : localStorage.getItem('occupation');
     let gender = localStorage.getItem('gender');
@@ -250,28 +391,9 @@ export default function MyProfileMobile(props) {
     let fecha = new Date(localStorage.getItem('birthDate'));
     let options = { day: 'numeric', month: 'long', year: 'numeric' };
     const isEnabled = profession !== '' && cuil !== '' ;
-    let inProcess = (
-        <Grid container xs={12} xl={12} sm={12} justify='flex-start' style={{marginBottom: 25}}>
-            <Grid container xs={11} xl={11} sm={11} justify='flex-start'>
-                <Typography style={{
-                    flexGrow: 1,
-                    textAlign: "left",
-                    fontWeight: 600,
-                    color: "#22C5FD",
-                    font: " normal normal 12px/12px Poppins",
-                    marginTop: 15,
-                    position: 'absolute',
-                    marginRight: 50
-                }}>
-                    En proceso de verificación
-                </Typography>
-            </Grid>
-            <Grid container xs={1} xl={1} sm={1} justify='flex-end'>
-                <img src={Verify} alt='ok' width='20px' style={{ marginTop: 10, position: 'absolute' }} />
-            </Grid>
 
-        </Grid>
-    );
+
+  
     let validated = (
         <Grid container xs={1} xl={1} sm={1} justify='flex-end'>
             <img src={Ok} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute' }} />
@@ -297,103 +419,6 @@ export default function MyProfileMobile(props) {
             
         </Grid>
     );
-
-    let errorValidate = (
-        <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginTop: 15, marginBottom: 5 }}>
-            <Grid container xs={10} xl={10} sm={10} justify='flex-start'>
-                <Typography style={{
-                    flexGrow: 1,
-                    textAlign: "left",
-                    fontWeight: 600,
-                    color: "#E94342",
-                    font: " normal normal 12px/12px Poppins",
-                    marginRight: 25,
-                }}>
-                    No se pudo verificar esta información. <Link underline='always' style={{
-                        color: "#E94342",
-                    }}>Para saber mas clickeá aquí </Link>
-                </Typography>
-            </Grid>
-            <Grid container xs={2} xl={2} sm={2} justify='flex-end'>
-                <img src={Add} alt='ok' width='20px' />
-            </Grid>
-        </Grid>
-    );
-
-    let toValidateDni = (
-        <Grid container xs={1} xl={1} sm={1} justify='flex-end' style={{ marginLeft: -35 }} >
-            
-           <Typography style={{
-                flexGrow: 1,
-                textAlign: "right",
-                fontWeight: 700,
-                color: "#ACFD00",
-                font: " normal normal 21px/21px PoppinsBold",
-                marginTop: 30,
-                marginRight: 20,
-                position: 'absolute'
-            }}>
-                +2
-            </Typography>
-            <img src={Logo} alt='ok' width='20px' style={{ marginLeft: 3, marginTop: 30, position: 'absolute' }} />
-            <Link href={goTOAfip}><img src={Add} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute', marginLeft: 15,cursor:'pointer', zIndex: 5  }}  /></Link>
-            
-        </Grid>
-    );
-
-    let toValidateAfit = (
-        <Grid container xs={1} xl={1} sm={1} justify='flex-end' style={{ marginLeft: -35 }} >
-            
-           <Typography style={{
-                flexGrow: 1,
-                textAlign: "right",
-                fontWeight: 700,
-                color: "#ACFD00",
-                font: " normal normal 21px/21px PoppinsBold",
-                marginTop: 30,
-                marginRight: 20,
-                position: 'absolute'
-            }}>
-                +2
-            </Typography>
-            <img src={Logo} alt='ok' width='20px' style={{ marginLeft: 3, marginTop: 30, position: 'absolute' }} />
-            <Link href='validation/afip'><img src={Add} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute', marginLeft: 15,cursor:'pointer', zIndex: 5  }}  /></Link>
-            
-        </Grid>
-    );
-    let toValidateAdress = (
-        <Grid container xs={1} xl={1} sm={1} justify='flex-end' style={{ marginLeft: -35 }} >
-            
-           <Typography style={{
-                flexGrow: 1,
-                textAlign: "right",
-                fontWeight: 700,
-                color: "#ACFD00",
-                font: " normal normal 21px/21px PoppinsBold",
-                marginTop: 30,
-                marginRight: 20,
-                position: 'absolute'
-            }}>
-                +2
-            </Typography>
-            <img src={Logo} alt='ok' width='20px' style={{ marginLeft: 3, marginTop: 30, position: 'absolute' }} />
-            <Link href='validation/direccion'><img src={Add} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute', marginLeft: 15,cursor:'pointer', zIndex: 5  }}  /></Link>
-            
-        </Grid>
-    );
-    let forValidatedGender = (
-        <Grid container xs={1} xl={1} sm={1} justify='flex-end'>
-            <Link href='validation/dni'> <img src={Add} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute',marginLeft: -19, cursor: 'pointer', zIndex: 5}} /></Link>
-        </Grid>
-    )
-    let forValidatedNacionality = (
-        <Grid container xs={1} xl={1} sm={1} justify='flex-end'>
-             <Link href='validation/dni'><img src={Add} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute' , marginLeft: -19, cursor: 'pointer', zIndex: 5}} /></Link>
-        </Grid>
-    )
-
-
-
 
     if (gender === 'MALE') {
         newGender = 'Masculino'
@@ -451,24 +476,17 @@ export default function MyProfileMobile(props) {
                 <Grid container justify="flex-end" xs={5} xl={5} sm={5} style={{ paddingLeft: 20 }}>
                 {loading ? <LoopCircleLoading size='large' color='#ACFD00' />
                             :
-                            (user !== null ?
+                            
 
                     <Grid container xs={12} xl={12} sm={12}>
                         <img src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'} alt='reputationimg' width='100px' height='100px' style={{
-                                borderRadius: '50%',
-                                
+                                borderRadius: '50%',                                
                                 objectFit: 'cover'
-                            }}/>
+                            }}
+                            onError={addDefaultPofileImage} 
+                            />
                     </Grid>
-                     : 
-                     <Grid container xs={12} xl={12} sm={12}>
-                        <img src={ReputationImg} alt='reputationimg' height='110px' width='100%'
-                        style={{
-                            borderRadius: '50%',                            
-                            objectFit: 'cover'
-                        }} />
-                    </Grid>
-                     )
+                    
                     }
                     <Grid container xs={12} xl={12} sm={12} component="label">
                          <input
@@ -585,7 +603,7 @@ export default function MyProfileMobile(props) {
                         Dirección
                     </Typography>
                 </Grid>
-                {toValidateAdress}
+                {adre}
                 <Grid container xs={12} xl={12} sm={12}>
                     <InputBase
                         defaultValue={adresses}
@@ -613,7 +631,7 @@ export default function MyProfileMobile(props) {
                         Teléfono
                     </Typography>
                 </Grid>
-                {toValidate}
+                {phon}
                 <Grid container xs={12} xl={12} sm={12}>
                     <InputBase
                         defaultValue={cellphone}
@@ -641,7 +659,7 @@ export default function MyProfileMobile(props) {
                         DNI / CUIL
                     </Typography>
                 </Grid>
-                {toValidateDni}
+                {dni}
                 <Grid container xs={12} xl={12} sm={12} justify='flex-start'>
                     <InputBase
                         defaultValue={cuit}

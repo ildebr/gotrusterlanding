@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Typography, Link, Button } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 import Ok from '../../asset/images/myProfile/ok.svg'
@@ -6,7 +6,7 @@ import Add from '../../asset/images/myProfile/add.svg'
 import Verify from '../../asset/images/myProfile/verify.svg'
 import Logo from '../../asset/images/reputation/logo.svg'
 import Cross from '../../asset/images/myProfile/cross.svg'
-import { CustomerResource } from '../../services/hostConfig';
+import { CustomerResource, AddressOperations, ValidatioDetailByCustomer } from '../../services/hostConfig';
 import Cliente from './../../setting/cliente'
 import { getToken } from './../../setting/auth-helpers';
 import InputBase from '@material-ui/core/InputBase';
@@ -122,12 +122,13 @@ let occupation = localStorage.getItem('occupation') === 'null' ? 'Agregue su ocu
 let gender = localStorage.getItem('gender');
 
 let cellphone = localStorage.getItem('cellphone') === 'string' ? 'xxx-xxxx-xxxx' : localStorage.getItem('cellphone');
-let cuit = localStorage.getItem('cuit') === 'string' ? 'xx-xxxxxxxx-x (Cuil/Cuit) o xxxxxxxx (Dni)' : localStorage.getItem('cuit');
+let cuit1 = localStorage.getItem('cuit') === 'string' ? 'xx-xxxxxxxx-x (Cuil/Cuit) o xxxxxxxx (Dni)' : localStorage.getItem('cuit');
 //let dni = localStorage.getItem('dni') === 'string' ? 'Agregue su cuit': localStorage.getItem('dni');
 let email = localStorage.getItem('email');
 let adresses = localStorage.getItem('Adresses') === '' ? 'Dirección' : localStorage.getItem('Adresses');
 let nacionality = localStorage.getItem('Nacinality') === '' ? 'Nacionalidad' : localStorage.getItem('Nacinality');
 let fecha = new Date(localStorage.getItem('birthDate'));
+
 
 
 export default function Profile(props) {
@@ -138,8 +139,43 @@ export default function Profile(props) {
     const [ipPublic, setIp] = React.useState('');
     const [show, setShow] = React.useState('');
     const [active, setActive] = React.useState(false);
+    
+    ////
+    const [dni, setDni] = React.useState('')
+    const [cuit, setCuit] = React.useState('')
+    const [phon, setPhon] = React.useState('')
+    const [adre, setAdresses] = React.useState('')
+    const [cui, setCui] = React.useState('')
+    const [selfie, setSelfie] = React.useState('')
 
+   
+    const handleLoadDataAdresses = (e) => {
 
+        const token = getToken();
+        let adress = '';
+        let nacional = '';
+        Cliente.get(AddressOperations(), {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                return response.data
+            }).then(response => {
+                console.log(response);
+                response.forEach(function (currentValue, index, arr) {
+                    adress += currentValue.streetName + ' ' + currentValue.streetNumber;
+                    nacional += currentValue.country;
+
+                });
+
+                localStorage.setItem("Adresses", adress)
+                localStorage.setItem("Nacinality", nacional)
+
+            })
+    }
     const getIpClient = () => {
         try {
             fetch('https://api.ipify.org?format=json')
@@ -156,7 +192,6 @@ export default function Profile(props) {
             console.error(error);
         }
     }
-
     const handleProfession = (e) => {
         setProfession(e.target.value);
     }
@@ -167,19 +202,142 @@ export default function Profile(props) {
     const handlePhone = (e) => {
         setPhone(e.target.value);
     }
-    
+
+    function loadValidation() {
+        const token = getToken();
+        const idCustomer = localStorage.getItem("customerId")
+        Cliente.get(ValidatioDetailByCustomer() + '/' + idCustomer, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                return response.data
+            }).then(response => {
+              
+                console.log("validation", response)
+               
+                for (let index = 0; index < response.length; index++) {
+                    const element = response[index].validationName;  
+                    console.log("Este es el elemento ",element)                   
+                    if (element == "DNI") {
+                        
+                        setDni(evaluateStatus(response[index].validationStatus));
+                    }
+                    if (element == "ADDRESS") {
+                       
+                        setAdresses(evaluateStatus(response[index].validationStatus));
+                    }
+                    if (element == "SELFIE") {
+                        
+                        setSelfie(evaluateStatus(response[index].validationStatus));
+                    }
+                    if (element == "CELLPHONE") {
+                       
+                        setPhon(evaluateStatus(response[index].validationStatus))
+                    }
+                    if (element == "CUIL") {
+                        
+                        setCui(evaluateStatus(response[index].validationStatuss));
+                    }
+                    
+                }
+               
+            })
+    }   
+
    
-    const formatDate = ()=>{
-        var date = new Date();
-        let formatted_date =  date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-         return formatted_date;
+    function evaluateStatus(estado) {
+        let validations='';             
+        if(estado == "PENDING" ){
+            validations=(
+                <Grid container xs={8} xl={8} sm={8} justify='flex-end' style={{ marginLeft: -92 }}>
+        
+                    <Typography style={{
+                        flexGrow: 1,
+                        textAlign: "right",
+                        fontWeight: 700,
+                        color: "#ACFD00",
+                        font: " normal normal 21px/21px PoppinsBold",
+                        marginTop: 30,
+                        marginLeft: 0,
+                        position: 'absolute'
+                    }}>
+                        +2
+                    </Typography>
+        
+                    <img src={Logo} alt='ok' width='20px' style={{ marginLeft: 30, marginTop: 30, position: 'absolute', cursor: 'pointer' }} />
+                    <Link href={goTOAfip}><img src={Add} alt='ok' width='20px' style={{ marginTop: 30, marginLeft: 75, position: 'absolute', cursor: 'pointer', zIndex: 5 }} /></Link>
+        
+                </Grid>
+        
+            );
         }
+        if ( estado== "APPROVED"){
+            validations = (
+                <Grid container xs={8} xl={8} sm={8} justify='flex-end'>
+                    <img src={Ok} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute' }} />
+                </Grid>
+            );
+        }
+        if ( estado == "PROCESSING"){
+            validations =(
+                <Grid container xs={8} xl={8} sm={8} justify='flex-end' >
+                <Typography style={{
+                    flexGrow: 1,
+                    textAlign: "left",
+                    fontWeight: 600,
+                    color: "#22C5FD",
+                    font: " normal normal 12px/12px Poppins",
+                    marginTop: 35,
+                    position: 'absolute',
+                    marginRight: 50
+                }}>
+                    En proceso de verificación
+                </Typography>
+                <img src={Verify} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute' }} />
+            </Grid>
+              )
+        }
+        if (estado == "REJECTED"){
+            validations=( <Grid container xs={8} xl={8} sm={8} justify='flex-end'>
+                  <img src={Cross} alt='ok' width='15px' style={{ marginTop: 35, marginLeft: -435, position: 'absolute' }} />
+                  <Typography style={{
+                      flexGrow: 1,
+                      textAlign: "left",
+                      fontWeight: 600,
+                      color: "#E94342",
+                      font: " normal normal 12px/12px Poppins",
+                      marginTop: 35,
+                      marginRight: 25,
+                      position: 'absolute',
+                  }}>
+                      No se pudo verificar esta información. <Link underline='always' style={{
+                          color: "#E94342",
+                      }}>Para saber mas clickeá aquí </Link>
+                  </Typography>
+                  <img src={Add} alt='ok' width='20px' style={{ marginTop: 32, position: 'absolute' }} />
+      
+              </Grid>);
+            
+        } 
+        console.log("Entre 2")
+       return validations;
+    }
+
+    const formatDate = () => {
+        var date = new Date();
+        let formatted_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        return formatted_date;
+    }
 
     const handleSubmit = () => {
         let URL = CustomerResource();
         setShow(<Loading />)
-        setActive(true); 
-        const token = getToken();        
+        setActive(true);
+        const token = getToken();
         let dni = cuil;
         let idUser = localStorage.getItem("userId")
         const dataUpdate = {
@@ -187,8 +345,8 @@ export default function Profile(props) {
             "birthDate": localStorage.getItem("birthDate"),
             "cellphone": localStorage.getItem("cellphone"),
             "creationDate": localStorage.getItem("createDate"),
-            "cuit": dni, 
-            "gender": localStorage.getItem("gender"),          
+            "cuit": dni,
+            "gender": localStorage.getItem("gender"),
             "ip": localStorage.getItem("ip"),
             "level": localStorage.getItem("Level"),
             "modificationDate": formatDate,
@@ -231,6 +389,11 @@ export default function Profile(props) {
             }
         }
     }
+    useEffect(() => {
+        handleLoadDataAdresses();        
+        loadValidation();             
+       // LoadData();
+    }, []);
 
 
 
@@ -240,139 +403,13 @@ export default function Profile(props) {
     let options = { day: 'numeric', month: 'long', year: 'numeric' };
     const isEnabled = profession !== '';
 
-    let inProcess = (
-        <Grid container xs={8} xl={8} sm={8} justify='flex-end' >
-            <Typography style={{
-                flexGrow: 1,
-                textAlign: "left",
-                fontWeight: 600,
-                color: "#22C5FD",
-                font: " normal normal 12px/12px Poppins",
-                marginTop: 35,
-                position: 'absolute',
-                marginRight: 50
-            }}>
-                En proceso de verificación
-            </Typography>
-            <img src={Verify} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute' }} />
-        </Grid>
-    );
+  ////////
     let validated = (
         <Grid container xs={8} xl={8} sm={8} justify='flex-end'>
             <img src={Ok} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute' }} />
         </Grid>
-    );
-    let toValidateDni = (
-
-        <Grid container xs={8} xl={8} sm={8} justify='flex-end' style={{ marginLeft: -92 }}>
-
-            <Typography style={{
-                flexGrow: 1,
-                textAlign: "right",
-                fontWeight: 700,
-                color: "#ACFD00",
-                font: " normal normal 21px/21px PoppinsBold",
-                marginTop: 30,
-                marginLeft: 0,
-                position: 'absolute'
-            }}>
-                +2
-            </Typography>
-
-            <img src={Logo} alt='ok' width='20px' style={{ marginLeft: 30, marginTop: 30, position: 'absolute', cursor: 'pointer' }} />
-            <Link href={goTOAfip}><img src={Add} alt='ok' width='20px' style={{ marginTop: 30, marginLeft: 75, position: 'absolute', cursor: 'pointer', zIndex: 5 }} /></Link>
-
-        </Grid>
-
-    );
-    let toValidate = (
-        <Grid container xs={8} xl={8} sm={8} justify='flex-end' style={{ marginLeft: -92 }}>
-
-            <Typography style={{
-                flexGrow: 1,
-                textAlign: "right",
-                fontWeight: 700,
-                color: "#ACFD00",
-                font: " normal normal 21px/21px PoppinsBold",
-                marginTop: 30,
-                marginLeft: 0,
-                position: 'absolute'
-            }}>
-                +2
-            </Typography>
-
-            <img src={Logo} alt='ok' width='20px' style={{ marginLeft: 30, marginTop: 30, position: 'absolute', cursor: 'pointer' }} />
-            <img src={Add} alt='ok' width='20px' style={{ marginTop: 30, marginLeft: 90, position: 'absolute', cursor: 'pointer', zIndex: 5 }} />
-
-        </Grid>
-
-    );
-    let toValidateAfit = (
-        <Grid container xs={8} xl={8} sm={8} justify='flex-end' style={{ marginLeft: -110 }}>
-
-            <Typography style={{
-                flexGrow: 1,
-                textAlign: "right",
-                fontWeight: 700,
-                color: "#ACFD00",
-                font: " normal normal 21px/21px PoppinsBold",
-                marginTop: 30,
-                marginLeft: 0,
-                position: 'absolute'
-            }}>
-                +2
-            </Typography>
-
-            <img src={Logo} alt='ok' width='20px' style={{ marginLeft: 30, marginTop: 30, position: 'absolute' }} />
-            <Link href='validation/afip'><img src={Add} alt='ok' width='20px' style={{ marginTop: 30, marginLeft: 80, position: 'absolute', cursor: 'pointer', zIndex: 5 }} /></Link>
-
-        </Grid>
-
-    );
-    let toValidateAdress = (
-        <Grid container xs={8} xl={8} sm={8} justify='flex-end' style={{ marginLeft: -92 }}>
-
-            <Typography style={{
-                flexGrow: 1,
-                textAlign: "right",
-                fontWeight: 700,
-                color: "#ACFD00",
-                font: " normal normal 21px/21px PoppinsBold",
-                marginTop: 30,
-                marginLeft: 0,
-                position: 'absolute'
-            }}>
-                +2
-            </Typography>
-
-            <img src={Logo} alt='ok' width='20px' style={{ marginLeft: 30, marginTop: 30, position: 'absolute' }} />
-            <Link href='validation/direccion'><img src={Add} alt='ok' width='20px' style={{ marginTop: 30, marginLeft: 75, position: 'absolute', cursor: 'pointer', zIndex: 5 }} /></Link>
-
-        </Grid>
-
-    );
-
-    let errorValidate = (
-        <Grid container xs={8} xl={8} sm={8} justify='flex-end'>
-            <img src={Cross} alt='ok' width='15px' style={{ marginTop: 35, marginLeft: -435, position: 'absolute' }} />
-            <Typography style={{
-                flexGrow: 1,
-                textAlign: "left",
-                fontWeight: 600,
-                color: "#E94342",
-                font: " normal normal 12px/12px Poppins",
-                marginTop: 35,
-                marginRight: 25,
-                position: 'absolute',
-            }}>
-                No se pudo verificar esta información. <Link underline='always' style={{
-                    color: "#E94342",
-                }}>Para saber mas clickeá aquí </Link>
-            </Typography>
-            <img src={Add} alt='ok' width='20px' style={{ marginTop: 32, position: 'absolute' }} />
-
-        </Grid>
-    );
+    );    
+   
     let forValidatedGender = (
         <Grid container xs={8} xl={8} sm={8} justify='flex-end'>
             <img src={Ok} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute' }} />
@@ -382,16 +419,14 @@ export default function Profile(props) {
         <Grid container xs={8} xl={8} sm={8} justify='flex-end'>
             <img src={Ok} alt='ok' width='20px' style={{ marginTop: 30, position: 'absolute' }} />
         </Grid>
-    );
-
-
-
+    ); 
+    ////////
     if (gender === 'MALE') {
         newGender = 'Masculino'
     } else {
         newGender = 'Femenino'
     }
-
+  
     return (
         <Grid position="static" color="transparent" style={{
             flexGrow: 1,
@@ -493,7 +528,7 @@ export default function Profile(props) {
                         Dirección
                     </Typography>
                 </Grid>
-                {toValidateAdress}
+                {adre}
                 <Grid container xs={12} xl={12} sm={12}>
                     <InputBase
                         placeholder='Dirección'
@@ -524,7 +559,7 @@ export default function Profile(props) {
                         Teléfono
                     </Typography>
                 </Grid>
-                {toValidate}
+                {phon}
                 <Grid container xs={12} xl={12} sm={12}>
                     <InputBase
                         defaultValue={cellphone}
@@ -552,10 +587,10 @@ export default function Profile(props) {
                         DNI / CUIL
                     </Typography>
                 </Grid>
-                {toValidateDni}
+                {dni}
                 <Grid container xs={12} xl={12} sm={12}>
                     <InputBase
-                        defaultValue={cuit}
+                        defaultValue={cuit1}
                         fullWidth
                         id="nombre"
                         name='name'
@@ -608,7 +643,7 @@ export default function Profile(props) {
                         Fecha de Nacimiento
                     </Typography>
                 </Grid>
-                {toValidate}
+                {dni}
                 <Grid container xs={12} xl={12} sm={12}>
                     <InputBase
 

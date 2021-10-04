@@ -296,7 +296,9 @@ class Business extends Component {
     }
 
     }
-
+    addDefaultCoverImage = e => {
+        e.target.src = LandingImage
+    }    
 
     render() {
         function getWindowDimensions() {
@@ -326,20 +328,13 @@ class Business extends Component {
                 <Grid container className={classes.root} component="main" maxWidth="md"
                     style={{ display: 'flex', justifyContent: 'center' }}>
                     {width >= 600 ? <div className={classes.background}>
-
-
-                        {this.state.imagesArray !== null && this.state.imagesArray.length > 0 ?
-                            <img src={
+                        <img src={
                                 'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverNegocio/' + this.state.user + '.png'
                             }
                                 alt='background' width={'1935px'} height={'550px'}
                                 style={{ objectFit: 'cover' }}
+                                onError={this.addDefaultCoverImage} 
                             />
-
-
-                            :
-                            <img src={LandingImage} alt='background' width={'100%'} height={'550px'} />
-                        }
                     </div> : ''}
                     <Grid className={classes.test} container maxWidth="md" component="main">
                         <Container component="main" maxWidth="md">

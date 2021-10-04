@@ -21,6 +21,7 @@
     "express": "^4.17.1",
     "framer-motion": "^4.1.17",
     "google-map-react": "^2.1.10",
+    "material-ui-confirm": "^3.0.0",
     "material-ui-search-bar": "^1.0.0",
     "mkdirp": "^1.0.4",
     "react": "^17.0.2",

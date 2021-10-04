@@ -65,42 +65,14 @@ const ValidationNavbar = ({ active, recover }) => {
         $Show = ''
     }
 
-    const [user, setUser] = useState(null)
+   /*  const [user, setUser] = useState(null)
     const [haveImage, setHaveImage] = useState(false); 
     const [haveImageCover, setHaveImageCover] = useState(false);
     const [imagesArray, setImagesArray] = useState([]);
-    function getImages(){
-        Cliente.get(GetImage(), {
-            params: {
-                'user': user,
-                'folder': 'perfil'
-            }
-        }).then(
-            res => {
-                // console.log(res)
-                setImagesArray(res['data']['fileNames'] )
-            }
-        )
-    }
-
-    useEffect(() => {
-
-        if (user === null) {
-            setUser(localStorage.getItem('userLogin'))
-            getImages()
-        }    
-
-    }, [haveImage, user])
-
-    useEffect(() => {
-
-        if (user === null) {
-            setUser(localStorage.getItem('userLogin'))
-            getImages()
-        }    
-
-    }, [haveImage, user])
-
+     */
+    const addDefaultPofileImage = e => {
+        e.target.src = ProfilePicture
+    } 
     return (
         <Grid position="static" color="primary" style={{
             flexGrow: 1,
@@ -217,15 +189,15 @@ const ValidationNavbar = ({ active, recover }) => {
                             textAlign: 'left'
                         }} >&nbsp;&nbsp;&nbsp;       </Typography>
 
-                     {user !== null ? 
+                     
                         <img
                             src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'}
                             style={{marginTop: 30, marginRight: 15, height: 50, width: 50,
                                 borderRadius:'50%', objectFit:'cover'
-                            }}/>
-                        : <img src={ProfilePicture} style={{marginTop: 30, marginRight: 15, height: 50, width: 50}}/>
-                    }
-
+                            }}
+                            onError={addDefaultPofileImage} 
+                            />
+                        
                     <Typography style={{
 
                         marginTop: 15,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import { Grid, Typography } from '@material-ui/core';
 import Arrow from '../../asset/images/reputation/sumReputation/caret-right.svg'
@@ -6,7 +6,9 @@ import dni from '../../asset/images/reputation/sumReputation/dni.svg'
 import Cuil from '../../asset/images/reputation/sumReputation/cuil.svg'
 import Direction from '../../asset/images/reputation/sumReputation/direction.svg'
 import Telephone from '../../asset/images/reputation/sumReputation/telephone.svg'
-
+import { ValidatioDetailByCustomer } from '../../services/hostConfig';
+import Cliente from './../../setting/cliente'
+import { getToken } from './../../setting/auth-helpers';
 
 const styles = theme => ({
     root: {
@@ -41,6 +43,60 @@ const styles = theme => ({
 
 
 const Validations = () => {
+    
+    const [cuit, setCuit] = React.useState('')
+    const [phon, setPhon] = React.useState('')
+    const [adre, setAdresses] = React.useState('')
+    const [cui, setCui] = React.useState(false)
+    const [selfie, setSelfie] = React.useState(false)
+    const [dniVal, setDniVal] = React.useState(false)
+    const [adressVal, setAdressVal] = React.useState(false)
+
+    function loadValidation() {
+        const token = getToken();
+        const idCustomer = localStorage.getItem("customerId")
+        Cliente.get(ValidatioDetailByCustomer() + '/' + idCustomer, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                return response.data
+            }).then(response => {               
+                for (let index = 0; index < response.length; index++) {
+                    const element = response[index].validationName; 
+                    const elemtStatus = response[index].validationStatus; 
+                    console.log("Este es el elemento ",element)                   
+                    if (element == "DNI" && elemtStatus == "APPROVED" ) {
+                        
+                        setDniVal(true)
+                    }
+                    if (element == "ADDRESS" && elemtStatus == "APPROVED" ) {
+                        setAdressVal(true)
+                      
+                    }
+                    if (element == "SELFIE" && elemtStatus == "APPROVED" ) {                        
+                        setSelfie(true);
+                    }
+                    if (element == "CELLPHONE" && elemtStatus == "APPROVED") {
+                       
+                        setPhon(true)
+                    }
+                    if (element == "CUIL" && elemtStatus == "APPROVED") {
+                        
+                        setCui(true);
+                    }
+                    
+                }
+               
+            })
+    }       
+    useEffect(() => {              
+        loadValidation();             
+       
+    }, []);
 
     return (
         <Grid position="static" color="transparent" style={{
@@ -60,96 +116,39 @@ const Validations = () => {
                 }}>
                     Validaciones Exitosas
                 </Typography>
-                {/*<Grid container justify='flex-start' >
+                <Grid container justify='flex-start' >
                     <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ marginLeft: -30, paddingRight: 15 }}>
-                        <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
-                            <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
-                                <img src={Telephone} alt='telefono' />
-                                <Typography style={{
-                                    align: "center",
-                                    color: "#FFFFFF",
-                                    font: " normal normal 14px/14px Poppins",
-                                    paddingLeft: 10,
-                                    marginTop: 5
-                                }}>
-                                    Teléfono
-                                </Typography>
-                            </Grid>
-                            <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
-                                <Typography style={{
-                                    align: "center",
-                                    color: "#FFFFFF",
-                                    font: " normal normal 20px/20px PoppinsBold",
-                                    paddingLeft: 10,
-                                    marginRight: 8
-                                }}>
-                                    +4
-                                </Typography>
-                                <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
-                            </Grid>
-                            <hr style={{ width: '100%' }} color='#333333' />
+                        {dniVal == true ? <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
+                        <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
+                            <img src={dni} alt='dni' />
+                            <Typography style={{
+                                align: "center",
+                                color: "#FFFFFF",
+                                font: " normal normal 14px/14px Poppins",
+                                paddingLeft: 10,
+                                marginTop: 5
+                            }}>
+                                DNI
+                            </Typography>
                         </Grid>
+                        <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
+                            <Typography style={{
+                                align: "center",
+                                color: "#FFFFFF",
+                                font: " normal normal 20px/20px PoppinsBold",
+                                paddingLeft: 10,
+                                marginRight: 8
+                            }}>
+                                +4
+                            </Typography>
+                            <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
+                        </Grid>
+                        <hr style={{ width: '100%' }} color='#333333' />
+                    </Grid>:''
+                    }
                     </Grid>
                     <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ marginLeft: 15, paddingLeft: 15, paddingRight: 15 }}>
-                        <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
-                            <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
-                                <img src={dni} alt='dni' />
-                                <Typography style={{
-                                    align: "center",
-                                    color: "#FFFFFF",
-                                    font: " normal normal 14px/14px Poppins",
-                                    paddingLeft: 10,
-                                    marginTop: 5
-                                }}>
-                                    DNI
-                                </Typography>
-                            </Grid>
-                            <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
-                                <Typography style={{
-                                    align: "center",
-                                    color: "#FFFFFF",
-                                    font: " normal normal 20px/20px PoppinsBold",
-                                    paddingLeft: 10,
-                                    marginRight: 8
-                                }}>
-                                    +4
-                                </Typography>
-                                <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
-                            </Grid>
-                            <hr style={{ width: '100%' }} color='#333333' />
-                        </Grid>
-                    </Grid>
-                    <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ marginLeft: 15, paddingLeft: 15, paddingRight: 15 }}>
-                        <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
-                            <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
-                                <img src={Cuil} alt='cuil' />
-                                <Typography style={{
-                                    align: "center",
-                                    color: "#FFFFFF",
-                                    font: " normal normal 14px/14px Poppins",
-                                    paddingLeft: 10,
-                                    marginTop: 5
-                                }}>
-                                    CUIL
-                                </Typography>
-                            </Grid>
-                            <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
-                                <Typography style={{
-                                    align: "center",
-                                    color: "#FFFFFF",
-                                    font: " normal normal 20px/20px PoppinsBold",
-                                    paddingLeft: 10,
-                                    marginRight: 8
-                                }}>
-                                    +4
-                                </Typography>
-                                <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
-                            </Grid>
-                            <hr style={{ width: '100%' }} color='#333333' />
-                        </Grid>
-                    </Grid>
-                    <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='flex-start' style={{ paddingLeft: 25 }}>
-                        <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }} >
+                       {adressVal == true ?  <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }} >
                             <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
                                 <img src={Direction} alt='direction' />
                                 <Typography style={{
@@ -176,8 +175,67 @@ const Validations = () => {
                             </Grid>
                             <hr style={{ width: '100%' }} color='#333333' />
                         </Grid>
+                     :''}
                     </Grid>
-                </Grid>*/}
+                    <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ marginLeft: 15, paddingLeft: 15, paddingRight: 15 }}>
+                        {cui == true ?<Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
+                        <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
+                            <img src={Cuil} alt='cuil' />
+                            <Typography style={{
+                                align: "center",
+                                color: "#FFFFFF",
+                                font: " normal normal 14px/14px Poppins",
+                                paddingLeft: 10,
+                                marginTop: 5
+                            }}>
+                                CUIL
+                            </Typography>
+                        </Grid>
+                        <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
+                            <Typography style={{
+                                align: "center",
+                                color: "#FFFFFF",
+                                font: " normal normal 20px/20px PoppinsBold",
+                                paddingLeft: 10,
+                                marginRight: 8
+                            }}>
+                                +4
+                            </Typography>
+                            <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
+                        </Grid>
+                        <hr style={{ width: '100%' }} color='#333333' />
+                    </Grid>:''}
+                    </Grid>
+                    <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='flex-start' style={{ paddingLeft: 25 }}>
+                        {phon == true ? <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
+                        <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
+                            <img src={Telephone} alt='telefono' />
+                            <Typography style={{
+                                align: "center",
+                                color: "#FFFFFF",
+                                font: " normal normal 14px/14px Poppins",
+                                paddingLeft: 10,
+                                marginTop: 5
+                            }}>
+                                Teléfono
+                            </Typography>
+                        </Grid>
+                        <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
+                            <Typography style={{
+                                align: "center",
+                                color: "#FFFFFF",
+                                font: " normal normal 20px/20px PoppinsBold",
+                                paddingLeft: 10,
+                                marginRight: 8
+                            }}>
+                                +4
+                            </Typography>
+                            <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
+                        </Grid>
+                        <hr style={{ width: '100%' }} color='#333333' />
+                    </Grid> :''}
+                    </Grid>
+                </Grid>
             </Grid>
 
         </Grid >)

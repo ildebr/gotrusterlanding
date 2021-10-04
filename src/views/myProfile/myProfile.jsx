@@ -12,7 +12,7 @@ import Profile from '../../components/myProfile/Profile'
 import MyEmail from '../../components/myProfile/MyEmail'
 import CustomizedSwitches from '../../components/myProfile/Linkages'
 import Cliente from './../../setting/cliente'
-import {AddressOperations, GetImage, UriServices} from './../../services/hostConfig';
+
 import {getToken} from './../../setting/auth-helpers';
 
 const {localStorage} = global.window;
@@ -64,7 +64,8 @@ class MyProfile extends Component {
             tab: 0,
             imagesArray: null,
             user: null,
-            modifiedCover: false
+            modifiedCover: false,
+           
         };
     }
 
@@ -72,27 +73,9 @@ class MyProfile extends Component {
         this.setState({windowWidth: window.innerWidth});
     };
 
-    componentDidMount() {
-        this.handleLoadDataAdresses();
+    componentDidMount() {        
         window.addEventListener("resize", this.handleResize);
-        if (this.state.user === null) {
-            this.state.user = localStorage.getItem('userLogin')
-        }
-
-        if (this.state.imagesArray === null && this.state.user !== null) {
-            Cliente.get(GetImage(), {
-                params: {
-                    'user': this.state.user,
-                    'folder': 'coverPerfil'
-                }
-            },).then(
-                res => {
-                    this.setState({imagesArray: res['data']['fileNames']})
-                    console.log(res)
-                }
-                
-            )
-        }
+       this.state.user = localStorage.getItem('userLogin')
     }
 
 
@@ -100,33 +83,11 @@ class MyProfile extends Component {
         this.setState({tab: value});
         console.log(this.state.tab)
     }
-    handleLoadDataAdresses = (e) => {
-
-        const token = getToken();
-        let adress = '';
-        let nacional = '';
-        Cliente.get(AddressOperations(), {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(response => {
-                return response.data
-            }).then(response => {
-            console.log(response);
-            response.forEach(function (currentValue, index, arr) {
-                adress += currentValue.streetName + ' ' + currentValue.streetNumber;
-                nacional += currentValue.country;
-
-            });
-
-            localStorage.setItem("Adresses", adress)
-            localStorage.setItem("Nacinality", nacional)
-
-        })
-    }
+    
+    addDefaultCoverImage = e => {
+        e.target.src = Rectangle
+    }   
+    
 
     render() {
         function getWindowDimensions() {
@@ -150,18 +111,16 @@ class MyProfile extends Component {
                       style={{display: 'flex', justifyContent: 'center'}}>
                     {width >= 600 ? <div className={classes.background}>
 
-                        {this.state.imagesArray !== null && this.state.imagesArray.length > 0 ?
-                            <img src={
-                                'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverPerfil/' + this.state.user + '.png#'
+                         <img src={
+                                'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverPerfil/' + this.state.user + '.png'
                             }
                                  alt='background' width={'1935px'} height={'470px'}
                                  style={{objectFit: 'cover'}}
+                                 onError={this.addDefaultCoverImage} 
                             />
 
 
-                            :
-                            <img src={Rectangle} alt='background' width={'100%'} height={'100%'}/>
-                        }
+                          
 
                     </div> : ''}
                     <Grid className={classes.test} container maxWidth="md" component="main">

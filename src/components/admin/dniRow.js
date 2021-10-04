@@ -102,12 +102,13 @@ const IMAGE_PROFILE_PATH = "perfil/"
 const IMAGE_DOCUMENT_PATH = "dni/";
 
 function DniRow(props) {
-    const {data} = props;
+    const {data, handleApprove, handleReject} = props;
     const classes = useStyles();
     const [showModal1, setShowModal1] = useState(false);
     const [showModal2, setShowModal2] = useState(false);
     const docFrontImageRef = useRef();
     const docBackImageRef = useRef();
+    const [show, setShow] = useState(false);
 
     const openModal1 = () => {
         setShowModal1(prev => !prev);
@@ -127,6 +128,14 @@ function DniRow(props) {
 
     const addDefaultDocumentBackImage = e => {
         e.target.src = DniBack
+    }
+
+    const handleApproveRow = async (data) => {
+        handleApprove(data)
+    }
+
+    const handleRejectRow = async (data) => {
+        handleReject(data)
     }
 
     return (
@@ -199,10 +208,10 @@ function DniRow(props) {
                     </Grid>
                     <Grid item container spacing={2} direction='row' alignItems='center' justify='center'>
                         <Grid item>
-                            <Button className={classes.acceptButton}>Aprobar</Button>
+                            <Button onClick={e => handleApproveRow(data)} className={classes.acceptButton}>Aprobar</Button>
                         </Grid>
                         <Grid item>
-                            <Button className={classes.rejectButton}>Rechazar</Button>
+                            <Button onClick={e => handleRejectRow(data)} className={classes.rejectButton}>Rechazar</Button>
                         </Grid>
                     </Grid>
                 </Grid>

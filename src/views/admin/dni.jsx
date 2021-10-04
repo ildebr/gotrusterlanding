@@ -5,6 +5,9 @@ import AdminNavbar from "../../components/navBar/adminNavbar";
 import DniRow from "../../components/admin/dniRow";
 import { AdminCustomer } from './../../services/hostConfig';
 import { getToken } from './../../setting/auth-helpers';
+import { LoopCircleLoading } from 'react-loadingg';
+import cliente from "./../../setting/cliente";
+import { ValidatioDetail } from './../../services/hostConfig';
 
 const styles = theme => ({
     navBar: {
@@ -54,11 +57,18 @@ const styles = theme => ({
     },
 });
 
+const DNI_FILTER = "DNI"
+const STATUS_FILTER = "PENDING"
+const STATUS_APPROVED = "APPROVED"
+const STATUS_REJECTED = "REJECTED"
+
 function AdminDni(props) {
     const {classes} = props;
     const pageSize = 13
     const [total, setTotal] = useState(pageSize);
+    const[retrieve, setRetrieve] = useState(false); 
     const [rows, setRows] = useState([]);
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         try {
@@ -77,13 +87,75 @@ function AdminDni(props) {
                     }
                     setRows([]);
                 }).then(response => {
-                    setRows(response)
+                    console.log(response)
+                    const newRows = response.filter((row) => {
+                        if (row.validationDetailsDTOS?.length > 0) {
+                            const valid = row.validationDetailsDTOS.find((vd) => (vd.validationName === DNI_FILTER && vd.validationStatus === STATUS_FILTER))
+                            if (valid) {
+                                row.validationDetailsDTOS = valid
+                                return true
+                            }
+                        }
+                        return false
+                    })
+                    setRetrieve(false)
+                    setRows(newRows)
                 })
             }
         } catch(e) {
             console.log(e)
         }
-    }, [total]);
+    }, [total, retrieve]);
+
+    const handleApprove = async (data) => {
+        setShow(true);
+        const validationDetail = data.validationDetailsDTOS
+        validationDetail.validationStatus = STATUS_APPROVED
+        try {
+            const token = getToken();
+            const data = await
+            cliente.put(ValidatioDetail() + "/" + validationDetail.id, validationDetail, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                }
+            }).then(response => {
+                console.log(response)
+                if (response.status === 200) {
+                    setRetrieve(true)
+                    setShow(false)
+                }
+            }).catch(error => console.error('Error:', error));
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
+    const handleReject = async (data) => {
+        setShow(true);
+        const validationDetail = data.validationDetailsDTOS
+        validationDetail.validationStatus = STATUS_REJECTED
+        try {
+            const token = getToken();
+            const data = await
+            cliente.put(ValidatioDetail() + "/" + validationDetail.id, validationDetail, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                }
+            }).then(response => {
+                console.log(response)
+                if (response.status === 200) {
+                    setRetrieve(true)
+                    setShow(false)
+                }
+            }).catch(error => console.error('Error:', error));
+        } catch(e) {
+            console.log(e);
+        }
+    }
 
     return (
         <Fragment>
@@ -97,7 +169,7 @@ function AdminDni(props) {
                         <Grid item container spacing={1} direction='row'>
                             <Grid item>
                                 <Typography className={classes.resultsNumber}>
-                                    32
+                                    {rows.length}
                                 </Typography>
                             </Grid>
                             <Grid item>
@@ -110,18 +182,19 @@ function AdminDni(props) {
                             <div className={classes.divider}/>
                             {rows.map((item, index) => (
                                 <>
-                                    <DniRow key={index} data={item}/>
+                                    <DniRow key={index} data={item} handleReject={handleReject} 
+                                        handleApprove={handleApprove} />
                                     <div className={classes.divider}/>
                                 </>
                             ))}
                         </Grid>
+                        { show ? <LoopCircleLoading size='large' color='#ACFD00' /> : null }
                         <Grid item container justify='flex-start'>
                             <Grid item>
                                 <Typography
                                     className={classes.loadMore}
                                     onClick={() => {
                                         setTotal(total + pageSize);
-                                        setRows(rows);
                                     }}
                                 >
                                     Cargar Más

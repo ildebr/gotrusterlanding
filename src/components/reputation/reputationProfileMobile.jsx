@@ -51,33 +51,16 @@ const ReputationProfileMobile = () => {
     const [haveImage, setHaveImage] = useState(false); 
     const [haveImageCover, setHaveImageCover] = useState(false);
 
-    function getImages(){
-        Cliente.get(GetImage(), {
-            params: {
-                'user': user,
-                'folder': 'perfil'
-            }
-        }).then(
-            res => {
-                // console.log(res)
-                setImagesArray(res['data']['fileNames'] )
-            }
-        )
+    const addDefaultPofileImage = e => {
+        e.target.src = ReputationImg
     }
 
-    useEffect(() => {
-
-        if (user === null) {
-            setUser(localStorage.getItem('userLogin'))
-            getImages()
-        }    
-
-    }, [haveImage, user])
+    
     let occupation = localStorage.getItem('occupation') === 'null' ? 'Agregue su ocupación' : localStorage.getItem('occupation');
     const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
     let points = localStorage.getItem('points')=='null'? '': localStorage.getItem('points');
     let nextLevel = localStorage.getItem('points')=='null'? '': 54-parseInt(localStorage.getItem('points'));
-    
+    let level = localStorage.getItem('Level');
     return (
         <Grid position="static" color="transparent" style={{
             flexGrow: 1,
@@ -118,7 +101,7 @@ const ReputationProfileMobile = () => {
                     <div style={{ zIndex: -1, marginTop: -8.2 }}>
                         <CircularDeterminate givenValue={points} />
                     </div>
-                    {user!== null ? 
+                   
                     <div style={{ zIndex: 1 }}>
                         <img
                             src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'}
@@ -126,18 +109,10 @@ const ReputationProfileMobile = () => {
                                 borderRadius: '50%',
                                 objectFit: 'cover'
                             }}
+                            onError={addDefaultPofileImage}
                         />
                     </div>
-                    :<div style={{ zIndex: 1 }}>
-                    <img
-                        src={ReputationImg}
-                        width='120px' height='120px' style={{
-                            borderRadius: '50%',
-                            objectFit: 'cover'
-                        }}
-                    />
-                </div>
-                }
+                  
                 </Grid>
                 <Grid container justify="center" xs={4} xl={4} sm={4}>
                     <Grid container justify="center" xs={12} xl={12} sm={12} style={{ marginLeft: -40 }}>
@@ -213,7 +188,7 @@ const ReputationProfileMobile = () => {
                             borderColor: '#ACFD00',
                             borderRadius: 5,
                             textTransform: 'none',
-                        }}>Rookie</button>
+                        }}>{level}</button>
                     </Grid>
                     <Grid container justify="flex-end" align='center' xs={4} xl={4} sm={4} style={{ marginTop: -30 }}>
                         <Button href ={'/sharemyprofile'} style={{

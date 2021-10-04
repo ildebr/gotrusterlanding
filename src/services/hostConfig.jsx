@@ -146,8 +146,13 @@ const loaderServices =()=>{
 }
 ///////////////
 const ValidatioDetail = ()=>{
-   let REACT_VALIDATION = 'https://truster-bk.herokuapp.com/api/validation-details' ;
+   let REACT_VALIDATION = BASE_URL_BACKEND + 'validation-details' ;
    return REACT_VALIDATION ;
+}
+///////////////
+const ValidatioDetailByCustomer = ()=>{
+   let REACT_VALIDATION_BY_CUSTOMER = BASE_URL_BACKEND + 'validationDetailsByCustomer' ;
+   return REACT_VALIDATION_BY_CUSTOMER ;
 }
 
 
@@ -180,5 +185,6 @@ const ValidatioDetail = ()=>{
       ShopAdress,
       AdminCustomer,
       BaseURLImage,
-      ValidatioDetail
+      ValidatioDetail,
+      ValidatioDetailByCustomer
    }

@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { withStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Button} from '@material-ui/core';
+import { Grid, Typography, Button } from '@material-ui/core';
 import ReputationImg from '../../asset/images/reputation/perfil.jpg'
 import ShareButton from '../../asset/images/reputation/Group 25.svg'
 import Logo from '../../asset/images/reputation/logo.svg'
 import GreyLogo from '../../asset/images/reputation/greylogo.svg'
 import LinearDeterminate from './progressBarArchMobile'
 import Cliente from "../../setting/cliente";
-import {GetJson, GetImage} from "../../services/hostConfig";
+import { GetJson, GetImage } from "../../services/hostConfig";
 const { localStorage } = global.window;
 const styles = theme => ({
     root: {
@@ -42,55 +42,16 @@ const styles = theme => ({
 
 
 const ReputationProfile = () => {
-    const [user, setUser] = useState(null)   
-    const [haveImage, setHaveImage] = useState(false); 
-    const [imagesArray, setImagesArray] = useState(null);    
-
-   /*  function getImages() {
-        let json = '';
-        Cliente.get(GetJson(), {}).then((res) => {
-           
-            json = res['data']['content']['images']['perfil']            
-           
-            console.log(json.includes(String(localStorage.getItem('userLogin'))))
-            if (json.includes(String(localStorage.getItem('userLogin')))) {
-                setHaveImage(true)
-                console.log("evaluar")
-            }
-          
-
-        }).catch(e => {
-            console.log(e);
-        })
-
-    } */
-    function getImages(){
-        Cliente.get(GetImage(), {
-            params: {
-                'user': user,
-                'folder': 'perfil'
-            }
-        }).then(
-            res => {
-                // console.log(res)
-                setImagesArray(res['data']['fileNames'] )
-            }
-        )
-    }
-
-    useEffect(() => {
-
-        if (user === null) {
-            setUser(localStorage.getItem('userLogin'))
-            getImages()
-        }    
-
-    }, [haveImage, user])
+    const addDefaultPofileImage = e => {
+        e.target.src = ReputationImg
+    }    
+   
     const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
-    let occupation = localStorage.getItem('occupation')=='null'? '': localStorage.getItem('occupation');
-    let points = localStorage.getItem('points')=='null'? '': localStorage.getItem('points');
-    let nextLevel = localStorage.getItem('points')=='null'? '': 54 - parseInt(localStorage.getItem('points'));
+    let occupation = localStorage.getItem('occupation') == 'null' ? '' : localStorage.getItem('occupation');
+    let points = localStorage.getItem('points') == 'null' ? '' : localStorage.getItem('points');
+    let nextLevel = localStorage.getItem('points') == 'null' ? '' : 54 - parseInt(localStorage.getItem('points'));
     let level = localStorage.getItem('Level');
+   
     return (
         <Grid position="static" color="transparent" style={{
             flexGrow: 1,
@@ -100,26 +61,18 @@ const ReputationProfile = () => {
 
             <Grid container>
                 <Grid container justify='flex-start' xs={4} xl={4} sm={4}>
-                {user!== null ? 
-                            <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
-
-                                <img
-                                    src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'}
-                                    width='250px' height='250px' style={{
-                                        borderRadius:'50%',
-                                    objectFit:'cover'
+                    
+                        <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
+                            <img
+                                src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'}
+                                width='250px' height='250px' style={{
+                                    borderRadius: '50%',
+                                    objectFit: 'cover'
                                 }}
-                                />
+                                onError={addDefaultPofileImage}
+                            />
 
-                            </Grid>
-                            : <Grid container justify='flex-end' xs={11} xl={11} sm={11}> 
-                            <img src={ReputationImg} alt='test' width='250px' height='250px'style={{
-                                        borderRadius:'50%',
-                                        objectFit:'cover'
-                                }}/>
-                            </Grid>
-                        }
-                   
+                        </Grid>
                 </Grid>
                 <Grid container xs={10} xl={8} sm={8}>
                     <Grid container>
@@ -154,7 +107,7 @@ const ReputationProfile = () => {
                             }}>
                                 Compartir Perfil
                             </Typography>
-                            <Button href ={'/sharemyprofile'} style={{
+                            <Button href={'/sharemyprofile'} style={{
                                 backgroundColor: 'rgba(0,0,0,0)',
                                 border: '1px solid',
                                 borderColor: 'rgba(0,0,0,0)',
@@ -222,7 +175,7 @@ const ReputationProfile = () => {
                                     letterSpacing: '-0.02em',
                                     color: '#888888'
                                 }}>
-                                   {nextLevel}
+                                    {nextLevel}
                                 </Typography>
                             </Grid>
                             <Grid>

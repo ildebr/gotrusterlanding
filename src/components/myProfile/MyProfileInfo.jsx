@@ -79,7 +79,7 @@ const MyProfileInfo = ({ modifiedCover }) => {
             )
             
             await waiter()
-            getImages()
+            
             window.location.reload()
         };
 
@@ -115,31 +115,9 @@ const MyProfileInfo = ({ modifiedCover }) => {
         reader.readAsDataURL(_file);
     }
 
-    function getImages() {
-
-        Cliente.get(GetImage(), {
-            params: {
-                'user': user,
-                'folder': 'perfil'
-            }
-        }).then(
-            res => {
-                // console.log(res)
-                setImagesArray(res['data']['fileNames'] )
-            }
-        )
-    
-    }
-
-    useEffect(() => {
-
-        if (user === null) {
-            setUser(localStorage.getItem('userLogin'))
-            getImages()
-        }
-
-
-    }, [haveImage, user, loading]);
+    const addDefaultPofileImage = e => {
+        e.target.src = ReputationImg
+    } 
     let occupation = localStorage.getItem('occupation') == 'null' ? '' : localStorage.getItem('occupation');
     return (
         <Grid position="static" color="transparent" style={{
@@ -210,9 +188,7 @@ const MyProfileInfo = ({ modifiedCover }) => {
                     <Grid container justify='flex-end'>
 
                         {loading ? <LoopCircleLoading size='large' color='#ACFD00' />
-                            :
-                            (user!== null ? 
-
+                            :                          
 
                                 <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
 
@@ -220,23 +196,11 @@ const MyProfileInfo = ({ modifiedCover }) => {
                                         src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'}
                                         width='160px' height='160px'
                                         style={{ objectFit: 'cover', borderRadius: '50%', }}
-                                    //     src={
-                                    //         UriServices() + '/' + user + '/images/perfil/' + imagesArray[0]}
-                                    //     width='160px' height='160px' style={{
-                                    //     borderRadius:'50%',
-                                    //     objectFit:'cover'
-                                    // }}
+                                        onError={addDefaultPofileImage}   
                                     />
 
-                                </Grid>
-
-                                : <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
-                                    <img src={ReputationImg} alt='test' width='160px' height='160px' style={{
-                                        borderRadius: '50%',
-                                        objectFit: 'cover'
-                                    }} />
-                                </Grid>
-                            )
+                                </Grid>                               
+                            
                         }
 
 

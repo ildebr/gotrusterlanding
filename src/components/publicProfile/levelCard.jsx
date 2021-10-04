@@ -83,7 +83,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const LevelCard = () => {
+const LevelCard = (props) => {
     const classes = useStyles();
     return (
         <Grid position="static" color="transparent" style={{

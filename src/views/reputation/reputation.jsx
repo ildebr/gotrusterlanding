@@ -43,11 +43,15 @@ class Reputation extends Component {
             user: null
         };
     }
+
+    addDefaultPofileImage = e => {
+        e.target.src = Rectangle
+    }
     handleResize = (e) => {
         this.setState({ windowWidth: window.innerWidth });
     };
     componentDidMount() {
-        window.addEventListener("resize", this.handleResize);
+        window.addEventListener("resize", this.handleResize);      
         if (this.state.user === null) {
             this.state.user = localStorage.getItem('userLogin')
         }
@@ -67,6 +71,7 @@ class Reputation extends Component {
             )
         }
     }
+  
     Tabf = () => {
         this.setState({ tab: !this.state.tab });
     }
@@ -80,21 +85,23 @@ class Reputation extends Component {
         const tab = this.state.tab
         const { width } = getWindowDimensions();
         const { classes } = this.props;
+        // let $images3 = this.ImageS3()
+         console.log("imagen s3")
         return (<React.Fragment>
             <Grid container className={classes.root} component="main" maxWidth="md" style={{ display: 'flex', justifyContent: 'center' }}>
                 {width >= 600 ? <div className={classes.background} >
-                    {this.state.imagesArray !== null && this.state.imagesArray.length > 0 ?
+                    {/* {this.state.imagesArray !== null && this.state.imagesArray.length > 0 ? */}
                         <img src={
                             'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverPerfil/' + this.state.user + '.png'
                         }
                             alt='background' width={'1935px'} height={'470px'}
                             style={{ objectFit: 'cover' }}
-                        />
+                            onError={this.addDefaultPofileImage}/>
 
 
-                        :
-                        <img src={Rectangle} alt='background' width={'100%'} height={'100%'} />
-                    }
+                       {/* /*  :
+                        <img src={Rectangle} alt='background' width={'100%'} height={'100%'} /> 
+                    }*/} 
                 </div> : ''}
                 <Grid className={classes.test} container maxWidth="md" component="main" >
                     <Container component="main" maxWidth="md" container justify='center' >

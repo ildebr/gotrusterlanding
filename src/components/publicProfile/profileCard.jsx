@@ -54,43 +54,10 @@ const useStyles = makeStyles(theme => ({
 
 
 const ProfileCard = () => {
-    const [user, setUser] = useState(null)
-    const [haveImage, setHaveImage] = useState(false); 
-    const [haveImageCover, setHaveImageCover] = useState(false);
-
-    function getImages() {
-
-        let json = '';
-        let coverPerfil = '';
-        Cliente.get(GetJson(), {}).then((res) => {
-            //
-            // console.log(res['data']['content']['images'])
-
-            json = res['data']['content']['images']['perfil']
-            coverPerfil = res['data']['content']['images']['coverPerfil']
-
-            if (json.includes(String(localStorage.getItem('userLogin')))) {
-                setHaveImage(true)
-                console.log()
-            }
-            else if ( coverPerfil.includes(String(localStorage.getItem('userLogin')))) {
-                setHaveImageCover(true)
-            }
-
-        }).catch(e => {
-            console.log(e);
-        })
-
-    }
-
-    useEffect(() => {
-
-        if (user === null) {
-            setUser(localStorage.getItem('userLogin'))
-            getImages()
-        }    
-
-    }, [haveImage, user])
+    
+    const addDefaultPofileImage = e => {
+        e.target.src = ReputationImg
+    } 
     const classes = useStyles();
     const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
     let occupation = localStorage.getItem('occupation') ;
@@ -128,7 +95,7 @@ const ProfileCard = () => {
                 </Grid>
                 <Grid container justify='flex-end' xs={3} xl={3} sm={3} style={{ marginTop: -10 }}>
                     <Grid container justify='flex-end'>
-                    {haveImage ? 
+                  
                             <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
 
                                 <img
@@ -137,16 +104,11 @@ const ProfileCard = () => {
                                         borderRadius:'50%',
                                     objectFit:'cover'
                                 }}
+                                onError={addDefaultPofileImage} 
                                 />
 
                             </Grid>
-                            : <Grid container justify='flex-end' xs={11} xl={11} sm={11}> 
-                            <img src={ReputationImg} alt='test'  width='160px' height='160px' style={{
-                                        borderRadius:'50%',
-                                        objectFit:'cover'
-                                }}/>
-                            </Grid>
-                        }
+                           
 
                         
                     </Grid>
