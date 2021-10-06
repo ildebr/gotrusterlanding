@@ -16,9 +16,7 @@ import Ajustes from '../../asset/images/sidemenu/ajustes.svg'
 import Soporte from '../../asset/images/sidemenu/soporte.svg'
 import CerrarSesion from '../../asset/images/sidemenu/cerrarsesion.svg'
 import TemporaryDrawer from './mobileDrawer'
-
-import Cliente from "../../setting/cliente";
-import { GetImage } from "../../services/hostConfig";
+import Letter from '../../asset/images/letterLogo.svg'
 const { localStorage } = global.window;
 const userActive = localStorage.getItem('logueado');
 const styles = theme => ({
@@ -102,7 +100,7 @@ const ValidationNavbar = ({ active, recover }) => {
                                         marginBottom: 60,
                                        // paddingLeft:'157px'
                                     }}>
-                                        Truster
+                                            <Link href='https://gotruster.com/'><img src={Letter}/></Link>
                                     </Typography>
 
                                     <Typography style={{
@@ -159,7 +157,7 @@ const ValidationNavbar = ({ active, recover }) => {
                         //paddingLeft:'157px'
                         //marginBottom: 217
                     }}>
-                        Truster
+                         <Link href='https://gotruster.com/'><img src={Letter}/></Link>
                     </Typography> : <Typography variant="h6" style={{
                         marginLeft: 77,
                         flexGrow: 1,
@@ -170,7 +168,7 @@ const ValidationNavbar = ({ active, recover }) => {
                         paddingLeft:'157px'
                         //marginBottom: 217
                     }}>
-                        Truster
+                          <Link href='https://gotruster.com/'><img src={Letter}/></Link>
                     </Typography>}
 
                     <Hidden xsDown>

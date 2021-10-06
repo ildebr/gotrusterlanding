@@ -327,17 +327,15 @@ export default function Profile(props) {
        return validations;
     }
 
-    const formatDate = () => {
-        var date = new Date();
-        let formatted_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-        return formatted_date;
-    }
+   
 
     const handleSubmit = () => {
         let URL = CustomerResource();
         setShow(<Loading />)
         setActive(true);
         const token = getToken();
+        var date = new Date();
+        let formatted_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
         let dni = cuil;
         let idUser = localStorage.getItem("userId")
         const dataUpdate = {
@@ -349,7 +347,7 @@ export default function Profile(props) {
             "gender": localStorage.getItem("gender"),
             "ip": localStorage.getItem("ip"),
             "level": localStorage.getItem("Level"),
-            "modificationDate": formatDate,
+            "modificationDate": formatted_date,
             "id": idUser,
             "dni": dni,
             "email": localStorage.getItem("email"),

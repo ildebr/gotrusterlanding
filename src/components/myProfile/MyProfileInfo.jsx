@@ -67,6 +67,7 @@ const MyProfileInfo = ({ modifiedCover }) => {
         const reader = new FileReader();
         let _file = event.target.files[0];
 
+
         setLoading(true)
         reader.onload = async function (event) {
             setFile(event.target.result)
@@ -76,15 +77,15 @@ const MyProfileInfo = ({ modifiedCover }) => {
                 'user': user,
                 'destination': 'perfil'
             }
-            )
+            ).then(console.log(_file.name))
             
             await waiter()
             
             window.location.reload()
         };
-
+        console.log(_file.name) 
         reader.readAsDataURL(_file);
-
+        
     }
 
     const onFileChangeCover = (event) => {
@@ -114,7 +115,12 @@ const MyProfileInfo = ({ modifiedCover }) => {
 
         reader.readAsDataURL(_file);
     }
+    useEffect(() => {
 
+      //  if (user !== null) {
+            setUser(localStorage.getItem('userLogin'))
+      //  }
+    }, [user]);
     const addDefaultPofileImage = e => {
         e.target.src = ReputationImg
     } 

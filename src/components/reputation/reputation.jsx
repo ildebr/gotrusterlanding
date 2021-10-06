@@ -7,7 +7,8 @@ import ReputationProfile from '../../components/reputation/reputationProfile'
 import NextArch from '../../components/reputation/nextArch'
 import SumReputation from '../../components/reputation/sumreputation'
 import Validations from '../../components/reputation/validations'
-
+import TemporaryDrawer from './mobileDrawer'
+import Letter from '../../asset/images/letterLogo.svg'
 const styles = theme => ({
     root: {
         background: '#000000',
@@ -49,7 +50,7 @@ class Reputation extends Component {
                                     color: "#FFFFFF",
                                     font: " normal normal 40px/40px Poppins",
                                 }}>
-                                    Truster
+                                     <img src={Letter}/>
                         </Typography>
                             </Grid>
                         </Grid>

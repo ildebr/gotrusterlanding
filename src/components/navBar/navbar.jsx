@@ -13,6 +13,7 @@ import Ajustes from '../../asset/images/sidemenu/ajustes.svg'
 import Soporte from '../../asset/images/sidemenu/soporte.svg'
 import CerrarSesion from '../../asset/images/sidemenu/cerrarsesion.svg'
 import TemporaryDrawer from './mobileDrawer'
+import Letter from '../../asset/images/letterLogo.svg'
 const { localStorage } = global.window;
 const userActive = localStorage.getItem('logueado');
 const styles = theme => ({
@@ -104,7 +105,7 @@ const Navbar = ({ active, recover }) => {
                                         font: " normal normal 40px/40px Poppins",
                                         marginBottom: 60
                                     }}>
-                                        Truster
+                                        <Link href='https://gotruster.com/'><img src={Letter}/></Link>
                                     </Typography>
 
                                     <Typography style={{
@@ -159,7 +160,7 @@ const Navbar = ({ active, recover }) => {
                         font: " normal normal 40px/40px Poppins",
                         //marginBottom: 217
                     }}>
-                        Truster
+                         <Link href='https://gotruster.com/'><img src={Letter}/></Link>
                     </Typography> : <Typography variant="h6" style={{
                         marginLeft: 77,
                         flexGrow: 1,
@@ -169,7 +170,7 @@ const Navbar = ({ active, recover }) => {
                         font: " normal normal 40px/40px Poppins",
                         //marginBottom: 217
                     }}>
-                        Truster
+                         <Link href='https://gotruster.com/'><img src={Letter}/></Link>
                     </Typography>}
 
                     <Hidden xsDown>
@@ -204,7 +205,7 @@ const Navbar = ({ active, recover }) => {
                         letterSpacing: ' -0.02em',
                         textAlign: 'center',
                         marginRight: 0,
-                    }}>Registrate</Link></Typography>
+                    }}></Link></Typography>
 
                 </Toolbar>
             </Grid> : <Grid container position="static" color="transparent" style={{
@@ -287,7 +288,7 @@ const Navbar = ({ active, recover }) => {
                                 color: "#FFFFFF",
                                 font: " normal normal 35px/35px Poppins",
                             }}>
-                                Truster
+                                <Link href='https://gotruster.com/'><img src={Letter}/></Link>
                             </Typography>
                         </Grid >
                         {recover === 1 ?
@@ -303,7 +304,7 @@ const Navbar = ({ active, recover }) => {
                                     borderColor: '#ACFD00',
                                     borderRadius: 5,
                                     textTransform: 'none',
-                                }}>Log In</button>
+                                }}></button>
                             </Grid>
                             : ''}
                     </Grid> :

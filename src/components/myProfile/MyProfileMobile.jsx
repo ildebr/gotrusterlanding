@@ -155,11 +155,7 @@ export default function MyProfileMobile(props) {
         }
     }
     useEffect(() => {
-
-        if (user === null) {
-            setUser(localStorage.getItem('userLogin'))
-        }
-      
+       setUser(localStorage.getItem('userLogin'))
         handleLoadDataAdresses();        
         loadValidation();      
 

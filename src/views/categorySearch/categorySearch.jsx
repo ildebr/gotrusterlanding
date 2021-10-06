@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
 import {CssBaseline, Grid, Container, Typography, Button} from '@material-ui/core';
@@ -165,24 +165,60 @@ const dummyData = [
     },
 ];
 
+
+
 function CategorySearch(props) {
     const Value = props.value
     const classes = useStyles();
+    const [subCat, setSubCat] = useState([]);
+    const [sub, setSub] = useState('');
+    const [active, setActive] = useState(true);
+    const [Categorys, setCategorys] = useState();
     const [openCategories, setOpenCategories] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState([]);
     const [selectedSubCategory, setSelectedSubCategory] = useState([]);
+    const [months, setMonths] = useState(' ');
+    useEffect(() => {
+        loadCategory()
+        console.log('mount it!');
+    }, []);
+    const handleMonths = (e) => {
+        setMonths(e.target.value);
+    }
+    const handleSub = (e) => {
+        setSub(e.target.value)
+    }
+    let idCategory = parseInt(localStorage.getItem("categoryBussines"));
+    let idSubCategory = parseInt(localStorage.getItem("subCategoryBussines"));
+    function loadCategory() {
+        let URI = AllCategory();
+        const token = getToken();
 
-
+        fetch(URI, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(response => {
+                setCategorys(response)
+                return response;
+            })
+            .catch(e => {
+                console.log(e);
+            })
+    }
     
 
     return (
-        <div>
+        <div >
             <CssBaseline/>
             <Grid container component="main" maxWidth="lg">
                 <Container component="main" maxWidth="lg">
-                    {/* <Grid item container xs={12} className={classes.navBar}>
-                        <NavBar active={1}/>
-                    </Grid> */}
                     <Grid item container xs={12} className={classes.searchBar} alignItems='center'
                           justify='space-between'>
                         <Grid item container spacing={2} xs={6}>
@@ -210,25 +246,55 @@ function CategorySearch(props) {
                                 <Typography className={classes.inputTitle}>
                                     {'Categoría'}
                                 </Typography>
-                                <SelectBase
-                                    disableUnderline
-                                    native
-                                    justifyContent="center"
-                                    value={selectedCategory}
-                                    onChange={(event) => setSelectedCategory(event.target.value)}
+                                <SelectBase defaultValue='none'
                                     className={selectedCategory !== '' ? classes.activeSelect : classes.select}
-                                    inputProps={{
-                                        classes: {
-                                            icon: classes.icon,
-                                        },
-                                    }}
+                                    value={months}
+                                    onChange={handleMonths}
                                 >
-                                    <option key={0} value={''} style={{color: 'black'}}>{'Elegir'}</option>
-                                    <option key={1} value={'Farmacia'} style={{color: 'black'}}>{'Farmacia'}</option>
-                                    <option key={2} value={'Indumentaria'}
-                                            style={{color: 'black'}}>{'Indumentaria'}</option>
-                                    <option key={3} value={'Gastronomía'}
-                                            style={{color: 'black'}}>{'Gastronomía'}</option>
+                                    {Categorys.map(category => {
+                                        return (<option value="none" key={category.id}
+                                            value={category.id} style={{
+                                                '& .MuiInputBase-root': {
+                                                    color: '#fff',
+                                                    align: "center",
+                                                    fontFamily: "Poppins",
+                                                    fontSize: '15px',
+                                                    cursor: 'pointer',
+                                                    fontWeight: 500,
+                                                    textAlign: 'left',
+                                                    letterSpacing: '-0.02em',
+                                                }
+                                            }} onClick={(e) => {
+                                                e.preventDefault()
+                                                localStorage.setItem('categoryBussines', months)
+                                                setActive(false)
+                                                setSelectedCategory(category.name)
+                                                let URI = selectSubCategory() + '/' + category.id;
+                                                console.log(URI)
+                                                const token = getToken();
+                                                fetch(URI, {
+                                                    headers: {
+                                                        'Accept': 'application/json',
+                                                        'Content-Type': 'application/json',
+                                                        'Authorization': `Bearer ${token}`
+                                                    }
+                                                })
+                                                    .then(response => {
+                                                        return response.json();
+                                                    })
+                                                    .then(response => {
+                                                        setSubCat(response)
+                                                        console.log(response)
+                                                        return response;
+                                                    })
+                                                    .catch(e => {
+                                                        console.log(e);
+                                                    })
+                                            }}>
+                                            {category.name}
+                                        </option>
+                                        )
+                                    })}
                                 </SelectBase>
                             </Grid>
                             <Grid item>
@@ -238,32 +304,33 @@ function CategorySearch(props) {
                                 <FormControl
                                     disabled={selectedCategory === ''}
                                 >
-                                    <SelectBase
-                                        disableUnderline
-                                        native
-                                        justifyContent="center"
-                                        value={selectedSubCategory}
-                                        onChange={(event) => setSelectedSubCategory(event.target.value)}
-                                        className={selectedSubCategory !== '' ? classes.activeSelect : classes.select}
-                                        style={selectedCategory === '' ? {
-                                            borderBottom: '2px solid',
-                                            borderColor: '#2C2C2C',
-                                            color: "#666666"
-                                        } : {}}
-                                        inputProps={{
-                                            classes: {
-                                                icon: classes.icon,
-                                                disabled: classes.disabledSelect
-                                            },
-                                        }}
-                                    >
-                                        <option key={0} value={''} style={{color: 'black'}}>{'Elegir'}</option>
-                                        <option key={1} value={'Productos'}
-                                                style={{color: 'black'}}>{'Productos'}</option>
-                                        <option key={2} value={'Servicios'}
-                                                style={{color: 'black'}}>{'Servicios'}</option>
-                                        <option key={3} value={'Relevantes'}
-                                                style={{color: 'black'}}>{'Relevantes'}</option>
+                                    <SelectBase defaultValue='none'
+                                        className={selectedCategory !== '' ? classes.activeSelect : classes.select}
+                                        value={sub}
+                                        onChange={handleSub}
+                                        disabled={active}>
+                                        {
+                                            subCat.map(subCategory => {
+                                                return (<option key={subCategory.id}
+                                                    value={subCategory.id} style={{
+                                                        '& .MuiInputBase-root': {
+                                                            color: '#fff',
+                                                            fontFamily: "Poppins",
+                                                            fontSize: '15px',
+                                                            fontWeight: 500,
+                                                            textAlign: 'left',
+                                                            letterSpacing: '-0.02em',
+                                                        },
+                                                    }} onClick={(e) => {
+                                                        e.preventDefault();
+                                                        localStorage.setItem('subCategoryBussines', sub)
+                                                    }}
+                                                >
+                                                    {subCategory.name}
+                                                </option>
+                                                )
+                                            })
+                                        }
                                     </SelectBase>
                                 </FormControl>
                             </Grid>
@@ -285,9 +352,7 @@ function CategorySearch(props) {
                         </Grid>
                         <Grid item container xs={12} className={classes.results} justify='space-between'>
                             {dummyData
-                                ? dummyData.map((item, index) =>
-                                    <ResultCard key={index} data={item} />
-                                )
+                                ? ''
                                 : <NoResultsSearch />
                             }
                         </Grid>

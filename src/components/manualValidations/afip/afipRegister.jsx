@@ -111,23 +111,18 @@ function AfipRegister(props) {
     const [nameImage, setNameImage] = React.useState(true);
     const [show, setShow] = React.useState('');
 
-    const formatDate = () => {
-        var date = new Date();
-        let formatted_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-        return formatted_date;
-    }
+    
 
     const handleSubmit = () => {
         /*   let URL = CustomerResource(); */
-        let URLVal = ValidatioDetail();
-        let dateModify = formatDate;
-        console.log(dateModify);
+        let URLVal = ValidatioDetail();       
+       
         setShow(<LoopCircleLoading />)
         setActive(true);
         const token = getToken();
-
-        let idUser = localStorage.getItem("userId")
-       
+        var date = new Date();
+        let formatted_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        let idUser = localStorage.getItem("userId")       
         const newValidations = {
             "customer": {
                 "id": idUser,
@@ -139,11 +134,11 @@ function AfipRegister(props) {
             "points": {
                 "id": 4,
             },
-            "validationCreationDate": formatDate,
+            "validationCreationDate": formatted_date,
             "validationEnabled": true,
             "validationExtra": "string",
-            "validationModificationDate": formatDate,
-            "validationName": "ADDRESS",
+            "validationModificationDate": formatted_date,
+            "validationName": "CUIL",
             "validationStatus": "PENDING"
         }
         console.log(newValidations)
@@ -168,7 +163,8 @@ function AfipRegister(props) {
         let fileName = event.target.files[0].name
         const reader = new FileReader();
         let _file = event.target.files[0];
-
+        setName(_file.name);
+        //let size = _file.size; 
         const _name = nombre
 
 
@@ -232,7 +228,7 @@ function AfipRegister(props) {
                         <Grid container direction={'row'} style={{ padding: '10px 0 10px 0', cursor: 'pointer' }}>
 
                             <Grid item xs={8}>
-                                <Typography className={classes.boton}>Adjuntar Cuil</Typography>
+                                <Typography className={classes.boton}>{nameImage ? 'Adjuntar Cuil' : name}</Typography>
                             </Grid>
                             <Grid item={2}>
                                 <FontAwesomeIcon icon={faPaperclip} className={nameImage ? classes.imageColorGray : classes.imageColor} />

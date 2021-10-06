@@ -2,17 +2,7 @@ import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import { Grid, Toolbar, Typography, Button, Hidden, Link } from '@material-ui/core';
 import WindowDimensions from "../../components/UtilityComponents/WindowDimension"
-import Inicio from '../../asset/images/sidemenu/inicio.svg'
-import Busqueda from '../../asset/images/sidemenu/busqueda.svg'
-import MiPerfil from '../../asset/images/sidemenu/miperfil.svg'
-import MiNegocio from '../../asset/images/sidemenu/minegocio.svg'
-import MiReputacion from '../../asset/images/sidemenu/mireputacion.svg'
-import Compartir from '../../asset/images/sidemenu/compartir.svg'
-import Insertar from '../../asset/images/sidemenu/insertar.svg'
-import Ajustes from '../../asset/images/sidemenu/ajustes.svg'
-import Soporte from '../../asset/images/sidemenu/soporte.svg'
-import CerrarSesion from '../../asset/images/sidemenu/cerrarsesion.svg'
-import TemporaryDrawer from './mobileDrawerRegister'
+import Letter from '../../asset/images/letterLogo.svg'
 const { localStorage } = global.window;
 const userActive = localStorage.getItem('logueado');
 const styles = theme => ({
@@ -160,7 +150,7 @@ const Navbar = ({ active, recover }) => {
                         font: " normal normal 40px/40px Poppins",
                         //marginBottom: 217
                     }}>
-                        Truster
+                       <Link href='https://gotruster.com/'> <img src={Letter}/> </Link>{/* Truster */}
                     </Typography> : <Typography variant="h6" style={{
                         marginLeft: 77,
                         flexGrow: 1,
@@ -170,7 +160,7 @@ const Navbar = ({ active, recover }) => {
                         font: " normal normal 40px/40px Poppins",
                         //marginBottom: 217
                     }}>
-                        Truster
+                        <img src={Letter}/>{/* Truster */}
                     </Typography>}
 
                     <Hidden xsDown>
@@ -288,7 +278,7 @@ const Navbar = ({ active, recover }) => {
                                 color: "#FFFFFF",
                                 font: " normal normal 35px/35px Poppins",
                             }}>
-                                Truster
+                                 <Link href='https://gotruster.com/'><img src={Letter}/></Link>
                             </Typography>
                         </Grid >
                         {recover === 1 ?

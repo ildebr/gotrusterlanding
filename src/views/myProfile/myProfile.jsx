@@ -11,9 +11,7 @@ import Back from '../../asset/images/myProfile/back.svg'
 import Profile from '../../components/myProfile/Profile'
 import MyEmail from '../../components/myProfile/MyEmail'
 import CustomizedSwitches from '../../components/myProfile/Linkages'
-import Cliente from './../../setting/cliente'
-
-import {getToken} from './../../setting/auth-helpers';
+import Letter from '../../asset/images/letterLogo.svg'
 
 const {localStorage} = global.window;
 const styles = theme => ({
@@ -144,7 +142,7 @@ class MyProfile extends Component {
                                             color: "#FFFFFF",
                                             font: " normal normal 40px/40px Poppins",
                                         }}>
-                                            Truster
+                                             <img src={Letter}/>
                                         </Typography>
                                     </Grid> :
                                     <Grid xs={6} xl={6} sm={6} container alignItems='center'>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Grid, Typography } from '@material-ui/core';
+import { Container, Grid, Typography, Link} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Rectangle from '../../asset/images/Rectangle 71.svg'
 import ReputatioNavBar from '../../components/navBar/reputationNavbar'
@@ -12,6 +12,7 @@ import SumReputationMobile from '../../components/reputation/sumReputationMobile
 import SumReputation from '../../components/reputation/sumreputation'
 import Validations from '../../components/reputation/validations'
 import {GetImage} from './../../services/hostConfig';
+import Letter from '../../asset/images/letterLogo.svg'
 import Cliente from './../../setting/cliente'
 const { localStorage } = global.window;
 
@@ -118,7 +119,7 @@ class Reputation extends Component {
                                         color: "#FFFFFF",
                                         font: " normal normal 40px/40px Poppins",
                                     }}>
-                                        Truster
+                                          <Link href='https://gotruster.com/'><img src={Letter}/></Link>
                                     </Typography>
                                 </Grid> :
                                 <Grid xs={8} xl={8} sm={8} container justify='flex-start'>

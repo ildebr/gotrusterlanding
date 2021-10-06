@@ -112,17 +112,14 @@ function DireccionRegister(props) {
     const [nameImage, setNameImage] = React.useState(true);
     const [show, setShow] = React.useState('');
 
-    const formatDate = () => {
-        var date = new Date();
-        let formatted_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-        return formatted_date;
-    }
+    
 
     const handleSubmit = () => {
         /*   let URL = CustomerResource(); */
         let URLVal = ValidatioDetail();
-        let dateModify = formatDate;
-        console.log(dateModify);
+        var date = new Date();
+        let formatted_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+
         setShow(<LoopCircleLoading />)
         setActive(true);
         const token = getToken();
@@ -140,10 +137,10 @@ function DireccionRegister(props) {
             "points": {
                 "id": 3,
             },
-            "validationCreationDate": formatDate,
+            "validationCreationDate": formatted_date,
             "validationEnabled": true,
             "validationExtra": "string",
-            "validationModificationDate": formatDate,
+            "validationModificationDate": formatted_date,
             "validationName": "ADDRESS",
             "validationStatus": "PENDING"
         }
@@ -169,7 +166,7 @@ function DireccionRegister(props) {
         let fileName = event.target.files[0].name
         const reader = new FileReader();
         let _file = event.target.files[0];
-
+        setName(_file.name);
         const _name = nombre
 
 
@@ -231,7 +228,7 @@ function DireccionRegister(props) {
                         <Grid container direction={'row'} style={{ padding: '10px 0 10px 0', cursor: 'pointer' }}>
 
                             <Grid item xs={8}>
-                                <Typography className={classes.boton}>Comprobante</Typography>
+                                <Typography className={classes.boton}>{nameImage ? 'Comprobante' : name}</Typography>
                             </Grid>
                             <Grid item={2}>
                                 <FontAwesomeIcon icon={faPaperclip} className={nameImage ? classes.imageColorGray : classes.imageColor} />

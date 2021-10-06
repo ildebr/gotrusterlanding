@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{ useEffect, useState }from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Link} from '@material-ui/core';
 import SmallLogo from '../../asset/images/reputation/smalllog.svg'
@@ -9,7 +9,9 @@ import Cuit from '../../asset/images/reputation/sumReputationMobile/cuit.svg'
 import Direction from '../../asset/images/reputation/sumReputationMobile/direction.svg'
 import Facebook from '../../asset/images/reputation/sumReputationMobile/facebook.svg'
 import Telephone from '../../asset/images/reputation/sumReputationMobile/telephone.svg'
-
+import { ValidatioDetailByCustomer } from '../../services/hostConfig';
+import Cliente from './../../setting/cliente'
+import { getToken } from './../../setting/auth-helpers';
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -43,6 +45,58 @@ const styles = theme => ({
 
 
 const SumReputationMobile = () => {
+    const [cuit, setCuit] = React.useState('')
+    const [phon, setPhon] = React.useState('')
+    const [adre, setAdresses] = React.useState('')
+    const [cui, setCui] = React.useState(false)
+    const [selfie, setSelfie] = React.useState(false)
+    const [dniVal, setDniVal] = React.useState(false)
+    const [adressVal, setAdressVal] = React.useState(false)
+
+    function loadValidation() {
+        const token = getToken();
+        const idCustomer = localStorage.getItem("customerId")
+        Cliente.get(ValidatioDetailByCustomer() + '/' + idCustomer, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                return response.data
+            }).then(response => {               
+                for (let index = 0; index < response.length; index++) {
+                    const element = response[index].validationName; 
+                    const elemtStatus = response[index].validationStatus; 
+                    console.log("Este es el elemento ",element)                   
+                    if (element == "DNI" && elemtStatus == "APPROVED" ) {
+                        
+                        setDniVal(true)
+                    }
+                    if (element == "ADDRESS" && elemtStatus == "APPROVED" ) {
+                        setAdressVal(true)
+                      
+                    }
+                    if (element == "SELFIE" && elemtStatus == "APPROVED" ) {                        
+                        setSelfie(true);
+                    }
+                    if (element == "CELLPHONE" && elemtStatus == "APPROVED") {
+                       
+                        setPhon(true)
+                    }
+                    if (element == "CUIL" && elemtStatus == "APPROVED") {
+                        
+                        setCui(true);
+                    }
+                    
+                }
+               
+            })
+    }       
+    useEffect(() => {              
+        loadValidation(); 
+    }, []);
 
     return (
         <Grid container justify="center" position="static" color="transparent" style={{
@@ -52,7 +106,7 @@ const SumReputationMobile = () => {
             maxWidth: '100vw',
 
         }} >
-            <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
+             {phon == false ?  <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
                 <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
                     <Grid container xs={2} xl={2} sm={2} justify='center' >
                         <img src={Telephone} alt='logo' width={'15px'} />
@@ -85,8 +139,43 @@ const SumReputationMobile = () => {
                         </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
-            <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
+            </Grid> :
+             <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
+             <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
+                 <Grid container xs={2} xl={2} sm={2} justify='center' >
+                     {/* <img src={Telephone} alt='logo' width={'15px'} /> */}
+                 </Grid>
+                 <Grid container xs={10} xl={10} sm={10} justify='flex-start' >
+                     <Typography style={{
+                         font: 'normal normal normal 16px/16px Poppins',
+                         marginLeft: 5,
+                         letterSpacing: '-0.02em',
+                         color: '#ffffff'
+                     }}>
+                       <Link href={'/automaticvalidationphone'} style={{ textDecoration: 'none', color: 'white' }}> </Link>
+                     </Typography>
+                 </Grid>
+             </Grid>
+             <Grid container xs={4} xl={4} sm={4} justify='flex-end' alignItems='center'>
+                 <Grid container xs={12} xl={12} sm={12} justify='flex-end' alignItems='center'>
+                     <Grid container xs={6} xl={6} sm={6} justify='flex-end' >
+                         <img src={SmallLogo} alt='logo' width={'25px'} />
+                     </Grid>
+                     <Grid container xs={6} xl={6} sm={6} justify='flex-end'>
+                         <Typography style={{
+                             font: 'normal normal normal 36px/36px PoppinsBold',
+                             marginLeft: 5,
+                             letterSpacing: '-0.02em',
+                             color: '#ACFD00'
+                         }}>
+                             
+                         </Typography>
+                     </Grid>
+                 </Grid>
+             </Grid>
+         </Grid> 
+            }
+             {dniVal == false ? <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
                 <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
                     <Grid container xs={2} xl={2} sm={2} justify='center' >
                         <img src={DNI} alt='logo' width={'15px'} />
@@ -120,7 +209,43 @@ const SumReputationMobile = () => {
                     </Grid>
                 </Grid>
             </Grid>
+            :
             <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
+                <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
+                    <Grid container xs={2} xl={2} sm={2} justify='center' >
+                       {/*  <img src={DNI} alt='logo' width={'15px'} /> */}
+                    </Grid>
+                    <Grid container xs={10} xl={10} sm={10} justify='flex-start' >
+                        <Typography style={{
+                            font: 'normal normal normal 16px/16px Poppins',
+                            marginLeft: 5,
+                            letterSpacing: '-0.02em',
+                            color: '#ffffff'
+                        }}>
+                           <Link href={'/validation/dni'} style={{ textDecoration: 'none', color: 'white' }}></Link>
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <Grid container xs={4} xl={4} sm={4} justify='flex-end' alignItems='center'>
+                    <Grid container xs={12} xl={12} sm={12} justify='flex-end' alignItems='center'>
+                        <Grid container xs={6} xl={6} sm={6} justify='flex-end' >
+                            {/* <img src={SmallLogo} alt='logo' width={'25px'} /> */}
+                        </Grid>
+                        <Grid container xs={6} xl={6} sm={6} justify='flex-end' >
+                            <Typography style={{
+                                font: 'normal normal normal 36px/36px PoppinsBold',
+                                marginLeft: 5,
+                                letterSpacing: '-0.02em',
+                                color: '#ACFD00'
+                            }}>
+                               
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+            }
+            {adressVal == false ? <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
                 <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
                     <Grid container xs={2} xl={2} sm={2} justify='center' >
                         <img src={Direction} alt='logo' width={'12px'} />
@@ -153,8 +278,44 @@ const SumReputationMobile = () => {
                         </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
+            </Grid> 
+            :
             <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
+                <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
+                    <Grid container xs={2} xl={2} sm={2} justify='center' >
+                        {/* <img src={Direction} alt='logo' width={'12px'} /> */}
+                    </Grid>
+                    <Grid container xs={10} xl={10} sm={10} justify='flex-start' >
+                        <Typography style={{
+                            font: 'normal normal normal 16px/16px Poppins',
+                            marginLeft: 5,
+                            letterSpacing: '-0.02em',
+                            color: '#ffffff'
+                        }}>
+                            <Link href={'/validation/direccion'} style={{ textDecoration: 'none', color: 'white' }}></Link>
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <Grid container xs={4} xl={4} sm={4} justify='flex-end' alignItems='center'>
+                    <Grid container xs={12} xl={12} sm={12} justify='flex-end' alignItems='center'>
+                        <Grid container xs={6} xl={6} sm={6} justify='flex-end' >
+                           {/*  <img src={SmallLogo} alt='logo' width={'25px'} /> */}
+                        </Grid>
+                        <Grid container xs={6} xl={6} sm={6} justify='flex-end' >
+                            <Typography style={{
+                                font: 'normal normal normal 36px/36px PoppinsBold',
+                                marginLeft: 5,
+                                letterSpacing: '-0.02em',
+                                color: '#ACFD00'
+                            }}>
+                                
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+            }
+            {cui == false ? <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
                 <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
                     <Grid container xs={2} xl={2} sm={2} justify='center' >
                         <img src={Cuit} alt='logo' width={'15px'} />
@@ -166,7 +327,7 @@ const SumReputationMobile = () => {
                             letterSpacing: '-0.02em',
                             color: '#ffffff'
                         }}>
-                            <Link href={'/validation/direccion'} style={{ textDecoration: 'none', color: 'white' }}> Validá tu CUIT</Link>
+                            <Link href={'/validation/dni'} style={{ textDecoration: 'none', color: 'white' }}> Validá tu CUIT</Link>
                         </Typography>
                     </Grid>
                 </Grid>
@@ -187,7 +348,113 @@ const SumReputationMobile = () => {
                         </Grid>
                     </Grid>
                 </Grid>
+            </Grid> 
+            :
+            <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
+                <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
+                    <Grid container xs={2} xl={2} sm={2} justify='center' >
+                       {/*  <img src={Cuit} alt='logo' width={'15px'} /> */}
+                    </Grid>
+                    <Grid container xs={10} xl={10} sm={10} justify='flex-start' >
+                        <Typography style={{
+                            font: 'normal normal normal 16px/16px Poppins',
+                            marginLeft: 5,
+                            letterSpacing: '-0.02em',
+                            color: '#ffffff'
+                        }}>
+                            <Link href={'/validation/dni'} style={{ textDecoration: 'none', color: 'white' }}> </Link>
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <Grid container xs={4} xl={4} sm={4} justify='flex-end' alignItems='center'>
+                    <Grid container xs={12} xl={12} sm={12} justify='flex-end' alignItems='center'>
+                        <Grid container xs={6} xl={6} sm={6} justify='flex-end' >
+                            {/* <img src={SmallLogo} alt='logo' width={'25px'} /> */}
+                        </Grid>
+                        <Grid container xs={6} xl={6} sm={6} justify='flex-end'>
+                            <Typography style={{
+                                font: 'normal normal normal 30px/30px PoppinsBold',
+                                marginLeft: 5,
+                                letterSpacing: '-0.02em',
+                                color: '#ACFD00'
+                            }}>
+                               
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
             </Grid>
+            }
+             {selfie == false ? <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
+                <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
+                    <Grid container xs={2} xl={2} sm={2} justify='center' >
+                        <img src={Cuit} alt='logo' width={'15px'} />
+                    </Grid>
+                    <Grid container xs={10} xl={10} sm={10} justify='flex-start' >
+                        <Typography style={{
+                            font: 'normal normal normal 16px/16px Poppins',
+                            marginLeft: 5,
+                            letterSpacing: '-0.02em',
+                            color: '#ffffff'
+                        }}>
+                            <Link href={'/validation/selfie'} style={{ textDecoration: 'none', color: 'white' }}> Validá tu Selfie</Link>
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <Grid container xs={4} xl={4} sm={4} justify='flex-end' alignItems='center'>
+                    <Grid container xs={12} xl={12} sm={12} justify='flex-end' alignItems='center'>
+                        <Grid container xs={6} xl={6} sm={6} justify='flex-end' >
+                            <img src={SmallLogo} alt='logo' width={'25px'} />
+                        </Grid>
+                        <Grid container xs={6} xl={6} sm={6} justify='flex-end'>
+                            <Typography style={{
+                                font: 'normal normal normal 25px/25px PoppinsBold',
+                                marginLeft: 5,
+                                letterSpacing: '-0.02em',
+                                color: '#ACFD00'
+                            }}>
+                                +20
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+            :
+            <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
+                <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
+                    <Grid container xs={2} xl={2} sm={2} justify='center' >
+                       {/*  <img src={Cuit} alt='logo' width={'15px'} /> */}
+                    </Grid>
+                    <Grid container xs={10} xl={10} sm={10} justify='flex-start' >
+                        <Typography style={{
+                            font: 'normal normal normal 16px/16px Poppins',
+                            marginLeft: 5,
+                            letterSpacing: '-0.02em',
+                            color: '#ffffff'
+                        }}>
+                            <Link href={'/validation/selfie'} style={{ textDecoration: 'none', color: 'white' }}> </Link>
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <Grid container xs={4} xl={4} sm={4} justify='flex-end' alignItems='center'>
+                    <Grid container xs={12} xl={12} sm={12} justify='flex-end' alignItems='center'>
+                        <Grid container xs={6} xl={6} sm={6} justify='flex-end' >
+                           {/*  <img src={SmallLogo} alt='logo' width={'25px'} /> */}
+                        </Grid>
+                        <Grid container xs={6} xl={6} sm={6} justify='flex-end'>
+                            <Typography style={{
+                                font: 'normal normal normal 25px/25px PoppinsBold',
+                                marginLeft: 5,
+                                letterSpacing: '-0.02em',
+                                color: '#ACFD00'
+                            }}>
+                                
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+            }
             <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
                 <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
                     <Grid container xs={2} xl={2} sm={2} justify='center' >

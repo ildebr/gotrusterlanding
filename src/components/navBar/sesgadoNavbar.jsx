@@ -1,16 +1,8 @@
 import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import { Grid, Toolbar, Typography, Link } from '@material-ui/core';
-import Inicio from '../../asset/images/sidemenu/inicio.svg'
-import Busqueda from '../../asset/images/sidemenu/busqueda.svg'
-import MiPerfil from '../../asset/images/sidemenu/miperfil.svg'
-import MiNegocio from '../../asset/images/sidemenu/minegocio.svg'
-import MiReputacion from '../../asset/images/sidemenu/mireputacion.svg'
-import Compartir from '../../asset/images/sidemenu/compartir.svg'
-import Insertar from '../../asset/images/sidemenu/insertar.svg'
-import Ajustes from '../../asset/images/sidemenu/ajustes.svg'
-import Soporte from '../../asset/images/sidemenu/soporte.svg'
-import CerrarSesion from '../../asset/images/sidemenu/cerrarsesion.svg'
+import Letter from '../../asset/images/letterLogo.svg'
+
 const { localStorage } = global.window;
 const userActive = localStorage.getItem('logueado');
 const styles = theme => ({
@@ -69,7 +61,7 @@ const SesgadoNavbar = () => {
                                     font: " normal normal 40px/40px Poppins",
                                     marginBottom: 60
                                 }}>
-                                    Truster
+                                     <Link href='https://gotruster.com/'><img src={Letter}/></Link>
                                     </Typography>
 
                                 {/* <Typography style={{

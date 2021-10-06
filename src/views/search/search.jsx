@@ -123,7 +123,8 @@ const styles = theme => ({
         fontSize: '40px',
         lineHeight: '40px',
         letterSpacing: '-0.01em',
-        textAlign: 'center'
+        textAlign: 'center',
+        width: '60%'
     },
     loadMore: {
         color: '#5F5F5F',
@@ -441,44 +442,11 @@ function Search(props) {
                                             <img src={SearchIcon} alt='logo' />
                                         </InputAdornment>
                                     }
-                                    /* endAdornment={
-                                        <InputAdornment position="end" onClick={() => setSearch(true)} style={{ cursor: 'pointer' }}>
-                                            <img src={Scope} alt='logo' />
-                                        </InputAdornment>
-                                    } */
                                 />
                             </Grid>
                         </Grid>
                     </Grid> : 
                         <CategorySearch value={Value}/>
-                        // <div>
-                        // <Grid item container xs={12} className={classes.searchBar2} alignItems='center'
-                        //     justify='space-between'>
-                        //     <Grid item container spacing={2} xs={6} xl={6} sm={6} alignItems='center'justify='space-between'>
-                        //         <Grid item alignItems='center' justify='space-between' xs={3} xl={3} sm={3} container>
-                        //             <img src={SearchIcon} width={50} />
-                        //         </Grid>
-                        //         <Grid item xs={9} xl={9} sm={9} alignItems='center' justify='flex-start' container>
-                        //             <InputBase
-                        //                 fullWidth={true}
-                        //                 disableUnderline={true}
-                        //                 defaultValue= {Value}
-                        //                 className={classes.searchTitle}
-                        //                 id="input-with-icon-adornment"
-                        //                 onChange={(event) => setValue(event.target.value)}
-                        //             />
-                        //         </Grid>
-                        //     </Grid>
-                        //     <Grid item>
-                        //         <Button className={classes.categoryButton} onClick={() => setOpenCategories(true)}
-                        //             style={openCategories ? { display: 'none' } : {}}
-                        //         >
-                        //             <img src={PlusIcon} style={{ paddingRight: '8px' }} />
-                        //             {"Buscá por Categoría"}
-                        //         </Button>
-                        //     </Grid>
-                        // </Grid>
-                        // </div>
                     }
                     {!Search ? <div>
                         <Grid item container xs={12} alignItems='center' style={{ zIndex: 1, marginTop: 80 }}>
@@ -502,16 +470,16 @@ function Search(props) {
                         </Grid>
                     </div> : ''}
                     {!Search ? <div>
-                        {width >= 600 ? <div className={classes.backgroundCut} style={{ zIndex: 0, marginTop: 0 }} >
-                            <img src={SearchCutImage} alt='background' width={'100%'} height={'60%'} />
+                        {width >= 600 ? <div className={classes.backgroundCut} style={{ zIndex: 0, marginTop: -50 }} >
+                            <img src={SearchCutImage} alt='background' width={'100%'} height={'250px'} />
                         </div> : ''}
                         <Grid item container xs={12} justify='center' alignItems='center' style={{ marginTop: 90 }}>
                             <Typography className={classes.secondTitle}> Alcanzá más público registrando gratis tu negocio en truster.</Typography>
-                            <Typography className={classes.welcomeSubTitle}> Construí reputación, alcanza mas gente</Typography>
+                            <Typography className={classes.welcomeSubTitle} style={{ marginTop: '10px'}}> Construí reputación, alcanza mas gente</Typography>
                         </Grid>
                         <Grid item container xs={12} alignItems='center' style={{ zIndex: 1, marginTop: 80 }}>
                             <Grid item container xs={12} alignItems='center' >
-                                <Typography className={classes.catTitles}>Trending esta semana</Typography>
+                                <Typography className={classes.catTitles}>Trending</Typography>
                             </Grid>
                             <Grid item container xs={12} alignItems='center' >
                                 <Grid item container xs={6} xl={6} sm={6} justify='flex-start'>
@@ -528,41 +496,9 @@ function Search(props) {
                                 <ResultCard key={index} data={item} />
                             )}
                         </Grid>
-                        <Grid item container xs={12} alignItems='center' style={{ zIndex: 1, marginTop: 80 }}>
-                            <Grid item container xs={12} alignItems='center' >
-                                <Typography className={classes.catTitles}>Otras localidades</Typography>
-                            </Grid>
-                            <Grid item container xs={12} alignItems='center' >
-                                <Grid item container xs={6} xl={6} sm={6} justify='flex-start'>
-                                    
-                                </Grid>
-                                <Grid item container xs={6} xl={6} sm={6} justify='flex-end'>
-                                    <img src={LArrow} alt='logo' style={{ marginLeft: - 30, marginRight: 30 }} onClick={() => test(0)} />
-                                    <img src={RArrow} alt='logo' onClick={() => test(1)} />
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <Grid item container xs={12} className={classes.results} justify='space-between'>
-                            {dummyData.map((item, index) =>
-                                <ResultCard key={index} data={item} />
-                            )}
-                        </Grid>
-                        <Grid item container xs={12} justify='center' style={{ marginBottom: 40 }}>
-                            
-                        </Grid>
                     </div> 
                     : 
                     <div>
-                        <Grid item container xs={12} alignItems='center' style={{ zIndex: 1, marginTop: 80 }}>
-                            <Grid item container xs={12} alignItems='center' >
-                                <Typography className={classes.catTitles}>Cerca Tuyo</Typography>
-                            </Grid>
-                            <Grid item container xs={12} alignItems='center' >
-                                <Grid item container xs={6} xl={6} sm={6} justify='flex-start'>
-                                    
-                                </Grid>
-                            </Grid>
-                        </Grid>
                         <Grid item container xs={12} className={classes.results} justify='space-between'>
                             {dummyBurger.map((item, index) =>
                               <Link href='/publicbusiness'>
@@ -570,41 +506,10 @@ function Search(props) {
                                 </Link>
                             )}
                         </Grid>
-                        <Grid item container xs={12} alignItems='center' style={{ zIndex: 1, marginTop: 80 }}>
-                            <Grid item container xs={12} alignItems='center' >
-                                <Typography className={classes.catTitles}>Otras localidades</Typography>
-                            </Grid>
-                            <Grid item container xs={12} alignItems='center' >
-                                <Grid item container xs={6} xl={6} sm={6} justify='flex-start'>
-                                    
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <Grid item container xs={12} className={classes.results} justify='space-between'>
-                            {dummyData.map((item, index) =>
-                                <ResultCard key={index} data={item} />
-                            )}
-
+                        <Grid item container xs={12} justify='center' style={{marginBottom: '40px'}}>
+                            <Typography className={classes.loadMore}>Cargar Más</Typography>    
                         </Grid>
                     </div>}
-                    
-                    {/* <Grid item container xs={12} className={classes.results} justify='flex-start' style={{ marginTop: 40 }}>
-                        <div >
-                            <ItemsCarousel
-                                activeItemIndex={1}
-                                numberOfCards={1}
-                                gutter={20}
-                                leftChevron={<div></div>}
-                                rightChevron={<div></div>}
-                                outsideChevron
-                                chevronWidth={60}
-                            >
-                                {dummyData.map((item, index) =>
-                                    <ResultCard data={item} />
-                                )}
-                            </ItemsCarousel>
-                        </div>
-                    </Grid> */}
                 </Container>
             </Grid>
         </div >

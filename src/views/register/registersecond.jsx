@@ -1,27 +1,25 @@
-import React, { Component } from 'react'
-import { CssBaseline, Grid, Box, Container, Typography, Button, TextField } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import React, {Component} from 'react'
+import {CssBaseline, Grid, Box, Container, Typography, Button, TextField} from '@material-ui/core';
+import {withStyles} from '@material-ui/core/styles';
 import NavBar from '../../components/navBar/navBarRegister'
 import Link from '@material-ui/core/Link';
 import InputBase from '@material-ui/core/InputBase';
-//import Swal from "sweetalert2";
 import cliente from "./../../setting/cliente";
-import { LoopCircleLoading } from 'react-loadingg';
-//import InputBase from '@material-ui/core/InputBase';
+import {LoopCircleLoading} from 'react-loadingg';
 import Logo from '../../asset/images/logo.svg';
 import SelectBase from '@material-ui/core/Select';
-import { AccountRegister, AddressOperationsFull } from './../../services/hostConfig';
-import { getToken } from './../../setting/auth-helpers';
+import {AccountRegister, AddressOperationsFull} from './../../services/hostConfig';
+import {getToken} from './../../setting/auth-helpers';
 import auth from './../../setting/auth';
 import RegexTextField from "../../components/helpers/regexTextField";
 import Swal from "sweetalert2";
 
 const dataSourceAvailable = require('./../../services/provincias.json');
-const dataSourceAvailableLocal= require('./../../services/municipios.json');
+const dataSourceAvailableLocal = require('./../../services/municipios.json');
 const onlyLettersRegex = /[^a-zA-Z]/gi;
 const onlyNumbersRegex = /[^0-9]/gi;
 
-const { localStorage } = global.window;
+const {localStorage} = global.window;
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -148,7 +146,7 @@ const styles = theme => ({
         marginTop: theme.spacing(3),
         "&:disabled": {
             backgroundColor: '#292929',
-            color:'#474747'
+            color: '#474747'
         }
     },
     formButton: {
@@ -345,7 +343,7 @@ const countries = [
     {
         value: 'Paises',
         name: 'Elegí tu nacionalidad'
-    },    
+    },
     {
         value: 'Argentina',
         name: 'Argentina'
@@ -805,9 +803,9 @@ class RegisterSecond extends Component {
             dayError: false,
             monthError: false,
             yearError: false,
-            municipality:[],
+            municipality: [],
             windowWidth: window.innerWidth,
-            enabledComponentLocality:true
+            enabledComponentLocality: true
         };
     }
 
@@ -872,26 +870,26 @@ class RegisterSecond extends Component {
         let tip = nationality;
         return tip;
     }
-    handleDataSourceAvailableLocal =(e) =>{
+    handleDataSourceAvailableLocal = (e) => {
         e.preventDefault();
-        let dataNewArrayLocal =[];
-        let local ='';
-        let provincias ='';
+        let dataNewArrayLocal = [];
+        let local = '';
+        let provincias = '';
         let provincia = this.state.province;
         for (let index = 0; index < dataSourceAvailableLocal.length; index++) {
-             let element = dataSourceAvailableLocal[index];
+            let element = dataSourceAvailableLocal[index];
             local = element.nombre;
-            console.log("este es local",local)
-            provincias = element["provincia"]["nombre"]; 
-            console.log("Esta es Provincia",provincias)
-            if (provincia === provincias){
+            console.log("este es local", local)
+            provincias = element["provincia"]["nombre"];
+            console.log("Esta es Provincia", provincias)
+            if (provincia === provincias) {
                 dataNewArrayLocal.push(local)
             }
-            
+
         }
         console.log(dataNewArrayLocal)
         this.setState({
-            municipality:dataNewArrayLocal
+            municipality: dataNewArrayLocal
         })
         return dataNewArrayLocal;
     }
@@ -903,7 +901,7 @@ class RegisterSecond extends Component {
     }
 
     handleResize = (e) => {
-        this.setState({ windowWidth: window.innerWidth });
+        this.setState({windowWidth: window.innerWidth});
     };
     handleDayChange = e => {
 
@@ -911,22 +909,35 @@ class RegisterSecond extends Component {
             day: e.target.value,
             dayError: false
         })
-        console.log(e.target.value)
+
     }
     handleMonthsChange = e => {
         this.setState({
             months: e.target.value,
             monthError: false
         })
-        console.log(e.target.value)
+
     }
     handleYearChange = e => {
 
         this.setState({
             years: e.target.value,
-            yearError: false
+            yearError: false,
         })
-        console.log(e.target.value)
+
+
+        let today = new Date();
+        let date = (today.getFullYear() - 18) + '-' + pad((today.getMonth() + 1), 2) + '-' + pad(today.getDate(), 2);
+        let birthDate = e.target.value + '-' + this.handleSetMonths(this.state.months) + '-' + this.state.day;
+
+        if (date < birthDate) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Debes ser mayor de 18 años para usar Truster',
+                footer: 'GoTruster App'
+            })
+        }
     }
     handleGenderChange = e => {
 
@@ -950,7 +961,7 @@ class RegisterSecond extends Component {
             local: e.target.value,
             locationError: false
         })
-     
+
         console.log(e.target.value)
     }
     handleProvinceChange = e => {
@@ -985,14 +996,14 @@ class RegisterSecond extends Component {
                 .then(response => {
                     return response.json();
                 }).then(response => {
-                    this.setState({
-                        ipPublic: response.ip
-                    })
-
-                    console.log("mi ip publica " + response.ip);
-                    console.log(response);
-                    return response.ip;
+                this.setState({
+                    ipPublic: response.ip
                 })
+
+                console.log("mi ip publica " + response.ip);
+                console.log(response);
+                return response.ip;
+            })
 
         } catch (error) {
             console.error(error);
@@ -1025,25 +1036,6 @@ class RegisterSecond extends Component {
         this.state.error = false;
         ////dataRegister //
 
-        let today = new Date();
-        let date = (today.getFullYear() - 18) + '-' + pad((today.getMonth() + 1), 2) + '-' + pad(today.getDate(), 2);
-
-
-
-        if (day !== "Dia" && months !== "Mes" && years !== "Año" && date < birthDate) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Debes ser mayor de 18 años para usar Truster',
-                footer: 'GoTruster App'
-            })
-            this.setState({
-                yearError: true,
-                error: true
-            })
-
-
-        }
 
         if (day === "Dia") {
             this.setState({
@@ -1102,8 +1094,7 @@ class RegisterSecond extends Component {
                 numberError: true,
                 error: true
             })
-        }
-        else if (this.state.error === false) {
+        } else if (this.state.error === false) {
             this.setState({
                 show: true,
                 enabledComponent: true
@@ -1227,21 +1218,21 @@ class RegisterSecond extends Component {
 
     render() {
         function getWindowDimensions() {
-            const { innerWidth: width } = window;
+            const {innerWidth: width} = window;
             return {
                 width
             };
         }
 
-        const { width } = getWindowDimensions();
-        const { classes } = this.props;
+        const {width} = getWindowDimensions();
+        const {classes} = this.props;
         let $show = this.state.show;
         let $wait = '';
         if ($show) {
             $wait = (<LoopCircleLoading size='large' color='#ACFD00
             '/>);
         }
-       // let $departments = this.handleDataSourceAvailableLocal(this.state.province)
+        // let $departments = this.handleDataSourceAvailableLocal(this.state.province)
 
         let $dirError = this.state.dirError ? '*no olvides poner tu dirección' : '';
         let $numberError = this.state.numberError ? '*ingresa el número' : '';
@@ -1252,7 +1243,7 @@ class RegisterSecond extends Component {
         let $dayError = this.state.dayError ? '*Por favor selecciona una opción' : '';
         let $monthError = this.state.monthError ? '*Por favor selecciona una opción' : '';
         let $yearError = this.state.yearError ? '*Por favor selecciona una opción' : '';
-        
+
         const isEnabled = this.state.number !== '' && this.state.direction !== ''
             && this.state.day !== 'Dia' && this.state.months !== 'Mes' && this.state.years !== 'Año'
             && this.state.nationality !== 0 && this.state.province !== 0
@@ -1260,19 +1251,19 @@ class RegisterSecond extends Component {
 
 
         return (
-            <div style={{ backgroundColor: '#000000' }}>
+            <div style={{backgroundColor: '#000000'}}>
 
                 <Grid container className={classes.root} component="main" maxWidth="md">
                     <Container component="main" maxWidth="md">
                         <Grid item container xs={12} className={classes.paperContainer}>
-                            <NavBar active={1} />
+                            <NavBar active={1}/>
                         </Grid>
-                        <Container component="main" maxWidth="md" style={{ alignItems: 'center' }}>
+                        <Container component="main" maxWidth="md" style={{alignItems: 'center'}}>
                             <Box className={classes.authWrapper}>
-                                <CssBaseline />
+                                <CssBaseline/>
                                 <Box mx="auto">
                                     <Box className={classes.authHeader}>
-                                        <img src={Logo} alt='logo' width="50" height="50" />
+                                        <img src={Logo} alt='logo' width="50" height="50"/>
                                     </Box>
                                 </Box>
                                 <div className={classes.paper}>
@@ -1281,20 +1272,20 @@ class RegisterSecond extends Component {
                                             Estás a punto de tener tu cuenta Truster. </Typography>
                                     </Box>
                                     {width > 550 ?
-                                        <Grid justify='center' style={{ maxWidth: 400 }}>
+                                        <Grid justify='center' style={{maxWidth: 400}}>
                                             <form style={{
                                                 //width: '100%',
                                                 marginTop: 30,
                                                 justifyContent: "center",
                                                 alignContent: "center",
                                             }}
-                                                onSubmit={this.handleCreateAccountSubmit}
-                                                noValidate>
+                                                  onSubmit={this.handleCreateAccountSubmit}
+                                                  noValidate>
                                                 <Typography className={classes.inputTitle}>
                                                     Fecha de Nacimiento
                                                 </Typography>
                                                 <Grid container justify='flex-start'>
-                                                    <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 30 }}>
+                                                    <Grid container xs={4} xl={4} sm={4} style={{paddingRight: 30}}>
                                                         <SelectBase
                                                             disableUnderline
                                                             native
@@ -1302,7 +1293,7 @@ class RegisterSecond extends Component {
                                                             disabled={this.state.enabledComponent}
                                                             onChange={this.handleDayChange}
                                                             className={this.state.dayError ? classes.errorSelect : classes.selectEx}
-                                                            style={{ paddingLeft: 20 }}
+                                                            style={{paddingLeft: 20}}
                                                             inputProps={{
                                                                 classes: {
                                                                     icon: classes.icon
@@ -1310,7 +1301,7 @@ class RegisterSecond extends Component {
                                                             }}
                                                         >
                                                             {days.map(days => <option key={days.value}
-                                                                value={days.value} >{days.name}</option>)}
+                                                                                      value={days.value}>{days.name}</option>)}
 
                                                         </SelectBase>
                                                         <Typography className={classes.inputTitle2}>
@@ -1318,7 +1309,7 @@ class RegisterSecond extends Component {
                                                         </Typography>
                                                     </Grid>
                                                     <Grid container xs={5} xl={5} sm={5}
-                                                        style={{ marginLeft: -10, paddingRight: 10 }}>
+                                                          style={{marginLeft: -10, paddingRight: 10}}>
                                                         <SelectBase
                                                             disableUnderline
                                                             native
@@ -1326,7 +1317,7 @@ class RegisterSecond extends Component {
                                                             disabled={this.state.enabledComponent}
                                                             onChange={this.handleMonthsChange}
                                                             className={this.state.dayError ? classes.errorSelect : classes.selectEx}
-                                                            style={{ paddingLeft: 20, }}
+                                                            style={{paddingLeft: 20,}}
                                                             inputProps={{
                                                                 classes: {
                                                                     icon: classes.icon,
@@ -1334,14 +1325,14 @@ class RegisterSecond extends Component {
                                                             }}
                                                         >
                                                             {months.map(months => <option key={months.value}
-                                                                value={months.value}>{months.name}</option>)}
+                                                                                          value={months.value}>{months.name}</option>)}
                                                         </SelectBase>
                                                         <Typography className={classes.inputTitle2}>
                                                             {$monthError}
                                                         </Typography>
                                                     </Grid>
                                                     <Grid container xs={3} xl={3} sm={3}
-                                                        style={{ marginLeft: 10, paddingRight: 0 }}>
+                                                          style={{marginLeft: 10, paddingRight: 0}}>
                                                         <SelectBase
                                                             disableUnderline
                                                             native
@@ -1349,7 +1340,7 @@ class RegisterSecond extends Component {
                                                             disabled={this.state.enabledComponent}
                                                             onChange={this.handleYearChange}
                                                             className={this.state.dayError ? classes.errorSelect : classes.selectEx}
-                                                            style={{ paddingLeft: 10 }}
+                                                            style={{paddingLeft: 10}}
                                                             inputProps={{
                                                                 classes: {
                                                                     icon: classes.icon,
@@ -1357,7 +1348,7 @@ class RegisterSecond extends Component {
                                                             }}
                                                         >
                                                             {years.map(years => <option key={years.value}
-                                                                value={years.value}>{years.name}</option>)}
+                                                                                        value={years.value}>{years.name}</option>)}
 
                                                         </SelectBase>
                                                         <Typography className={classes.inputTitle2}>
@@ -1382,14 +1373,14 @@ class RegisterSecond extends Component {
                                                             icon: classes.icon,
                                                         },
                                                     }}
-                                                    style={{ paddingLeft: 20 }}
+                                                    style={{paddingLeft: 20}}
                                                 >
                                                     {gender.map(gender => <option key={gender.value}
-                                                        value={gender.value} style={{
-                                                            width: '150px',
-                                                            whiteSpace: 'pre-wrap',
-                                                            wordWrap: ' break-word'
-                                                        }}>
+                                                                                  value={gender.value} style={{
+                                                        width: '150px',
+                                                        whiteSpace: 'pre-wrap',
+                                                        wordWrap: ' break-word'
+                                                    }}>
                                                         {gender.name}</option>)}
 
                                                 </SelectBase>
@@ -1412,11 +1403,11 @@ class RegisterSecond extends Component {
                                                             icon: classes.icon,
                                                         },
                                                     }}
-                                                    style={{ paddingLeft: 20 }}
+                                                    style={{paddingLeft: 20}}
 
                                                 >
                                                     {countries.map(country => <option key={country.value}
-                                                        value={country.value}>{country.name}</option>)}
+                                                                                      value={country.value}>{country.name}</option>)}
                                                 </SelectBase>
                                                 <Typography className={classes.inputTitle2}>
                                                     {$nationalityError}
@@ -1437,11 +1428,11 @@ class RegisterSecond extends Component {
                                                             icon: classes.icon,
                                                         },
                                                     }}
-                                                    style={{ paddingLeft: 20 }}
+                                                    style={{paddingLeft: 20}}
 
                                                 >
                                                     {dataSourceAvailable.map(provinces => <option key={provinces.nombre}
-                                                        value={provinces.value} >{provinces.nombre}</option>)}  
+                                                                                                  value={provinces.value}>{provinces.nombre}</option>)}
 
                                                 </SelectBase>
                                                 <Typography className={classes.inputTitle2}>
@@ -1464,9 +1455,9 @@ class RegisterSecond extends Component {
                                                         },
 
                                                     }}
-                                                    style={{ paddingLeft: 20 }}
+                                                    style={{paddingLeft: 20}}
                                                 >
-                                                    {this.state.municipality.map(locality => <option 
+                                                    {this.state.municipality.map(locality => <option
                                                         value={locality}>{locality}</option>)}
 
                                                 </SelectBase>
@@ -1474,21 +1465,21 @@ class RegisterSecond extends Component {
                                                     {$locationError}
                                                 </Typography>
 
-                                                <Typography style={{ color: '#999999', fontSize: 11 }}>
+                                                <Typography style={{color: '#999999', fontSize: 11}}>
                                                     12 caracteres máx
                                                 </Typography>
                                                 <Typography className={classes.inputTitle}>
                                                     Dirección
                                                 </Typography>
                                                 <Grid container justify='center'>
-                                                    <Grid container xs={9} xl={9} sm={9} style={{ paddingRight: 10 }}>
+                                                    <Grid container xs={9} xl={9} sm={9} style={{paddingRight: 10}}>
                                                         <InputBase
                                                             placeholder="Calle"
                                                             fullWidth
                                                             id="direction"
                                                             name="direccion"
 
-                                                            inputProps={{ style: { textAlign: 'center' } }}
+                                                            inputProps={{style: {textAlign: 'center'}}}
                                                             className={this.state.dirError ? classes.errorFormButton : classes.formButton}
                                                             onChange={this.handleDir}
                                                             required
@@ -1509,7 +1500,7 @@ class RegisterSecond extends Component {
                                                             id="numero"
                                                             name="numero"
                                                             regex={onlyNumbersRegex}
-                                                            inputProps={{ style: { textAlign: 'center' } }}
+                                                            inputProps={{style: {textAlign: 'center'}}}
                                                             className={this.state.numberError ? classes.errorFormButton : classes.formButton}
                                                             onChange={this.handleNumberChange}
                                                             required
@@ -1525,12 +1516,12 @@ class RegisterSecond extends Component {
 
 
                                                 <Grid container item>
-                                                    <Grid container justify="center" style={{ marginTop: 10 }}>
+                                                    <Grid container justify="center" style={{marginTop: 10}}>
                                                         <Typography
                                                             className={classes.normaltext}>
                                                             <Link
-                                                                style={{ color: '#999999' }}>
-                                                               {/* ¿Por qué me solicitan esta información?*/}
+                                                                style={{color: '#999999'}}>
+                                                                {/* ¿Por qué me solicitan esta información?*/}
                                                             </Link>
                                                         </Typography>
                                                     </Grid>
@@ -1549,23 +1540,23 @@ class RegisterSecond extends Component {
 
                                             </form>
                                         </Grid> :
-                                        <Grid justify='center' style={{ maxWidth: 400 }}>
+                                        <Grid justify='center' style={{maxWidth: 400}}>
                                             <form style={{
                                                 width: '100%',
                                                 marginTop: 30,
                                                 justifyContent: "center",
                                                 alignContent: "center",
                                             }}
-                                                onSubmit={this.handleCreateAccountSubmit}
-                                                noValidate>
-                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                  onSubmit={this.handleCreateAccountSubmit}
+                                                  noValidate>
+                                                <Typography className={classes.inputTitle} style={{textAlign: 'left'}}>
                                                     Fecha de Nacimiento
                                                 </Typography>
                                                 <Grid container justify='flex-start'>
-                                                    <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 10 }}>
+                                                    <Grid container xs={4} xl={4} sm={4} style={{paddingRight: 10}}>
                                                         <SelectBase
                                                             disableUnderline
-                                                            style={{ width: '80%' }}
+                                                            style={{width: '80%'}}
                                                             native
                                                             disabled={this.state.enabledComponent}
                                                             value={this.state.day}
@@ -1580,14 +1571,14 @@ class RegisterSecond extends Component {
                                                             }}
                                                         >
                                                             {days.map(days => <option key={days.value}
-                                                                value={days.value}>{days.name}</option>)}
+                                                                                      value={days.value}>{days.name}</option>)}
 
                                                         </SelectBase>
                                                         <Typography className={classes.inputTitle2}>
                                                             {$dayError}
                                                         </Typography>
                                                     </Grid>
-                                                    <Grid container xs={4} xl={4} sm={4} style={{ paddingRight: 0 }}>
+                                                    <Grid container xs={4} xl={4} sm={4} style={{paddingRight: 0}}>
                                                         <SelectBase
                                                             disableUnderline
                                                             native
@@ -1597,7 +1588,7 @@ class RegisterSecond extends Component {
                                                                 this.handleMonthsChange(e)
                                                             }}
                                                             className={this.state.monthError ? classes.errorSelectMobile : classes.selectMobile}
-                                                            style={{ paddingLeft: 15, width: '100%' }}
+                                                            style={{paddingLeft: 15, width: '100%'}}
                                                             inputProps={{
                                                                 classes: {
                                                                     icon: classes.icon,
@@ -1605,16 +1596,16 @@ class RegisterSecond extends Component {
                                                             }}
                                                         >
                                                             {months.map(months => <option key={months.value}
-                                                                value={months.value}>{months.name}</option>)}
+                                                                                          value={months.value}>{months.name}</option>)}
                                                         </SelectBase>
                                                         <Typography className={classes.inputTitle2}>
                                                             {$monthError}
                                                         </Typography>
                                                     </Grid>
-                                                    <Grid container xs={4} xl={4} sm={4} style={{ paddingLeft: 30 }}>
+                                                    <Grid container xs={4} xl={4} sm={4} style={{paddingLeft: 30}}>
                                                         <SelectBase
                                                             disableUnderline
-                                                            style={{ width: '100%' }}
+                                                            style={{width: '100%'}}
                                                             native
                                                             disabled={this.state.enabledComponent}
                                                             value={this.state.years}
@@ -1629,7 +1620,7 @@ class RegisterSecond extends Component {
                                                             }}
                                                         >
                                                             {years.map(years => <option key={years.value}
-                                                                value={years.value}>{years.name}</option>)}
+                                                                                        value={years.value}>{years.name}</option>)}
 
                                                         </SelectBase>
                                                         <Typography className={classes.inputTitle2}>
@@ -1638,7 +1629,7 @@ class RegisterSecond extends Component {
                                                     </Grid>
                                                 </Grid>
 
-                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                <Typography className={classes.inputTitle} style={{textAlign: 'left'}}>
                                                     Nacionalidad
                                                 </Typography>
                                                 <SelectBase
@@ -1655,16 +1646,16 @@ class RegisterSecond extends Component {
                                                             icon: classes.icon,
                                                         },
                                                     }}
-                                                    style={{ paddingLeft: 10 }}
+                                                    style={{paddingLeft: 10}}
                                                 >
                                                     {countries.map(country => <option key={country.value}
-                                                        value={country.value}>{country.name}</option>)}
+                                                                                      value={country.value}>{country.name}</option>)}
 
                                                 </SelectBase>
                                                 <Typography className={classes.inputTitle2}>
                                                     {$nationalityError}
                                                 </Typography>
-                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                <Typography className={classes.inputTitle} style={{textAlign: 'left'}}>
                                                     Género
                                                 </Typography>
                                                 <SelectBase
@@ -1681,16 +1672,16 @@ class RegisterSecond extends Component {
                                                             icon: classes.icon,
                                                         },
                                                     }}
-                                                    style={{ paddingLeft: 10 }}
+                                                    style={{paddingLeft: 10}}
                                                 >
                                                     {gender.map(gender => <option key={gender.value}
-                                                        value={gender.value}>{gender.name}</option>)}
+                                                                                  value={gender.value}>{gender.name}</option>)}
 
                                                 </SelectBase>
                                                 <Typography className={classes.inputTitle2}>
                                                     {$genderError}
                                                 </Typography>
-                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                <Typography className={classes.inputTitle} style={{textAlign: 'left'}}>
                                                     Provincia
                                                 </Typography>
                                                 <SelectBase
@@ -1709,14 +1700,14 @@ class RegisterSecond extends Component {
                                                     }}
 
                                                 >
-                                                  
-                                                   {dataSourceAvailable.map(provinces => <option key={provinces.nombre}
-                                                        value={provinces.value}>{provinces.nombre}</option>)}  
+
+                                                    {dataSourceAvailable.map(provinces => <option key={provinces.nombre}
+                                                                                                  value={provinces.value}>{provinces.nombre}</option>)}
                                                 </SelectBase>
                                                 <Typography className={classes.inputTitle2}>
                                                     {$provinceError}
                                                 </Typography>
-                                                <Typography className={classes.inputTitle} style={{ textAlign: 'left' }}>
+                                                <Typography className={classes.inputTitle} style={{textAlign: 'left'}}>
                                                     Localidad
                                                 </Typography>
                                                 <SelectBase
@@ -1736,7 +1727,7 @@ class RegisterSecond extends Component {
                                                     }}
 
                                                 >
-                                                    {this.state.municipality.map(locality => <option 
+                                                    {this.state.municipality.map(locality => <option
                                                         value={locality}>{locality}</option>)}
 
                                                 </SelectBase>
@@ -1744,28 +1735,28 @@ class RegisterSecond extends Component {
                                                     {$locationError}
                                                 </Typography>
                                                 <Grid container justify='flex-start'>
-                                                    <Grid container xs={9} xl={9} sm={9} style={{ paddingRight: 10 }}>
+                                                    <Grid container xs={9} xl={9} sm={9} style={{paddingRight: 10}}>
                                                         <Typography className={classes.inputTitle}
-                                                            style={{ textAlign: 'left' }}>
+                                                                    style={{textAlign: 'left'}}>
                                                             Dirección
                                                         </Typography>
                                                     </Grid>
                                                     <Grid container xs={3} xl={3} sm={3}>
                                                         <Typography className={classes.inputTitle}
-                                                            style={{ textAlign: 'left' }}>
+                                                                    style={{textAlign: 'left'}}>
                                                             Número
                                                         </Typography>
                                                     </Grid>
                                                 </Grid>
                                                 <Grid container justify='center'>
-                                                    <Grid container xs={9} xl={9} sm={9} style={{ paddingRight: 10 }}>
+                                                    <Grid container xs={9} xl={9} sm={9} style={{paddingRight: 10}}>
                                                         <InputBase
                                                             placeholder="Calle"
                                                             fullWidth
                                                             id="direction"
                                                             name="direccion"
 
-                                                            inputProps={{ style: { textAlign: 'center' } }}
+                                                            inputProps={{style: {textAlign: 'center'}}}
                                                             className={this.state.dirError ? classes.errorFormButton : classes.formButton}
                                                             onChange={this.handleDir}
                                                             required
@@ -1796,7 +1787,7 @@ class RegisterSecond extends Component {
                                                             id="numero"
                                                             name="numero"
                                                             regex={onlyNumbersRegex}
-                                                            inputProps={{ style: { textAlign: 'center' } }}
+                                                            inputProps={{style: {textAlign: 'center'}}}
                                                             className={this.state.numberError ? classes.errorFormButton : classes.formButton}
                                                             onChange={this.handleNumberChange}
                                                             required
@@ -1823,11 +1814,11 @@ class RegisterSecond extends Component {
                                                 </Grid>
 
                                                 <Grid container item>
-                                                    <Grid container justify="center" style={{ marginTop: 10 }}>
+                                                    <Grid container justify="center" style={{marginTop: 10}}>
                                                         <Typography
                                                             className={classes.normaltext}>
                                                             <Link
-                                                                style={{ color: '#999999' }}>
+                                                                style={{color: '#999999'}}>
                                                                 {/* ¿Por qué me solicitan esta información?*/}
                                                             </Link>
                                                         </Typography>
@@ -1839,7 +1830,7 @@ class RegisterSecond extends Component {
                                                         fullWidth
                                                         disabled={this.state.enabledComponent}
                                                         className={this.state.error ? classes.loginError : classes.login}
-                                                       //onSubmit={this.handleCreateAccountSubmit}
+                                                        //onSubmit={this.handleCreateAccountSubmit}
                                                         disabled={!isEnabled}
                                                     >
                                                         Finalizar registro
@@ -1861,4 +1852,4 @@ class RegisterSecond extends Component {
     }
 }
 
-export default withStyles(styles, { withTheme: true })(RegisterSecond);
+export default withStyles(styles, {withTheme: true})(RegisterSecond);

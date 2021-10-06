@@ -6,6 +6,7 @@ import CerrarSesion from '../../asset/images/sidemenu/cerrarsesion.svg'
 import TemporaryDrawer from './mobileDrawer'
 import Ok from '../../asset/images/myProfile/ok.svg'
 import ProfilePicture from '../../asset/images/admin/profilePicture.png'
+import Letter from '../../asset/images/letterLogo.svg'
 import Cliente from "../../setting/cliente";
 import { GetJson } from "../../services/hostConfig";
 
@@ -118,7 +119,7 @@ const AdminNavbar = ({ active, recover }) => {
                                         font: " normal normal 40px/40px Poppins",
                                         marginBottom: 60
                                     }}>
-                                        Truster
+                                        <img src={Letter}/>
                                     </Typography>
 
                                     <Typography style={{
@@ -169,7 +170,7 @@ const AdminNavbar = ({ active, recover }) => {
                         font: " normal normal 40px/40px Poppins",
                         //marginBottom: 217
                     }}>
-                        Truster
+                         <Link href='https://gotruster.com/'><img src={Letter}/></Link>
                     </Typography> : <Typography variant="h6" style={{
                         marginLeft: 77,
                         flexGrow: 1,
@@ -179,7 +180,7 @@ const AdminNavbar = ({ active, recover }) => {
                         font: " normal normal 40px/40px Poppins",
                         //marginBottom: 217
                     }}>
-                        Truster
+                        <img src={Letter}/>
                     </Typography>}
 
                     <Hidden xsDown>

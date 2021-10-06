@@ -122,8 +122,9 @@ function DniRegister(props) {
     const handleSubmit = () => {
         let URL = CustomerResource();
         let URLVal = ValidatioDetail();
-        let dateModify = formatDate;
-        console.log(dateModify);
+        var date = new Date();
+        let formatted_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+       
         setShow(<LoopCircleLoading />)
         setActive(true);
         const token = getToken();
@@ -174,10 +175,10 @@ function DniRegister(props) {
                     "points": {
                         "id": 1,
                     },
-                    "validationCreationDate": "2021-09-26",
+                    "validationCreationDate": formatted_date,
                     "validationEnabled": true,
                     "validationExtra": "string",
-                    "validationModificationDate": "2021-09-26",
+                    "validationModificationDate": formatted_date,
                     "validationName": "DNI",
                     "validationStatus": "PENDING"
                 }
@@ -209,7 +210,7 @@ function DniRegister(props) {
 
         const reader = new FileReader();
         let _file = event.target.files[0];
-
+        setName(_file.name);
         const _name = nombre
 
         reader.onload = function (event) {
@@ -310,7 +311,7 @@ function DniRegister(props) {
                     <Grid container direction={'row'} style={{ padding: '10px 0 10px 0', cursor: 'pointer' }}>
                         <Grid item xs={2} />
                         <Grid item xs={8}>
-                            <Typography className={classes.boton}>Adjuntar Frente</Typography>
+                            <Typography className={classes.boton}>{nameImage ?'Adjuntar Frente' : name}</Typography>
                         </Grid>
                         <Grid item={2}>
                             <FontAwesomeIcon icon={faPaperclip} className={nameImage ? classes.imageColorGray : classes.imageColor} />
@@ -346,7 +347,7 @@ function DniRegister(props) {
                     <Grid container direction={'row'} style={{ padding: '10px 0 10px 0', cursor: 'pointer' }}>
                         <Grid item xs={2} />
                         <Grid item xs={8}>
-                            <Typography className={classes.boton}>Adjuntar Dorso</Typography>
+                            <Typography className={classes.boton}>{nameImage ?'Adjuntar Dorso' : name}</Typography>
                         </Grid>
                         <Grid item={2}>
                             <FontAwesomeIcon icon={faPaperclip} className={nameImage ? classes.imageColorGray : classes.imageColor} />

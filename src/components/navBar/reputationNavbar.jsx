@@ -1,6 +1,7 @@
 import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import { Grid, Toolbar, Typography, Link } from '@material-ui/core';
+import Letter from '../../asset/images/letterLogo.svg'
 import Inicio from '../../asset/images/sidemenu/inicio.svg'
 import Busqueda from '../../asset/images/sidemenu/busqueda.svg'
 import MiPerfil from '../../asset/images/sidemenu/miperfil.svg'
@@ -69,7 +70,7 @@ const ReputationNavbar = () => {
                                     font: " normal normal 40px/40px Poppins",
                                     marginBottom: 60
                                 }}>
-                                    Truster
+                                   <Link href='https://gotruster.com/'><img src={Letter}/></Link>
                                     </Typography>
 
                                 <Typography style={{
