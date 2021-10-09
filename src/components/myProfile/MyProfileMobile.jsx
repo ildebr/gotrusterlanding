@@ -101,7 +101,7 @@ export default function MyProfileMobile(props) {
     const [active, setActive] = React.useState(false);
     const [file, setFile] = useState(null)
     const [user, setUser] = useState(null)
-    const [imagesArray, setImagesArray] = useState(null)
+    const [fechaCreate, setFechaCreate] = useState(false);    
     const [loading, setLoading] = useState(false);
     
     ////
@@ -110,6 +110,8 @@ export default function MyProfileMobile(props) {
     const [adre, setAdresses] = React.useState('')
     const [cui, setCui] = React.useState('')
     const [selfie, setSelfie] = React.useState('')
+    const [loadAdre, setLoadAdre]= React.useState('')
+    const [loadNac, setLoadNac]= React.useState('')
 
      const onFileChange = (event) => {
         let fileName = event.target.files[0].name
@@ -157,7 +159,10 @@ export default function MyProfileMobile(props) {
     useEffect(() => {
        setUser(localStorage.getItem('userLogin'))
         handleLoadDataAdresses();        
-        loadValidation();      
+        loadValidation();  
+        var fecha = new Date(localStorage.getItem('createDate'));
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        setFechaCreate(fecha.toLocaleDateString("es-ES", options));    
 
     }, [ file, user]);
 
@@ -243,8 +248,8 @@ export default function MyProfileMobile(props) {
 
                 });
 
-                localStorage.setItem("Adresses", adress)
-                localStorage.setItem("Nacinality", nacional)
+                setLoadAdre(adress)
+                setLoadNac(nacional)
 
             })
     }
@@ -464,7 +469,7 @@ export default function MyProfileMobile(props) {
                             color: "#777777",
                             font: " normal normal 13px/13px Poppins",
                         }}>
-                            Miembro Truster desde Septiembre / 2021
+                            Miembro Truster desde {fechaCreate}
                         </Typography>
                     </Grid>
                     {show}
@@ -602,7 +607,7 @@ export default function MyProfileMobile(props) {
                 {adre}
                 <Grid container xs={12} xl={12} sm={12}>
                     <InputBase
-                        defaultValue={adresses}
+                        value={loadAdre}
                         fullWidth
                         id="nombre"
                         name='name'
@@ -686,7 +691,7 @@ export default function MyProfileMobile(props) {
                 {validated}
                 <Grid container xs={12} xl={12} sm={12}>
                     <InputBase
-                        defaultValue={nacionality}
+                        value={loadNac}
                         fullWidth
                         id="nombre"
                         name='name'

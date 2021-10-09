@@ -58,7 +58,12 @@ const SumReputation = () => {
     const [selfie, setSelfie] = React.useState(false)
     const [dniVal, setDniVal] = React.useState(false)
     const [adressVal, setAdressVal] = React.useState(false)
-
+    ////////////////////////////////////////
+    const [cuiProce, setCuiProce] = React.useState(false)
+    const [selfieProce, setSelfieProce] = React.useState(false)
+    const [dniValProce, setDniValProce] = React.useState(false)
+    const [adressValProce, setAdressValProce] = React.useState(false)
+    const [phoneValProce, setPhoneValProce] = React.useState(false)
     function loadValidation() {
         const token = getToken();
         const idCustomer = localStorage.getItem("customerId")
@@ -95,9 +100,29 @@ const SumReputation = () => {
                         
                         setCui(true);
                     }
+                    //////////////////
+                    if (element == "DNI" && elemtStatus == "PENDING" ) {
+                        
+                        setDniValProce(true)
+                    }
+                    if (element == "ADDRESS" && elemtStatus == "PENDING" ) {
+                        setAdressValProce(true)
+                      
+                    }
+                    if (element == "SELFIE" && elemtStatus == "PENDING" ) {                        
+                        setSelfieProce(true);
+                    }
+                    if (element == "CELLPHONE" && elemtStatus == "PENDING") {
+                       
+                        setPhoneValProce(true)
+                    }
+                    if (element == "CUIL" && elemtStatus == "PENDING") {
+                        
+                        setCuiProce(true);
+                    }
                     
                 }
-               
+                console.log("Selfie ver", selfieProce) 
             })
     }       
     useEffect(() => {              
@@ -248,7 +273,7 @@ const SumReputation = () => {
                                     paddingLeft: 10,
                                     marginTop: 5
                                 }}>
-                                    <Link href={'/validation/dni'} style={{ textDecoration: 'none', color: 'white' }}>
+                                    <Link href={dniValProce == false ?'/validation/dni':''} style={{ textDecoration: 'none', color: 'white' }}>
                                         DNI </Link>
                                 </Typography>
                             </Grid>
@@ -266,7 +291,7 @@ const SumReputation = () => {
                                 <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
                             </Grid>
                             <hr style={{ width: '100%' }} color='#333333' />
-                        </Grid>:<Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
+                        </Grid>:<Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }} hidden>
                             <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
                                {/*  <img src={dni} alt='dni' /> */}
                                 <Typography style={{
@@ -289,10 +314,10 @@ const SumReputation = () => {
                                 }}>
                                    
                                 </Typography>
-                                <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
-                                <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} /> 
+                                <div   style={{ marginRight: 5 }} />
+                                <div   style={{ paddingRight: 10 }}  /> 
                             </Grid>
-                           <hr style={{ width: '100%' }} color='#333333' /> 
+                           <hr style={{ width: '100%' }} color='#000000'  /> 
                         </Grid>}
                         <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
                             <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
@@ -332,7 +357,7 @@ const SumReputation = () => {
                                     paddingLeft: 10,
                                     marginTop: 5
                                 }}>
-                                  <Link href={'/validation/afip'} style={{ textDecoration: 'none', color: 'white' }}> CUIL</Link>
+                                  <Link href={cuiProce == false ?'/validation/afip':''} style={{ textDecoration: 'none', color: 'white' }}> CUIL</Link>
                                 </Typography>
                             </Grid>
                             <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
@@ -372,15 +397,15 @@ const SumReputation = () => {
                                 }}>
                                    
                                 </Typography>
-                                <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
-                                <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
+                                <div   style={{ marginRight: 5 }} />
+                                <div   style={{ paddingRight: 10 }}  /> 
                             </Grid>
-                            <hr style={{ width: '100%' }} color='#333333' />
+                            <hr style={{ width: '100%' }} color='#000000' />
                         </Grid>
                         }
                     </Grid>
                     <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ marginLeft: 10, paddingLeft: 15, paddingRight: 15 }}>
-                    {adressVal == false ? <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
+                    {selfie == false ? <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
                             <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
                                 <img src={Cuil} alt='cuil' />
                                 <Typography style={{
@@ -390,7 +415,7 @@ const SumReputation = () => {
                                     paddingLeft: 10,
                                     marginTop: 5
                                 }}>
-                                    <Link href={'/validation/selfie'} style={{ textDecoration: 'none', color: 'white' }}> SELFIE</Link>
+                                    <Link href={selfieProce == false ? '/validation/selfie':''} style={{ textDecoration: 'none', color: 'white' }}> SELFIE</Link>
                                 </Typography>
                             </Grid>
                             <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
@@ -430,10 +455,10 @@ const SumReputation = () => {
                                 }}>
                                    
                                 </Typography>
-                                <img src={Logo} alt='logo' style={{ marginRight: 5 }} />
-                                <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
+                                <div   style={{ marginRight: 5 }} />
+                                <div   style={{ paddingRight: 10 }}  /> 
                             </Grid>
-                            <hr style={{ width: '100%' }} color='#333333' />
+                            <hr style={{ width: '100%' }} color='#000000' />
                         </Grid> }
                         <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
                             <Grid container justify='flex-start' xs={7} xl={7} sm={7} >
@@ -492,8 +517,9 @@ const SumReputation = () => {
                             <hr style={{ width: '100%' }} color='#333333' />
                         </Grid>
                     </Grid>
-                    <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='flex-start' style={{ marginLeft: 10, paddingLeft: 15 }}>
-                        <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }} >
+                  
+                     <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='flex-start' style={{ marginLeft: 10, paddingLeft: 15 }}>
+                     {adressVal == false ?  <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }} >
                             <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
                                 <img src={Direction} alt='direction' />
                                 <Typography style={{
@@ -503,7 +529,7 @@ const SumReputation = () => {
                                     paddingLeft: 10,
                                     marginTop: 5
                                 }}>
-                                  <Link href={'/validation/direccion'} style={{ textDecoration: 'none', color: 'white' }}>
+                                  <Link href={adressValProce == false ?'/validation/direccion':''} style={{ textDecoration: 'none', color: 'white' }}>
                                         Dirección </Link>
                                 </Typography>
                             </Grid>
@@ -522,6 +548,36 @@ const SumReputation = () => {
                             </Grid>
                             <hr style={{ width: '100%' }} color='#333333' />
                         </Grid>
+                        :                       
+                        <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }} >
+                            <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
+                                {/* <img src={Direction} alt='direction' /> */}
+                                <Typography style={{
+                                    align: "center",
+                                    color: "#FFFFFF",
+                                    font: " normal normal 14px/14px Poppins",
+                                    paddingLeft: 10,
+                                    marginTop: 5
+                                }}>
+                                  <Link href={'/validation/direccion'} style={{ textDecoration: 'none', color: 'white' }}>
+                                       </Link>
+                                </Typography>
+                            </Grid>
+                            <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
+                                <Typography style={{
+                                    align: "center",
+                                    color: "#ACFD00",
+                                    font: " normal normal 20px/20px PoppinsBold",
+                                    paddingLeft: 10,
+                                    marginRight: 8
+                                }}>
+                                   
+                                </Typography>
+                                <div   style={{ marginRight: 5 }} />
+                                <div   style={{ paddingRight: 10 }}  /> 
+                            </Grid>
+                            <hr style={{ width: '100%' }} color='#000000' />
+                        </Grid>}
                         <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30, marginTop: -65 }}>
                             <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
                                 <img src={Instagram} alt='instagram' />

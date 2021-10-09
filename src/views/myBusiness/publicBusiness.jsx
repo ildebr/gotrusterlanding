@@ -17,6 +17,7 @@ import Contact from "../../components/publicBusiness/contact";
 import MobileTrustUsers from "../../components/publicBusiness/mobileTrustUsers";
 import MobileImage from "../../components/publicBusiness/mobileImage";
 import cliente from "./../../setting/cliente";
+import Letter from '../../asset/images/letterLogo.svg'
 import {  GetImage } from "../../services/hostConfig";
 const styles = theme => ({
     root: {
@@ -148,7 +149,7 @@ class PublicBusiness extends Component {
                                         color: "#FFFFFF",
                                         font: " normal normal 40px/40px Poppins",
                                     }}>
-                                        Truster
+                                        <img src={Letter}/>
                                     </Typography>
                                 </Grid> : <Grid xs={8} xl={8} sm={8} container justify='flex-start'>
                                     <Typography style={{
@@ -162,7 +163,7 @@ class PublicBusiness extends Component {
                                         fontSize: '26px',
 
                                     }}>
-                                        Truster
+                                       <img src={Letter}/>
                                     </Typography>
                                 </Grid>}
 

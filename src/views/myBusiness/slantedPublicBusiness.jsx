@@ -13,7 +13,7 @@ import SlantedPBMHeader from "../../components/publicBusiness/slantedPBMHeader";
 import AboutSlantedPb from "../../components/publicBusiness/aboutSlantedPB";
 import Redes from "../../components/publicBusiness/redes";
 import AboutSlantedPbm from "../../components/publicBusiness/aboutSlantedPBM";
-
+import Letter from '../../asset/images/letterLogo.svg'
 const styles = theme => ({
     root: {
         background: '#000000',
@@ -164,7 +164,7 @@ class SlantedPublicBusiness extends Component {
                                         color: "#FFFFFF",
                                         font: " normal normal 40px/40px Poppins",
                                     }}>
-                                        Truster
+                                        <img src={Letter}/>
                                     </Typography>
                                 </Grid> : <Grid xs={8} xl={8} sm={8} container justify='flex-start'>
                                     <Typography style={{
@@ -178,7 +178,7 @@ class SlantedPublicBusiness extends Component {
                                         paddingLeft: '22px',
                                         paddingBottom: '5px'
                                     }}>
-                                        Truster
+                                       <img src={Letter}/>
                                     </Typography>
                                 </Grid>}
 

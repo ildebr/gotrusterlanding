@@ -3,11 +3,12 @@ import {withStyles} from '@material-ui/core/styles';
 import {CssBaseline, Grid, Container, Typography} from '@material-ui/core';
 import AdminNavbar from "../../components/navBar/adminNavbar";
 import DniRow from "../../components/admin/dniRow";
-import { AdminCustomer } from './../../services/hostConfig';
+import { AdminCustomer, ValidatioDetail } from './../../services/hostConfig';
 import { getToken } from './../../setting/auth-helpers';
 import { LoopCircleLoading } from 'react-loadingg';
 import cliente from "./../../setting/cliente";
-import { ValidatioDetail } from './../../services/hostConfig';
+import { ConfirmProvider } from "material-ui-confirm";
+import moment from 'moment'
 
 const styles = theme => ({
     navBar: {
@@ -57,11 +58,6 @@ const styles = theme => ({
     },
 });
 
-const DNI_FILTER = "DNI"
-const STATUS_FILTER = "PENDING"
-const STATUS_APPROVED = "APPROVED"
-const STATUS_REJECTED = "REJECTED"
-
 function AdminDni(props) {
     const {classes} = props;
     const pageSize = 13
@@ -87,19 +83,17 @@ function AdminDni(props) {
                     }
                     setRows([]);
                 }).then(response => {
-                    console.log(response)
-                    const newRows = response.filter((row) => {
+                    setRows(response.filter((row) => {
                         if (row.validationDetailsDTOS?.length > 0) {
-                            const valid = row.validationDetailsDTOS.find((vd) => (vd.validationName === DNI_FILTER && vd.validationStatus === STATUS_FILTER))
-                            if (valid) {
-                                row.validationDetailsDTOS = valid
+                            const validRow = row.validationDetailsDTOS.find((vd) => (vd.validationName === "DNI" && vd.validationStatus === "PENDING"))
+                            if (validRow) {
+                                row.validationDetailsDTOS = validRow
                                 return true
                             }
                         }
                         return false
-                    })
+                    }))
                     setRetrieve(false)
-                    setRows(newRows)
                 })
             }
         } catch(e) {
@@ -109,12 +103,14 @@ function AdminDni(props) {
 
     const handleApprove = async (data) => {
         setShow(true);
-        const validationDetail = data.validationDetailsDTOS
-        validationDetail.validationStatus = STATUS_APPROVED
+        const valDetail = data.validationDetailsDTOS
+        valDetail.validationStatus = "APPROVED"
+        valDetail.validationEnabled = true
+        valDetail.validationModificationDate = moment(new Date()).format("YYYY-MM-DD")
         try {
             const token = getToken();
             const data = await
-            cliente.put(ValidatioDetail() + "/" + validationDetail.id, validationDetail, {
+            cliente.put(ValidatioDetail() + "/" + valDetail.id, valDetail, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -123,10 +119,11 @@ function AdminDni(props) {
             }).then(response => {
                 console.log(response)
                 if (response.status === 200) {
-                    setRetrieve(true)
-                    setShow(false)
+                    console.debug('Respuesta correcta')
                 }
             }).catch(error => console.error('Error:', error));
+            setRetrieve(true)
+            setShow(false)
         } catch(e) {
             console.log(e);
         }
@@ -134,12 +131,14 @@ function AdminDni(props) {
 
     const handleReject = async (data) => {
         setShow(true);
-        const validationDetail = data.validationDetailsDTOS
-        validationDetail.validationStatus = STATUS_REJECTED
+        const valDetail = data.validationDetailsDTOS
+        valDetail.validationStatus = "REJECTED"
+        valDetail.validationEnabled = false
+        valDetail.validationModificationDate = moment(new Date()).format("YYYY-MM-DD")
         try {
             const token = getToken();
             const data = await
-            cliente.put(ValidatioDetail() + "/" + validationDetail.id, validationDetail, {
+            cliente.put(ValidatioDetail() + "/" + valDetail.id, valDetail, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -148,10 +147,11 @@ function AdminDni(props) {
             }).then(response => {
                 console.log(response)
                 if (response.status === 200) {
-                    setRetrieve(true)
-                    setShow(false)
+                    console.debug('Respuesta correcta')
                 }
             }).catch(error => console.error('Error:', error));
+            setRetrieve(true)
+            setShow(false)
         } catch(e) {
             console.log(e);
         }
@@ -180,13 +180,15 @@ function AdminDni(props) {
                         </Grid>
                         <Grid item container direction='column'>
                             <div className={classes.divider}/>
-                            {rows.map((item, index) => (
-                                <>
-                                    <DniRow key={index} data={item} handleReject={handleReject} 
-                                        handleApprove={handleApprove} />
-                                    <div className={classes.divider}/>
-                                </>
-                            ))}
+                            <ConfirmProvider>
+                                {rows.map((item, index) => (
+                                    <>
+                                        <DniRow key={index} data={item} handleReject={handleReject} 
+                                            handleApprove={handleApprove} />
+                                        <div className={classes.divider}/>
+                                    </>
+                                ))}
+                            </ConfirmProvider>
                         </Grid>
                         { show ? <LoopCircleLoading size='large' color='#ACFD00' /> : null }
                         <Grid item container justify='flex-start'>

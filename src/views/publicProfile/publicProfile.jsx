@@ -28,6 +28,7 @@ import Airtm from '../../asset/images/publicProfile/companyIcons/airtm.svg'
 import Facebook from '../../asset/images/publicProfile/companyIcons/facebook.svg'
 import LinkedIn from '../../asset/images/publicProfile/companyIcons/linked.svg'
 import Meli from '../../asset/images/publicProfile/companyIcons/meli.svg'
+import Letter from '../../asset/images/letterLogo.svg'
 import Cliente from './../../setting/cliente'
 const { localStorage } = global.window;
 
@@ -302,7 +303,7 @@ class PublicProfile extends Component {
                                         color: "#FFFFFF",
                                         font: " normal normal 40px/40px Poppins",
                                     }}>
-                                        Truster
+                                        <img src={Letter}/>
                                     </Typography>
                                 </Grid> :
                                 <Grid xs={10} xl={10} sm={10} container alignItems='center'>
@@ -318,7 +319,7 @@ class PublicProfile extends Component {
                                             color: "#FFFFFF",
                                             font: " normal normal 24px/24px Poppins",
                                         }}>
-                                            Truster
+                                           <img src={Letter}/>
                                         </Typography>
                                     </Grid>
                                     <Grid xs={1} xl={1} sm={1} container justify='flex-end' style={{ marginTop: 10 }}>

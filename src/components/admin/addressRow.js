@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Button, Grid, Typography} from '@material-ui/core';
-import GoogleMapReact from 'google-map-react';
 import { Modal } from './Modal';
+import { BaseURLImage } from './../../services/hostConfig';
+import Factura from "../../asset/images/admin/direcciones/Factura.png";
+import DniFront from "../../asset/images/admin/dni/dniFront.png";
+import DniBack from "../../asset/images/admin/dni/dniBack.png";
+import { useConfirm } from "material-ui-confirm";
 
 const useStyles = makeStyles({
     acceptButton: {
@@ -77,6 +81,15 @@ const useStyles = makeStyles({
             textDecoration: 'underline'
         }
     },
+    dataText: {
+        fontFamily: 'Poppins',
+        fontStyle: 'normal',
+        fontWeight: 500,
+        fontSize: '14px',
+        lineHeight: '30px',
+        letterSpacing: '-0.02em',
+        color: '#E5E5E5',
+    },
     facturaImage: {
         width: 310,
         height: 270
@@ -87,27 +100,59 @@ const useStyles = makeStyles({
     },
 });
 
+const IMAGE_DOCUMENT_PATH = "dni/";
+const IMAGE_INVOICE_PATH = "factura/";
+
 function AddressRow(props) {
-    const {data} = props;
+    const {data, handleApprove, handleReject, disabled} = props;
     const classes = useStyles();
     const [showModal1, setShowModal1] = useState(false);
     const [showModal2, setShowModal2] = useState(false);
+    const [showModal3, setShowModal3] = useState(false);
+    const invoiceImageRef = useRef();
+    const docFrontImageRef = useRef();
+    const docBackImageRef = useRef();
+    const confirm = useConfirm();
 
-    const openModal1 = () => {
-        setShowModal1(prev => !prev);
+    const openModal = (index) => {
+        console.log(index);
+        switch (index) {
+            case 1:
+                setShowModal1(prev => !prev);
+                break;
+            case 2:
+                setShowModal2(prev => !prev);
+                break;
+            case 3:
+                setShowModal3(prev => !prev);
+                break;
+        }
     };
 
-    const openModal2 = () => {
-        setShowModal2(prev => !prev);
-    };
+    const setDefaultImage = (e, defImage) => {
+        e.target.src = defImage
+    }
 
-    // Default google maps props
-    const defaultProps = {
-        center: {
-            lat: 10.99835602,
-            lng: 77.01502627
-        },
-        zoom: 11
+    const handleApproveRow = data => {
+        confirm({ title: '¿Estas Seguro?',
+                  description: `Esta seguro de aprobar a ${data.name} ${data.lastName}.`,
+                  cancellationText: 'Cancelar',
+                  confirmationText: 'Aceptar',
+                  confirmationButtonProps: { autoFocus: true }
+                })
+            .then(() => handleApprove(data))
+            .catch(() => console.log("Aprobacion cancelada."));
+    }
+
+    const handleRejectRow = data => {
+        confirm({ title: '¿Estas Seguro?',
+                  description: `Esta seguro de rechazar a ${data.name} ${data.lastName}.`,
+                  cancellationText: 'Cancelar',
+                  confirmationText: 'Aceptar',
+                  confirmationButtonProps: { autoFocus: true }
+                })
+            .then(() => handleReject(data))
+            .catch(() => console.log("Rechazo cancelado."));
     };
 
     return (
@@ -121,19 +166,8 @@ function AddressRow(props) {
                         <Typography className={classes.label}>
                             Dirección
                         </Typography>
-                    </Grid>
-                    <Grid item xs>
-                        <div className={classes.map}>
-                            <GoogleMapReact
-                                bootstrapURLKeys={{ key: "AIzaSyDNKMLsD2eNK4PKN3EpfcVFf4F1sWpoDik" }}  // TODO: Add API key
-                                defaultCenter={defaultProps.center}
-                                defaultZoom={defaultProps.zoom}
-                            />
-                        </div>
-                    </Grid>
-                    <Grid item xs>
-                        <Typography className={classes.ampliar}>
-                            + Ampliar
+                        <Typography item className={classes.dataText}>
+                            {data.streetName} {data.streetNumber} 
                         </Typography>
                     </Grid>
                 </Grid>
@@ -144,11 +178,11 @@ function AddressRow(props) {
                         </Typography>
                     </Grid>
                     <Grid item xs>
-                        <img src={data.factura} className={classes.facturaImage} onClick={openModal1} />
-                        <Modal showModal={showModal1} setShowModal={setShowModal1} src={data.factura} />
+                        <img ref={invoiceImageRef} src={BaseURLImage() + IMAGE_INVOICE_PATH + data.email + '.png'} onError={e => setDefaultImage(e, Factura)} className={classes.facturaImage} onClick={() => openModal(1)} />
+                        <Modal showModal={showModal1} setShowModal={setShowModal1} imageRef={invoiceImageRef} />
                     </Grid>
                     <Grid item xs>
-                        <Typography className={classes.ampliar} onClick={openModal1}>
+                        <Typography className={classes.ampliar} onClick={() => openModal(1)}>
                             + Ampliar
                         </Typography>
                     </Grid>
@@ -157,15 +191,17 @@ function AddressRow(props) {
                     <Grid item xs={7} container spacing={1} direction='column' alignItems='flex-start'>
                         <Grid item xs>
                             <Typography className={classes.label}>
-                                Factura
+                                Dni
                             </Typography>
                         </Grid>
                         <Grid item xs container spacing={1} direction='column'>
                             <Grid item>
-                                <img src={data.dniFront} className={classes.dniImage} />
+                                <img ref={docFrontImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email + '-frente.png'} onError={e => setDefaultImage(e, DniFront)} className={classes.dniImage} onClick={() => openModal(2)} />
+                                <Modal showModal={showModal2} setShowModal={setShowModal2} imageRef={docFrontImageRef} />
                             </Grid>
                             <Grid item>
-                                <img src={data.dniBack} className={classes.dniImage} />
+                                <img ref={docBackImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email + '-dorso.png'} onError={e => setDefaultImage(e, DniBack)} className={classes.dniImage} onClick={() => openModal(3)} />
+                                <Modal showModal={showModal3} setShowModal={setShowModal3} imageRef={docBackImageRef} />
                             </Grid>
                         </Grid>
                         <Grid item xs>
@@ -176,10 +212,10 @@ function AddressRow(props) {
                     </Grid>
                     <Grid item xs={5} container spacing={1} direction='column' justify='center'>
                         <Grid item>
-                            <Button className={classes.acceptButton}>Aprobar</Button>
+                            <Button disabled={disabled} onClick={() => handleApproveRow(data)} className={classes.acceptButton}>Aprobar</Button>
                         </Grid>
                         <Grid item>
-                            <Button className={classes.rejectButton}>Rechazar</Button>
+                            <Button disabled={disabled} onClick={() => handleRejectRow(data)} className={classes.rejectButton}>Rechazar</Button>
                         </Grid>
                     </Grid>
                 </Grid>

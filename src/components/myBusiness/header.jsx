@@ -59,7 +59,8 @@ function Header(props) {
     const [user, setUser] = useState(null)
     const [haveImage, setHaveImage] = useState(false);
     const [haveImageCover, setHaveImageCover] = useState(false);
-
+    const [fechaCreate, setFechaCreate] = useState(false);
+    
     function getImages(){
         Cliente.get(GetImage(), {
             params: {
@@ -131,16 +132,15 @@ function Header(props) {
 
         reader.readAsDataURL(_file);
     }
+    const addDefaultPofileImage = e => {
+        e.target.src = elipse
+    }
 
-
-    useEffect(() => {
-
-
-        if (user === null) {
+    useEffect(() => {       
             setUser(localStorage.getItem('userLogin'))
-            getImages()
-        }
-
+          var fecha = new Date(localStorage.getItem('createDate'));
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        setFechaCreate(fecha.toLocaleDateString("es-ES", options));
 
 
     }, [haveImage, user, loading]);
@@ -153,29 +153,19 @@ function Header(props) {
                         <LoopCircleLoading size='large' color='#ACFD00'/>
 
                     </div>
-
                     :
-                    (user !== null ?
+                    
                         <Grid item>
 
                             <img
                                 src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/avatar/' + localStorage.getItem('userLogin') + '.png'}
                                 width='160px' height='160px'
                                 style={{objectFit: 'cover', borderRadius: '50%',}}
-                                //     src={
-                                //         UriServices() + '/' + user + '/images/perfil/' + imagesArray[0]}
-                                //     width='160px' height='160px' style={{
-                                //     borderRadius:'50%',
-                                //     objectFit:'cover'
-                                // }}
+                                onError={addDefaultPofileImage} 
                             />
 
                         </Grid>
-                        :
-                <Grid item>
-                    <img src={elipse} style={{width: '160px'}}/>
-                </Grid>
-                    )
+                        
                 }
                 <Grid component="label">
                     <input

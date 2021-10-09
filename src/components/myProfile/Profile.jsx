@@ -120,13 +120,9 @@ const useStyles = makeStyles(theme => ({
 }));
 let occupation = localStorage.getItem('occupation') === 'null' ? 'Agregue su ocupación' : localStorage.getItem('occupation');
 let gender = localStorage.getItem('gender');
-
+let email = localStorage.getItem('email');
 let cellphone = localStorage.getItem('cellphone') === 'string' ? 'xxx-xxxx-xxxx' : localStorage.getItem('cellphone');
 let cuit1 = localStorage.getItem('cuit') === 'string' ? 'xx-xxxxxxxx-x (Cuil/Cuit) o xxxxxxxx (Dni)' : localStorage.getItem('cuit');
-//let dni = localStorage.getItem('dni') === 'string' ? 'Agregue su cuit': localStorage.getItem('dni');
-let email = localStorage.getItem('email');
-let adresses = localStorage.getItem('Adresses') === '' ? 'Dirección' : localStorage.getItem('Adresses');
-let nacionality = localStorage.getItem('Nacinality') === '' ? 'Nacionalidad' : localStorage.getItem('Nacinality');
 let fecha = new Date(localStorage.getItem('birthDate'));
 
 
@@ -139,7 +135,7 @@ export default function Profile(props) {
     const [ipPublic, setIp] = React.useState('');
     const [show, setShow] = React.useState('');
     const [active, setActive] = React.useState(false);
-    
+   
     ////
     const [dni, setDni] = React.useState('')
     const [cuit, setCuit] = React.useState('')
@@ -147,10 +143,11 @@ export default function Profile(props) {
     const [adre, setAdresses] = React.useState('')
     const [cui, setCui] = React.useState('')
     const [selfie, setSelfie] = React.useState('')
+    const [loadAdre, setLoadAdre]= React.useState('')
+    const [loadNac, setLoadNac]= React.useState('')
 
-   
+
     const handleLoadDataAdresses = (e) => {
-
         const token = getToken();
         let adress = '';
         let nacional = '';
@@ -170,9 +167,11 @@ export default function Profile(props) {
                     nacional += currentValue.country;
 
                 });
-
-                localStorage.setItem("Adresses", adress)
-                localStorage.setItem("Nacinality", nacional)
+                console.log("Viendo carga de direccion", adress)
+                console.log("Viendo carga de Nacionalidad", nacional)
+                setLoadAdre(adress)
+                setLoadNac(nacional)
+               
 
             })
     }
@@ -250,7 +249,25 @@ export default function Profile(props) {
 
    
     function evaluateStatus(estado) {
-        let validations='';             
+        let validations=(<Grid container xs={8} xl={8} sm={8} justify='flex-end' style={{ marginLeft: -92 }}>
+        
+        <Typography style={{
+            flexGrow: 1,
+            textAlign: "right",
+            fontWeight: 700,
+            color: "#ACFD00",
+            font: " normal normal 21px/21px PoppinsBold",
+            marginTop: 30,
+            marginLeft: 0,
+            position: 'absolute'
+        }}>
+            +2
+        </Typography>
+
+        <img src={Logo} alt='ok' width='20px' style={{ marginLeft: 30, marginTop: 30, position: 'absolute', cursor: 'pointer' }} />
+        <Link href={goTOAfip}><img src={Add} alt='ok' width='20px' style={{ marginTop: 30, marginLeft: 75, position: 'absolute', cursor: 'pointer', zIndex: 5 }} /></Link>
+
+    </Grid>);             
         if(estado == "PENDING" ){
             validations=(
                 <Grid container xs={8} xl={8} sm={8} justify='flex-end' style={{ marginLeft: -92 }}>
@@ -321,9 +338,7 @@ export default function Profile(props) {
                   <img src={Add} alt='ok' width='20px' style={{ marginTop: 32, position: 'absolute' }} />
       
               </Grid>);
-            
         } 
-        console.log("Entre 2")
        return validations;
     }
 
@@ -391,6 +406,7 @@ export default function Profile(props) {
         handleLoadDataAdresses();        
         loadValidation();             
        // LoadData();
+     
     }, []);
 
 
@@ -400,7 +416,6 @@ export default function Profile(props) {
 
     let options = { day: 'numeric', month: 'long', year: 'numeric' };
     const isEnabled = profession !== '';
-
   ////////
     let validated = (
         <Grid container xs={8} xl={8} sm={8} justify='flex-end'>
@@ -530,7 +545,7 @@ export default function Profile(props) {
                 <Grid container xs={12} xl={12} sm={12}>
                     <InputBase
                         placeholder='Dirección'
-                        defaultValue={adresses}
+                        value={loadAdre}
                         fullWidth
                         id="nombre"
                         name='name'
@@ -616,7 +631,7 @@ export default function Profile(props) {
                 {forValidatedNacinality}
                 <Grid container xs={12} xl={12} sm={12}>
                     <InputBase
-                        defaultValue={nacionality}
+                        value={loadNac}
                         fullWidth
                         id="nombre"
                         name='name'

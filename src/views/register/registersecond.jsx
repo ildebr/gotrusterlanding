@@ -16,6 +16,7 @@ import Swal from "sweetalert2";
 
 const dataSourceAvailable = require('./../../services/provincias.json');
 const dataSourceAvailableLocal = require('./../../services/municipios.json');
+const countries = require('./../../services/countries.json');
 const onlyLettersRegex = /[^a-zA-Z]/gi;
 const onlyNumbersRegex = /[^0-9]/gi;
 
@@ -339,16 +340,7 @@ const styles = theme => ({
         }
     },
 });
-const countries = [
-    {
-        value: 'Paises',
-        name: 'Elegí tu nacionalidad'
-    },
-    {
-        value: 'Argentina',
-        name: 'Argentina'
-    },
-];
+
 
 
 const days = [

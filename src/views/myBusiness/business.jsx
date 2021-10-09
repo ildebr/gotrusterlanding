@@ -16,6 +16,7 @@ import MobileHeader from "../../components/myBusiness/mobileHeader";
 import MobileTienda from "../../components/myBusiness/mobileTienda";
 import MobileBotonera from "../../components/myBusiness/mobileBotonera";
 import Switch from "@material-ui/core/Switch";
+import Letter from '../../asset/images/letterLogo.svg'
 import { AllCategory, GetImage, ShopResource, ShopAdress } from "../../services/hostConfig";
 import { getToken } from './../../setting/auth-helpers';
 
@@ -351,7 +352,7 @@ class Business extends Component {
                                         color: "#FFFFFF",
                                         font: " normal normal 40px/40px Poppins",
                                     }}>
-                                        Truster
+                                        <img src={Letter}/>
                                     </Typography>
                                 </Grid> : <Grid xs={8} xl={8} sm={8} container justify='flex-start'>
                                     <Typography style={{

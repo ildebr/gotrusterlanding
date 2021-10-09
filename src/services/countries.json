@@ -1,0 +1,135 @@
+[
+    {
+        "value": "Paises",
+        "name": "Elegí tu nacionalidad"
+    },
+    {
+        "value": "Argentina",
+        "name": "Argentina"
+    },
+    {
+        "value": "Brasil",
+        "name": "Brasil"
+    },
+    {
+        "value": "Chile",
+        "name": "Chile"
+    },
+    {
+        "value": "Paraguay",
+        "name": "Paraguay"
+    },
+    {
+        "value": "Venezuela",
+        "name": "Venezuela"
+    },
+    {
+        "value": "Uruguay",
+        "name": "Uruguay"
+    },
+    {
+        "value": "Bolivia",
+        "name": "Bolivia"
+    },
+    {
+        "value": "Perú",
+        "name": "Perú"
+    },
+    {
+        "value": "Colombia",
+        "name": "Colombia"
+    },
+    {
+        "value": "Panama",
+        "name": "Panama"
+    },
+    {
+        "value": "Costa rica",
+        "name": "Costa rica"
+    },
+    {
+        "value": "El Salvador",
+        "name": "El Salvador"
+    },
+    {
+        "value": "Cuba",
+        "name": "Cuba"
+    },
+    {
+        "value": "Ecuador",
+        "name": "Ecuador"
+    },
+    {
+        "value": "Granada",
+        "name": "Granada"
+    },
+    {
+        "value": "Guatemala",
+        "name": "Guatemala"
+    },
+    {
+        "value": "Guyana",
+        "name": "Guyana"
+    },
+    {
+        "value": "Haití",
+        "name": "Haití"
+    },
+    {
+        "value": "Honduras",
+        "name": "Honduras"
+    },
+    {
+        "value": "México",
+        "name": "México"
+    },
+    {
+        "value": "Nicaragua",
+        "name": "Nicaragua"
+    },
+    {
+        "value": "Canadá",
+        "name": "Canadá"
+    },
+    {
+        "value": "Estado Unidos",
+        "name": "Estado Unidos"
+    },
+    {
+        "value": "Dominica",
+        "name": "Dominica"
+    },
+    {
+        "value": "República Dominicana",
+        "name": "República Dominicana"
+    },
+    {
+        "value": "San Cristóbal y Nieves",
+        "name": "San Cristóbal y Nieves"
+    },
+    {
+        "value": "San Vicente y las Granadinas",
+        "name": "San Vicente y las Granadinas"
+    },
+    {
+        "value": "Santa Lucia",
+        "name": "Santa Lucia"
+    },
+    {
+        "value": "Barbados",
+        "name": "Barbados"
+    },
+    {
+        "value": "Bahamas",
+        "name": "Bahamas"
+    },
+    {
+        "value": "Antigua y Barbuda",
+        "name": "Antigua y Barbuda"
+    },
+    {
+        "value": "Trinidad y Tobago",
+        "name": "Trinidad y Tobago"
+    }
+
+]

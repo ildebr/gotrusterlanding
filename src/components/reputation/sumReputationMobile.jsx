@@ -52,6 +52,12 @@ const SumReputationMobile = () => {
     const [selfie, setSelfie] = React.useState(false)
     const [dniVal, setDniVal] = React.useState(false)
     const [adressVal, setAdressVal] = React.useState(false)
+     ////////////////////////////////////////
+     const [cuiProce, setCuiProce] = React.useState(false)
+     const [selfieProce, setSelfieProce] = React.useState(false)
+     const [dniValProce, setDniValProce] = React.useState(false)
+     const [adressValProce, setAdressValProce] = React.useState(false)
+     const [phoneValProce, setPhoneValProce] = React.useState(false)
 
     function loadValidation() {
         const token = getToken();
@@ -88,6 +94,26 @@ const SumReputationMobile = () => {
                     if (element == "CUIL" && elemtStatus == "APPROVED") {
                         
                         setCui(true);
+                    }
+                     //////////////////
+                     if (element == "DNI" && elemtStatus == "PENDING" ) {
+                        
+                        setDniValProce(true)
+                    }
+                    if (element == "ADDRESS" && elemtStatus == "PENDING" ) {
+                        setAdressValProce(true)
+                      
+                    }
+                    if (element == "SELFIE" && elemtStatus == "PENDING" ) {                        
+                        setSelfieProce(true);
+                    }
+                    if (element == "CELLPHONE" && elemtStatus == "PENDING") {
+                       
+                        setPhoneValProce(true)
+                    }
+                    if (element == "CUIL" && elemtStatus == "PENDING") {
+                        
+                        setCuiProce(true);
                     }
                     
                 }
@@ -140,7 +166,7 @@ const SumReputationMobile = () => {
                     </Grid>
                 </Grid>
             </Grid> :
-             <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
+             <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#000000', height: 80, padding: 25, marginBottom: 15 }}>
              <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
                  <Grid container xs={2} xl={2} sm={2} justify='center' >
                      {/* <img src={Telephone} alt='logo' width={'15px'} /> */}
@@ -187,7 +213,7 @@ const SumReputationMobile = () => {
                             letterSpacing: '-0.02em',
                             color: '#ffffff'
                         }}>
-                           <Link href={'/validation/dni'} style={{ textDecoration: 'none', color: 'white' }}>Validá tu DNI</Link>
+                           <Link href={dniValProce == false ?'/validation/dni':''} style={{ textDecoration: 'none', color: 'white' }}>Validá tu DNI</Link>
                         </Typography>
                     </Grid>
                 </Grid>
@@ -257,7 +283,7 @@ const SumReputationMobile = () => {
                             letterSpacing: '-0.02em',
                             color: '#ffffff'
                         }}>
-                            <Link href={'/validation/direccion'} style={{ textDecoration: 'none', color: 'white' }}>Validá tu dirección</Link>
+                            <Link href={adressValProce == false ? '/validation/selfie':''} style={{ textDecoration: 'none', color: 'white' }}>Validá tu dirección</Link>
                         </Typography>
                     </Grid>
                 </Grid>
@@ -327,7 +353,7 @@ const SumReputationMobile = () => {
                             letterSpacing: '-0.02em',
                             color: '#ffffff'
                         }}>
-                            <Link href={'/validation/dni'} style={{ textDecoration: 'none', color: 'white' }}> Validá tu CUIT</Link>
+                            <Link href={cuiProce == false ?'/validation/afip':''} style={{ textDecoration: 'none', color: 'white' }}> Validá tu CUIT</Link>
                         </Typography>
                     </Grid>
                 </Grid>
@@ -397,7 +423,7 @@ const SumReputationMobile = () => {
                             letterSpacing: '-0.02em',
                             color: '#ffffff'
                         }}>
-                            <Link href={'/validation/selfie'} style={{ textDecoration: 'none', color: 'white' }}> Validá tu Selfie</Link>
+                            <Link href={selfieProce == false ? '/validation/selfie':''} style={{ textDecoration: 'none', color: 'white' }}> Validá tu Selfie</Link>
                         </Typography>
                     </Grid>
                 </Grid>

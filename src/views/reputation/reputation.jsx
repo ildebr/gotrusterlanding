@@ -52,25 +52,8 @@ class Reputation extends Component {
         this.setState({ windowWidth: window.innerWidth });
     };
     componentDidMount() {
-        window.addEventListener("resize", this.handleResize);      
-        if (this.state.user === null) {
-            this.state.user = localStorage.getItem('userLogin')
-        }
-
-        if (this.state.user !== null) {
-            Cliente.get(GetImage(), {
-                params: {
-                    'user': this.state.user,
-                    'folder': 'coverPerfil'
-                }
-            }).then(
-                res => {
-                    this.setState({ imagesArray: res['data']['fileNames'] })
-                    console.log(res)
-                }
-
-            )
-        }
+        window.addEventListener("resize", this.handleResize);  
+        this.state.user = localStorage.getItem('userLogin') 
     }
   
     Tabf = () => {
@@ -86,8 +69,7 @@ class Reputation extends Component {
         const tab = this.state.tab
         const { width } = getWindowDimensions();
         const { classes } = this.props;
-        // let $images3 = this.ImageS3()
-         console.log("imagen s3")
+        
         return (<React.Fragment>
             <Grid container className={classes.root} component="main" maxWidth="md" style={{ display: 'flex', justifyContent: 'center' }}>
                 {width >= 600 ? <div className={classes.background} >
@@ -97,12 +79,7 @@ class Reputation extends Component {
                         }
                             alt='background' width={'1935px'} height={'470px'}
                             style={{ objectFit: 'cover' }}
-                            onError={this.addDefaultPofileImage}/>
-
-
-                       {/* /*  :
-                        <img src={Rectangle} alt='background' width={'100%'} height={'100%'} /> 
-                    }*/} 
+                            onError={this.addDefaultPofileImage}/>                      
                 </div> : ''}
                 <Grid className={classes.test} container maxWidth="md" component="main" >
                     <Container component="main" maxWidth="md" container justify='center' >

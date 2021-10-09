@@ -6,6 +6,7 @@ import { BaseURLImage } from './../../services/hostConfig';
 import ProfileImage from "../../asset/images/admin/dni/profileImage.png";
 import DniFront from "../../asset/images/admin/dni/dniFront.png";
 import DniBack from "../../asset/images/admin/dni/dniBack.png";
+import { useConfirm } from "material-ui-confirm";
 
 const useStyles = makeStyles({
     root: {
@@ -108,35 +109,45 @@ function DniRow(props) {
     const [showModal2, setShowModal2] = useState(false);
     const docFrontImageRef = useRef();
     const docBackImageRef = useRef();
-    const [show, setShow] = useState(false);
+    const confirm = useConfirm();
 
-    const openModal1 = () => {
-        setShowModal1(prev => !prev);
+    const openModal = (index) => {
+        console.log(index);
+        switch (index) {
+            case 1:
+                setShowModal1(prev => !prev);
+                break;
+            case 2:
+                setShowModal2(prev => !prev);
+                break;
+        }
     };
 
-    const openModal2 = () => {
-        setShowModal2(prev => !prev);
+    const setDefaultImage = (e, defImage) => {
+        e.target.src = defImage
+    }
+
+    const handleApproveRow = data => {
+        confirm({ title: '¿Estas Seguro?',
+                  description: `Esta seguro de aprobar a ${data.name} ${data.lastName}.`,
+                  cancellationText: 'Cancelar',
+                  confirmationText: 'Aceptar',
+                  confirmationButtonProps: { autoFocus: true }
+                })
+            .then(() => handleApprove(data))
+            .catch(() => console.log("Rechazo cancelado."));
+    }
+
+    const handleRejectRow = data => {
+        confirm({ title: '¿Estas Seguro?',
+                  description: `Esta seguro de rechazar a ${data.name} ${data.lastName}.`,
+                  cancellationText: 'Cancelar',
+                  confirmationText: 'Aceptar',
+                  confirmationButtonProps: { autoFocus: true }
+                })
+            .then(() => handleReject(data))
+            .catch(() => console.log("Rechazo cancelado."));
     };
-
-    const addDefaultPofileImage = e => {
-        e.target.src = ProfileImage
-    }
-
-    const addDefaultDocumentFrontImage = e => {
-        e.target.src = DniFront
-    }
-
-    const addDefaultDocumentBackImage = e => {
-        e.target.src = DniBack
-    }
-
-    const handleApproveRow = async (data) => {
-        handleApprove(data)
-    }
-
-    const handleRejectRow = async (data) => {
-        handleReject(data)
-    }
 
     return (
         <Grid container spacing={4} direction='column' className={classes.root} alignItems='flex-start'>
@@ -147,7 +158,7 @@ function DniRow(props) {
                 <Grid item xs={7} container spacing={3} direction='column'>
                     <Grid item container spacing={2} direction='row' alignItems='center' justify='center'>
                         <Grid item xs={3}>
-                            <img src={BaseURLImage() + IMAGE_PROFILE_PATH + data.email + '.png'} onError={addDefaultPofileImage} className={classes.profileImage} />
+                            <img src={BaseURLImage() + IMAGE_PROFILE_PATH + data.email + '.png'} onError={e => setDefaultImage(e, ProfileImage)} className={classes.profileImage} />
                         </Grid>
                         <Grid item xs={9} container spacing={2} direction='row'>
                             <Grid item xs={3} container spacing={2} direction='column' justify='space-between'>
@@ -192,7 +203,7 @@ function DniRow(props) {
                                         Dirección
                                     </Typography>
                                     <Typography item className={classes.dataText}>
-                                        {data.streetName} {data.streetNumber} 
+                                        {data.streetName} {data.streetNumber}
                                     </Typography>
                                 </Grid>
                                 <Grid item className={classes.gridDataItem}>
@@ -208,30 +219,30 @@ function DniRow(props) {
                     </Grid>
                     <Grid item container spacing={2} direction='row' alignItems='center' justify='center'>
                         <Grid item>
-                            <Button onClick={e => handleApproveRow(data)} className={classes.acceptButton}>Aprobar</Button>
+                            <Button onClick={() => handleApproveRow(data)} className={classes.acceptButton}>Aprobar</Button>
                         </Grid>
                         <Grid item>
-                            <Button onClick={e => handleRejectRow(data)} className={classes.rejectButton}>Rechazar</Button>
+                            <Button onClick={() => handleRejectRow(data)} className={classes.rejectButton}>Rechazar</Button>
                         </Grid>
                     </Grid>
                 </Grid>
                 <Grid item xs={5} container spacing={2} direction='row' alignItems='center' justify='center'>
                     <Grid item xs container spacing={1} direction='column'>
                         <Grid item>
-                            <img ref={docFrontImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email + '-frente.png'} onError={addDefaultDocumentFrontImage} className={classes.dniImage} onClick={openModal1} />
-                            <Modal showModal={showModal1} setShowModal={setShowModal1} src={DniFront} />
+                            <img ref={docFrontImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email + '-frente.png'} onError={e => setDefaultImage(e, DniFront)} className={classes.dniImage} onClick={() => openModal(1)} />
+                            <Modal showModal={showModal1} setShowModal={setShowModal1} imageRef={docFrontImageRef} />
                         </Grid>
                         <Grid item>
-                            <Typography className={classes.ampliar} onClick={openModal1}>+ Ampliar</Typography>
+                            <Typography className={classes.ampliar} onClick={() => openModal(1)}>+ Ampliar</Typography>
                         </Grid>
                     </Grid>
                     <Grid item xs container spacing={1} direction='column'>
                         <Grid item>
-                            <img ref={docBackImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email + '-dorso.png'} onError={addDefaultDocumentBackImage} className={classes.dniImage} onClick={openModal2} />
-                            <Modal showModal={showModal2} setShowModal={setShowModal2} src={DniBack} />
+                            <img ref={docBackImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email + '-dorso.png'} onError={e => setDefaultImage(e, DniBack)} className={classes.dniImage} onClick={() => openModal(2)} />
+                            <Modal showModal={showModal2} setShowModal={setShowModal2} imageRef={docBackImageRef} />
                         </Grid>
                         <Grid item>
-                            <Typography className={classes.ampliar} onClick={openModal2}>+ Ampliar</Typography>
+                            <Typography className={classes.ampliar} onClick={() => openModal(2)}>+ Ampliar</Typography>
                         </Grid>
                     </Grid>
                 </Grid>

@@ -29085,6 +29085,1427 @@
         "lat": -25.8492622245534,
         "lon": -54.4206259685073
     }
+},
+
+{
+    "nombre_completo": "Almagro",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Almagro",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Balvanera",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Balvanera",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Barracas",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Barracas",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "La Boca",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "La Boca",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "Boedo",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Boedo",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Chacarita",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Chacarita",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Barracas",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Barracas",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Coghlan",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Coghlan",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "Colegiales",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Colegiales",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Constitución",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Constitución",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Flores",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Flores",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Floresta",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Floresta",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "Liniers",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Liniers",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Mataderos",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Mataderos",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Monserrat",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Monserrat",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Monte Castro",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Monte Castro",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "Nueva Pompeya",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Nueva Pompeya",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Nuñez",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Nuñez",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Parque Avellaneda",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Parque Avellaneda",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Parque Chacabuco",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Parque Chacabuco",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "Parque Chas",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Parque Chas",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Parque Patricios",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Parque Patricios",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "La Paternal",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "La Paternal",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Puerto Madero",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Puerto Madero",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "La Recoleta",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "La Recoleta",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Retiro",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Retiro",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Saavedra",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Saavedra",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "San Cristobal",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "San Cristobal",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "San Nicolas",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "San Nicolas",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "San Telmo",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "San Telmo",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Velez Sarsfield",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Velez Sarsfield",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Versalles",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Versalles",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "Villa Crespo",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Villa Crespo",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Villa del Parque",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Villa del Parque",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Villa Devoto",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Villa Devoto",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Villa General Mitre",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Villa General Mitre",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "Villa Lugano",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Villa Lugano",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Villa Luro",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Villa Luro",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Villa Ortúzar",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Villa Ortúzar",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Villa Pueyrredón",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Villa Pueyrredón",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "Villa Real",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Villa Real",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Cilla Riachuelo",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Cilla Riachuelo",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Santa Rita",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Santa Rita",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Villa Soldati",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Villa Soldati",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "Santa Rita",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Santa Rita",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Villa Urquiza",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Villa Urquiza",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Ciudad Autónoma de Buenos Aires",
+        "id": "02",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Paraná",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Paraná",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "Concordia",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Concordia",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Gualeguaychú",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Gualeguaychú",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Concepción del Uruguay",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Concepción del Uruguay",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Gualeguay",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Gualeguay",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Chajarí",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Chajarí",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Villaguay",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Villaguay",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Victoria",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Victoria",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "La Paz",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "La Paz",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Colón",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Colón",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Nogoyá",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Nogoyá",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Crespo",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Crespo",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Crespo",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Crespo",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Diamante",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Diamante",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "San José",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "San José",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Federal",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Federal",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Santa Elena",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Santa Elena",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Federación",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Federación",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Rosario del Tala",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Rosario del Tala",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "San Salvador",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "San Salvador",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "San José de Feliciano",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "San José de Feliciano",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Villa Elisa",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Villa Elisa",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Basavilbaso",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Basavilbaso",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Viale",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Viale",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "San Benito",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "San Benito",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "General Ramírez",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "General Ramírez",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Urdinarrain",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Urdinarrain",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Viale",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Viale",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Bovril",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Bovril",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "María Grande",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "General Ramírez",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Puerto Ibicuy",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Puerto Ibicuy",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Libertador San Martín",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Libertador San Martín",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Larroque",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Larroque",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Maciá",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Maciá",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Villa Hernandarias",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Villa Hernandarias",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Cerrito",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Cerrito",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Hasenkamp",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Hasenkamp",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "General Galarza",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "General Galarza",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Lucas González",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Lucas González",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "San Jaime de la Frontera",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "San Jaime de la Frontera",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Oro Verde",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Oro Verde",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Villa Paranacito",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Villa Paranacito",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Entre Ríos",
+        "id": "30",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
 }
 
 ]

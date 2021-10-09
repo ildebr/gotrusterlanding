@@ -121,7 +121,7 @@ function UsersTable(props) {
                             <TableCell className={classes.tableCellActions}>Ver Dueño</TableCell>
                             <TableCell className={classes.tableCellActions}>Ver Negocio</TableCell>
                             <TableCell className={classes.noBorderCell}/>
-                            <TableCell className={classes.tableCellActions}><AntSwitch/></TableCell>
+                            <TableCell className={classes.tableCellActions}><AntSwitch checked={row.activated} /></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

@@ -25,6 +25,7 @@ import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import { UserAdminPlusResource } from './../../services/hostConfig';
 import { getToken } from './../../setting/auth-helpers';
 import moment from 'moment'
+import { ConfirmProvider } from "material-ui-confirm";
 
 const styles = theme => ({
     navBar: {
@@ -332,7 +333,9 @@ function Users(props) {
                             <div className={classes.divider}/>
                         </Grid>
                         <Grid item>
-                            <UsersTable data={rows}/>
+                            <ConfirmProvider>
+                                <UsersTable data={rows}/>
+                            </ConfirmProvider>
                         </Grid>
                         <Grid item container justify='flex-start' >
                             <Grid item>

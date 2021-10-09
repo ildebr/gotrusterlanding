@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Button, Grid, Typography} from '@material-ui/core';
 import { Modal } from './Modal';
+import { BaseURLImage } from './../../services/hostConfig';
+import DniFront from "../../asset/images/admin/dni/dniFront.png";
+import SelfieImage from "../../asset/images/admin/selfie/selfieImage.png";
+import { useConfirm } from "material-ui-confirm";
 
 const useStyles = makeStyles({
     root: {
@@ -80,18 +84,54 @@ const useStyles = makeStyles({
     },
 });
 
+const IMAGE_DOCUMENT_PATH = "dni/";
+const IMAGE_SELFIE_PATH = "selfie/";
+
 function SelfieRow(props) {
-    const {data} = props;
+    const {data, handleApprove, handleReject, disabled} = props;
     const classes = useStyles();
     const [showModal1, setShowModal1] = useState(false);
     const [showModal2, setShowModal2] = useState(false);
+    const docFrontImageRef = useRef();
+    const selfieImageRef = useRef();
+    const confirm = useConfirm();
 
-    const openModal1 = () => {
-        setShowModal1(prev => !prev);
+    const openModal = (index) => {
+        console.log(index);
+        switch (index) {
+            case 1:
+                setShowModal1(prev => !prev);
+                break;
+            case 2:
+                setShowModal2(prev => !prev);
+                break;
+        }
     };
 
-    const openModal2 = () => {
-        setShowModal2(prev => !prev);
+    const setDefaultImage = (e, defImage) => {
+        e.target.src = defImage
+    }
+
+    const handleApproveRow = data => {
+        confirm({ title: '¿Estas Seguro?',
+                  description: `Esta seguro de aprobar a ${data.name} ${data.lastName}.`,
+                  cancellationText: 'Cancelar',
+                  confirmationText: 'Aceptar',
+                  confirmationButtonProps: { autoFocus: true }
+                })
+            .then(() => handleApprove(data))
+            .catch(() => console.log("Aprobacion cancelada."));
+    }
+
+    const handleRejectRow = data => {
+        confirm({ title: '¿Estas Seguro?',
+                  description: `Esta seguro de rechazar a ${data.name} ${data.lastName}.`,
+                  cancellationText: 'Cancelar',
+                  confirmationText: 'Aceptar',
+                  confirmationButtonProps: { autoFocus: true }
+                })
+            .then(() => handleReject(data))
+            .catch(() => console.log("Rechazo cancelado."));
     };
 
     return (
@@ -107,11 +147,11 @@ function SelfieRow(props) {
                         </Typography>
                     </Grid>
                     <Grid item xs>
-                        <img src={data.selfieImage} className={classes.selfieImage} onClick={openModal1} />
-                        <Modal showModal={showModal1} setShowModal={setShowModal1} src={data.selfieImage} />
+                        <img ref={selfieImageRef} src={BaseURLImage() + IMAGE_SELFIE_PATH + data.email + '.png'} onError={e => setDefaultImage(e, SelfieImage)} className={classes.selfieImage} onClick={() => openModal(1)} />
+                        <Modal showModal={showModal1} setShowModal={setShowModal1} imageRef={selfieImageRef} />
                     </Grid>
                     <Grid item xs>
-                        <Typography className={classes.ampliar} onClick={openModal1}>
+                        <Typography className={classes.ampliar} onClick={() => openModal(1)}>
                             + Ampliar
                         </Typography>
                     </Grid>
@@ -123,21 +163,21 @@ function SelfieRow(props) {
                         </Typography>
                     </Grid>
                     <Grid item xs>
-                        <img src={data.dniFront} className={classes.dniImage} onClick={openModal2} />
-                        <Modal showModal={showModal2} setShowModal={setShowModal2} src={data.dniFront} />
+                        <img ref={docFrontImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email + '-frente.png'} onError={e => setDefaultImage(e, DniFront)} className={classes.dniImage} onClick={() => openModal(2)} />
+                        <Modal showModal={showModal2} setShowModal={setShowModal2} imageRef={docFrontImageRef} />
                     </Grid>
                     <Grid item xs>
-                        <Typography className={classes.ampliar} onClick={openModal2}>
+                        <Typography className={classes.ampliar} onClick={() => openModal(2)}>
                             + Ampliar
                         </Typography>
                     </Grid>
                 </Grid>
                 <Grid item xs={3} container spacing={2} direction='column' justify='center' alignItems='flex-start'>
                     <Grid item>
-                        <Button className={classes.acceptButton}>Aprobar</Button>
+                        <Button disabled={disabled} onClick={() => handleApproveRow(data)} className={classes.acceptButton}>Aprobar</Button>
                     </Grid>
                     <Grid item>
-                        <Button className={classes.rejectButton}>Rechazar</Button>
+                        <Button disabled={disabled} onClick={() => handleRejectRow(data)} className={classes.rejectButton}>Rechazar</Button>
                     </Grid>
                 </Grid>
             </Grid>

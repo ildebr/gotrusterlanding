@@ -370,7 +370,7 @@ class Login extends Component {
         if ($show) {           
             $wait = (<Loading />);        
         } else{
-            $wait = (<Link href='/'><Logo width="50" height="50" /></Link>); 
+            $wait = (<Link href='https://gotruster.com/'><Logo width="50" height="50" /></Link>); 
         }
         return (
             <div style={{ backgroundColor: '#000000' }}>

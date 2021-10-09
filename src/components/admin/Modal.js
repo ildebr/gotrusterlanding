@@ -46,7 +46,7 @@ const CloseModalButton = styled(MdClose)`
   z-index: 10;
 `;
 
-export const Modal = ({ showModal, setShowModal, src }) => {
+export const Modal = ({ showModal, setShowModal, imageRef }) => {
   const modalRef = useRef();
 
   const animation = useSpring({
@@ -97,7 +97,7 @@ export const Modal = ({ showModal, setShowModal, src }) => {
                   <React.Fragment>
                     <div style={{height: 500, width: 800 }}> 
                       <TransformComponent>
-                        <ModalImg src={src} alt='camera' style={{height: 500, width: 800, backgroundColor: 'blue' }} />  
+                        <ModalImg src={imageRef.current.src} alt='camera' style={{height: 500, width: 800, backgroundColor: 'blue' }} />  
                       </TransformComponent>
                     </div>
                   </React.Fragment>

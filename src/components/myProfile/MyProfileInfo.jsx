@@ -54,12 +54,10 @@ const MyProfileInfo = ({ modifiedCover }) => {
     const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
 
     const [file, setFile] = useState(null)
-    const [user, setUser] = useState(null)
-    const [imagesArray, setImagesArray] = useState(null)
-    const [imagesArrayCover, setImagesArrayCover] = useState(null)
+    const [user, setUser] = useState(null)    
     const [loading, setLoading] = useState(false);
-    const [haveImage, setHaveImage] = useState(false);
-    const [haveImageCover, setHaveImageCover] = useState(false);
+    const [fechaCreate, setFechaCreate] = useState(false);
+    
 
 
     const onFileChange = (event) => {
@@ -119,6 +117,10 @@ const MyProfileInfo = ({ modifiedCover }) => {
 
       //  if (user !== null) {
             setUser(localStorage.getItem('userLogin'))
+            var fecha = new Date(localStorage.getItem('createDate'));
+            var options = { year: 'numeric', month: 'long', day: 'numeric' };
+            setFechaCreate(fecha.toLocaleDateString("es-ES", options));
+
       //  }
     }, [user]);
     const addDefaultPofileImage = e => {
@@ -163,7 +165,7 @@ const MyProfileInfo = ({ modifiedCover }) => {
                             letterSpacing: '-0.02em',
                             color: '#FFFFFF'
                         }}>
-                            Miembro Truster desde Septiembre / 2021
+                            Miembro Truster desde {fechaCreate}
                         </Typography>
                     </Grid>
                     <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center' component="label">

@@ -1,6 +1,7 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {Button, Grid, Typography} from '@material-ui/core';
+import { useConfirm } from "material-ui-confirm";
 
 const useStyles = makeStyles({
     root: {
@@ -84,8 +85,31 @@ const useStyles = makeStyles({
 });
 
 function CuilRow(props) {
-    const {data} = props;
+    const {data, handleApprove, handleReject, disabled} = props;
     const classes = useStyles();
+    const confirm = useConfirm();
+
+    const handleApproveRow = data => {
+        confirm({ title: '¿Estas Seguro?',
+                  description: `Esta seguro de aprobar a ${data.name} ${data.lastName}.`,
+                  cancellationText: 'Cancelar',
+                  confirmationText: 'Aceptar',
+                  confirmationButtonProps: { autoFocus: true }
+                })
+            .then(() => handleApprove(data))
+            .catch(() => console.log("Aprobacion cancelada."));
+    }
+
+    const handleRejectRow = data => {
+        confirm({ title: '¿Estas Seguro?',
+                  description: `Esta seguro de rechazar a ${data.name} ${data.lastName}.`,
+                  cancellationText: 'Cancelar',
+                  confirmationText: 'Aceptar',
+                  confirmationButtonProps: { autoFocus: true }
+                })
+            .then(() => handleReject(data))
+            .catch(() => console.log("Rechazo cancelado."));
+    };
 
     return (
         <Grid container spacing={4} direction='column' className={classes.root} alignItems='flex-start'>
@@ -140,16 +164,16 @@ function CuilRow(props) {
                             Dirección
                         </Typography>
                         <Typography item className={classes.dataText}>
-                            {data.address}
+                            {data.streetName} {data.streetNumber}
                         </Typography>
                     </Grid>
                 </Grid>
                 <Grid item xs={3} container spacing={3} direction='column' alignItems='center' justify='center'>
                     <Grid item>
-                        <Button className={classes.acceptButton}>Aprobar</Button>
+                        <Button disabled={disabled} onClick={() => handleApproveRow(data)} className={classes.acceptButton}>Aprobar</Button>
                     </Grid>
                     <Grid item>
-                        <Button className={classes.rejectButton}>Rechazar</Button>
+                        <Button disabled={disabled} onClick={() => handleRejectRow(data)} className={classes.rejectButton}>Rechazar</Button>
                     </Grid>
                 </Grid>
             </Grid>

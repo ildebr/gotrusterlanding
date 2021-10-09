@@ -42,9 +42,20 @@ const styles = theme => ({
 
 
 const ReputationProfile = () => {
+    const [fechaCreate, setFechaCreate] = useState(false);
     const addDefaultPofileImage = e => {
         e.target.src = ReputationImg
     }    
+
+    useEffect(() => {
+        //  if (user !== null) {
+             
+              var fecha = new Date(localStorage.getItem('createDate'));
+              var options = { year: 'numeric', month: 'long', day: 'numeric' };
+              setFechaCreate(fecha.toLocaleDateString("es-ES", options));
+  
+        //  }
+      }, []);
    
     const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
     let occupation = localStorage.getItem('occupation') == 'null' ? '' : localStorage.getItem('occupation');
@@ -133,7 +144,7 @@ const ReputationProfile = () => {
                             letterSpacing: '-0.02em',
                             color: '#FFFFFF'
                         }}>
-                            Miembro Truster desde Septiembre / 2021
+                            Miembro Truster desde {fechaCreate}
                         </Typography>
                     </Grid>
                     <Grid container justify='flex-start' alignItems='center'>
