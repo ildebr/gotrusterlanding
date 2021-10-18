@@ -100,7 +100,7 @@ const useStyles = makeStyles({
     },
 });
 
-const IMAGE_DOCUMENT_PATH = "dni/";
+const IMAGE_DOCUMENT_PATH = "DNI/";
 const IMAGE_INVOICE_PATH = "factura/";
 
 function AddressRow(props) {
@@ -196,11 +196,11 @@ function AddressRow(props) {
                         </Grid>
                         <Grid item xs container spacing={1} direction='column'>
                             <Grid item>
-                                <img ref={docFrontImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email + '-frente.png'} onError={e => setDefaultImage(e, DniFront)} className={classes.dniImage} onClick={() => openModal(2)} />
+                                <img ref={docFrontImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email+'/'+ data.email + '-frente.png'} onError={e => setDefaultImage(e, DniFront)} className={classes.dniImage} onClick={() => openModal(2)} />
                                 <Modal showModal={showModal2} setShowModal={setShowModal2} imageRef={docFrontImageRef} />
                             </Grid>
                             <Grid item>
-                                <img ref={docBackImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email + '-dorso.png'} onError={e => setDefaultImage(e, DniBack)} className={classes.dniImage} onClick={() => openModal(3)} />
+                                <img ref={docBackImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email+'/'+ data.email + '-dorso.png'} onError={e => setDefaultImage(e, DniBack)} className={classes.dniImage} onClick={() => openModal(3)} />
                                 <Modal showModal={showModal3} setShowModal={setShowModal3} imageRef={docBackImageRef} />
                             </Grid>
                         </Grid>

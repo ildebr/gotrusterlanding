@@ -183,9 +183,6 @@ function Bussines(props) {
         searchIconRef.current.src = SearchIcon;
         arrowIconRef.current.style.color = "#555555";
     };
-    function loadDataUser(){
-        
-    }
 
     const handleClearSearch = (ev) => {
         ev.target.value = '';

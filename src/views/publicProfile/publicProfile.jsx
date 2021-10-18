@@ -128,7 +128,7 @@ class PublicProfile extends Component {
         let params = new URLSearchParams(window.location.search);
         var key = params.get('key');
         this.setState({ key: key })
-        localStorage.setItem('key', key)
+       
         /* if (this.state.user === null) {
             this.state.user = localStorage.getItem('userLogin')
         } */

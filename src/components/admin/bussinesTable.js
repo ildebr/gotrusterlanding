@@ -9,6 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Switch from '@material-ui/core/Switch';
 import moment from 'moment'
+import { useConfirm } from "material-ui-confirm";
 
 const useStyles = makeStyles({
     tableHeader: {
@@ -88,9 +89,40 @@ const AntSwitch = withStyles((theme) => ({
     checked: {},
 }))(Switch);
 
-function UsersTable(props) {
+function BussinesTable(props) {
     const {data} = props;
     const classes = useStyles();
+    const confirm = useConfirm();
+
+    const handleEnable = data => {
+        confirm({ title: '¿Estas Seguro?',
+                  description: `Esta seguro de habilitar a ${data.name}.`,
+                  cancellationText: 'Cancelar',
+                  confirmationText: 'Aceptar',
+                  confirmationButtonProps: { autoFocus: true }
+                })
+            .then(() => handleEnable(data))
+            .catch(() => console.log("Habilitacion cancelada."));
+    }
+
+    const handleDisable = data => {
+        confirm({ title: '¿Estas Seguro?',
+                  description: `Esta seguro de deshabilitar a ${data.name}.`,
+                  cancellationText: 'Cancelar',
+                  confirmationText: 'Aceptar',
+                  confirmationButtonProps: { autoFocus: true }
+                })
+            .then(() => handleDisable(data))
+            .catch(() => console.log("Deshabilitacion cancelado."));
+    };
+
+    const enabler = (e, row) => {
+        if (e.target.checked) {
+            handleEnable(row)
+        } else {
+            handleDisable(row)
+        }
+    }
 
     return (
         <TableContainer>
@@ -121,7 +153,7 @@ function UsersTable(props) {
                             <TableCell className={classes.tableCellActions}>Ver Dueño</TableCell>
                             <TableCell className={classes.tableCellActions}>Ver Negocio</TableCell>
                             <TableCell className={classes.noBorderCell}/>
-                            <TableCell className={classes.tableCellActions}><AntSwitch checked={row.enabled} /></TableCell>
+                            <TableCell className={classes.tableCellActions}><AntSwitch onChange={e => enabler(e, row)} /></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
@@ -130,4 +162,4 @@ function UsersTable(props) {
     );
 }
 
-export default UsersTable;
+export default BussinesTable;

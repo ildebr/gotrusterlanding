@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const ProfileCard = () => {
+const ProfileCard = (props) => {
     
     const addDefaultPofileImage = e => {
         e.target.src = ReputationImg

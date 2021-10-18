@@ -79,7 +79,7 @@ function DniReady(props) {
                     width: '300px',
                     marginTop: '35px',
                     marginBottom: '80px'
-                }}>
+                }} href={'/reputation'}>
                     <Typography style={{
                         align: "center",
                         color: '#252525',

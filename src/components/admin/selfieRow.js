@@ -4,7 +4,7 @@ import {Button, Grid, Typography} from '@material-ui/core';
 import { Modal } from './Modal';
 import { BaseURLImage } from './../../services/hostConfig';
 import DniFront from "../../asset/images/admin/dni/dniFront.png";
-import SelfieImage from "../../asset/images/admin/selfie/selfieImage.png";
+import SelfieImage from "../../asset/images/reputation/perfil.jpg";
 import { useConfirm } from "material-ui-confirm";
 
 const useStyles = makeStyles({
@@ -84,7 +84,7 @@ const useStyles = makeStyles({
     },
 });
 
-const IMAGE_DOCUMENT_PATH = "dni/";
+const IMAGE_DOCUMENT_PATH = "DNI/";
 const IMAGE_SELFIE_PATH = "selfie/";
 
 function SelfieRow(props) {
@@ -163,7 +163,7 @@ function SelfieRow(props) {
                         </Typography>
                     </Grid>
                     <Grid item xs>
-                        <img ref={docFrontImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email + '-frente.png'} onError={e => setDefaultImage(e, DniFront)} className={classes.dniImage} onClick={() => openModal(2)} />
+                        <img ref={docFrontImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email+'/'+data.email + '-frente.png'} onError={e => setDefaultImage(e, DniFront)} className={classes.dniImage} onClick={() => openModal(2)} />
                         <Modal showModal={showModal2} setShowModal={setShowModal2} imageRef={docFrontImageRef} />
                     </Grid>
                     <Grid item xs>

@@ -1,12 +1,13 @@
-import React,  { useEffect, useState } from 'react';
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useEffect, useState } from 'react';
+import { makeStyles } from "@material-ui/core/styles";
 import image from '../../../asset/images/manualValidations/afip/afipValidation.png';
-import {Typography} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPaperclip} from "@fortawesome/free-solid-svg-icons";
-import {Input} from 'rsuite';
-import { Fileload, ValidatioDetail } from "../../../services/hostConfig";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
+import InputBase from '@material-ui/core/InputBase';
+import { Fileload, ValidatioDetail, CustomerResource } from "../../../services/hostConfig";
 //import 'rsuite/dist/styles/rsuite-default.css'
 import Cliente from "../../../setting/cliente";
 
@@ -35,7 +36,7 @@ const useStyles = makeStyles(theme => ({
         fontWeight: 400,
         fontSize: '27px',
         letterSpacing: '-0.01em',
-        maxWidth:'500px',
+        maxWidth: '500px',
         paddingTop: '40px',
         [theme.breakpoints.down('sm')]: {
             fontSize: '12px',
@@ -61,10 +62,10 @@ const useStyles = makeStyles(theme => ({
         letterSpacing: '-0.02em',
         marginTop: '8px'
     },
-    rootDiv:{
-        display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop:'100px',
+    rootDiv: {
+        display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',
         [theme.breakpoints.down('sm')]: {
-            marginTop:'30px'
+            marginTop: '30px'
         },
     },
     login: {
@@ -107,83 +108,104 @@ function AfipRegister(props) {
     const [file, setFile] = useState(null)
     const [user, setUser] = useState(null)
     const [name, setName] = useState(null)
+    const [cuil, setCuil] = React.useState('');
     const [active, setActive] = useState(true)
     const [nameImage, setNameImage] = React.useState(true);
     const [show, setShow] = React.useState('');
 
-    
+    const handleCuil = (e) => {
+        setCuil(e.target.value);
+        setActive(false)
+        localStorage.setItem('cuil/cuit', e.target.value)
+    }
 
     const handleSubmit = () => {
-        /*   let URL = CustomerResource(); */
-        let URLVal = ValidatioDetail();       
+        let URL = CustomerResource();
+        let URLVal = ValidatioDetail();
+        var date = new Date();
+        let formatted_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
        
         setShow(<LoopCircleLoading />)
         setActive(true);
         const token = getToken();
-        var date = new Date();
-        let formatted_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-        let idUser = localStorage.getItem("userId")       
-        const newValidations = {
-            "customer": {
+        let dni = localStorage.getItem('dniCuit');
+        let idUser = localStorage.getItem("userId")
+        const dataUpdate = {
+            "active": true,
+            "birthDate": localStorage.getItem("birthDate"),
+            "cellphone": localStorage.getItem("cellphone"),
+            "creationDate": localStorage.getItem("createDate"),
+            "cuit": cuil,
+            "gender": localStorage.getItem("gender"),
+            "ip": localStorage.getItem("ip"),
+            "level": localStorage.getItem("Level"),
+            "modificationDate": formatted_date,
+            "id": idUser,
+            "dni": localStorage.getItem("dni"),
+            "email": localStorage.getItem("email"),
+            "occupation": localStorage.getItem("occupation"),
+            "user": {
                 "id": idUser,
-                "user": {
-                    "id": idUser,
-                    "login": localStorage.getItem('email')
-                }
+                "login": localStorage.getItem('email')
             },
-            "points": {
-                "id": 4,
-            },
-            "validationCreationDate": formatted_date,
-            "validationEnabled": true,
-            "validationExtra": "string",
-            "validationModificationDate": formatted_date,
-            "validationName": "CUIL",
-            "validationStatus": "PENDING"
+            "userType": "INDIVIDUAL"
         }
-        console.log(newValidations)
-        Cliente.post(URLVal, newValidations, {
+
+        let newState = JSON.parse(JSON.stringify(dataUpdate));
+        console.log(dataUpdate)
+        Cliente.put(URL + '/' + idUser, newState, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
-        }).then(response => {
-            return response.data
-        }).then(response => {
-            console.log(response)
-            setShow('')
-            setActive(false)
-            window.open("/validation/afipReady", '_self');
-        }).catch(error => console.log(error));
+        })
+            .then(response => {
+                return response.data
+            }).then(response => {
+                console.log(response);
+                const newValidations = {
+                    "customer": {
+                        "id": idUser,
+                        "user": {
+                            "id": idUser,
+                            "login": localStorage.getItem('email')
+                        }
+                    },
+                    "points": {
+                        "id": 1,
+                    },
+                    "validationCreationDate": formatted_date,
+                    "validationEnabled": true,
+                    "validationExtra": "string",
+                    "validationModificationDate": formatted_date,
+                    "validationName": "CUIL",
+                    "validationStatus": "PENDING"
+                }
+                console.log(newValidations)
+                Cliente.post(URLVal, newValidations, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(response => {
+                    return response.data
+                }).then(response => {
+                    console.log(response)
+                    window.open("/validation/afipReady", '_self');
+                }).catch(error => console.log(error));
 
-    }
-
-    const onFileChange = (event, nombre) => {
-        let fileName = event.target.files[0].name
-        const reader = new FileReader();
-        let _file = event.target.files[0];
-        setName(_file.name);
-        //let size = _file.size; 
-        const _name = nombre
+            }).then(response => {
+                console.log(response);
+                setShow('')
+                setActive(false)
+            }).catch(error => console.log(error));
 
 
-        reader.onload = function (event) {
-            setFile(event.target.result)
-            Cliente.post(Fileload(), {
-                'file': event.target.result,
-                'fileName': _name,
-                'user': user,
-                'destination': 'documentos'
-            }
-            ).then(res =>{
-                setActive(false);
-                setNameImage(false);
-            })
-        };
-        reader.readAsDataURL(_file);
     }
    
+
     useEffect(() => {
 
         if (user === null) {
@@ -193,57 +215,47 @@ function AfipRegister(props) {
     return (
         <React.Fragment>
             <div className={classes.rootDiv}>
-                <img src={image} width={200} height={'100%'}/>
+                <img src={image} width={200} height={'100%'} />
                 <Typography className={classes.titulo}>
                     Para validar tu CUIL/CUIL proporcionanos tu N°
                 </Typography>
-                <Typography className={classes.subtitulo} style={{color: '#ACFD00'}}>
+                <Typography className={classes.subtitulo} style={{ color: '#ACFD00' }}>
                     Esta información es solo para propositos de validación y no sera compartida con ningún usuario.
                 </Typography>
 
-                <Typography className={classes.subtitulo} style={{paddingTop: '27px'}}>
-                    Adjunte CUIL
+                <Typography className={classes.subtitulo} style={{ paddingTop: '27px' }}>
+                    Número CUIL/CUIT
+                    {show}
                 </Typography>
 
-                <Button component="label" style={{
-                        width: '300px', marginTop: '8px',
+                <div style={{ width: '300px', marginTop: '4px' }}>
+
+                    <InputBase onChange={handleCuil} style={{
+                        backgroundColor: '#000',
                         border: '2px solid #303030',
                         filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
                         borderRadius: '14px',
-                        backgroundColor: '#000',
-                        textTransform: 'none'
-
-                    }}>
-                        <input
-                            className={classes.boton}
-                            id="file"
-                            name="file"
-                            type="file"
-                            hidden
-                            onChange={
-                                (e) => onFileChange(e, 'Factura')}
-
-
-                        />
-                        <Grid container direction={'row'} style={{ padding: '10px 0 10px 0', cursor: 'pointer' }}>
-
-                            <Grid item xs={8}>
-                                <Typography className={classes.boton}>{nameImage ? 'Adjuntar Cuil' : name}</Typography>
-                            </Grid>
-                            <Grid item={2}>
-                                <FontAwesomeIcon icon={faPaperclip} className={nameImage ? classes.imageColorGray : classes.imageColor} />
-                            </Grid>
-                        </Grid>
-
-                    </Button>
+                        color: "#FFF",
+                        fontFamily: "Poppins",
+                        fontWeight: 600,
+                        fontSize: '16px',
+                        letterSpacing: '-0.02em',
+                        textAlign: 'center',
+                        marginTop: '4px',
+                        padding: '10px 0 10px 0'
+                    }} placeholder="CUIL"
+                        inputProps={{ style: { textAlign: 'center' } }}
+                        
+                    />
+                </div>
 
                 <Typography className={classes.texto}>
                     Los jpg, png, pdf son válidos.
                 </Typography>
 
                 <Button className={active ? classes.login2 : classes.login}
-                onClick={handleSubmit}
-                disabled={active}>
+                    onClick={handleSubmit}
+                    disabled={active}>
                     <Typography style={{
                         align: "center",
                         color: '#252525',

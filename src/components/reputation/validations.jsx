@@ -115,12 +115,13 @@ const Validations = () => {
                     marginLeft: -30
                 }}>
                     Validaciones Exitosas
-                </Typography>
+                </Typography>               
+                   
                 <Grid container justify='flex-start' >
                     <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ marginLeft: -30, paddingRight: 15 }}>
-                        {dniVal == true ? <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
+                         <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
                         <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
-                            <img src={dni} alt='dni' />
+                            <img src={Direction} alt='dni' />
                             <Typography style={{
                                 align: "center",
                                 color: "#FFFFFF",
@@ -128,7 +129,7 @@ const Validations = () => {
                                 paddingLeft: 10,
                                 marginTop: 5
                             }}>
-                                DNI
+                                Correo
                             </Typography>
                         </Grid>
                         <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
@@ -139,18 +140,18 @@ const Validations = () => {
                                 paddingLeft: 10,
                                 marginRight: 8
                             }}>
-                                +4
+                                +2
                             </Typography>
                             <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
                         </Grid>
                         <hr style={{ width: '100%' }} color='#333333' />
-                    </Grid>:''
-                    }
+                    </Grid>
+                    
                     </Grid>
                     <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ marginLeft: 15, paddingLeft: 15, paddingRight: 15 }}>
-                       {adressVal == true ?  <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }} >
+                       {dniVal == true ?  <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }} >
                             <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
-                                <img src={Direction} alt='direction' />
+                                <img src={dni} alt='direction' />
                                 <Typography style={{
                                     align: "center",
                                     color: "#FFFFFF",
@@ -158,7 +159,7 @@ const Validations = () => {
                                     paddingLeft: 10,
                                     marginTop: 5
                                 }}>
-                                    Dirección
+                                    DNI
                                 </Typography>
                             </Grid>
                             <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
@@ -169,7 +170,7 @@ const Validations = () => {
                                     paddingLeft: 10,
                                     marginRight: 8
                                 }}>
-                                    +4
+                                    +5
                                 </Typography>
                                 <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
                             </Grid>
@@ -178,9 +179,9 @@ const Validations = () => {
                      :''}
                     </Grid>
                     <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ marginLeft: 15, paddingLeft: 15, paddingRight: 15 }}>
-                        {cui == true ?<Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
+                        {adressVal == true ?<Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
                         <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
-                            <img src={Cuil} alt='cuil' />
+                            <img src={Direction} alt='cuil' />
                             <Typography style={{
                                 align: "center",
                                 color: "#FFFFFF",
@@ -188,7 +189,7 @@ const Validations = () => {
                                 paddingLeft: 10,
                                 marginTop: 5
                             }}>
-                                CUIL
+                                Dirección
                             </Typography>
                         </Grid>
                         <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
@@ -199,7 +200,7 @@ const Validations = () => {
                                 paddingLeft: 10,
                                 marginRight: 8
                             }}>
-                                +4
+                                +5
                             </Typography>
                             <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
                         </Grid>
@@ -207,9 +208,9 @@ const Validations = () => {
                     </Grid>:''}
                     </Grid>
                     <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='flex-start' style={{ paddingLeft: 25 }}>
-                        {phon == true ? <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
+                        {cui == true ? <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
                         <Grid container justify='flex-start' xs={6} xl={6} sm={6} >
-                            <img src={Telephone} alt='telefono' />
+                            <img src={Cuil} alt='Cuil' />
                             <Typography style={{
                                 align: "center",
                                 color: "#FFFFFF",
@@ -217,7 +218,7 @@ const Validations = () => {
                                 paddingLeft: 10,
                                 marginTop: 5
                             }}>
-                                Teléfono
+                                Cuil
                             </Typography>
                         </Grid>
                         <Grid container justify='flex-end' xs={6} xl={6} sm={6} alignItems='center'>
@@ -228,7 +229,7 @@ const Validations = () => {
                                 paddingLeft: 10,
                                 marginRight: 8
                             }}>
-                                +4
+                                +10
                             </Typography>
                             <img src={Arrow} alt='arrow' style={{ paddingRight: 10 }} />
                         </Grid>

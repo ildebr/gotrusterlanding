@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, {useState, Fragment, useEffect, useRef} from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { CssBaseline, Grid, Container, Typography, Button, Link } from '@material-ui/core';
+import { CssBaseline, Grid, Container, Typography, Button, Link, Menu, ListItemText, MenuItem, List } from '@material-ui/core';
+import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import NavBar from '../../components/navBar/navbar.jsx';
 import ResultCard from '../../components/categorySearch/resultCard';
 import SearchImage from '../../asset/images/search/searchImage.png';
@@ -12,6 +13,7 @@ import RArrow from '../../asset/images/search/rightArrow.svg';
 import LocationIcon from '../../asset/images/search/locationIcon.svg';
 import Scope from '../../asset/images/search/greenScope.svg';
 import SearchIcon from '../../asset/images/search/searchIcon.svg';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import InputBase from '@material-ui/core/InputBase';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import RegisterCard from '../../components/search/registerCard';
@@ -19,6 +21,9 @@ import CategorySearch from '../../views/categorySearch/categorySearch';
 import PlusIcon from '../../asset/images/categorySearch/plusIcon.svg';
 import ItemsCarousel from 'react-items-carousel';
 import HorizontalResultCard from '../../components/search/horizontalResultCard'
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import EmailIcon from '@material-ui/icons/Email';
+import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 // Dummy Images
 import CheekyImage from '../../asset/images/categorySearch/dummy/cheekyLomas.png'
 import DepilifeImage from '../../asset/images/categorySearch/dummy/depilifeLomas.png'
@@ -28,6 +33,7 @@ import Burger1 from '../../asset/images/categorySearch/dummy/burger1.png'
 import Burger2 from '../../asset/images/categorySearch/dummy/burger2.png'
 import Burger3 from '../../asset/images/categorySearch/dummy/burger3.png'
 import SelectBase from '@material-ui/core/Select';
+import SearchIconGreen from "../../asset/images/admin/searchIconGreen.svg"
 
 const styles = theme => ({
     navBar: {
@@ -177,6 +183,10 @@ const styles = theme => ({
     icon: {
         fill: '#999999',
     },
+    iconActive:{
+        color:'#FFFFFF',
+        marginRight: "14px",
+    },
     background: {
         position: 'absolute',
         display: 'flex',
@@ -236,6 +246,66 @@ const styles = theme => ({
         color: '#A3A3A3'
     }
 });
+
+const StyledMenu = withStyles({
+    paper: {
+        border: '1px solid #5F5F5F',
+        backgroundColor: "#090909",
+        width: 285, 
+        maxWidth: '100%'
+    },
+})((props) => (
+    <Menu
+        elevation={0}
+        getContentAnchorEl={null}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+        }}
+        transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+        }}
+        {...props}
+    />
+));
+
+const StyledMenuItem = withStyles((theme) => ({
+    root: {
+        backgroundColor: "#090909",       
+        color:'#97EA3B',
+        fontFamily: 'Poppins',
+        fontStyle: 'normal',
+        fontSize: '12px',
+        lineHeight: '13px', 
+        "& #primary": {
+            fontWeight: 'bold',
+        },  
+        "& #secondary1": {
+            color: "#5F5F5F",
+        },     
+        '&:focus': {
+            backgroundColor: "#97EA3B",
+            borderRadius:"10px",
+            color:'#141414',
+            "& #arrowDown": {
+                color: "#97EA3B",
+            },
+            "& #primary": {
+                color: "#141414",
+            },
+            "& #secondary1": {
+                color: "#FEFEFE",
+            },
+            "& #icon": {
+                color: "#141414",
+            },
+            '&:hover': {
+                backgroundColor: "#97EA3B",
+            }
+        },
+    },
+}))(MenuItem);
 
 const dummyData = [
     {
@@ -383,6 +453,11 @@ function Search(props) {
     const [openCategories, setOpenCategories] = useState(false);
     const [Search, setSearch] = useState(false);
     const { width } = windowDimensions();
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const searchIconRef = useRef();
+    const arrowIconRef = useRef();
+    const [selectedSearch, setSelectedSearch] = React.useState("NOMBRE");
+
     const test = (num) => {
         if (num === 1) {
             if (activeItemIndex === dummyData.length - 1) {
@@ -397,6 +472,19 @@ function Search(props) {
         }
         console.log(activeItemIndex)
     }
+
+    const handleOpen = (e) => {
+        setAnchorEl(e.target);
+        searchIconRef.current.src = SearchIconGreen;
+        arrowIconRef.current.style.color = "#97EA3B";
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+        searchIconRef.current.src = SearchIcon;
+        arrowIconRef.current.style.color = "#555555";
+    };
+
     return (
         <div>
             <CssBaseline />
@@ -431,18 +519,71 @@ function Search(props) {
                                     placeholder="Buscá tu negocio"
                                     className={classes.searchBar}
                                     id="input-with-icon-adornment"
+                                    inputProps={{'aria-label': 'Negocios'}}
                                     onChange={(event) => setValue(event.target.value)}
                                     onKeyPress ={(e) => {                                        
-                                           if (e.key === 'Enter'){
-                                           setSearch(true)
-                                         }
+                                        if (e.key === 'Enter'){
+                                        setSearch(true)
+                                        }
                                     }}
                                     startAdornment={
                                         <InputAdornment position="start">
-                                            <img src={SearchIcon} alt='logo' />
+                                            <img ref={searchIconRef} id="searchIcon" src={SearchIcon}/>
+                                            <ArrowDropDownIcon ref={arrowIconRef} id="arrowDown" 
+                                                style={{color: "#555555", cursor: "pointer"}}
+                                                onClick={e => handleOpen(e)}
+                                            />
                                         </InputAdornment>
                                     }
                                 />
+                                <StyledMenu
+                                    id="customized-menu"
+                                    anchorEl={anchorEl}
+                                    keepMounted
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleClose}
+                                >
+                                    <StyledMenuItem onClick={() => {setSelectedSearch("NOMBRE");handleClose();}}
+                                            selected={selectedSearch === "NOMBRE"}>
+                                        <BusinessCenterIcon id="icon" fontSize="default" className={classes.iconActive}/>
+                                        <List>
+                                            <ListItemText id="primary" disableTypography
+                                                primary="Nombre" />
+                                            <ListItemText id="secondary1" disableTypography
+                                                secondary="Búsqueda de usuarios por nombre" />
+                                        </List>
+                                    </StyledMenuItem>
+                                    <StyledMenuItem onClick={() => {setSelectedSearch("TAGLINE");handleClose();}}
+                                            selected={selectedSearch === "TAGLINE"}>
+                                        <LocalOfferIcon id="icon" fontSize="default" className={classes.iconActive}/>
+                                        <List>
+                                            <ListItemText id="primary" disableTypography
+                                                primary="Tagline" />
+                                            <ListItemText id="secondary1" disableTypography
+                                                secondary="Búsqueda de usuarios por tagline" />
+                                        </List>
+                                    </StyledMenuItem>
+                                    <StyledMenuItem onClick={() => {setSelectedSearch("CORREO");handleClose();}}
+                                            selected={selectedSearch === "CORREO"}>
+                                        <EmailIcon id="icon" fontSize="default" className={classes.iconActive}/>
+                                        <List>
+                                            <ListItemText id="primary" disableTypography
+                                                primary="Correo" />
+                                            <ListItemText id="secondary1" disableTypography
+                                                secondary="Búsqueda de usuarios por email" />
+                                        </List>
+                                    </StyledMenuItem>
+                                    <StyledMenuItem onClick={() => {setSelectedSearch("FECHAMODIFICACION");handleClose();}}
+                                            selected={selectedSearch === "FECHAMODIFICACION"}>
+                                        <EventAvailableIcon id="icon" fontSize="default" className={classes.iconActive}/>
+                                        <List>
+                                            <ListItemText id="primary" disableTypography
+                                                primary="Última fecha modificación" />
+                                            <ListItemText id="secondary1" disableTypography
+                                                secondary="Búsqueda de usuarios por fecha" />
+                                        </List>
+                                    </StyledMenuItem>
+                                </StyledMenu>
                             </Grid>
                         </Grid>
                     </Grid> : 

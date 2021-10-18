@@ -36,6 +36,7 @@ const styles = theme => ({
     }
 });
 
+
 class Reputation extends Component {
     constructor(props) {
         super(props);
@@ -54,6 +55,7 @@ class Reputation extends Component {
     componentDidMount() {
         window.addEventListener("resize", this.handleResize);  
         this.state.user = localStorage.getItem('userLogin') 
+        console.log('https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverPerfil/' + this.state.user + '.png')
     }
   
     Tabf = () => {

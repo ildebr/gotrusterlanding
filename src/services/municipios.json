@@ -30506,6 +30506,862 @@
         "lat": -25.8492622245534,
         "lon": -54.4206259685073
     }
+},
+
+{
+    "nombre_completo": "Río Gallegos",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Río Gallegos",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santa Cruz",
+        "id": "78",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Caleta Olivia",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Caleta Olivia",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santa Cruz",
+        "id": "78",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "El Calafate",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "El Calafate",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santa Cruz",
+        "id": "78",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Pico Truncado",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Pico Truncado",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santa Cruz",
+        "id": "78",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Las Heras",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Las Heras",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santa Cruz",
+        "id": "78",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Puerto Deseado",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Puerto Deseado",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santa Cruz",
+        "id": "78",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Puerto San Julián",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Puerto San Julián",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santa Cruz",
+        "id": "78",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Río Turbio",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Río Turbio",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santa Cruz",
+        "id": "78",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Gobernador Gregores",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Gobernador Gregores",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santa Cruz",
+        "id": "78",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "28 de Noviembre",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "28 de Noviembre",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santa Cruz",
+        "id": "78",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Santa Cruz",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Santa Cruz",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santa Cruz",
+        "id": "78",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "El Chaltén",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "El Chaltén",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santa Cruz",
+        "id": "78",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "Santiago del Estero",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Santiago del Estero",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "La Banda",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "La Banda",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Termas de Río Hondo",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Termas de Río Hondo",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Frías",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Frías",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Añatuya",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Añatuya",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Quimilí",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Quimilí",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Fernández",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Fernández",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Monte Quemado",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Monte Quemado",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Loreto",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Loreto",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Clodomira",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Clodomira",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Suncho Corral",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Suncho Corral",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Villa Ojo de Agua",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Villa Ojo de Agua",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Bandera",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Bandera",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Beltrán",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Beltrán",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Campo Gallo",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Campo Gallo",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Sumampa",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Sumampa",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Ingeniero Forres",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Ingeniero Forres",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Nueva Esperanza",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Nueva Esperanza",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "Pinto",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Pinto",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Pampa de los Guanacos",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Pampa de los Guanacos",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Colonia El Simbolar",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Colonia El Simbolar",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Los Juríes",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Los Juríes",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "Tintina",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Tintina",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Colonia Dora",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Colonia Dora",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Villa Atamisqui",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Villa Atamisqui",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Pozo Hondo",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Pozo Hondo",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "Selva",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Selva",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Garza",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Garza",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Los Telares",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Los Telares",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Sol de Julio",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Sol de Julio",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "Estación Simbolar",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Estación Simbolar",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Sacháyoj",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Sacháyoj",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "San Pedro de Guasayán",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "San Pedro de Guasayán",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Icaño",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Icaño",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "Herrera",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Hererra",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Sacháyoj",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Sacháyoj",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Brea Pozo",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Brea Pozo",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Weisburd",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Weisburd",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+
+{
+    "nombre_completo": "Los Pirpintos",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Los Pirpintos",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "Vilelas",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "Vilelas",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
+},
+{
+    "nombre_completo": "La Cañada",
+    "fuente": "Ministerio de Ecología",
+    "nombre": "La Cañada",
+    "id": "540224",
+    "provincia": {
+        "nombre": "Santiago del Estero",
+        "id": "86",
+        "interseccion": 0.0288918714802287
+    },
+    "categoria": "Municipio",
+    "centroide": {
+        "lat": -25.8492622245534,
+        "lon": -54.4206259685073
+    }
 }
 
 ]

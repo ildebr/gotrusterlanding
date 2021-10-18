@@ -409,6 +409,7 @@ class Login extends Component {
                                                 fullWidth
                                                 id="email"
                                                 name="name"
+                                                autocomplete="off"
                                                 helperText={(<font color='red'>{$textError}</font>)}
                                                 inputProps={{ style: { textAlign: 'center' } }}
                                                 className={classes.formButton}
@@ -435,6 +436,7 @@ class Login extends Component {
                                                 color='white'
                                                 type="password"
                                                 name="password"
+                                                autocomplete="off"
                                                 disabled={this.state.enabledComponent}
                                                 inputProps={{ style: { textAlign: 'center' } }}
                                                 className={classes.formButton}

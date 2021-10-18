@@ -103,12 +103,13 @@ function DniRegister(props) {
 
     const [file, setFile] = useState(null)
     const [user, setUser] = useState(null)
-    const [name, setName] = useState(null)
+    const [nameFront, setNameFront] = useState(null)
+    const [nameDorso, setNameDorso] = useState(null)
     const [active, setActive] = useState(true)
     const [dni, setDni] = React.useState('');
     const [show, setShow] = React.useState('');
-    const [nameImage, setNameImage] = React.useState(true);
-
+    const [nameImage1, setNameImage1] = React.useState(true);
+    const [nameImage2, setNameImage2] = React.useState(true);
     const handleDni = (e) => {
         setDni(e.target.value);
         localStorage.setItem('dniCuit', e.target.value)
@@ -205,12 +206,36 @@ function DniRegister(props) {
 
     }
 
-    const onFileChange = (event, nombre) => {
-        let fileName = event.target.files[0].name
-
+    const onFileChangeFront = (event, nombre) => {       
+         
         const reader = new FileReader();
         let _file = event.target.files[0];
-        setName(_file.name);
+        let fileName = event.target.files[0].name;
+        console.log("nombre de imagen", fileName)
+        setNameFront(fileName);
+        const _name = nombre
+
+        reader.onload = function (event) {
+            setFile(event.target.result)
+
+            Cliente.post(Fileload(), {
+                'file': event.target.result,
+                'fileName': _name,
+                'user': user,
+                'destination': 'DNI'
+            }
+            ).then(res =>{  
+                console.log(res)            
+                setNameImage1(false);                
+            })
+        };
+        reader.readAsDataURL(_file);
+    }
+    const onFileChangeDorso = (event, nombre) => {
+        const reader = new FileReader();
+        let _file = event.target.files[0];
+        let fileName = event.target.files[0].name;
+        setNameDorso(fileName);
         const _name = nombre
 
         reader.onload = function (event) {
@@ -223,13 +248,14 @@ function DniRegister(props) {
                 'destination': 'DNI'
             }
             ).then(res =>{
-                setActive(false);
-                setNameImage(false);
+                console.log(res)
+               setActive(false);
+                setNameImage2(false); 
+                
             })
         };
         reader.readAsDataURL(_file);
     }
-
     useEffect(() => {
 
         if (user === null) {
@@ -247,7 +273,7 @@ function DniRegister(props) {
                 </Typography>
 
                 <Typography className={classes.subtitulo}>
-                    Numero de DNI o Libreta Civica
+                    Número de DNI o Libreta Civica
                     {show}
                 </Typography>
                 <div style={{ width: '300px', marginTop: '4px' }}>
@@ -304,17 +330,19 @@ function DniRegister(props) {
                         id="file"
                         name="file"
                         type="file"
+                        
                         hidden
                         onChange={
-                            (e) => onFileChange(e, 'FrenteDNI')}
+                            (e) => onFileChangeFront(e, 'FrenteDNI')}
+                       
                     />
                     <Grid container direction={'row'} style={{ padding: '10px 0 10px 0', cursor: 'pointer' }}>
                         <Grid item xs={2} />
                         <Grid item xs={8}>
-                            <Typography className={classes.boton}>{nameImage ?'Adjuntar Frente' : name}</Typography>
+                            <Typography className={classes.boton}>{nameImage1 ?'Adjuntar Frente' : nameFront}</Typography>
                         </Grid>
                         <Grid item={2}>
-                            <FontAwesomeIcon icon={faPaperclip} className={nameImage ? classes.imageColorGray : classes.imageColor} />
+                            <FontAwesomeIcon icon={faPaperclip} className={nameImage1 ? classes.imageColorGray : classes.imageColor} />
                         </Grid>
                     </Grid>
 
@@ -342,15 +370,16 @@ function DniRegister(props) {
                         name="file"
                         type="file"
                         hidden
-                        onChange={(e) => onFileChange(e, 'DorsoDNI')}
+                        onChange={(e) => onFileChangeDorso(e, 'DorsoDNI')}
+                        
                     />
                     <Grid container direction={'row'} style={{ padding: '10px 0 10px 0', cursor: 'pointer' }}>
                         <Grid item xs={2} />
                         <Grid item xs={8}>
-                            <Typography className={classes.boton}>{nameImage ?'Adjuntar Dorso' : name}</Typography>
+                            <Typography className={classes.boton}>{nameImage2 ?'Adjuntar Dorso' : nameDorso}</Typography>
                         </Grid>
                         <Grid item={2}>
-                            <FontAwesomeIcon icon={faPaperclip} className={nameImage ? classes.imageColorGray : classes.imageColor} />
+                            <FontAwesomeIcon icon={faPaperclip} className={nameImage2 ? classes.imageColorGray : classes.imageColor} />
                         </Grid>
 
 

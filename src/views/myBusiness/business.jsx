@@ -112,6 +112,8 @@ class Business extends Component {
             ipPublic: '',
             show: false,
             active: true,
+            ocupationBussisnes : '',
+            nameBussines:''
 
         };
 
@@ -124,7 +126,7 @@ class Business extends Component {
 
     componentDidMount() {
         this.loadCategory();
-
+        this.loadDataBussines();
         window.addEventListener("resize", this.handleResize);
         if (this.state.user === null) {
             this.state.user = localStorage.getItem('userLogin')
@@ -300,6 +302,32 @@ class Business extends Component {
     addDefaultCoverImage = e => {
         e.target.src = LandingImage
     }    
+    loadDataBussines = (e)=>{
+        let URI = ShopResource();
+        const token = getToken();
+        let idCustomer = localStorage.getItem("customerId")
+        fetch(URI+'/' + idCustomer, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(response => {
+                this.setState({
+                    nameBussines: response.name,
+                    ocupationBussisnes:response.summary
+                })
+                return response;
+            })
+            .catch(e => {
+                console.log(e);
+            })
+  
+    }
 
     render() {
         function getWindowDimensions() {

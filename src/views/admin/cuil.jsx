@@ -1,6 +1,6 @@
 import React, {useState, Fragment, useEffect} from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import {CssBaseline, Grid, Container, Typography} from '@material-ui/core';
+import {CssBaseline, Grid, Container, Typography, Link} from '@material-ui/core';
 import AdminNavbar from "../../components/navBar/adminNavbar";
 import CuilRow from "../../components/admin/cuilRow";
 import FileIcon from "../../asset/images/admin/file.svg";
@@ -201,9 +201,11 @@ function AdminCuil(props) {
                                     <img src={FileIcon}/>
                                 </Grid>
                                 <Grid item>
-                                    <Typography className={classes.constanciAfip}>
-                                        Ver Constancias de Inscripción AFIP
-                                    </Typography>
+                                    <Link href="https://www.anses.gob.ar/consulta/constancia-de-cuil" target="_blank" rel="noopener">
+                                        <Typography className={classes.constanciAfip}>
+                                            Ver Constancias de Inscripción AFIP
+                                        </Typography>
+                                    </Link>
                                 </Grid>
                             </Grid>
                         </Grid>

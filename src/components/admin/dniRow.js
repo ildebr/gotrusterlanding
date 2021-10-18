@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {Button, Grid, Typography} from '@material-ui/core';
 import { Modal } from './Modal';
 import { BaseURLImage } from './../../services/hostConfig';
-import ProfileImage from "../../asset/images/admin/dni/profileImage.png";
+import ProfileImage from "../../asset/images/reputation/perfil.jpg";
 import DniFront from "../../asset/images/admin/dni/dniFront.png";
 import DniBack from "../../asset/images/admin/dni/dniBack.png";
 import { useConfirm } from "material-ui-confirm";
@@ -100,7 +100,7 @@ const useStyles = makeStyles({
 });
 
 const IMAGE_PROFILE_PATH = "perfil/"
-const IMAGE_DOCUMENT_PATH = "dni/";
+const IMAGE_DOCUMENT_PATH = "DNI/";
 
 function DniRow(props) {
     const {data, handleApprove, handleReject} = props;
@@ -229,7 +229,7 @@ function DniRow(props) {
                 <Grid item xs={5} container spacing={2} direction='row' alignItems='center' justify='center'>
                     <Grid item xs container spacing={1} direction='column'>
                         <Grid item>
-                            <img ref={docFrontImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email + '-frente.png'} onError={e => setDefaultImage(e, DniFront)} className={classes.dniImage} onClick={() => openModal(1)} />
+                            <img ref={docFrontImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email+'/'+ data.email + '-frente.png'} onError={e => setDefaultImage(e, DniFront)} className={classes.dniImage} onClick={() => openModal(1)} />
                             <Modal showModal={showModal1} setShowModal={setShowModal1} imageRef={docFrontImageRef} />
                         </Grid>
                         <Grid item>
@@ -238,7 +238,7 @@ function DniRow(props) {
                     </Grid>
                     <Grid item xs container spacing={1} direction='column'>
                         <Grid item>
-                            <img ref={docBackImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email + '-dorso.png'} onError={e => setDefaultImage(e, DniBack)} className={classes.dniImage} onClick={() => openModal(2)} />
+                            <img ref={docBackImageRef} src={BaseURLImage() + IMAGE_DOCUMENT_PATH + data.email+'/'+ data.email + '-dorso.png'} onError={e => setDefaultImage(e, DniBack)} className={classes.dniImage} onClick={() => openModal(2)} />
                             <Modal showModal={showModal2} setShowModal={setShowModal2} imageRef={docBackImageRef} />
                         </Grid>
                         <Grid item>

@@ -199,8 +199,18 @@ const SentText = 'No utilices guiones o caracteres especiales, el código es val
 const ValidationPhone = () => {
   const { width } = WindowDimensions();
   const [Sent, setSent] = useState(false)
+  const [to, setTo]= useState('');
+  const [sendCode, setsendCode]= useState('');
+  const [code, setCode]=useState('');
+  const [submitting,setSubmitting]= useState(false);
+  const [error, setError]= useState(false);
+
   const classes = useStyles();
   const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
+  
+  const handleTo = (e) =>{
+    setTo(e.target.value)
+  } 
   const toggleSend = () => {
     setSent(!Sent)
   }
@@ -244,11 +254,8 @@ const ValidationPhone = () => {
             name='name'
             inputProps={{ style: { textAlign: 'left' } }}
             className={classes.formButton2}
-            // onChange={this.handleName}
-            required
-          // onBlur={(e) => {
-          //   this.inputChange(e)
-          // }}
+            onChange={handleTo}
+            required          
           />
         </form>
       </Grid> 

@@ -52,12 +52,20 @@ const SumReputationMobile = () => {
     const [selfie, setSelfie] = React.useState(false)
     const [dniVal, setDniVal] = React.useState(false)
     const [adressVal, setAdressVal] = React.useState(false)
+    const [fbook, setFbook] = React.useState(false)
+    const [inst, setInst] = React.useState(false)
+    const [meli, setMeli] = React.useState(false)
+    const [linkd, setlinkd] = React.useState(false)
      ////////////////////////////////////////
      const [cuiProce, setCuiProce] = React.useState(false)
      const [selfieProce, setSelfieProce] = React.useState(false)
      const [dniValProce, setDniValProce] = React.useState(false)
      const [adressValProce, setAdressValProce] = React.useState(false)
      const [phoneValProce, setPhoneValProce] = React.useState(false)
+     const [fbookVal, setFbookVal] = React.useState(false)
+    const [instVal, setInstVal] = React.useState(false)
+    const [meliVal, setMeliVal] = React.useState(false)
+    const [linkdVal, setlinkdVal] = React.useState(false)
 
     function loadValidation() {
         const token = getToken();
@@ -95,25 +103,40 @@ const SumReputationMobile = () => {
                         
                         setCui(true);
                     }
+                    if (element == "MELI" && elemtStatus == "APPROVED") {
+                        setMeli(true)
+                    }
+                    if (element == "FACEBOOK" && elemtStatus == "APPROVED") {
+                        setFbook(true)
+                    }
+                    if (element == "INSTAGRAM" && elemtStatus == "APPROVED") {
+                        setInst(true);
+                    }
+                    if (element == "LINKEDIN" && elemtStatus == "APPROVED") {
+                        setlinkd(true)
+                    }
                      //////////////////
-                     if (element == "DNI" && elemtStatus == "PENDING" ) {
-                        
+                     if (element == "DNI") {
+
                         setDniValProce(true)
-                    }
-                    if (element == "ADDRESS" && elemtStatus == "PENDING" ) {
+                    }                   
+                    if (element == "DNI" && elemtStatus == "APPROVED") {
                         setAdressValProce(true)
-                      
-                    }
-                    if (element == "SELFIE" && elemtStatus == "PENDING" ) {                        
+                        setPhoneValProce(true)
+                        setCuiProce(true);
                         setSelfieProce(true);
                     }
-                    if (element == "CELLPHONE" && elemtStatus == "PENDING") {
-                       
-                        setPhoneValProce(true)
+                    if (element == "MELI") {
+                        setMeliVal(true)
                     }
-                    if (element == "CUIL" && elemtStatus == "PENDING") {
-                        
-                        setCuiProce(true);
+                    if (element == "FACEBOOK") {
+                        setFbookVal(true)
+                    }
+                    if (element == "INSTAGRAM") {
+                        setInstVal(true);
+                    }
+                    if (element == "LINKEDIN") {
+                        setlinkdVal(true)
                     }
                     
                 }
@@ -132,6 +155,7 @@ const SumReputationMobile = () => {
             maxWidth: '100vw',
 
         }} >
+           {/*  CELLPHONE */}
              {phon == false ?  <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
                 <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
                     <Grid container xs={2} xl={2} sm={2} justify='center' >
@@ -201,6 +225,8 @@ const SumReputationMobile = () => {
              </Grid>
          </Grid> 
             }
+
+             {/*  DNI */}
              {dniVal == false ? <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
                 <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
                     <Grid container xs={2} xl={2} sm={2} justify='center' >
@@ -271,6 +297,7 @@ const SumReputationMobile = () => {
                 </Grid>
             </Grid>
             }
+            {/* DIRECCION */}
             {adressVal == false ? <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
                 <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
                     <Grid container xs={2} xl={2} sm={2} justify='center' >
@@ -341,6 +368,7 @@ const SumReputationMobile = () => {
                 </Grid>
             </Grid>
             }
+           {/*  CUIL */}
             {cui == false ? <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
                 <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
                     <Grid container xs={2} xl={2} sm={2} justify='center' >
@@ -411,6 +439,7 @@ const SumReputationMobile = () => {
                 </Grid>
             </Grid>
             }
+           {/*  SELFIE */}
              {selfie == false ? <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
                 <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
                     <Grid container xs={2} xl={2} sm={2} justify='center' >
@@ -481,6 +510,7 @@ const SumReputationMobile = () => {
                 </Grid>
             </Grid>
             }
+            {/* FACEBOOK */}
             <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
                 <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
                     <Grid container xs={2} xl={2} sm={2} justify='center' >
@@ -523,6 +553,7 @@ const SumReputationMobile = () => {
                     </Grid>
                 </Grid>
             </Grid>
+           {/*  MERCADO LIBRE */}
             <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
                 <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
                     <Grid container xs={2} xl={2} sm={2} justify='center' >
