@@ -1,7 +1,7 @@
 {
   "name": "truster",
   "version": "0.1.0",
-  "homepage": "/",
+  "homepage": "https://prod.d38w5g7sjghyw4.amplifyapp.com/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.4.1",
