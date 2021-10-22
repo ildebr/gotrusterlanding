@@ -168,8 +168,8 @@ function DireccionRegister(props) {
         let _file = event.target.files[0];
         setName(_file.name);
         const _name = nombre
-
-
+        console.log("este nombre estoy buscando", _name)
+         console.log("viendo url", Fileload())
         reader.onload = function (event) {
             setFile(event.target.result)
             Cliente.post(Fileload(), {

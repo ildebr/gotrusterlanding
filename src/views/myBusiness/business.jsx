@@ -17,7 +17,7 @@ import MobileTienda from "../../components/myBusiness/mobileTienda";
 import MobileBotonera from "../../components/myBusiness/mobileBotonera";
 import Switch from "@material-ui/core/Switch";
 import Letter from '../../asset/images/letterLogo.svg'
-import { AllCategory, GetImage, ShopResource, ShopAdress } from "../../services/hostConfig";
+import { AllCategory, GetImage, ShopResource, ShopAdress, ShopByCustomer } from "../../services/hostConfig";
 import { getToken } from './../../setting/auth-helpers';
 
 import { LoopCircleLoading } from 'react-loadingg';
@@ -54,7 +54,7 @@ const styles = theme => ({
         color: '#FFFFFF',
         cursor: 'Pointer',
     },
-    error:{
+    error: {
         background: '#666666',
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         borderRadius: '14px',
@@ -112,8 +112,7 @@ class Business extends Component {
             ipPublic: '',
             show: false,
             active: true,
-            ocupationBussisnes : '',
-            nameBussines:''
+
 
         };
 
@@ -125,12 +124,11 @@ class Business extends Component {
     };
 
     componentDidMount() {
+
         this.loadCategory();
-        this.loadDataBussines();
+
         window.addEventListener("resize", this.handleResize);
-        if (this.state.user === null) {
-            this.state.user = localStorage.getItem('userLogin')
-        }
+        this.state.user = localStorage.getItem('userLogin')
         if (this.state.imagesArray === null && this.state.user !== null) {
             cliente.get(GetImage(), {
                 params: {
@@ -145,6 +143,7 @@ class Business extends Component {
             )
         }
     }
+
 
     loadCategory = (e) => {
         let URI = AllCategory();
@@ -228,106 +227,75 @@ class Business extends Component {
             nameBussines !== null
             && summary !== null
             && descrpition !== null
-            && idCategory !== NaN 
-            && idSubCategory !== NaN
-            && city !== null
-            && country !== null
-            && postalCode !== null
-            && streetName !== null
-            && streetNumber !== null
-
+            && idCategory !== NaN
+            && idSubCategory !== NaN            
 
         ) {
-        cliente.post(UriShop, dataRegister, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        }).then(response => {
-            console.log(response);
-            return response
-        }).then(response => {
-            console.log("quiero ver esta data", response)
-            console.log("este es el id", response.id)
-            return response.data.id;
-        }).then(response => {
-            //////adreeeshop
-            console.log("este es el id", response)
-            const addressShop = {
-                "apartment": "string",
-                "city": city,
-                "country": country,
-                "postalCode": postalCode,
-                "shop": {
-                    "id": response,
-                },
-                "streetName": streetName,
-                "streetNumber": streetNumber
-            }
-            cliente.post(UriShopAdress, addressShop, {
+            cliente.post(UriShop, dataRegister, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             }).then(response => {
-                this.setState({
-                    show: false,
-                    enabledComponent: false,
-                    active: false
-                })
+                console.log(response);
                 return response
-            }).catch(error => {
-                console.error('Error:', error)
-                this.setState({
-                    show: false,
-                    enabledComponent: false,
-                    active: false
-                })
-            });
-        })
-    } else {
-        this.setState({show:false})  
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Faltan datos por completar ',
-            footer: 'GoTruster'
-        }) 
-        
-    }
+            }).then(response => {
+                console.log("quiero ver esta data", response)
+                console.log("este es el id", response.id)
+                return response.data.id;
+            }).then(response => {
+                //////adreeeshop
+                console.log("este es el id", response)
+                const addressShop = {
+                    "apartment": "string",
+                    "city": city,
+                    "country": country,
+                    "postalCode": postalCode,
+                    "shop": {
+                        "id": response,
+                    },
+                    "streetName": streetName,
+                    "streetNumber": streetNumber
+                }
+                cliente.post(UriShopAdress, addressShop, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(response => {
+                    this.setState({
+                        show: false,
+                        enabledComponent: false,
+                        active: false
+                    })
+                    return response
+                }).catch(error => {
+                    console.error('Error:', error)
+                    this.setState({
+                        show: false,
+                        enabledComponent: false,
+                        active: false
+                    })
+                });
+            })
+        } else {
+            this.setState({ show: false })
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Faltan datos por completar ',
+                footer: 'GoTruster'
+            })
+
+        }
 
     }
     addDefaultCoverImage = e => {
         e.target.src = LandingImage
-    }    
-    loadDataBussines = (e)=>{
-        let URI = ShopResource();
-        const token = getToken();
-        let idCustomer = localStorage.getItem("customerId")
-        fetch(URI+'/' + idCustomer, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(response => {
-                return response.json();
-            })
-            .then(response => {
-                this.setState({
-                    nameBussines: response.name,
-                    ocupationBussisnes:response.summary
-                })
-                return response;
-            })
-            .catch(e => {
-                console.log(e);
-            })
-  
     }
+
 
     render() {
         function getWindowDimensions() {
@@ -339,31 +307,30 @@ class Business extends Component {
 
         // const [switchState, setSwitchState] = useState(false)
 
-
         const { width } = getWindowDimensions();
         const { classes } = this.props;
         let $show = this.state.show;
         let $wait = '';
-        
+
 
         if ($show) {
             $wait = (<LoopCircleLoading />);
         } else {
             $wait = '';
         }
-        
+
         return (
             <React.Fragment>
                 <Grid container className={classes.root} component="main" maxWidth="md"
                     style={{ display: 'flex', justifyContent: 'center' }}>
                     {width >= 600 ? <div className={classes.background}>
                         <img src={
-                                'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverNegocio/' + this.state.user + '.png'
-                            }
-                                alt='background' width={'1935px'} height={'550px'}
-                                style={{ objectFit: 'cover' }}
-                                onError={this.addDefaultCoverImage} 
-                            />
+                            'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverNegocio/' + this.state.user + '.png'
+                        }
+                            alt='background' width={'1935px'} height={'550px'}
+                            style={{ objectFit: 'cover' }}
+                            onError={this.addDefaultCoverImage}
+                        />
                     </div> : ''}
                     <Grid className={classes.test} container maxWidth="md" component="main">
                         <Container component="main" maxWidth="md">
@@ -380,7 +347,7 @@ class Business extends Component {
                                         color: "#FFFFFF",
                                         font: " normal normal 40px/40px Poppins",
                                     }}>
-                                        <img src={Letter}/>
+                                        <img src={Letter} />
                                     </Typography>
                                 </Grid> : <Grid xs={8} xl={8} sm={8} container justify='flex-start'>
                                     <Typography style={{
@@ -413,13 +380,13 @@ class Business extends Component {
                                     display: 'flex', justifyContent: 'center'
                                 }} xs={12}>
                                     {width >= 600 ?
-                                        <Header />
+                                        <Header  />
                                         :
-                                        <MobileHeader />
+                                        <MobileHeader  />
                                     }
                                 </Grid>
                             </Grid>
-                            
+
 
                         </Container>
                     </Grid>
@@ -474,7 +441,7 @@ class Business extends Component {
 
 
                                             }}>
-                                                {$wait}
+                                            {$wait}
                                             Mostrar tu negocio en los listados
                                         </Typography>
 
@@ -505,7 +472,7 @@ class Business extends Component {
 
                                     <div style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: '69px' }}>
                                         <Button className={classes.normal}
-                                          //disabled={this.state.active}
+                                            //disabled={this.state.active}
                                             onClick={this.handlenSubmit}
                                         >
                                             <Typography style={{

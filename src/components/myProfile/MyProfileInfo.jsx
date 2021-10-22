@@ -57,22 +57,18 @@ const MyProfileInfo = ({ modifiedCover }) => {
     const [user, setUser] = useState(null)    
     const [loading, setLoading] = useState(false);
     const [fechaCreate, setFechaCreate] = useState(false);
-    
-
 
     const onFileChange = (event) => {
         let fileName = event.target.files[0].name
         const reader = new FileReader();
         let _file = event.target.files[0];
-
-
         setLoading(true)
         reader.onload = async function (event) {
             setFile(event.target.result)
             Cliente.post(Fileload(), {
                 'file': event.target.result,
                 'fileName': fileName,
-                'user': user,
+                'user': localStorage.getItem('userLogin'),
                 'destination': 'perfil'
             }
             ).then(console.log(_file.name))
@@ -98,7 +94,7 @@ const MyProfileInfo = ({ modifiedCover }) => {
             Cliente.post(Fileload(), {
                 'file': event.target.result,
                 'fileName': fileName,
-                'user': user,
+                'user': localStorage.getItem('userLogin'),
                 'destination': 'coverPerfil'
             }
             ).then(() => {
@@ -115,13 +111,13 @@ const MyProfileInfo = ({ modifiedCover }) => {
     }
     useEffect(() => {
 
-      //  if (user !== null) {
+       if (user !== null) {
             setUser(localStorage.getItem('userLogin'))
             var fecha = new Date(localStorage.getItem('createDate'));
             var options = { year: 'numeric', month: 'long', day: 'numeric' };
             setFechaCreate(fecha.toLocaleDateString("es-ES", options));
 
-      //  }
+        }
     }, [user]);
     const addDefaultPofileImage = e => {
         e.target.src = ReputationImg

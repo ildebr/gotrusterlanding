@@ -1,0 +1,67 @@
+.containerItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px 8px 0px;
+  border-bottom: 2px solid #333333;
+}
+
+.itemReputation {
+  display: flex;
+  align-items: center;
+  width: auto;
+  column-gap: 8px;
+}
+.itemDescription {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 12px;
+}
+.itemDescription .status .name {
+  font: normal normal 14px/14px Poppins;
+  color: #fff;
+}
+.itemDescription .status {
+  display: grid;
+  text-align: left;
+  row-gap: 6px;
+}
+.pendient,
+.error {
+  font-size: 12px;
+  font-weight: bold;
+}
+.error {
+  color: red;
+}
+.pending {
+  color: lightblue;
+}
+.points {
+  font: normal normal 20px/20px PoppinsBold;
+  color: #fff;
+}
+.aprobbed{
+    color: rgb(172, 253, 0);
+}
+.itemDescription img {
+  width: 20px;
+  height: 20px;
+}
+@media (min-width: 320px){
+    .containerItem{
+        border: none;
+        background: #202020;
+        border-radius: 12px;
+        padding: 24px;
+    }
+}
+@media (min-width:  800px){
+  .containerItem{
+    padding: 0 8px 8px 0px;
+    border-bottom: 2px solid #333333;
+    background: transparent;
+    border-radius: 0;
+  }
+}

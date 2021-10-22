@@ -81,7 +81,7 @@ import afipValidationError from './views/manualValidations/afip/afipValidationEr
 
 function App() {
   return (
-    <div className="App" >
+    <div className="App" id='app' >
       <Router>
         <Route exact path="/" render={() => {
           return <div>

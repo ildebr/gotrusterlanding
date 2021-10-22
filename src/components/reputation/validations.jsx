@@ -117,7 +117,7 @@ const Validations = () => {
                     Validaciones Exitosas
                 </Typography>               
                    
-                <Grid container justify='flex-start' >
+                <Grid container justify='flex-start'  >
                     <Grid container justify='flex-start' xs={3} xl={3} sm={3} alignItems='center' style={{ marginLeft: -30, paddingRight: 15 }}>
                          <Grid container justify='flex-start' xs={12} xl={12} sm={12} style={{ marginBottom: 30 }}>
                         <Grid container justify='flex-start' xs={6} xl={6} sm={6} >

@@ -303,7 +303,7 @@ function SelfieRegister(props) {
                 </div>
 
                 <Typography className={classes.subtitulo} style={{paddingTop: '27px'}}>
-                    Adjunte Selfie
+                    Adjunte Selfie {show}
                 </Typography>
                 <Button component="label" style={{
                         width: '300px', marginTop: '8px',

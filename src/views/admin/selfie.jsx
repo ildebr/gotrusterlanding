@@ -78,11 +78,13 @@ function AdminSelfie(props) {
                         'Authorization': `Bearer ${token}`
                     }
                 }).then(response => {
+                    console.log("primera respuesta", response)
                     if (response.status === 200) {
                         return response.json()
                     }
                     setRows([]);
                 }).then(response => {
+                    console.log("Respuesta selfie", response)
                     setRows(response.filter((row) => {
                         if (row.validationDetailsDTOS?.length > 0) {
                             const validRow = row.validationDetailsDTOS.find((vd) => (vd.validationName === "SELFIE" && vd.validationStatus === "PENDING"))

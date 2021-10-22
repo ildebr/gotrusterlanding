@@ -122,9 +122,9 @@ let occupation = localStorage.getItem('occupation') === 'null' ? 'Agregue su ocu
 let gender = localStorage.getItem('gender');
 let email = localStorage.getItem('email');
 let cellphone = localStorage.getItem('cellphone') === 'string' ? 'xxx-xxxx-xxxx' : localStorage.getItem('cellphone');
-let cuit1 = localStorage.getItem('cuit') === 'string' ? 'xx-xxxxxxxx-x (Cuil/Cuit) o xxxxxxxx (Dni)' : localStorage.getItem('cuit');
+let cuit1 = localStorage.getItem('cuit') === 'string' ? 'xx-xxxxxxxx-x  ' : localStorage.getItem('cuit');
 let fecha = new Date(localStorage.getItem('birthDate'));
-
+let dnipro = localStorage.getItem('dni') === 'string' ? ' xxxxxxxx ' : localStorage.getItem('dni');
 
 
 export default function Profile(props) {
@@ -137,8 +137,7 @@ export default function Profile(props) {
     const [active, setActive] = React.useState(false);
    
     ////
-    const [dni, setDni] = React.useState('')
-    const [cuit, setCuit] = React.useState('')
+    const [dni, setDni] = React.useState('')    
     const [phon, setPhon] = React.useState('')
     const [adre, setAdresses] = React.useState('')
     const [cui, setCui] = React.useState('')
@@ -201,6 +200,10 @@ export default function Profile(props) {
     const handlePhone = (e) => {
         setPhone(e.target.value);
     }
+    const handleDni = (e) => {
+        setDni(e.target.value);
+        localStorage.setItem('dni', e.target.value)
+    }
 
     function loadValidation() {
         const token = getToken();
@@ -238,7 +241,7 @@ export default function Profile(props) {
                         setPhon(evaluateStatus(response[index].validationStatus))
                     }
                     if (element == "CUIL") {
-                        
+                       
                         setCui(evaluateStatus(response[index].validationStatuss));
                     }
                     
@@ -264,7 +267,7 @@ export default function Profile(props) {
             +2
         </Typography>
 
-        <img src={Logo} alt='ok' width='20px' style={{ marginLeft: 30, marginTop: 30, position: 'absolute', cursor: 'pointer' }} />
+        <Link href={goTOAfip}><img src={Logo} alt='ok' width='20px' style={{ marginLeft: 10, marginTop: 30, position: 'absolute', cursor: 'pointer' }} /></Link>
         <Link href={goTOAfip}><img src={Add} alt='ok' width='20px' style={{ marginTop: 30, marginLeft: 75, position: 'absolute', cursor: 'pointer', zIndex: 5 }} /></Link>
 
     </Grid>);             
@@ -351,14 +354,14 @@ export default function Profile(props) {
         const token = getToken();
         var date = new Date();
         let formatted_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-        let dni = cuil;
+        let dni = dni;
         let idUser = localStorage.getItem("userId")
         const dataUpdate = {
             "active": true,
             "birthDate": localStorage.getItem("birthDate"),
             "cellphone": localStorage.getItem("cellphone"),
             "creationDate": localStorage.getItem("createDate"),
-            "cuit": dni,
+            "cuit": cuil,
             "gender": localStorage.getItem("gender"),
             "ip": localStorage.getItem("ip"),
             "level": localStorage.getItem("Level"),
@@ -597,10 +600,38 @@ export default function Profile(props) {
                         color: "#666666",
                         font: " normal normal 12px/12px Poppins",
                     }}>
-                        DNI / CUIL
+                        DNI 
                     </Typography>
                 </Grid>
                 {dni}
+                <Grid container xs={12} xl={12} sm={12}>
+                    <InputBase
+                        defaultValue={dnipro}
+                        fullWidth
+                        id="nombre"
+                        name='name'
+                        inputProps={{ style: { textAlign: 'left' } }}
+                        className={classes.formButton2}
+                        onChange={handleDni}
+                        disabled={active}
+                        required
+                    // onBlur={}
+                    />
+                </Grid>
+            </Grid>
+            <Grid container alignItems='flex-start' xs={12} xl={12} sm={12} style={{ marginTop: 30 }} >
+                <Grid container xs={4} xl={4} sm={4}>
+                    <Typography style={{
+                        flexGrow: 1,
+                        textAlign: "left",
+                        fontWeight: 600,
+                        color: "#666666",
+                        font: " normal normal 12px/12px Poppins",
+                    }}>
+                        CUIL/CUIT 
+                    </Typography>
+                </Grid>
+                {cui}
                 <Grid container xs={12} xl={12} sm={12}>
                     <InputBase
                         defaultValue={cuit1}

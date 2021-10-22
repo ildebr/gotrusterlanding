@@ -4,6 +4,7 @@ import { Typography } from '@material-ui/core';
 import MasterBadge from '../../asset/images/categorySearch/masterBadge.svg';
 import OkayIcon from '../../asset/images/categorySearch/okayIcon.svg';
 import RegisterCard from '../../components/search/registerCard';
+import Burger1 from '../../asset/images/categorySearch/dummy/burger1.png'
 
 const useStyles = makeStyles({
     root: {
@@ -79,7 +80,7 @@ function ResultCard(props) {
         <div>
             {data.name == 'register' ? <RegisterCard /> :
                 <div className={classes.root}>
-                    <img src={data.image} />
+                    <img src={Burger1} />
                     <div className={classes.information}>
                         <div className={classes.infoRow}>
                             <div>

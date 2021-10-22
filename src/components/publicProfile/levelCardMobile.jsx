@@ -102,9 +102,9 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const LevelCard = () => {
+const LevelCard = (props) => {
   const classes = useStyles();
-  const TrusterPoints = 122
+  const { points } = props.customer
   return (
     <Grid position="static" color="transparent" style={{
       flexGrow: 1,
@@ -131,7 +131,7 @@ const LevelCard = () => {
               </Grid>
               <Grid container item alignItems='center' justify="center" xs={8} xl={8} sm={8}>
                   <Typography className={classes.trustern}>
-                      {TrusterPoints}
+                      {points}
                   </Typography>
               </Grid>
             </Grid>

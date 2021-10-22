@@ -11,9 +11,14 @@ import NextArchMobile from '../../components/reputation/nextArchMobile'
 import SumReputationMobile from '../../components/reputation/sumReputationMobile'
 import SumReputation from '../../components/reputation/sumreputation'
 import Validations from '../../components/reputation/validations'
-import {GetImage} from './../../services/hostConfig';
+
 import Letter from '../../asset/images/letterLogo.svg'
 import Cliente from './../../setting/cliente'
+import { CustomerResource, UserAdminResource, GetImage } from './../../services/hostConfig';
+import { getToken } from './../../setting/auth-helpers';
+import ValidationsChecked from '../../components/reputation/validationsChecked'
+import Banner from '../../components/reputation/banner'
+import { accordionActionsClasses } from '@mui/material';
 const { localStorage } = global.window;
 
 const styles = theme => ({
@@ -41,8 +46,10 @@ class Reputation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            windowWidth: window.innerWidth, tab: false, imagesArray: null,
-            user: null
+            windowWidth: window.innerWidth, 
+            tab: false, 
+            imagesArray: null,
+            user: null, 
         };
     }
 
@@ -52,11 +59,10 @@ class Reputation extends Component {
     handleResize = (e) => {
         this.setState({ windowWidth: window.innerWidth });
     };
-    componentDidMount() {
-        window.addEventListener("resize", this.handleResize);  
-        this.state.user = localStorage.getItem('userLogin') 
-        console.log('https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverPerfil/' + this.state.user + '.png')
+    componentDidMount() {      
+        window.addEventListener("resize", this.handleResize);
     }
+    
   
     Tabf = () => {
         this.setState({ tab: !this.state.tab });
@@ -74,15 +80,7 @@ class Reputation extends Component {
         
         return (<React.Fragment>
             <Grid container className={classes.root} component="main" maxWidth="md" style={{ display: 'flex', justifyContent: 'center' }}>
-                {width >= 600 ? <div className={classes.background} >
-                    {/* {this.state.imagesArray !== null && this.state.imagesArray.length > 0 ? */}
-                        <img src={
-                            'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverPerfil/' + this.state.user + '.png'
-                        }
-                            alt='background' width={'1935px'} height={'470px'}
-                            style={{ objectFit: 'cover' }}
-                            onError={this.addDefaultPofileImage}/>                      
-                </div> : ''}
+                <Banner/>
                 <Grid className={classes.test} container maxWidth="md" component="main" >
                     <Container component="main" maxWidth="md" container justify='center' >
                         <Grid container >
@@ -173,7 +171,7 @@ class Reputation extends Component {
                             {width >= 600 ? <SumReputation /> : ''}
                         </Grid>
                         <Grid container >
-                            {width >= 600 ? <Validations /> : ''}
+                            {width >= 600 && <ValidationsChecked />}
                         </Grid>
                     </Container>
                 </Grid>

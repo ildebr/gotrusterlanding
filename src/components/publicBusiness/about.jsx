@@ -84,6 +84,10 @@ const useStyles = makeStyles(theme => ({
 
 function About(props) {
     const classes = useStyles();
+    const { description, customers } = props
+
+    const key = customers?.length > 0 ? customers[0].id : ''
+
     return (
         <React.Fragment>
             <Grid container direction={'row'}>
@@ -103,28 +107,20 @@ function About(props) {
                             borderRadius: '25px',
                         }}></div>
                     </div>
-                    <Typography className={classes.texto}>Mi nombre es Daniel, vivo en Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit.
-                        Sed leo eros, gravida sed sapien vel, maximus ultrices diam. Duis scelerisque mi sit amet
-                        bibendum facilisis. Donec scelerisque lectus ut lectus tincidunt, id bibendum sapien tristique.
-                        Proin at cursus tellus, at viverra nunc. Aenean ut purus ut libero lobortis dignissim. Cras eros
-                        felis, molestie at mi nec, fermentum volutpat turpis.</Typography>
+                    <Typography className={classes.texto}>{description}</Typography>
                 </Grid>
 
                 <Grid item className={classes.gridDirection} xs={12}>
-
-                        <Direction/>
-                        <img src={directionImage} alt='background' width={'100%'}/>
-
+                    <Direction/>
+                    <img src={directionImage} alt='background' width={'100%'}/>
                 </Grid>
 
                 <Grid container direction={"row"} xs={12} md={4}>
                     <div className={classes.card1} >
-
                         <Grid container direction={"row"} style={{display:'flex', alignItems:'center', justifyContent:'space-around'}}>
                             <Grid container direction={"column"} xs>
                                 <Typography className={classes.titulo2}>Dueño</Typography>
-                                <Link href='/publicprofile'>
+                                <Link href={`/publicprofile?key=${key}`}>
                                 <Typography className={classes.subtitulo2}>Beatris Napoles</Typography></Link>
                                 <Typography className={classes.texto}>Miembro desde 2021</Typography>
                                 <div style={{

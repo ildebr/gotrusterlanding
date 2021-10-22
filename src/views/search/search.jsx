@@ -34,6 +34,8 @@ import Burger2 from '../../asset/images/categorySearch/dummy/burger2.png'
 import Burger3 from '../../asset/images/categorySearch/dummy/burger3.png'
 import SelectBase from '@material-ui/core/Select';
 import SearchIconGreen from "../../asset/images/admin/searchIconGreen.svg"
+import { getToken } from './../../setting/auth-helpers';
+import { ShopsResource } from './../../services/hostConfig';
 
 const styles = theme => ({
     navBar: {
@@ -457,6 +459,10 @@ function Search(props) {
     const searchIconRef = useRef();
     const arrowIconRef = useRef();
     const [selectedSearch, setSelectedSearch] = React.useState("NOMBRE");
+    const [rows, setRows] = useState([]);
+    const[retrieve, setRetrieve] = useState(false);
+    const pageSize = 13
+    const [total, setTotal] = useState(pageSize);
 
     const test = (num) => {
         if (num === 1) {
@@ -484,6 +490,44 @@ function Search(props) {
         searchIconRef.current.src = SearchIcon;
         arrowIconRef.current.style.color = "#555555";
     };
+
+    useEffect(() => {
+        try {
+            const token = getToken();
+            if (token !== 'undefined') {
+                fetch(ShopsResource(), {
+                    method: 'get',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(response => {
+                    if (response.status === 200) {
+                        return response.json()
+                    }
+                    setRows([]);
+                }).then(response => {
+                    setRows(response);
+                    /*setRows(response.filter((row) => {
+                        if (row.validationDetailsDTOS?.length > 0) {
+                            const validRow = row.validationDetailsDTOS.find((vd) => (vd.validationName === "SELFIE" && vd.validationStatus === "PENDING"))
+                            const hasDniApproved = row.validationDetailsDTOS.find((vd) => (vd.validationName === "DNI" && vd.validationStatus === "APPROVED"))
+                            if (validRow) {
+                                row.validationDetailsDTOS = validRow
+                                row.disabled = hasDniApproved ? false : true
+                                return true
+                            }
+                        }
+                        return false
+                    }))*/
+                    setRetrieve(false)
+                })
+            }
+        } catch(e) {
+            console.log(e)
+        }
+    }, [total, retrieve]);
 
     return (
         <div>
@@ -524,6 +568,7 @@ function Search(props) {
                                     onKeyPress ={(e) => {                                        
                                         if (e.key === 'Enter'){
                                         setSearch(true)
+                                        setRetrieve(true)
                                         }
                                     }}
                                     startAdornment={
@@ -641,9 +686,9 @@ function Search(props) {
                     : 
                     <div>
                         <Grid item container xs={12} className={classes.results} justify='space-between'>
-                            {dummyBurger.map((item, index) =>
-                              <Link href='/publicbusiness'>
-                                <ResultCard key={index} data={item} />
+                            {rows.map((item, index) =>
+                                <Link href={`/publicbusiness?key=${item.id}`}>
+                                    <ResultCard key={index} data={item} />
                                 </Link>
                             )}
                         </Grid>

@@ -172,6 +172,10 @@ export default function MyProfileMobile(props) {
     const handleCuil = (e) => {
         setCuil(e.target.value);
     }
+    const handleDni = (e) => {
+        setDni(e.target.value);
+        localStorage.setItem('dni', e.target.value)
+    }
     const handlePhone = (e) => {
         setPhone(e.target.value);
     }
@@ -382,9 +386,11 @@ export default function MyProfileMobile(props) {
     let gender = localStorage.getItem('gender');
 
     let cellphone = localStorage.getItem('cellphone') === 'string' ? '(xxx)-(xxxx-xxxx)' : localStorage.getItem('cellphone');
-    let cuit = localStorage.getItem('cuit') === 'string' ? 'xx-xxxxxxxx-x o xxxxxxxx ' : localStorage.getItem('cuit');
-   //let dni = localStorage.getItem('dni') === 'string' ? 'Agregue su cuit': localStorage.getItem('dni');
+    let cuit1 = localStorage.getItem('cuit') === 'string' ? 'xx-xxxxxxxx-x  ' : localStorage.getItem('cuit');
+
     let email = localStorage.getItem('email');
+    let dnipro = localStorage.getItem('dni') === 'string' ? ' xxxxxxxx ' : localStorage.getItem('dni');
+
     let adresses = localStorage.getItem('Adresses') === '' ? 'Dirección' : localStorage.getItem('Adresses');
     let nacionality = localStorage.getItem('Nacinality') === '' ? 'Nacionalidad' : localStorage.getItem('Nacinality');
     let newGender = '';
@@ -657,19 +663,47 @@ export default function MyProfileMobile(props) {
                         color: "#666666",
                         font: " normal normal 12px/12px Poppins",
                     }}>
-                        DNI / CUIL
+                        DNI 
                     </Typography>
                 </Grid>
                 {dni}
                 <Grid container xs={12} xl={12} sm={12} justify='flex-start'>
                     <InputBase
-                        defaultValue={cuit}
+                        defaultValue={dnipro}
                         fullWidth
                         id="nombre"
                         name='name'
                         inputProps={{ style: { textAlign: 'left' } }}
                         className={classes.formButton2}
-                        onChange={handlePhone}
+                        onChange={handleDni}
+                        disabled={active}
+                        required
+                    // onBlur={}
+                    />
+                </Grid>
+            </Grid>
+            <Grid container alignItems='flex-start' xs={12} xl={12} sm={12} style={{ marginTop: 30 }} >
+                <Grid container xs={11} xl={11} sm={11}>
+                    <Typography style={{
+                        flexGrow: 1,
+                        textAlign: "left",
+                        fontWeight: 600,
+                        color: "#666666",
+                        font: " normal normal 12px/12px Poppins",
+                    }}>
+                        CUIL 
+                    </Typography>
+                </Grid>
+                {cui}
+                <Grid container xs={12} xl={12} sm={12} justify='flex-start'>
+                    <InputBase
+                        defaultValue={cuit1}
+                        fullWidth
+                        id="nombre"
+                        name='name'
+                        inputProps={{ style: { textAlign: 'left' } }}
+                        className={classes.formButton2}
+                        onChange={handleCuil}
                         disabled={active}
                         required
                     // onBlur={}
@@ -716,7 +750,7 @@ export default function MyProfileMobile(props) {
                         Fecha de nacimiento
                     </Typography>
                 </Grid>
-                {toValidate}
+                {dni}
                 <Grid container xs={12} xl={12} sm={12}>
                     <InputBase
                         defaultValue={fecha.toLocaleDateString("es-ES", options)}

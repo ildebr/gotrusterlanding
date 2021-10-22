@@ -223,13 +223,10 @@ function Bussines(props) {
                     'Authorization': `Bearer ${token}`
                 }
             }).then(response => {
-                if (response.status == 401 ||
-                    response.status == 400 || 
-                    response.status == 500) {
-                        setRows([]);
-                } else{
+                if (response.status === 200) {
                     return response.json();
-                }
+                } 
+                setRows([]);
             }).then(response => {
                 setRows(response);
                 localStorage.setItem(ROWS_SHOP, JSON.stringify(response));

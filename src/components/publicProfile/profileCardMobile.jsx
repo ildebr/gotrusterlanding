@@ -5,7 +5,8 @@ import GreenCircle from '../../asset/images/publicProfile/greencircle.svg'
 import CircularDeterminate from '../../components/reputation/progressBarMobile'
 import UserImg from '../../asset/images/reputation/Ellipse 6.png'
 import ShareIcon from '../../asset/images/publicProfile/shareIcon.svg'
-
+import moment from 'moment'
+import 'moment/locale/es';
 
 const { localStorage } = global.window;
 const useStyles = makeStyles(theme => ({
@@ -59,9 +60,10 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const ProfileCard = () => {
+const ProfileCard = (props) => {
   const classes = useStyles();
   const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
+  const { level, occupation, creationDate } = props.customer
   return (
     <Grid position="static" color="transparent" container style={{
       flexGrow: 1,
@@ -75,7 +77,7 @@ const ProfileCard = () => {
             <button className={classes.protrusterb}>
               <Grid item container justify='flex-end' xs={12} xl={12} sm={12}>
                 <img src={GreenCircle} alt='greencircle' width='15%' />
-                <Typography className={classes.protrustert}>Pro Truster</Typography>
+                <Typography className={classes.protrustert}>{level}</Typography>
               </Grid>
             </button>
           </Grid>
@@ -86,12 +88,12 @@ const ProfileCard = () => {
           </Grid>
           <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center' style={{ marginBottom: 20 }}>
             <Typography className={classes.ocupation}>
-              Software Developer
+              {occupation}
             </Typography>
           </Grid>
           <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center' style={{ marginBottom: 20 }}>
             <Typography className={classes.membership}>
-              Miembro desde 2021
+              Miembro Truster desde {moment(creationDate).format('MMMM')} / {moment(creationDate).format('YYYY')}
             </Typography>
           </Grid>
         </Grid>

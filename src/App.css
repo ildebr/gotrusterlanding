@@ -3,6 +3,7 @@
 .App {
   text-align: center;
   background: #000000;
+  width: 100%;
 }
 
 .App-logo {
@@ -50,6 +51,7 @@
 /* MENU STYLES */
 .menu-wrap {
   /* position: fixed; */
+  overflow: hidden;
   z-index: 5;
 }
 
@@ -218,6 +220,7 @@
   background: var(--overlay-color);
   border-radius: 50%;
   width: 300vw;
+  overflow: hidden;
   height: 300vw;
   display: flex;
   flex: none;
@@ -238,7 +241,7 @@
 .menu-wrap .menu > div > div > ul {
   padding-left: 0;
 }
-.menu-wrap .menu > div > div > ul > li:hover {
+.menu-wrap .menu > div > div > ul > li a span:hover {
   text-decoration: underline;
   text-decoration-color: #acfd00;
   text-decoration-style: solid;
@@ -256,4 +259,30 @@
   color: inherit;
   text-decoration: none;
   transition: color 0.4s ease;
+}
+.containerValidations{
+  display: grid;
+  width: 100%;
+  row-gap: 36px;
+  margin: 48px 0;
+
+}
+.containerValidations .title{
+  display: flex;
+}
+.containerValidations .title span{
+  width: 100%;
+  text-align: left;
+  font: normal normal normal 19px/19px Poppins;
+  color: #fff;
+  font-weight: bold;
+}
+.validations {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 250px));
+  grid-gap: 64px;
+}
+.itemValidation {
+  display: flex;
+  width: 300px;
 }

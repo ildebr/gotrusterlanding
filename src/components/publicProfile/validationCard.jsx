@@ -4,6 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Ok from '../../asset/images/publicProfile/ok.svg'
 import Cross from '../../asset/images/publicProfile/cross.svg'
 import GrayCircle from '../../asset/images/publicProfile/grayCircle.svg'
+import DNI from '../../asset/images/publicProfile/correo.svg'
+import PHONE from '../../asset/images/publicProfile/phone.svg'
 
 const { localStorage } = global.window;
 const dummyText = 'Mi nombre es Daniel, vivo en Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed leo eros, gravida sed sapien vel, maximus ultrices diam. Duis scelerisque mi sit amet bibendum facilisis. Donec scelerisque lectus ut lectus tincidunt, id bibendum sapien tristique. '
@@ -23,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const ValidationCard = (props) => {
-  const {data} = props;
+  const { validationEnabled, validationName, validationStatus } = props.data;
   const classes = useStyles();
   return (
     <Grid position="static" color="transparent" style={{
@@ -45,14 +47,14 @@ const ValidationCard = (props) => {
             backgroundColor: '#0F0F0F', height: '65px', width: '110px', borderRadius: '10px'
           }}>
             <Grid container justify="flex-end" xs={12} xl={12} sm={12} style={{paddingRight: '5px', paddingTop: '5px'}}>
-              {data.validated == 'true' ? <img src={Ok} /> : <img src={Cross} width={'15px'} />}
+              {validationEnabled ? <img src={Ok} /> : <img src={Cross} width={'15px'} />}
             </Grid> 
-            {data.icon == '' ? <img src={GrayCircle} width={'50px'} /> : <img src={data.icon} width={'25px'}/>}
+            {validationName == '' ? <img src={GrayCircle} width={'50px'} /> : <img src={DNI} width={'25px'}/>}
           </Grid>
         </Grid>
         <Grid container justify="center" xs={12} xl={12} sm={12} style={{ paddingRight: '5px', paddingTop: '15px', paddingBottom: '15px' }}>
             <Typography className={classes.text}>
-              {data.name} {data.category}
+              {validationName} {validationStatus}
             </Typography>
         </Grid>
       </Grid>

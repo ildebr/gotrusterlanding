@@ -65,6 +65,11 @@ const UserResource = () => {
    let REACT_APP_USER = BASE_URL_BACKEND + 'users';
    return REACT_APP_USER;
 }
+
+// const UserResourceMail = () => {
+//    let REACT_APP_USER_MAIL = BASE_URL_BACKEND + ''
+// }
+
 ///////////////User Admin Resource
 const UserAdminResource = () => {
    let REACT_APP_USER_ADMIN = BASE_URL_BACKEND + 'admin/users';
@@ -82,9 +87,13 @@ const AdminCustomer = () => {
    return REACT_APP_USER_ADMIN;
 }
 //////////////Shop
-const ShopResource = () => {
+const ShopsResource = () => {
    let REACT_APP_SHOP = BASE_URL_BACKEND + 'shops';
    return REACT_APP_SHOP;
+}
+const ShopByCustomer = () => {
+   let REACT_APP_SHOP_CUSTOMER = BASE_URL_BACKEND + 'shopsByCustomer';
+   return REACT_APP_SHOP_CUSTOMER;
 }
 
 const ShopAdress = () => {
@@ -170,7 +179,7 @@ const ValidatioDetailByCustomer = ()=>{
       UserAdminResource,
       UserAdminPlusResource,
       UserAuthoritie,
-      ShopResource,
+      ShopsResource,
       TransactionResource,
       TrustResource,
       GetImage,
@@ -186,5 +195,6 @@ const ValidatioDetailByCustomer = ()=>{
       AdminCustomer,
       BaseURLImage,
       ValidatioDetail,
-      ValidatioDetailByCustomer
+      ValidatioDetailByCustomer,
+      ShopByCustomer
    }

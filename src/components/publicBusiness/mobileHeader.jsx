@@ -48,7 +48,7 @@ function MobileHeader(props) {
     const [haveImageCover, setHaveImageCover] = useState(false);
     const classes = useStyles();
 
-    function getImages() {
+    /* function getImages() {
         let json = '';
         let coverNegocio = '';
         cliente.get(GetJson(), {}).then((res) => {
@@ -69,8 +69,8 @@ function MobileHeader(props) {
             console.log(e);
         })
 
-    }
-    function getImagesCover(){
+    } */
+   /*  function getImagesCover(){
         cliente.get(GetImage(), {
             params: {
                 'user': this.state.user,
@@ -82,14 +82,20 @@ function MobileHeader(props) {
                 this.setState({ imagesArray: res['data']['fileNames'] })
             }
         )
-    }
+    } */
+    function addDefaultCoverImage (e ){
+        e.target.src = background
+    }   
+    function addDefaultAvatarImage (e){
+        e.target.src = elipse
+    }   
 
     useEffect(() => {
 
         if (user === null) {
             setUser(localStorage.getItem('userLogin'))
-            getImages()
-            getImagesCover()
+          /*   getImages()
+            getImagesCover() */
         }
 
     }, [haveImage, haveImageCover, user])
@@ -98,23 +104,13 @@ function MobileHeader(props) {
         <React.Fragment>
             <div style={{ width: '100%' }}>
                 <div className={classes.background}>
-                    {user!== null ?
-
+                  
                         <img
                             src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverNegocio/' + user + '.png'}
                             width='100%'
                             style={{ width: '100%' }}
-
-                        />
-
-                        :
-                        <img src={background} style={{ width: '100%' }} />
-
-                    }
-
-
-                    {haveImage ?
-
+                            onError={addDefaultCoverImage}
+                        /> 
                         <img
                             src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/avatar/' + localStorage.getItem('userLogin') + '.png'}
                             width='120px' height='120px' style={{
@@ -123,13 +119,10 @@ function MobileHeader(props) {
                                 borderRadius: '50%',
                                 objectFit: 'cover'
                             }}
+                            onError={addDefaultAvatarImage}
                         />
 
-                        :
-                        <img src={elipse} style={{ width: '30%', position: 'absolute', bottom: '-35px' }} />
-
-
-                    }
+                       
                 </div>
             </div>
         </React.Fragment>

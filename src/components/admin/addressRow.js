@@ -101,7 +101,7 @@ const useStyles = makeStyles({
 });
 
 const IMAGE_DOCUMENT_PATH = "DNI/";
-const IMAGE_INVOICE_PATH = "factura/";
+const IMAGE_INVOICE_PATH = "comprobantes/";
 
 function AddressRow(props) {
     const {data, handleApprove, handleReject, disabled} = props;

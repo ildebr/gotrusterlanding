@@ -66,15 +66,16 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const PublicInfo = ({selected}) => {
+const PublicInfo = (props) => {
     const classes = useStyles();
     const [Trust, setTrust] = React.useState(false);
-    const TrusterPoints = localStorage.getItem('points')
+    console.log(props.customer);
+    const { points } = props.customer
     const TrusterUsers = 0
     const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
     function toggleTrust(){
         setTrust(!Trust)
-        selected(Trust)
+        props.selected(Trust)
     }
     return (
         <Grid position="static" color="transparent" style={{
@@ -88,7 +89,7 @@ const PublicInfo = ({selected}) => {
                         <img src={Logo} alt='logo' width='45px'/>
                     </Grid>
                     <Grid container alignItems='center' justify='flex-start' xs={4} xl={4} sm={4}>
-                        <Typography className={classes.trusterp}>{TrusterPoints}</Typography>
+                        <Typography className={classes.trusterp}>{points}</Typography>
                     </Grid>
                     <Grid container alignItems='center' justify='center' xs={6} xl={6} sm={6}>
                         <Typography className={classes.trustert}>

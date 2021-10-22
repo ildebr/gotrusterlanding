@@ -110,10 +110,10 @@ const ReputationNavbar = () => {
                                     <li><Link href='/'><img src={Soporte} alt='soporte' style={{ paddingRight: 10, width: '12px' }} /> Soporte</Link></li>
                                 </ul>
                                 <hr width={'100%'} size={1} color={'#5e5e5d'} style={{ marginBottom: 30, marginLeft: 20 }} />
-                                <ul style={{ paddingLeft: '40px' }}>
+                                <ul style={{ paddingLeft: '40px', display: 'grid', placeItems: 'center' }}>
                                     <li><Link href='/' style={{ color: "#5e5e5d" }}>Términos y Condiciones</Link></li>
                                     <li><Link href='/' style={{ color: "#5e5e5d" }}>Política</Link></li>
-                                    <li><Link href='/' style={{ color: "#5e5e5d", fontSize: 12 }}><img src={CerrarSesion} alt='cerrarsesion' style={{ paddingRight: 5, width: '8px' }} /> Cerrar Sesión</Link></li>
+                                    <li ><Link href='/' style={{ color: "#5e5e5d", fontSize: 15, display: 'flex', alignItems: 'center', columnGap: '6px'}}><img src={CerrarSesion} alt='cerrarsesion' style={{ width: '14px', height: '14px' }} /> Cerrar Sesión</Link></li>
                                 </ul>
                             </div>
                         </div>

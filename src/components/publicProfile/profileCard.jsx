@@ -5,6 +5,10 @@ import ReputationImg from '../../asset/images/reputation/Ellipse 6.png'
 import GreenCircle from '../../asset/images/publicProfile/greencircle.svg'
 import Cliente from "../../setting/cliente";
 import {GetJson} from "../../services/hostConfig";
+import moment from 'moment'
+import 'moment/locale/es';
+
+moment.locale('es')
 const { localStorage } = global.window;
 const useStyles = makeStyles(theme => ({
     name: {
@@ -57,10 +61,11 @@ const ProfileCard = (props) => {
     
     const addDefaultPofileImage = e => {
         e.target.src = ReputationImg
-    } 
+    }
+
+    const { level, occupation, creationDate } = props.customer
     const classes = useStyles();
     const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
-    let occupation = localStorage.getItem('occupation') ;
     return (
         <Grid position="static" color="transparent" style={{
             flexGrow: 1,
@@ -73,7 +78,7 @@ const ProfileCard = (props) => {
                         <button className={classes.protrusterb}>
                             <Grid item container  justify='flex-end' xs={12} xl={12} sm={12}>
                                 <img src={GreenCircle} alt='greencircle' />
-                                <Typography className={classes.protrustert}>Rookie</Typography>
+                                <Typography className={classes.protrustert}>{level}</Typography>
                             </Grid>
                         </button>
                     </Grid>
@@ -89,28 +94,23 @@ const ProfileCard = (props) => {
                     </Grid>
                     <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center' style={{ marginBottom: 20 }}>
                         <Typography className={classes.membership}>
-                            Miembro Truster desde Septiembre / 2021
+                            Miembro Truster desde {moment(creationDate).format('MMMM')} / {moment(creationDate).format('YYYY')}
                         </Typography>
                     </Grid>
                 </Grid>
                 <Grid container justify='flex-end' xs={3} xl={3} sm={3} style={{ marginTop: -10 }}>
                     <Grid container justify='flex-end'>
-                  
-                            <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
+                        <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
 
-                                <img
-                                    src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'}
-                                    width='250px' height='250px' style={{
-                                        borderRadius:'50%',
-                                    objectFit:'cover'
-                                }}
-                                onError={addDefaultPofileImage} 
-                                />
-
-                            </Grid>
-                           
-
-                        
+                            <img
+                                src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'}
+                                width='250px' height='250px' style={{
+                                    borderRadius:'50%',
+                                objectFit:'cover'
+                            }}
+                            onError={addDefaultPofileImage} 
+                            />
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>

@@ -1,15 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useEffect, useState } from 'react';
+import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import elipse from "../../asset/images/myBusiness/Ellipse 6.png"
-import {Typography} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import ShareButton from "../../asset/images/myBusiness/buttonShare.svg";
 import icon1 from "../../asset/images/myBusiness/icon1.svg";
 import icon2 from "../../asset/images/myBusiness/icon2.svg";
 import icon3 from "../../asset/images/myBusiness/icon3.svg";
 import Cliente from "../../setting/cliente";
-import {Fileload, GetJson, GetImage} from "../../services/hostConfig";
-import {LoopCircleLoading} from "react-loadingg";
+import { Fileload, GetJson, GetImage } from "../../services/hostConfig";
+import { ShopByCustomer } from "../../services/hostConfig";
+import { getToken } from './../../setting/auth-helpers';
+
+import { LoopCircleLoading } from "react-loadingg";
 
 const useStyles = makeStyles(theme => ({
     test: {
@@ -60,8 +63,10 @@ function Header(props) {
     const [haveImage, setHaveImage] = useState(false);
     const [haveImageCover, setHaveImageCover] = useState(false);
     const [fechaCreate, setFechaCreate] = useState(false);
-    
-    function getImages(){
+    const [nameBussines, setNameBussines] = useState('')
+    const [summary, setSummary] = useState('')
+    const [active, setActive] = useState('');
+    function getImages() {
         Cliente.get(GetImage(), {
             params: {
                 'user': user,
@@ -70,7 +75,7 @@ function Header(props) {
         }).then(
             res => {
                 console.log(res)
-               //  setImagesArray(res['data']['fileNames'] )
+                //  setImagesArray(res['data']['fileNames'] )
             }
         )
     }
@@ -86,11 +91,11 @@ function Header(props) {
         reader.onload = async function (event) {
             setFile(event.target.result)
             Cliente.post(Fileload(), {
-                    'file': event.target.result,
-                    'fileName': fileName,
-                    'user': user,
-                    'destination': 'avatar'
-                }
+                'file': event.target.result,
+                'fileName': fileName,
+                'user': user,
+                'destination': 'avatar'
+            }
             )
             //     .then(() => {
             //         getImages()
@@ -115,18 +120,18 @@ function Header(props) {
         reader.onload = function (event) {
             setFile(event.target.result)
             Cliente.post(Fileload(), {
-                    'file': event.target.result,
-                    'fileName': fileName,
-                    'user': user,
-                    'destination': 'coverNegocio'
-                }
+                'file': event.target.result,
+                'fileName': fileName,
+                'user': user,
+                'destination': 'coverNegocio'
+            }
             ).then(() => {
-                    waiter().then(() => {
-                        setLoading(false)
-                        window.location.reload();
-                    })
+                waiter().then(() => {
+                    setLoading(false)
+                    window.location.reload();
+                })
 
-                }
+            }
             )
         };
 
@@ -135,37 +140,68 @@ function Header(props) {
     const addDefaultPofileImage = e => {
         e.target.src = elipse
     }
+    const loadDataBussines = (e)=>{
+        let URI = ShopByCustomer();
+        const token = getToken();
+        let idCustomer = localStorage.getItem("customerId")
+        fetch(URI+'/' + idCustomer, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(response => {
+               debugger
+                if (response.length === undefined){
+                   setActive(false)
+                }
+                if  (response.length > 0 ){              
+                setNameBussines(response[0].name)
+                setSummary(response[0].summary)
+            }
+                return response;
+            })
+            .catch(e => {
+                console.log(e);
+            })
+  
+    }
 
-    useEffect(() => {       
-            setUser(localStorage.getItem('userLogin'))
-          var fecha = new Date(localStorage.getItem('createDate'));
+    useEffect(() => {
+        loadDataBussines();
+        setUser(localStorage.getItem('userLogin'))
+        var fecha = new Date(localStorage.getItem('createDate'));
         var options = { year: 'numeric', month: 'long', day: 'numeric' };
         setFechaCreate(fecha.toLocaleDateString("es-ES", options));
-
-
+        console.log("nombre de negocio", nameBussines)
+        
     }, [haveImage, user, loading]);
     return (
         <React.Fragment>
             <Grid container direction={"column"}>
 
                 {loading ?
-                    <div style={{height: '160px'}}>
-                        <LoopCircleLoading size='large' color='#ACFD00'/>
+                    <div style={{ height: '160px' }}>
+                        <LoopCircleLoading size='large' color='#ACFD00' />
 
                     </div>
                     :
-                    
-                        <Grid item>
 
-                            <img
-                                src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/avatar/' + localStorage.getItem('userLogin') + '.png'}
-                                width='160px' height='160px'
-                                style={{objectFit: 'cover', borderRadius: '50%',}}
-                                onError={addDefaultPofileImage} 
-                            />
+                    <Grid item>
 
-                        </Grid>
-                        
+                        <img
+                            src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/avatar/' + localStorage.getItem('userLogin') + '.png'}
+                            width='160px' height='160px'
+                            style={{ objectFit: 'cover', borderRadius: '50%', }}
+                            onError={addDefaultPofileImage}
+                        />
+
+                    </Grid>
+
                 }
                 <Grid component="label">
                     <input
@@ -196,7 +232,7 @@ function Header(props) {
                     justifyContent: 'center',
                 }}>
 
-                    <div style={{position: 'relative'}}>
+                    <div style={{ position: 'relative' }}>
                         <Typography style={{
                             align: "center",
                             color: 'rgba(255, 255, 255, 0.95)',
@@ -205,13 +241,13 @@ function Header(props) {
                             fontWeight: 'bold',
                             textAlign: 'center',
                         }}>
-                            Anagrama Studio
+                            {active == false ? ' Anagrama Studio' : nameBussines}
                         </Typography>
                         <div style={{
                             position: 'absolute', right: '-30px',
                             top: '0'
                         }}>
-                            <img src={ShareButton} alt='share button'/>
+                            <img src={ShareButton} alt='share button' />
                         </div>
                     </div>
                 </Grid>
@@ -226,17 +262,17 @@ function Header(props) {
                         textAlign: 'center',
                         letterSpacing: '-0.02em'
                     }}>
-                        Software & Development Services
+                        {active == false ? 'Software & Development Services' : summary}
                     </Typography>
 
                 </Grid>
 
                 <Grid container direction={"row"}>
-                    <Grid item xs={2}/>
+                    <Grid item xs={2} />
                     <Grid container direction={"column"} xs
-                          style={{display: 'flex', alignItems: 'center'}}>
-                        <Grid item style={{display: "flex", alignItems: 'center'}}>
-                            <img src={icon1} style={{paddingRight: '16px'}}/>
+                        style={{ display: 'flex', alignItems: 'center' }}>
+                        <Grid item style={{ display: "flex", alignItems: 'center' }}>
+                            <img src={icon1} style={{ paddingRight: '16px' }} />
                             <Typography className={classes.numberGrid}>
                                 +0
                             </Typography>
@@ -249,9 +285,9 @@ function Header(props) {
                     </Grid>
 
                     <Grid container direction={"column"} xs
-                          style={{display: 'flex', alignItems: 'center'}}>
-                        <Grid item style={{display: "flex", alignItems: 'center'}}>
-                            <img src={icon2} style={{paddingRight: '16px'}}/>
+                        style={{ display: 'flex', alignItems: 'center' }}>
+                        <Grid item style={{ display: "flex", alignItems: 'center' }}>
+                            <img src={icon2} style={{ paddingRight: '16px' }} />
                             <Typography className={classes.numberGrid}>
                                 +0
                             </Typography>
@@ -263,9 +299,9 @@ function Header(props) {
                         </Grid>
                     </Grid>
 
-                    <Grid item xs={2} style={{display: "flex", alignItems: 'flex-end', justifyContent: 'flex-end'}} component="label">
-                        <div style={{display: "flex", alignItems: 'center', paddingBottom: '8px'}}>
-                            <img src={icon3} style={{paddingRight: '8px'}}/>
+                    <Grid item xs={2} style={{ display: "flex", alignItems: 'flex-end', justifyContent: 'flex-end' }} component="label">
+                        <div style={{ display: "flex", alignItems: 'center', paddingBottom: '8px' }}>
+                            <img src={icon3} style={{ paddingRight: '8px' }} />
 
 
                             <input
