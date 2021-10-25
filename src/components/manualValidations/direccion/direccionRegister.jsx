@@ -203,6 +203,7 @@ function DireccionRegister(props) {
 
                 <Typography className={classes.subtitulo}>
                     Podes utilizar una factura de servicio, contrato de alquiler, resumen de banco, etc, etc, etc.
+                    {show}
                 </Typography>
                
                     <Button component="label" style={{

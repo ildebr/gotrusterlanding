@@ -19,6 +19,9 @@ import MobileImage from "../../components/publicBusiness/mobileImage";
 import cliente from "./../../setting/cliente";
 import Letter from '../../asset/images/letterLogo.svg'
 import {  GetImage } from "../../services/hostConfig";
+import { getToken } from './../../setting/auth-helpers';
+import { ShopsResource } from './../../services/hostConfig';
+
 const styles = theme => ({
     root: {
         background: '#000000',
@@ -78,8 +81,7 @@ class PublicBusiness extends Component {
         this.state = {
             windowWidth: window.innerWidth,
             user: null,
-            modifiedCover: false,
-            imagesArray: null,        
+            shop: '',
         };
     }
 
@@ -92,19 +94,29 @@ class PublicBusiness extends Component {
         if (this.state.user === null) {
             this.state.user = localStorage.getItem('userLogin')
         }
-        if (this.state.imagesArray === null && this.state.user !== null) {
-            cliente.get(GetImage(), {
-                params: {
-                    'user': this.state.user,
-                    'folder': 'coverNegocio'
-                }
-            }).then(
-                res => {
-                    // console.log(res)
-                    this.setState({ imagesArray: res['data']['fileNames'] })
-                }
-            )
-        }    
+        let params = new URLSearchParams(window.location.search);
+        const key = params.get('key')
+        try {
+            const token = getToken();
+            if (token !== 'undefined') {
+                fetch(ShopsResource() + '/' + key, {
+                    method: 'get',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(response => {
+                    if (response.status === 200) {
+                        return response.json()
+                    }
+                }).then(response => {
+                    this.setState({ shop: response })
+                })
+            }
+        } catch(e) {
+            console.log(e)
+        }
     }   
 
     render() {
@@ -115,24 +127,24 @@ class PublicBusiness extends Component {
             };
         }
 
-        const {width} = getWindowDimensions();
-        const {classes} = this.props;
+        const setDefaultImage = (e, defImage) => {
+            e.target.src = defImage
+        }
+
+        const { width } = getWindowDimensions();
+        const { classes } = this.props;
+        const { description, customers } = this.state.shop
+
+        //const summary = 'test'
+        //const customer = null
         return (
             <React.Fragment>
                 <Grid container className={classes.root} component="main" maxWidth="md"
                       style={{display: 'flex', justifyContent: 'center'}}>
                     {width >= 600 ? <div className={classes.background}>
-                    {this.state.imagesArray !== null && this.state.imagesArray.length > 0 ?
-                            <img src={
-                                'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverNegocio/' + this.state.user + '.png'
-                            }
-                                alt='background' width={'1935px'} height={'500px'}
-                                style={{ objectFit: 'cover' }}
-                            />
-                            :
-                            <img src={LandingImage} alt='background' width={'100%'} height={'460px'}/>
-                        }
-                        
+                        <img src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverNegocio/' + this.state.user + '.png'} 
+                            onError={e => setDefaultImage(e, LandingImage)}
+                            alt='background' width={'100%'} height={'460px'} style={{ objectFit: 'cover' }} className={classes.profileImage} />
                     </div> : ''}
                     <Grid className={classes.test} container maxWidth="lg" component="main">
                         <Container component="main" maxWidth="lg">
@@ -166,7 +178,6 @@ class PublicBusiness extends Component {
                                        <img src={Letter}/>
                                     </Typography>
                                 </Grid>}
-
                                 {width >= 600 ?
                                     <Grid xs={2}> <a/> </Grid>
                                     :
@@ -176,7 +187,6 @@ class PublicBusiness extends Component {
                                         }}/>
                                     </Grid>
                                 }
-
                                 <Grid container direction={"column"} style={{
                                     width: '100%',
                                     display: 'flex', justifyContent: 'center'
@@ -203,9 +213,8 @@ class PublicBusiness extends Component {
                                 }
                             </Grid>
                             <Grid maxWidth="lg"  style={{display: 'flex', justifyContent: 'center', paddingTop: '36px'}}>
-                                <About/>
+                                <About description={description} customers={customers} />
                             </Grid>
-
                             <Grid container direction={"row"} maxWidth="lg" xs={12} style={{display: 'flex', marginTop:'24px'}}>
                                 {width >= 600 ?
                                 <Grid item xs={4} className={classes.grid1}>
@@ -214,22 +223,17 @@ class PublicBusiness extends Component {
                                 </Grid>
                                     :
                                     <a/>}
-
                                 <Grid item md={8} xs={12} className={classes.grid2} >
                                     <div className={classes.contactCard}>
                                         <Contact/>
                                     </div>
-
                                 </Grid>
                             </Grid>
-
-
                         </Container>
                     </Grid>
                 </Grid>
 
             </React.Fragment>
-
 
         )
 

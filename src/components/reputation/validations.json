@@ -1,0 +1,44 @@
+[
+  {
+    "validationName": "CELLPHONE",
+    "display": "Teléfono",
+    "points": "4",
+    "href": "/automaticvalidationphone",
+    "logo": "/sumReputation/telephone.svg"
+  },
+  {
+    "validationName": "DNI",
+    "display": "DNI",
+    "points": "5",
+    "href": "/validation/dni",
+    "logo": "/sumReputation/dni.svg"
+  },
+  {
+    "validationName": "CUIL",
+    "display": "CUIL",
+    "points": "10",
+    "href": "/validation/afip",
+    "logo": "/sumReputation/cuil.svg"
+  },
+  {
+    "validationName": "SELFIE",
+    "display": "SELFIE",
+    "points": "20",
+    "href": "/validation/selfie",
+    "logo": "/sumReputation/cuil.svg"
+  },
+  {
+    "validationName": "ADRESS",
+    "display": "Dirección",
+    "points": "5",
+    "href": "/validation/direccion",
+    "logo": "/sumReputation/direction.svg"
+  },
+  {
+    "validationName": "MELI",
+    "display": "Mercado libre",
+    "points": "10",
+    "href": "/validation/direccion",
+    "logo": "/sumReputation/direction.svg"
+  }
+]

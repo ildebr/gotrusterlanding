@@ -260,17 +260,16 @@
   text-decoration: none;
   transition: color 0.4s ease;
 }
-.containerValidations{
+.containerValidations {
   display: grid;
   width: 100%;
   row-gap: 36px;
   margin: 48px 0;
-
 }
-.containerValidations .title{
+.containerValidations .title {
   display: flex;
 }
-.containerValidations .title span{
+.containerValidations .title span {
   width: 100%;
   text-align: left;
   font: normal normal normal 19px/19px Poppins;
@@ -278,6 +277,7 @@
   font-weight: bold;
 }
 .validations {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 250px));
   grid-gap: 64px;
@@ -285,4 +285,23 @@
 .itemValidation {
   display: flex;
   width: 300px;
+}
+@media (min-width: 320px) {
+  .containerValidations .title {
+    display: none;
+  }
+  .validations {
+    grid-gap: 24px;
+    grid-template-columns: repeat(auto-fit, 100%);
+  }
+}
+
+@media (min-width: 800px) {
+  .containerValidations .title {
+    display: flex;
+  }
+  .validations {
+    grid-gap: 64px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 250px));
+  }
 }

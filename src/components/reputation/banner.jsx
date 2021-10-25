@@ -34,11 +34,11 @@ const Banner = () => {
       setUser(localStorage.getItem('userLogin'))
       setImag('https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverPerfil/' + user + '.png')
       console.log("url de imagen",imag)
-      if (imag === 'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverPerfil/.png'){
+   /*   if (imag === 'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverPerfil/.png'){
          setTimeout(function () {
             setStuff()
          }, 2000);
-      }
+      }*/
    }
    return (
          <Grid container className={classes.root} component="main" maxWidth="md" style={{ display: 'flex', justifyContent: 'center' }}>

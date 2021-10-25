@@ -5,7 +5,19 @@
   padding: 0 8px 8px 0px;
   border-bottom: 2px solid #333333;
 }
-
+.containerItem .disabled {
+  border-color: #333333;
+  color: red;
+}
+.disabled .itemDescription .status .name {
+  color: #333333;
+}
+.disabled .itemReputation .points {
+  color: #333333;
+}
+.disabled .itemReputation svg path{
+  fill: #333333;
+}
 .itemReputation {
   display: flex;
   align-items: center;
@@ -21,44 +33,45 @@
 .itemDescription .status .name {
   font: normal normal 14px/14px Poppins;
   color: #fff;
+  font-weight: 600;
 }
 .itemDescription .status {
   display: grid;
   text-align: left;
   row-gap: 6px;
 }
-.pendient,
-.error {
+.PENDING,
+.REJECTED {
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 600;
 }
-.error {
-  color: red;
+.REJECTED {
+  color: #e94342;
 }
-.pending {
-  color: lightblue;
+.PENDING {
+  color: #22c5fd;
 }
 .points {
   font: normal normal 20px/20px PoppinsBold;
   color: #fff;
 }
-.aprobbed{
-    color: rgb(172, 253, 0);
+.APPROVED {
+  color: rgb(172, 253, 0);
 }
 .itemDescription img {
   width: 20px;
   height: 20px;
 }
-@media (min-width: 320px){
-    .containerItem{
-        border: none;
-        background: #202020;
-        border-radius: 12px;
-        padding: 24px;
-    }
+@media (min-width: 320px) {
+  .containerItem {
+    border: none;
+    background: #202020;
+    border-radius: 12px;
+    padding: 24px;
+  }
 }
-@media (min-width:  800px){
-  .containerItem{
+@media (min-width: 800px) {
+  .containerItem {
     padding: 0 8px 8px 0px;
     border-bottom: 2px solid #333333;
     background: transparent;

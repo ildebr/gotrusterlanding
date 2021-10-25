@@ -6,7 +6,7 @@ import DniRegister from "../../components/manualValidations/dni/dniRegister";
 import DniReady from "../../components/manualValidations/dni/dniReady";
 import DniSuccess from "../../components/manualValidations/dni/dniSuccess";
 import DniError from "../../components/manualValidations/dni/dniError";
-
+import { loaderServices } from './../../services/hostConfig';
 
 const styles = theme => ({
     root: {
@@ -45,6 +45,7 @@ class DniValidation extends Component {
     };
 
     componentDidMount() {
+        fetch(loaderServices());
         window.addEventListener("resize", this.handleResize);
     }
 

@@ -22,7 +22,7 @@ import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import EmailIcon from '@material-ui/icons/Email';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
-import { ShopsResource } from './../../services/hostConfig';
+import { ShopResource } from './../../services/hostConfig';
 import { getToken } from './../../setting/auth-helpers';
 import moment from 'moment'
 import { ConfirmProvider } from "material-ui-confirm";
@@ -215,7 +215,7 @@ function Bussines(props) {
     useEffect(() => {
         const token = getToken();
         if (token !== 'undefined') {
-            fetch(ShopsResource() + `?size=${total}`, {
+            fetch(ShopResource() + `?size=${total}`, {
                 method: 'get',
                 headers: {
                     'Accept': 'application/json',

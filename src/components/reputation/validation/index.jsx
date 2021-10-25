@@ -1,10 +1,8 @@
-import Arrow from "../../../asset/images/reputation/sumReputation/caret-right.svg";
-import Logo from "../../../asset/images/reputation/smalllog.svg";
+import { Clock, ErrorValidation, Logo, ArrowRight } from "asset/svg/";
 import "./styles.css";
-import { Grid, Typography, Link } from "@material-ui/core";
+import { Link } from "@material-ui/core";
 
 function ItemValidation(props) {
-  // href, alt, srcImg, itemName, arrowEnabled, logoEnabled
   const {
     href,
     alt,
@@ -14,39 +12,121 @@ function ItemValidation(props) {
     points,
     status,
     logo,
+    display,
   } = props;
+
   return (
     <>
       {view && (
-        <div className="containerItem">
-          <div className="itemDescription">
-            <img src={srcImg} alt={alt} />
-            <div className="status">
-              {href ? (
-                <Link href={href} style={{ textDecoration: "none" }}>
-                  <span className="name">{itemName}</span>
-                </Link>
-              ) : (
-                <span className="name">{itemName}</span>
+        <>
+          {" "}
+          {display === "sum" ? (
+            <>
+              {status !== "APPROVED" && (
+                <div
+                  className={href ? `containerItem` : `containerItem disabled`}
+                >
+                  <div className="itemDescription">
+                    <img src={srcImg} alt={alt} />
+                    <div className="status">
+                      {href && status !== "PENDING" ? (
+                        <Link href={href} style={{ textDecoration: "none" }}>
+                          <span className="name">{itemName}</span>
+                        </Link>
+                      ) : (
+                        <span className="name">{itemName}</span>
+                      )}
+                      {status !== "APPROVED" && status !== "" && (
+                        <span
+                          className={`${
+                            status !== "" && status !== "APPROVED" && status
+                          }`}
+                        >
+                          {status === "REJECTED"
+                            ? "Fallida, a Reintentar"
+                            : status === "PENDING" && "En Verificación"}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="itemReputation">
+                    {status !== "APPROVED" && status !== "" ? (
+                      <>
+                        {status === "PENDING" ? (
+                          <Clock />
+                        ) : (
+                          status === "REJECTED" && <ErrorValidation />
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <span
+                          className={`points ${!logo && "APPROVED"}`}
+                        >{`+ ${points}`}</span>
+                        {logo && <Logo />}
+                        <ArrowRight />
+                      </>
+                    )}
+                  </div>
+                </div>
               )}
-              {status && (
-                <span className={`${status}`}>
-                  {status === "error"
-                    ? "Fallida, a Reintentar"
-                    : "En Verificación"}
-                </span>
+            </>
+          ) : (
+            <>
+              {status === "APPROVED" && (
+                <div className="containerItem">
+                  <div className="itemDescription">
+                    <img src={srcImg} alt={alt} />
+                    <div className="status">
+                      {href && status !== "PENDING" ? (
+                        <Link href={href} style={{ textDecoration: "none" }}>
+                          <span className="name">{itemName}</span>
+                        </Link>
+                      ) : (
+                        <span className="name">{itemName}</span>
+                      )}
+                      {status !== "APPROVED" && status !== "" && (
+                        <span
+                          className={`${
+                            status !== "" && status !== "APPROVED" && status
+                          }`}
+                        >
+                          {status === "REJECTED"
+                            ? "Fallida, a Reintentar"
+                            : status === "PENDING" && "En Verificación"}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="itemReputation">
+                    {status !== "APPROVED" && status !== "" ? (
+                      <>
+                        {status === "PENDING" ? (
+                          <Clock />
+                        ) : (
+                          status === "REJECTED" && <ErrorValidation />
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <span
+                          className={`points ${!logo && "APPROVED"}`}
+                        >{`+ ${points}`}</span>
+                        {logo && <img src={Logo} alt="logo" />}
+                        <img
+                          src={"/sumReputation/caret-right.svg"}
+                          alt="arrow"
+                        />
+                      </>
+                    )}
+                  </div>
+                </div>
               )}
-            </div>
-          </div>
-          <div className="itemReputation">
-            <span className={`points ${!logo && 'aprobbed'}`}>{`+ ${points}`}</span>
-            {logo && <img src={Logo} alt="logo" />}
-            <img src={Arrow} alt="arrow" />
-          </div>
-        </div>
+            </>
+          )}
+        </>
       )}
     </>
   );
 }
 export default ItemValidation;
-

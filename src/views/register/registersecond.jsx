@@ -1015,7 +1015,7 @@ class RegisterSecond extends Component {
     e.preventDefault();
     let name = localStorage.getItem("nombre");
     let lastName = localStorage.getItem("apellido");
-    let email = localStorage.getItem("email");
+    let email = localStorage.getItem("Email");
     let password = localStorage.getItem("password");
     //let userid = localStorage.getItem("userId");
     let birthDate =
@@ -1123,7 +1123,7 @@ class RegisterSecond extends Component {
       password: password,
       phone: "string",
       lastModifiedDate: "2021-05-19T04:23:28.205Z",
-      points: 1,
+      points: 2,
       userType: "INDIVIDUAL",
     };
     ////dataAdress //
@@ -1306,7 +1306,7 @@ class RegisterSecond extends Component {
                             justifyContent: "center",
                             alignContent: "center",
                           }}
-                          onSubmit={this.handleCreateAccountSubmit}
+                          
                           noValidate
                         >
                           <Typography className={classes.inputTitle}>
@@ -1644,6 +1644,7 @@ class RegisterSecond extends Component {
                                   ? classes.loginError
                                   : classes.login
                               }
+                              onClick={this.handleCreateAccountSubmit}
                             >
                               Finalizar registro
                             </Button>
@@ -1659,7 +1660,7 @@ class RegisterSecond extends Component {
                             justifyContent: "center",
                             alignContent: "center",
                           }}
-                          onSubmit={this.handleCreateAccountSubmit}
+                         
                           noValidate
                         >
                           <Typography
@@ -2049,7 +2050,7 @@ class RegisterSecond extends Component {
                                   ? classes.loginError
                                   : classes.login
                               }
-                              //onSubmit={this.handleCreateAccountSubmit}
+                              onClick={this.handleCreateAccountSubmit}
                               disabled={!isEnabled}
                             >
                               Finalizar registro

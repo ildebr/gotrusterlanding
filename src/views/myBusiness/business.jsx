@@ -228,7 +228,13 @@ class Business extends Component {
             && summary !== null
             && descrpition !== null
             && idCategory !== NaN
-            && idSubCategory !== NaN            
+            && idSubCategory !== NaN
+            && city !== null
+            && country !== null
+            && postalCode !== null
+            && streetName !== null
+            && streetNumber !== null
+
 
         ) {
             cliente.post(UriShop, dataRegister, {

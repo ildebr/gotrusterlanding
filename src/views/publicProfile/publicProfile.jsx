@@ -30,6 +30,11 @@ import LinkedIn from '../../asset/images/publicProfile/companyIcons/linked.svg'
 import Meli from '../../asset/images/publicProfile/companyIcons/meli.svg'
 import Letter from '../../asset/images/letterLogo.svg'
 import Cliente from './../../setting/cliente'
+import { getToken } from './../../setting/auth-helpers';
+import { CustomerResource, UserAdminResource, ValidatioDetailByCustomer } from './../../services/hostConfig';
+
+
+
 const { localStorage } = global.window;
 
 const styles = theme => ({
@@ -116,24 +121,83 @@ const styles = theme => ({
 class PublicProfile extends Component {
     constructor(props) {
         super(props);
-        this.state = { windowWidth: window.innerWidth, tab: 0, woBussiness: false , 
+        this.state = {
+            windowWidth: window.innerWidth,
+            tab: 0,
+            woBussiness: false,
             imagesArray: null,
-            user: null};
+            user: null,
+            customer: '',
+            validations: [],
+        };
     }
     handleResize = (e) => {
         this.setState({ windowWidth: window.innerWidth });
     };
     componentDidMount() {
         window.addEventListener("resize", this.handleResize);
-        let params = new URLSearchParams(window.location.search);
-        var key = params.get('key');
-        this.setState({ key: key })
-       
-        /* if (this.state.user === null) {
+        if (this.state.user === null) {
             this.state.user = localStorage.getItem('userLogin')
-        } */
+        }
+        let params = new URLSearchParams(window.location.search);
+        const key = params.get('key')
+        try {
+            const token = getToken();
+            if (token !== 'undefined') {
+                fetch(CustomerResource() + '/' + key, {
+                    method: 'get',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(response => {
+                    if (response.status === 200) {
+                        return response.json()
+                    }
+                }).then(response => {
+                    alert(UserAdminResource() + '/' + response.email);
+                    const token1 = getToken();
+                    fetch(UserAdminResource() + '/' + response.email, {
+                        method: 'get',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token1}`
+                        }
+                    }).then(response1 => {
+                        alert(response1.status);
+                        if (response1.status === 200) {
+                            return response1.json()
+                        }
+                    }).then(response1 => {
+                        alert(response1);
+                        //response.fullName = response1.firstName
+                        //console.log('>>> FULL: ' + response.fullName);
+                        this.setState({ customer: response })
+                    })
+                })
 
-       
+
+                fetch(ValidatioDetailByCustomer() + '/' + key, {
+                    method: 'get',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(response => {
+                    if (response.status === 200) {
+                        return response.json()
+                    }
+                }).then(response => {
+                    this.setState({ validations: response })
+                })
+
+            }
+        } catch(e) {
+            console.log(e)
+        }
     }
 
     addDefaultCoverImage = e => {
@@ -266,32 +330,26 @@ class PublicProfile extends Component {
                 icon: ''
             },
         ]
-        const checkWoBussiness = (data) =>{
+        const checkWoBussiness = (data) => {
             console.log(data)
             this.setState({woBussiness: data})
         }
         return (<React.Fragment>
             <Grid container className={classes.root} component="main" maxWidth="md" style={{ display: 'flex', justifyContent: 'center' }}>
                 {width >= 600 ? <div className={classes.background} >
-                
-                        <img src={
-                            'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverPerfil/' + this.state.user + '.png'
-                        }
-                            alt='background' width={'1935px'} height={'430px'}
-                            style={{ objectFit: 'cover' }}
-                            onError={this.addDefaultCoverImage}
-                        />
-
-
-                      
-                </div> : ''}                    
+                    <img src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverPerfil/' + this.state.user + '.png'}
+                        alt='background' width={'1935px'} height={'430px'}
+                        style={{ objectFit: 'cover' }}
+                        onError={this.addDefaultCoverImage}
+                    />
+                </div> : ''}                   
                 <Grid className={classes.test} container maxWidth="md" component="main" >
                     <Container component="main" maxWidth="md" container  >
                         <Grid container >
                             {width >= 600 ? <Grid item container xs={4} xl={4} sm={4} className={classes.paperContainer} >
-                                <ReputatioNavBar />
+                                <ReputatioNavBar customer={this.state.customer} />
                             </Grid> : <Grid item container xs={2} xl={2} sm={2} style={{ marginTop: 10, marginLeft: -20 }} alignItems='center'>
-                                <TemporaryDrawer />
+                                <TemporaryDrawer customer={this.state.customer} />
                             </Grid>}
 
                             {width >= 600 ?
@@ -328,10 +386,10 @@ class PublicProfile extends Component {
                                 </Grid>}
                         </Grid>
                         <Grid>
-                            {width >= 600 ? <ProfileCard/> : <ProfileCardMobile/>}
+                            {width >= 600 ? <ProfileCard customer={this.state.customer} /> : <ProfileCardMobile customer={this.state.customer} />}
                         </Grid>
                         <Grid>
-                            {width >= 600 ? <PublicInfo selected={(wotruster) => checkWoBussiness(wotruster)} /> : <LevelCardMobile />}
+                            {width >= 600 ? <PublicInfo customer={this.state.customer} selected={(wotruster) => checkWoBussiness(wotruster)} /> : <LevelCardMobile customer={this.state.customer} />}
                         </Grid>
                         <Grid>
                             {width >= 600 ? '' : <TrustUsers/>}
@@ -343,7 +401,8 @@ class PublicProfile extends Component {
                             {width >= 600 ? '' : <AboutCardMobile />}
                         </Grid>
                         {width >= 600 ? <hr style={{ width: '100%' }} color='#333333'/> : ''}
-                        {width >= 600 ? <Grid container>
+                        
+                        {width >= 600 ? <Grid container style={{ display: "none" }}>
                             <Grid item container xs={4} xl={4} sm={4} style={{padding:5}}>
                                 <LevelCard />
                             </Grid>
@@ -372,11 +431,11 @@ class PublicProfile extends Component {
                             </Typography>
                         </Grid>
                         {width >= 600 ? <Grid justify='flex-start' item container xs={12} xl={12} sm={12} style={{ paddingTop: '10px' }}>
-                            {dummyValidationInfo.map((item, index) =>
+                            {this.state.validations.map((item, index) =>
                                 <ValidationCard key={index} data={item} />
                             )}
                         </Grid> : <Grid justify='center' item container xs={12} xl={12} sm={12} style={{ paddingTop: '10px' }}>
-                            {dummyValidationInfo.map((item, index) =>
+                            {this.state.validations.map((item, index) =>
                                 <ValidationCard key={index} data={item} />
                             )}
                         </Grid>}

@@ -618,7 +618,7 @@ class Register extends Component {
         const isEnabled =
             this.state.name !== "" &&
             this.state.lastName !== "" &&
-            this.state.email !== "" &&
+            this.state.emailRep !== "" &&
             this.state.password !== "" &&
             this.state.passwordEx !== "" &&
             this.state.checkTer === true;

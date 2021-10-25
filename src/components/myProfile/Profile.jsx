@@ -354,7 +354,7 @@ export default function Profile(props) {
         const token = getToken();
         var date = new Date();
         let formatted_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-        let dni = dni;
+        let dni =localStorage.getItem("dni");
         let idUser = localStorage.getItem("userId")
         const dataUpdate = {
             "active": true,

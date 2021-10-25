@@ -2,7 +2,6 @@ import React ,{ useEffect, useState }from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Link} from '@material-ui/core';
 import SmallLogo from '../../asset/images/reputation/smalllog.svg'
-import Amazon from '../../asset/images/reputation/sumReputation/amazon.svg'
 import GreyLogo from '../../asset/images/reputation/greyeyLogo.svg'
 import DNI from '../../asset/images/reputation/sumReputationMobile/dni.svg'
 import Cuit from '../../asset/images/reputation/sumReputationMobile/cuit.svg'
@@ -526,7 +525,7 @@ const SumReputationMobile = () => {
             <Grid container xs={12} xl={12} sm={12} alignItems='center' justify='center' style={{ borderRadius: 10, backgroundColor: '#202020', height: 80, padding: 25, marginBottom: 15 }}>
                 <Grid container xs={8} xl={8} sm={8} justify='flex-start' >
                     <Grid container xs={2} xl={2} sm={2} justify='center' >
-                        <img src={Amazon} alt='logo' width={'15px'} />
+                        <img src={'/sumReputation/amazon.svg'} alt='logo' width={'15px'} />
                     </Grid>
                     <Grid container xs={10} xl={10} sm={10} justify='flex-start' >
                         <Typography style={{
