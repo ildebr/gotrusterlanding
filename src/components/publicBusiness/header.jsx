@@ -12,6 +12,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faPlus} from "@fortawesome/free-solid-svg-icons";
 import cliente from "./../../setting/cliente";
 import {  GetImage,GetJson } from "../../services/hostConfig";
+import moment from 'moment'
+import 'moment/locale/es';
 
 const useStyles = makeStyles(theme => ({
       numberGrid: {
@@ -48,21 +50,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Header(props) {
-    const [user, setUser] = useState(null)   
-    const [haveImage, setHaveImage] = useState(false);    
+    const [user, setUser] = useState(props.email)  
+      
     const classes = useStyles();
 
     const addDefaultPofileImage = e => {
         e.target.src = elipse
     } 
-    useEffect(() => {
-
-        //  if (user !== null) {
-              setUser(localStorage.getItem('userLogin'))
-        //  }
-      }, [user]);   
     
-
+    
+      const { summary, name, createDate} = props
     return (
         <React.Fragment>
             <Grid container direction={"column"} >           
@@ -86,7 +83,7 @@ function Header(props) {
                         fontWeight: 'bold',
                         textAlign: 'center',
                     }}>
-                        Anagrama Studio
+                       {name}
                     </Typography>
 
                 </Grid>
@@ -104,7 +101,7 @@ function Header(props) {
                         textAlign: 'center',
                         letterSpacing: '-0.02em'
                     }}>
-                        Software & Development Services
+                        {summary}
                     </Typography>
 
                 </Grid>
@@ -118,7 +115,7 @@ function Header(props) {
                         textAlign: 'center',
                         letterSpacing: '-0.02em'
                     }}>
-                        Publicado en truster desde Octubre de 2020
+                        Publicado en truster desde {moment(createDate).format('MMMM')} / {moment(createDate).format('YYYY')}
                     </Typography>
 
                 </Grid>

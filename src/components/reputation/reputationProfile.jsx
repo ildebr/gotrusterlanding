@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Button } from '@material-ui/core';
-import ReputationImg from '../../asset/images/reputation/perfil.jpg'
+import ReputationImg from '../../asset/images/reputation/perfil.png'
 import ShareButton from '../../asset/images/reputation/Group 25.svg'
 import Logo from '../../asset/images/reputation/logo.svg'
 import GreyLogo from '../../asset/images/reputation/greylogo.svg'
 import LinearDeterminate from './progressBarArchMobile'
-import Cliente from "../../setting/cliente";
-import { GetJson, GetImage } from "../../services/hostConfig";
+
 const { localStorage } = global.window;
 const styles = theme => ({
     root: {
@@ -45,7 +44,19 @@ const ReputationProfile = () => {
     const [fechaCreate, setFechaCreate] = useState(false);
     const addDefaultPofileImage = e => {
         e.target.src = ReputationImg
-    }    
+    }  
+    
+    const LevelCalculation =(Level)=>{ 
+          let nextLevel;
+           if (Level <= 54){
+            nextLevel= 54;
+           }else if(Level > 54 && Level <= 83){
+            nextLevel = 83-Level;
+           }else if (Level >= 84 && Level <= 160) {
+            nextLevel = 160 -Level;
+           }
+         return nextLevel;
+    }
 
     useEffect(() => {
         //  if (user !== null) {
@@ -60,7 +71,7 @@ const ReputationProfile = () => {
     const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
     let occupation = localStorage.getItem('occupation') == 'null' ? '' : localStorage.getItem('occupation');
     let points = localStorage.getItem('points') == 'null' ? '' : localStorage.getItem('points');
-    let nextLevel = localStorage.getItem('points') == 'null' ? '' : 54 - parseInt(localStorage.getItem('points'));
+    let nextLevel = localStorage.getItem('points') == 'null' ? '' : LevelCalculation(parseInt(localStorage.getItem('points')));
     let level = localStorage.getItem('Level');
    
     return (

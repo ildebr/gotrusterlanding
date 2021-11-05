@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Button} from '@material-ui/core';
-import ReputationImg from '../../asset/images/reputation/perfil.jpg'
+import ReputationImg from '../../asset/images/reputation/perfil.png'
 import ShareButton from '../../asset/images/reputation/Group 25.svg'
 import Logo from '../../asset/images/reputation/logo.svg'
 import GreyLogo from '../../asset/images/reputation/greylogo.svg'
 import CircularDeterminate from './progressBarMobile'
-import Cliente from "../../setting/cliente";
-import {GetImage} from "../../services/hostConfig";
+
 const { localStorage } = global.window;
 const styles = theme => ({
     root: {
@@ -55,11 +54,22 @@ const ReputationProfileMobile = () => {
         e.target.src = ReputationImg
     }
 
+    const LevelCalculation =(Level)=>{ 
+        let nextLevel;
+         if (Level <= 54){
+          nextLevel= 54;
+         }else if(Level > 54 && Level <= 83){
+          nextLevel = 83-Level;
+         }else if (Level >= 84 && Level <= 160) {
+          nextLevel = 160 -Level;
+         }
+       return nextLevel;
+  }
     
     let occupation = localStorage.getItem('occupation') === 'null' ? 'Agregue su ocupación' : localStorage.getItem('occupation');
     const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
     let points = localStorage.getItem('points')=='null'? '': localStorage.getItem('points');
-    let nextLevel = localStorage.getItem('points')=='null'? '': 54-parseInt(localStorage.getItem('points'));
+    let nextLevel = localStorage.getItem('points')=='null'? '': LevelCalculation(parseInt(localStorage.getItem('points')));
     let level = localStorage.getItem('Level');
     return (
         <Grid position="static" color="transparent" style={{
@@ -71,11 +81,11 @@ const ReputationProfileMobile = () => {
                 <Grid container alignItems="center" justify="center" xs={4} xl={4} sm={4}>
                     <Grid container justify="center" xs={12} xl={12} sm={12}>
                         <Grid container justify="flex-end" xs={6} xl={6} sm={6}>
-                            <img src={Logo} alt='logo' width='22px' />
+                            <img src={Logo} alt='logo' width='20px' />
                         </Grid>
                         <Grid container justify="flex-start" xs={6} xl={6} sm={6} >
                             <Typography style={{
-                                font: 'normal normal normal 40px/40px PoppinsBold',
+                                font: 'normal normal normal 30px/30px PoppinsBold',
                                 marginLeft: 5,
                                 letterSpacing: '-0.02em',
                                 color: '#ACFD00'
@@ -117,13 +127,13 @@ const ReputationProfileMobile = () => {
                 <Grid container justify="center" xs={4} xl={4} sm={4}>
                     <Grid container justify="center" xs={12} xl={12} sm={12} style={{ marginLeft: -40 }}>
                         <Grid container justify="flex-end" xs={6} xl={6} sm={6}>
-                            <img src={GreyLogo} alt='logo' width='22px' />
+                            <img src={GreyLogo} alt='logo' width='20px' />
                         </Grid>
                         <Grid container justify="flex-start" xs={6} xl={6} sm={6}>
                             <Typography style={{
-                                font: 'normal normal normal 40px/40px PoppinsBold',
+                                font: 'normal normal normal 30px/30px PoppinsBold',
                                 textAlign: 'center',
-                                marginLeft: 5,
+                                marginLeft: 6,
                                 letterSpacing: '-0.02em',
                                 color: '#777777'
                             }}>
@@ -150,7 +160,7 @@ const ReputationProfileMobile = () => {
                             font: " normal normal 24px/24px PoppinsBold",
                             paddingRight: 10
                         }}>
-                            +4
+                           
                         </Typography>
                     </Grid>
                 </Grid>

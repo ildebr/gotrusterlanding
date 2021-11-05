@@ -1,16 +1,42 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faAngleRight, faChevronCircleRight} from "@fortawesome/free-solid-svg-icons";
 import imagen from "../../asset/images/publicBusiness/Rectangle 4.png";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-
+import { GetImage,  UriServices} from '../../services/hostConfig';
+import Cliente from './../../setting/cliente'
 const useStyles = makeStyles(theme => ({}))
 
 function ImageCarrousel(props) {
+    const [imagesArray, setImagesArray] = useState(null)
+    const [user, setUser] = useState(props.user)
 
     const classes = useStyles();
+
+
+    function getImages() {
+        Cliente.get(GetImage(), {
+            params: {
+                'user': user,
+                'folder': 'negocio'
+            }
+        },).then(
+            res => {
+                setImagesArray(res['data']['fileNames'])
+            }
+        )
+    }
+    useEffect(() => {       
+
+        if (imagesArray === null ) {
+            getImages();
+        }
+        //let user = JSON.parse(localStorage.getItem('currentUser'));
+
+    }, [imagesArray,  user]);
+
     return (
         <React.Fragment>
             <Grid container direction={'column'}>

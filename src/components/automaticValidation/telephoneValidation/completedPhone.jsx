@@ -103,9 +103,10 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+
 const MainText = `¡Listo! ¡Tu teléfono fue validado exitosamente!`
 const ReputationText = `Tu reputación ha aumentado.`
-const Points = '2'
+const Points = '4'
 
 const CompletedPhone = () => {
   const {width} = WindowDimensions();
@@ -166,13 +167,13 @@ const CompletedPhone = () => {
       </Grid>
       <Grid xs={12} xl={12} sm={12} container style={{ marginTop: '40px' }} justify="center" alignContent="center">
           {width >= 600 ?
-          <button className={classes.button}>
+          <Button className={classes.button} href={'/reputation'}>
             Cerrar
-          </button>
+          </Button>
           :
-          <button className={classes.buttonMobile}>
+          <Button className={classes.buttonMobile} href={'/reputation'}>
             Cerrar
-          </button>
+          </Button>
           }
           
       </Grid>

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Button } from '@material-ui/core';
-import ReputationImg from '../../asset/images/reputation/perfil.jpg'
+import ReputationImg from '../../asset/images/reputation/perfil.png'
 import Cover from '../../asset/images/myProfile/cover.svg'
 import Logo from '../../asset/images/reputation/logo.svg'
 import Cliente from "../../setting/cliente";
-import { Fileload, GetImage, UriServices, GetJson } from "../../services/hostConfig";
+import { Fileload } from "../../services/hostConfig";
 import { LoopCircleLoading } from "react-loadingg";
 
 

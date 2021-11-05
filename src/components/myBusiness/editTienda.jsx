@@ -173,9 +173,7 @@ function EditTienda(props) {
         setDescription(e.target.value)
         localStorage.setItem('descriptionBussines', e.target.value)
     }
-    const handlenSubmit = (e) => {
-        let UriShop = ShopResource();
-        let UriShopAdress = ShopAdress();
+    const handlenSubmit = (e) => {       
         let nameBussines = localStorage.getItem("nameBussines");
         let summary = localStorage.getItem("summary");
         let descrpition = localStorage.getItem("descriptionBussines");
@@ -242,7 +240,7 @@ function EditTienda(props) {
 
         ) {
             setShow(true);
-            cliente.post(UriShop, dataRegister, {
+            cliente.post(ShopResource(), dataRegister, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -269,7 +267,7 @@ function EditTienda(props) {
                     "streetName": streetName,
                     "streetNumber": streetNumber
                 }
-                cliente.post(UriShopAdress, addressShop, {
+                cliente.post(ShopAdress(), addressShop, {
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',

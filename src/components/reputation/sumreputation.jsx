@@ -52,7 +52,7 @@ const SumReputation = (props) => {
               itemName={res.display}
               logo
               points={res.points}
-              display="sum"
+              display="add"
               view={validations[index].view}
               status={validations[index].status}
             />

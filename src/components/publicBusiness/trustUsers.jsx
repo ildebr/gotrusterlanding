@@ -55,7 +55,7 @@ function TrustUsers(props) {
     const classes = useStyles();
 
     const [trust, setTrust] = useState(false)
-
+    const {name} = props
     return (
         <React.Fragment>
             <Grid container direction={"row"} style={{display: 'flex', justifyContent: 'center', alignItems:'center'}}>
@@ -64,10 +64,10 @@ function TrustUsers(props) {
                         color: '#ACFD00', fontSize: 22, paddingRight: '10px'
                     }}/>
                     <Typography className={classes.numbersGrid}>
-                        86
+                        0
                     </Typography>
                     <Typography className={classes.textGrid}>
-                        Usuarios ya confían en Anagrama Studio
+                        Usuarios ya confían en {name}
                     </Typography>
 
 
@@ -75,10 +75,10 @@ function TrustUsers(props) {
                         color: '#ACFD00', fontSize: 22, paddingRight: '10px', paddingLeft: '24px'
                     }}/>
                     <Typography className={classes.numbersGrid}>
-                        122
+                        0
                     </Typography>
                     <Typography className={classes.textGrid}>
-                        Usuarios truster ya validaron Anagrama
+                        Usuarios truster ya validaron {name}
                     </Typography>
 
 
@@ -108,7 +108,7 @@ function TrustUsers(props) {
 
 
                                 }}>
-                                    Confias en Anagrama
+                                    Confias en {name}
                                 </Typography>
                             </div>
 
@@ -142,7 +142,7 @@ function TrustUsers(props) {
 
 
                                 }}>
-                                    Confias en Anagrama?
+                                    Confias en {name}?
                                 </Typography>
                             </div>
 

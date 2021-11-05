@@ -154,7 +154,7 @@ function DniRegister(props) {
 
         let newState = JSON.parse(JSON.stringify(dataUpdate));
         console.log(dataUpdate)
-        Cliente.put(URL + '/' + idUser, newState, {
+        Cliente.patch(URL + '/' + idUser, newState, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',

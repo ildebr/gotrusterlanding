@@ -16,8 +16,8 @@ const CircularDeterminate = ({ givenValue, color }) => {
     let points = localStorage.getItem('points')=='null'? '': localStorage.getItem('points');
     return (
         <div className={classes.root}>
-            { color ? <CircularProgress size={135} variant="determinate" value={givenValue} thickness={1.5} style={{ 'color': color, 'border': '#666666' }} /> : 
-                <CircularProgress size={135} variant="determinate" value={givenValue} thickness={1.5} style={{ 'color': '#ACFD00', 'border': '#666666' }} />}
+            { color ? <CircularProgress size={135} variant="determinate" value={givenValue} thickness={1.0} style={{ 'color': color, 'border': '#666666' }} /> : 
+                <CircularProgress size={135} variant="determinate" value={givenValue} thickness={1.0} style={{ 'color': '#ACFD00', 'border': '#666666' }} />}
         </div>
         
     );

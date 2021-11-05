@@ -20,7 +20,8 @@ function ValidationsChecked(props) {
               alt={res.display}
               itemName={res.display}
               points={res.points}
-              view="checked"
+              display="checked"
+              view={validations[index].view}
               status={validations[index].status}
             />
           ))}
@@ -29,7 +30,8 @@ function ValidationsChecked(props) {
           alt="correo"
           itemName="Correo"
           points="2"
-          view="checked"
+          display="checked"
+          view={true}
           status="APPROVED"
         />
       </div>

@@ -75,7 +75,7 @@ function Direction(props) {
                 </Grid>
 
                 <Grid item>
-                    <Typography className={classes.texto1}>Olazabal 1323, Nuñez, CABA</Typography>
+                    <Typography className={classes.texto1}>A</Typography>
                     <Typography className={classes.texto2}>Buenos Aires, Argentina</Typography>
                 </Grid>
 

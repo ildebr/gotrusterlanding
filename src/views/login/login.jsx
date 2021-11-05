@@ -134,7 +134,7 @@ const styles = theme => ({
         maxWidth: 316,
         border: '1px solid',
         borderColor: '#ACFD00',
-        cursor: 'pointer',
+        cursor: 'pointer',        
         borderRadius: 15,
         font: 'normal normal normal 18px/24px Poppins',
         height: 50,
@@ -315,9 +315,9 @@ class Login extends Component {
                                     localStorage.setItem('createDate', response.creationDate);
                                     localStorage.setItem('cellphone', response.cellphone);
                                     //////////////////////////////////////
-
+                                     
                                     localStorage.setItem('logueado', true);
-                                    console.log(this.state.userType);
+                                    console.log("Este usuario es el que busco",this.state.userType);
                                     if (this.state.userType === 'INDIVIDUAL') {
                                         window.open("/reputation", '_self');
                                         this.setState({

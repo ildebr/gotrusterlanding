@@ -1123,7 +1123,7 @@ class RegisterSecond extends Component {
       password: password,
       phone: "string",
       lastModifiedDate: "2021-05-19T04:23:28.205Z",
-      points: 2,
+      points:"2",
       userType: "INDIVIDUAL",
     };
     ////dataAdress //

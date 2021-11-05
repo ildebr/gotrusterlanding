@@ -27,7 +27,7 @@ const LinearDeterminate = ({ value }) => {
 
     return (
         <div className={classes.root}>
-            <BorderLinearProgress variant="determinate" value={value} />
+            <BorderLinearProgress variant="determinate" value={value}  />
         </div>
     );
 }

@@ -7,7 +7,7 @@ import BRectangle from '../../asset/images/sesgado/bigrectangle.svg'
 import GreyElipse from '../../asset/images/sesgado/greyelipse.svg'
 import Icons from '../../asset/images/sesgado/icons.svg'
 import User from '../../asset/images/sesgado/user.svg'
-import ReputationImg from '../../asset/images/reputation/perfil.jpg'
+import ReputationImg from '../../asset/images/reputation/perfil.png'
 
 const { localStorage } = global.window;
 const useStyles = makeStyles(theme => ({

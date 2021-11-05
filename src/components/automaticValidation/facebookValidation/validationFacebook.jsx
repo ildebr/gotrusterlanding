@@ -3,7 +3,7 @@ import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import eyePhone from '../../../asset/images/automaticvalidation/facebook/validationFacebook.png';
 import WindowDimensions from "../../../components/UtilityComponents/WindowDimension"
-
+import FacebookLogin from 'react-facebook-login';
 
 
 const { localStorage } = global.window;
@@ -185,6 +185,10 @@ const RegisterText = `Registrate y accede a todo el perfil de ${localStorage.get
 const Text = 'Utiliza el formato 54-11-67880000, solo son válidos teléfonos argentinos'
 
 const ValidationFacebook = () => {
+
+  const responseFacebook = (response) => {
+    console.log(response);
+  }
   const classes = useStyles();
   const { width } = WindowDimensions();
   const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
@@ -213,15 +217,23 @@ const ValidationFacebook = () => {
           <button className={classes.cbutton}>
             Cancelar
           </button>
-          <button className={classes.button} style={{ marginLeft: '30px' }}>
-            Validar
-          </button>
+          <FacebookLogin
+            appId="1009328753080954"
+            autoLoad={false}
+            fields="name,email,picture"
+            textButton="Validar"            
+            cssClass={classes.button}
+            callback={responseFacebook} />
         </div>
         :
         <div style={{ justifyContent: 'center', marginTop: '32px' }}>
-          <button className={classes.buttonMobile}>
-            Validar
-          </button>
+          <FacebookLogin
+            appId="1088597931155576"
+            autoLoad={false}
+            fields="name,email,picture"
+            textButton="Validar"
+            cssClass={classes.buttonMobile}
+            callback={responseFacebook} />
           <button className={classes.cbuttonMobile} style={{ marginTop: '20px' }}>
             Cancelar
           </button>

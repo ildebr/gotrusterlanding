@@ -29,9 +29,9 @@ import Facebook from '../../asset/images/publicProfile/companyIcons/facebook.svg
 import LinkedIn from '../../asset/images/publicProfile/companyIcons/linked.svg'
 import Meli from '../../asset/images/publicProfile/companyIcons/meli.svg'
 import Letter from '../../asset/images/letterLogo.svg'
-import Cliente from './../../setting/cliente'
+//import Cliente from './../../setting/cliente'
 import { getToken } from './../../setting/auth-helpers';
-import { CustomerResource, UserAdminResource, ValidatioDetailByCustomer } from './../../services/hostConfig';
+import { CustomerResource, GetUserNames, ValidatioDetailByCustomer } from './../../services/hostConfig';
 
 
 
@@ -128,6 +128,11 @@ class PublicProfile extends Component {
             imagesArray: null,
             user: null,
             customer: '',
+            Level:'',
+            email:'',
+            firtsName:'',
+            occupation:'',
+            creationDate:'',
             validations: [],
         };
     }
@@ -156,25 +161,36 @@ class PublicProfile extends Component {
                         return response.json()
                     }
                 }).then(response => {
-                    alert(UserAdminResource() + '/' + response.email);
-                    const token1 = getToken();
-                    fetch(UserAdminResource() + '/' + response.email, {
+                   
+                   // alert(UserAdminResource() + '/' + response.email);
+                    //const token1 = getToken();
+                    this.setState({
+                        Level:response.level,
+                        occupation:response.occupation,
+                        creationDate:response.creationDate,
+                        email:response.email
+                    })
+                    console.log(" esta es la respuesta ",response)
+                    fetch(GetUserNames() + '/' + response.email, {
                         method: 'get',
                         headers: {
                             'Accept': 'application/json',
                             'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token1}`
+                            'Authorization': `Bearer ${token}`
                         }
-                    }).then(response1 => {
-                        alert(response1.status);
-                        if (response1.status === 200) {
-                            return response1.json()
+                    }).then(response => {
+                      //  alert(response1.status);
+                        if (response.status === 200) {
+                            return response.json()
                         }
-                    }).then(response1 => {
-                        alert(response1);
-                        //response.fullName = response1.firstName
-                        //console.log('>>> FULL: ' + response.fullName);
-                        this.setState({ customer: response })
+                    }).then(response => {
+                      //  alert(response1);
+                        response.fullName = response.firstName+' '+response.lastName
+                        console.log('>>> FULL: ' + response.fullName);
+                        this.setState({ 
+                            customer: response,
+                            firtsName: response.fullName
+                         })
                     })
                 })
 
@@ -337,7 +353,7 @@ class PublicProfile extends Component {
         return (<React.Fragment>
             <Grid container className={classes.root} component="main" maxWidth="md" style={{ display: 'flex', justifyContent: 'center' }}>
                 {width >= 600 ? <div className={classes.background} >
-                    <img src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverPerfil/' + this.state.user + '.png'}
+                    <img src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverPerfil/' + this.state.email + '.png'}
                         alt='background' width={'1935px'} height={'430px'}
                         style={{ objectFit: 'cover' }}
                         onError={this.addDefaultCoverImage}
@@ -386,20 +402,20 @@ class PublicProfile extends Component {
                                 </Grid>}
                         </Grid>
                         <Grid>
-                            {width >= 600 ? <ProfileCard customer={this.state.customer} /> : <ProfileCardMobile customer={this.state.customer} />}
+                            {width >= 600 ? <ProfileCard email={this.state.email} level={this.state.Level} occupation={this.state.occupation} creationDate={this.state.creationDate} firstName={this.state.firtsName} /> : <ProfileCardMobile level={this.state.Level} occupation={this.state.occupation} creationDate={this.state.creationDate} firstName={this.state.firtsName} email={this.state.email} />}
                         </Grid>
-                        <Grid>
+                       {/*  <Grid>
                             {width >= 600 ? <PublicInfo customer={this.state.customer} selected={(wotruster) => checkWoBussiness(wotruster)} /> : <LevelCardMobile customer={this.state.customer} />}
-                        </Grid>
+                        </Grid> */}
                         <Grid>
                             {width >= 600 ? '' : <TrustUsers/>}
                         </Grid>
                         <Grid>
                             {width >= 600 ? '' : <TrustButton />}
                         </Grid>
-                        <Grid>
+                       {/*  <Grid>
                             {width >= 600 ? '' : <AboutCardMobile />}
-                        </Grid>
+                        </Grid> */}
                         {width >= 600 ? <hr style={{ width: '100%' }} color='#333333'/> : ''}
                         
                         {width >= 600 ? <Grid container style={{ display: "none" }}>
@@ -449,23 +465,10 @@ class PublicProfile extends Component {
                         </Grid>
                         <Grid justify='center' item container xs={12} xl={12} sm={12} style={{ paddingTop: '30px' }}>
                             <Typography className={classes.validInfo}>
-                                Infomación Traida
+                               
                             </Typography>
                         </Grid>
-                        <Grid justify='center' item container xs={12} xl={12} sm={12} style={{ paddingTop: '10px' }}>
-                            <Typography className={classes.validInfoSubtitle}>
-                                Completadas
-                            </Typography>
-                        </Grid>
-                        {width >= 600 ? <Grid justify='flex-start' item container xs={12} xl={12} sm={12} style={{ paddingTop: '10px', paddingLeft: '10px' }}>
-                            {dummyBringInfo.map((item, index) =>
-                                <BringInfo key={index} data={item} />
-                            )}
-                        </Grid> : <Grid justify='center' item container xs={12} xl={12} sm={12} style={{ paddingTop: '10px', paddingLeft: '10px' }}>
-                            {dummyBringInfo.map((item, index) =>
-                                <BringInfo key={index} data={item} />
-                            )}
-                        </Grid>}
+                        
                     </Container>
                 </Grid>
             </Grid >

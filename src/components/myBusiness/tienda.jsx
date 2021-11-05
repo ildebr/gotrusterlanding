@@ -191,11 +191,13 @@ function Tienda(props) {
     const classes = useStyles();
 
     const handleMonths = (e) => {
-        setMonths(e.target.value);    
+        setMonths(e.target.value); 
+        localStorage.setItem("categoryBussines",e.target.value)    
        
     }
     const handleSub =(e)=>{
-        setSub(e.target.value)        
+        setSub(e.target.value) 
+        localStorage.setItem("subCategoryBussines",e.target.value)      
     }
     const handleSubCat =(e)=>{
         setSubCat(e.target.value)

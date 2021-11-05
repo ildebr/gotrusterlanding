@@ -3,7 +3,7 @@ import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 import GreenCircle from '../../asset/images/publicProfile/greencircle.svg'
 import CircularDeterminate from '../../components/reputation/progressBarMobile'
-import UserImg from '../../asset/images/reputation/Ellipse 6.png'
+import UserImg from '../../asset/images/reputation/perfil.jpg'
 import ShareIcon from '../../asset/images/publicProfile/shareIcon.svg'
 import moment from 'moment'
 import 'moment/locale/es';
@@ -62,8 +62,11 @@ const useStyles = makeStyles(theme => ({
 
 const ProfileCard = (props) => {
   const classes = useStyles();
-  const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
-  const { level, occupation, creationDate } = props.customer
+
+  const addDefaultPofileImage = e => {
+    e.target.src = UserImg
+}
+  const { level, occupation, creationDate, firstName, email } = props
   return (
     <Grid position="static" color="transparent" container style={{
       flexGrow: 1,
@@ -83,7 +86,7 @@ const ProfileCard = (props) => {
           </Grid>
           <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center' style={{ marginBottom: 20 }}>
             <Typography className={classes.name}>
-              {namefull}
+              {firstName}
             </Typography>
           </Grid>
           <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center' style={{ marginBottom: 20 }}>
@@ -99,15 +102,23 @@ const ProfileCard = (props) => {
         </Grid>
       </Grid>
       <Grid container xs={4} xl={4} sm={4} justify="center" alignItems='center'>
-        <Grid container justify="center" xs={12} xl={12} sm={12} style={{marginRight: '20px'}}>
+        <Grid container justify="center" xs={12} xl={12} sm={12} style={{ marginRight: '20px' }}>
           <div style={{ zIndex: 1, marginTop: -8.2 }}>
             <CircularDeterminate givenValue={90} />
           </div>
           <div style={{ zIndex: 1 }}>
-            <img src={UserImg} alt='reputationImg' width='120px' />
+          <img
+            src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + email + '.png'}
+            width='120px' height='120px' style={{
+              borderRadius: '50%',
+              objectFit: 'cover'
+            }}
+            onError={addDefaultPofileImage}
+          />
+            
           </div>
         </Grid>
-        <Grid container justify="flex-end" xs={12} xl={12} sm={12}>
+        <Grid container justify="flex-end" xs={12} xl={12} sm={12}>          
           <img src={ShareIcon} alt='shareIcon' width='25px' />
         </Grid>
       </Grid>

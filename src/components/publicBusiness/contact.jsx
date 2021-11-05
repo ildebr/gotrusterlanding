@@ -133,9 +133,7 @@ function Contact(props) {
                 </Grid>
 
                 <Typography className={classes.texto}>
-                    Donec scelerisque lectus ut lectus tincidunt, id bibendum sapien tristique. Proin at cursus tellus,
-                    at viverra nunc. Aenean ut purus ut libero lobortis dignissim. Cras eros felis, molestie at mi nec,
-                    fermentum volutpat turpis.
+                   
                 </Typography>
 
                 <Grid item xs={12} style={{paddingRight: '32px'}}>

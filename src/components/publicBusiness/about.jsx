@@ -1,13 +1,14 @@
-import React from 'react';
-import {makeStyles} from "@material-ui/core/styles";
+import React, {useState}from 'react';
+import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import {Typography, Link} from "@material-ui/core";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAngleLeft, faCircle} from "@fortawesome/free-solid-svg-icons";
+import { Typography, Link } from "@material-ui/core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faCircle } from "@fortawesome/free-solid-svg-icons";
 import imagen from "../../asset/images/publicBusiness/Ellipse 7.png";
 import Direction from "./direction";
 import directionImage from "../../asset/images/publicBusiness/Rectangle 124.png"
-
+import moment from 'moment'
+import 'moment/locale/es';
 
 const useStyles = makeStyles(theme => ({
     titulo: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles(theme => ({
         textAlign: 'left',
         [theme.breakpoints.down('sm')]: {
             fontSize: 21,
-            maxWidth:'90px'
+            maxWidth: '90px'
         },
     },
     titulo2: {
@@ -57,7 +58,7 @@ const useStyles = makeStyles(theme => ({
         borderRadius: '11px',
         padding: '30px'
     },
-    card1:{
+    card1: {
         background: 'rgba(28, 28, 28, 0.49)',
         border: '1px solid #000000',
         boxSizing: 'border-box',
@@ -68,25 +69,30 @@ const useStyles = makeStyles(theme => ({
             marginLeft: 0,
         },
     },
-    gridDirection:{
+    gridDirection: {
         border: ' 1px solid #000000',
         boxSizing: 'border-box',
         borderRadius: '10.6253px',
         position: 'relative',
-        margin:'16px 0',
+        margin: '16px 0',
 
         [theme.breakpoints.up('sm')]: {
-            display:'none'
+            display: 'none'
         },
     }
 
 }))
 
 function About(props) {
+    const [key, setKey]=React.useState(props.customerid)
     const classes = useStyles();
-    const { description, customers } = props
+    const { level, creationDate, customers, email, description,firtsName} = props
 
-    const key = customers?.length > 0 ? customers[0].id : ''
+    const setDefaultImage = e => {
+        e.target.src = imagen;
+      };
+
+   console.log("Esta es la key ", key )
 
     return (
         <React.Fragment>
@@ -110,19 +116,19 @@ function About(props) {
                     <Typography className={classes.texto}>{description}</Typography>
                 </Grid>
 
-                <Grid item className={classes.gridDirection} xs={12}>
-                    <Direction/>
-                    <img src={directionImage} alt='background' width={'100%'}/>
-                </Grid>
+               {/*  <Grid item className={classes.gridDirection} xs={12}>
+                    <Direction />
+                    <img src={directionImage} alt='background' width={'100%'} />
+                </Grid> */}
 
                 <Grid container direction={"row"} xs={12} md={4}>
                     <div className={classes.card1} >
-                        <Grid container direction={"row"} style={{display:'flex', alignItems:'center', justifyContent:'space-around'}}>
+                        <Grid container direction={"row"} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
                             <Grid container direction={"column"} xs>
                                 <Typography className={classes.titulo2}>Dueño</Typography>
                                 <Link href={`/publicprofile?key=${key}`}>
-                                <Typography className={classes.subtitulo2}>Beatris Napoles</Typography></Link>
-                                <Typography className={classes.texto}>Miembro desde 2021</Typography>
+                                    <Typography className={classes.subtitulo2}>{firtsName}</Typography></Link>
+                                <Typography className={classes.texto}>Miembro desde {moment(creationDate).format('YYYY')}</Typography>
                                 <div style={{
                                     border: '2px solid #ACFD00',
                                     boxSizing: 'border-box',
@@ -130,16 +136,16 @@ function About(props) {
                                     display: 'flex',
                                     flexDirection: 'row',
                                     alignItems: 'center',
-                                    width:'auto',
-                                    padding:"5px 1px 5px 10px",
-                                    marginTop:'16px'
+                                    width: 'auto',
+                                    padding: "5px 1px 5px 10px",
+                                    marginTop: '16px'
                                 }}>
                                     <FontAwesomeIcon icon={faCircle} style={{
 
                                         color: '#ACFD00', fontSize: "18px", align: 'center',
-                                        paddingRight:'10px'
+                                        paddingRight: '10px'
 
-                                    }}/>
+                                    }} />
                                     <Typography style={{
                                         align: "center",
                                         color: '#ACFD00',
@@ -149,11 +155,22 @@ function About(props) {
                                         textAlign: 'left',
                                         letterSpacing: '-0.02em',
 
-                                    }}>Pro Truster</Typography>
+                                    }}>{level}</Typography>
                                 </div>
                             </Grid>
                             <Grid item xs>
-                                <img src={imagen}/>
+                                <img
+                                    src={
+                                        "https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/" +
+                                        email +
+                                        ".png"
+                                    }
+                                    width='120px' height='120px' style={{
+                                        borderRadius: '50%',
+                                        objectFit: 'cover'
+                                      }}
+                                    onError={setDefaultImage} />
+                                
                             </Grid>
                         </Grid>
                     </div>

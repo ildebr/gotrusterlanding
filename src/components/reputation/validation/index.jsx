@@ -19,8 +19,7 @@ function ItemValidation(props) {
     <>
       {view && (
         <>
-          {" "}
-          {display === "sum" ? (
+          {display === "add" ? (
             <>
               {status !== "APPROVED" && (
                 <div
@@ -78,7 +77,7 @@ function ItemValidation(props) {
                   <div className="itemDescription">
                     <img src={srcImg} alt={alt} />
                     <div className="status">
-                      {href && status !== "PENDING" ? (
+                      {href && display === "add" ? (
                         <Link href={href} style={{ textDecoration: "none" }}>
                           <span className="name">{itemName}</span>
                         </Link>

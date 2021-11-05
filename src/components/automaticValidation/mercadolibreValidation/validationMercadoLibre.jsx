@@ -1,6 +1,6 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core';
-import { makeStyles} from '@material-ui/core/styles';
+import { Grid, Typography, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import eyePhone from '../../../asset/images/automaticvalidation/mercadolibre/mercadolibreValidation.png';
 import WindowDimensions from "../../../components/UtilityComponents/WindowDimension"
 
@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
     lineHeight: "29.41px",
     color: "#FFFFFF"
   },
-  inputTitle : {
+  inputTitle: {
     textAlign: 'center',
     fontFamily: "Poppins",
     fontWeight: 600,
@@ -97,7 +97,7 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '27px',
     letterSpacing: '-0.02',
     color: '#252525',
-    cursor: 'pointer', 
+    cursor: 'pointer',
     width: '190px'
   },
   buttonMobile: {
@@ -185,10 +185,8 @@ const Text = 'Utiliza el formato 54-11-67880000, solo son válidos teléfonos ar
 const ValidationMercadoLibre = () => {
   const classes = useStyles();
   const { width } = WindowDimensions();
-  const validationMeli = (e) =>{
-  fetch('https://auth.mercadolibre.com.ar/authorization') 
 
-}
+  
   const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
   return (
     <Grid position="static" color="transparent" style={{
@@ -197,36 +195,53 @@ const ValidationMercadoLibre = () => {
       marginTop: width >= 600 ? 120 : 50,
     }}>
       <Grid xs={12} xl={12} sm={12} container justify="center">
-        <img src={eyePhone} alt='eyePhone' width='120px' style={{marginLeft:'32px'}}/>
+        <img src={eyePhone} alt='eyePhone' width='120px' style={{ marginLeft: '32px' }} />
       </Grid>
       <Grid xs={12} xl={12} sm={12} container style={{ marginTop: '30px' }} justify="center">
         {width >= 600 ?
           <Typography className={classes.mainText}>
             {MainText}
           </Typography>
-        :
+          :
           <Typography className={classes.mainTextMobile}>
             {MainText}
           </Typography>
         }
-      </Grid> 
-      {width >= 600 ? 
+      </Grid>
+      {width >= 600 ?
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: '32px' }}>
-          <button className={classes.cbutton}>
+          <Button className={classes.cbutton} href={'/reputation'} >
             Cancelar
-          </button>
-          <button className={classes.button} style={{ marginLeft: '30px' }}>
+          </Button>
+          <Button className={classes.button} style={{ marginLeft: '30px' }} onClick={
+            (e) => {
+             
+                let url= 'https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=8113077250611426&redirect_uri=https://dev.gotruster.app/readyAutomaticvalidationmercadolibre';
+                var win = window.open(url, '_blank');
+                // Cambiar el foco al nuevo tab (punto opcional)
+                win.focus();
+            }
+
+          }>
             Validar
-          </button>
+          </Button>
         </div>
         :
         <div style={{ justifyContent: 'center', marginTop: '32px' }}>
-          <button className={classes.buttonMobile}>
+          <Button className={classes.buttonMobile} onClick={
+            (e) => {
+             
+                let url= 'https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=8113077250611426&redirect_uri=https://dev.gotruster.app/readyAutomaticvalidationmercadolibre';
+                var win = window.open(url, '_blank');
+                // Cambiar el foco al nuevo tab (punto opcional)
+                win.focus();
+            }
+          }>
             Validar
-          </button>
-          <button className={classes.cbuttonMobile} style={{ marginTop: '20px'}}>
+          </Button>
+          <Button className={classes.cbuttonMobile} style={{ marginTop: '20px' }} href={'/reputation'}>
             Cancelar
-          </button>
+          </Button>
         </div>
       }
 

@@ -163,7 +163,20 @@ const ValidatioDetailByCustomer = ()=>{
    let REACT_VALIDATION_BY_CUSTOMER = BASE_URL_BACKEND + 'validationDetailsByCustomer' ;
    return REACT_VALIDATION_BY_CUSTOMER ;
 }
-
+const SMSValidations = ()=>{
+   let REACT_VALIDATION_SMS = BASE_URL_SERVICE + 'api/messages' ;
+   return REACT_VALIDATION_SMS ;
+}
+////////////////////////
+const MeliValidations = ()=>{
+   let REACT_VALIDATION_SMS = BASE_URL_BACKEND + 'ml' ;
+   return REACT_VALIDATION_SMS ;
+}
+//////////////////////
+const GetUserNames =()=>{
+     let USER_NAMES = BASE_URL_BACKEND + 'usersNames' ;
+     return USER_NAMES; 
+}
 
    module.exports = {
       Account,
@@ -196,5 +209,8 @@ const ValidatioDetailByCustomer = ()=>{
       BaseURLImage,
       ValidatioDetail,
       ValidatioDetailByCustomer,
-      ShopByCustomer
+      ShopByCustomer,
+      SMSValidations,
+      MeliValidations,
+      GetUserNames
    }

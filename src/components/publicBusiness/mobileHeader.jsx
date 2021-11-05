@@ -43,62 +43,19 @@ const useStyles = makeStyles(theme => ({
 
 
 function MobileHeader(props) {
-    const [user, setUser] = useState(null)
-    const [haveImage, setHaveImage] = useState(false);
-    const [haveImageCover, setHaveImageCover] = useState(false);
+    const [user, setUser] = useState(props.email)
+    /* const [haveImage, setHaveImage] = useState(false);
+    const [haveImageCover, setHaveImageCover] = useState(false); */
     const classes = useStyles();
 
-    /* function getImages() {
-        let json = '';
-        let coverNegocio = '';
-        cliente.get(GetJson(), {}).then((res) => {
-
-            json = res['data']['content']['images']['avatar']
-            coverNegocio = res['data']['content']['images']['coverPerfil']
-
-            if (json.includes(String(localStorage.getItem('userLogin')))) {
-                setHaveImage(true)
-                console.log()
-            }
-            if (coverNegocio.includes(String(localStorage.getItem('userLogin')))) {
-                setHaveImageCover(true)
-            }
-
-
-        }).catch(e => {
-            console.log(e);
-        })
-
-    } */
-   /*  function getImagesCover(){
-        cliente.get(GetImage(), {
-            params: {
-                'user': this.state.user,
-                'folder': 'coverNegocio'
-            }
-        }).then(
-            res => {
-                // console.log(res)
-                this.setState({ imagesArray: res['data']['fileNames'] })
-            }
-        )
-    } */
+   
     function addDefaultCoverImage (e ){
         e.target.src = background
     }   
     function addDefaultAvatarImage (e){
         e.target.src = elipse
     }   
-
-    useEffect(() => {
-
-        if (user === null) {
-            setUser(localStorage.getItem('userLogin'))
-          /*   getImages()
-            getImagesCover() */
-        }
-
-    }, [haveImage, haveImageCover, user])
+    const { email} = props
 
     return (
         <React.Fragment>
@@ -106,13 +63,13 @@ function MobileHeader(props) {
                 <div className={classes.background}>
                   
                         <img
-                            src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverNegocio/' + user + '.png'}
+                            src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/coverNegocio/' + email + '.png'}
                             width='100%'
                             style={{ width: '100%' }}
                             onError={addDefaultCoverImage}
                         /> 
                         <img
-                            src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/avatar/' + localStorage.getItem('userLogin') + '.png'}
+                            src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/avatar/' + email + '.png'}
                             width='120px' height='120px' style={{
                                 position: 'absolute',
                                 bottom: '-35px',

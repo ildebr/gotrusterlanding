@@ -5,7 +5,8 @@ import {faStore, faShareAlt, faUserShield, faThumbsUp} from "@fortawesome/free-s
 import {Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-
+import moment from 'moment'
+import 'moment/locale/es';
 
 const useStyles = makeStyles(theme => ({
     titulo: {
@@ -65,6 +66,7 @@ function MobileTrustUsers(props) {
 
     const classes = useStyles();
     const [trust, setTrust] = useState(false)
+    const {summary, description, name, createDate}= props
     return (
         <React.Fragment>
             <Grid container direction={"column"}>
@@ -75,11 +77,11 @@ function MobileTrustUsers(props) {
                                 color: '#fff', fontSize: 15, paddingRight: '8px'
                             }}/>
                             <Typography className={classes.titulo}>
-                                Anagrama Studio
+                                {name}
                             </Typography>
                         </div>
-                        <Typography className={classes.subtitulo}>Software & Development Services</Typography>
-                        <Typography className={classes.subtituloAlt}>Tienda en Truster desde 2021</Typography>
+                        <Typography className={classes.subtitulo}>{summary}</Typography>
+                        <Typography className={classes.subtituloAlt}>Tienda en Truster {moment(createDate).format('YYYY')} </Typography>
                     </Grid>
                     <Grid item xs={1}>
                         <FontAwesomeIcon icon={faShareAlt} style={{
@@ -95,7 +97,7 @@ function MobileTrustUsers(props) {
                             color: '#777', fontSize: 20,  paddingRight:'16px'
                         }}/>
                         <Typography className={classes.numero}>
-                            +22
+                            +0
                         </Typography>
                         <Typography className={classes.textoRectangle}>
                             Usuarios Truster ya validaron este negocio
@@ -106,7 +108,7 @@ function MobileTrustUsers(props) {
                             color: '#777', fontSize: 20,  paddingRight:'16px'
                         }}/>
                         <Typography className={classes.numero}>
-                            +232
+                            +0
                         </Typography>
                         <Typography className={classes.textoRectangle}>
                             Usuarios ya confían en este negocio
@@ -140,7 +142,7 @@ function MobileTrustUsers(props) {
 
 
                                 }}>
-                                    Confias en Anagrama
+                                    Confias en {name}
                                 </Typography>
                             </div>
 
@@ -170,7 +172,7 @@ function MobileTrustUsers(props) {
 
 
                                 }}>
-                                    Confias en Anagrama?
+                                    Confias en {name}?
                                 </Typography>
                             </div>
 

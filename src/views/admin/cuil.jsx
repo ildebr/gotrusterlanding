@@ -201,7 +201,7 @@ function AdminCuil(props) {
                                     <img src={FileIcon}/>
                                 </Grid>
                                 <Grid item>
-                                    <Link href="https://www.anses.gob.ar/consulta/constancia-de-cuil" target="_blank" rel="noopener">
+                                    <Link href="https://seti.afip.gob.ar/padron-puc-constancia-internet/ConsultaConstanciaAction.do" target="_blank" rel="noopener">
                                         <Typography className={classes.constanciAfip}>
                                             Ver Constancias de Inscripción AFIP
                                         </Typography>

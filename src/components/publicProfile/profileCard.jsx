@@ -1,7 +1,8 @@
 import React, {useEffect, useState}from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
-import ReputationImg from '../../asset/images/reputation/Ellipse 6.png'
+import ReputationImg from '../../asset/images/reputation/perfil.jpg'
+
 import GreenCircle from '../../asset/images/publicProfile/greencircle.svg'
 import Cliente from "../../setting/cliente";
 import {GetJson} from "../../services/hostConfig";
@@ -63,9 +64,9 @@ const ProfileCard = (props) => {
         e.target.src = ReputationImg
     }
 
-    const { level, occupation, creationDate } = props.customer
+    const { level, occupation, creationDate, firstName, email } = props
     const classes = useStyles();
-    const namefull = localStorage.getItem("nombre") + ' ' + localStorage.getItem("apellido");
+   
     return (
         <Grid position="static" color="transparent" style={{
             flexGrow: 1,
@@ -84,7 +85,7 @@ const ProfileCard = (props) => {
                     </Grid>
                     <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center' style={{ marginBottom: 20 }}>
                         <Typography className={classes.name}>
-                            {namefull}
+                            {firstName}
                         </Typography>
                     </Grid>
                     <Grid container justify='flex-start' xs={12} xl={12} sm={12} alignItems='center' style={{ marginBottom: 20 }}>
@@ -103,8 +104,8 @@ const ProfileCard = (props) => {
                         <Grid container justify='flex-end' xs={11} xl={11} sm={11}>
 
                             <img
-                                src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' + localStorage.getItem('userLogin') + '.png'}
-                                width='250px' height='250px' style={{
+                                src={'https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/' +email+ '.png'}
+                                width='250px' height='200px' style={{
                                     borderRadius:'50%',
                                 objectFit:'cover'
                             }}

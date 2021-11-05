@@ -1,6 +1,7 @@
 let CACHE_NAME = 'trusterApp';
-const urlsToCache = [    
-    '/index.html',
+const urlsToCache = [
+    '/',
+    
 ];
 self.addEventListener('install', function (event) {
     // Realizar los pasos de instalación 

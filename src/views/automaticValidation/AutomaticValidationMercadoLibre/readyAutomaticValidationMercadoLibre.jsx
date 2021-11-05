@@ -102,7 +102,9 @@ class AutomaticValidationMercadoLibre extends Component {
    };
    componentDidMount() {
       window.addEventListener("resize", this.handleResize);
+     
    }
+   
    Tabf = (value) => {
       this.setState({ tab: value });
       console.log(this.state.tab)
@@ -121,6 +123,7 @@ class AutomaticValidationMercadoLibre extends Component {
          console.log(data)
          this.setState({ woBussiness: data })
       }
+      
       return (<React.Fragment>
          <Grid container className={classes.root} component="main" maxWidth="md" style={{ display: 'flex', justifyContent: 'center' }}>
             <Grid className={classes.test} container maxWidth="md" component="main" >
