@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 .App {
   text-align: center;
@@ -97,7 +96,7 @@
 /* Hamburger Lines - Top & Bottom */
 .menu-wrap .hamburger > div::before,
 .menu-wrap .hamburger > div::after {
-  content: "";
+  content: '';
   position: absolute;
   z-index: 1;
   top: -10px;
@@ -158,7 +157,7 @@
 /* Hamburger Lines - Top & Bottom */
 .menu-wrap .hamburger2 > div::before,
 .menu-wrap .hamburger2 > div::after {
-  content: "";
+  content: '';
   position: absolute;
   z-index: 1;
   top: -10px;
@@ -253,7 +252,7 @@
   color: #fff;
   font-size: 16px;
   padding: 10px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
 }
 
 .menu-wrap .menu > div > div > ul > li > a {

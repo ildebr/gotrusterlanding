@@ -37,8 +37,8 @@
   {
     "validationName": "MELI",
     "display": "Mercado libre",
-    "points": "10",
-    "href": "/automaticValidationmercadolibre",
+    "points": "20",
+    "href": "/",
     "logo": "/sumReputation/amazon.svg"
   },
   {

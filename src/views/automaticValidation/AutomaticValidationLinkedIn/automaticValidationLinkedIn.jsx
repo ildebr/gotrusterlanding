@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import { Container, Grid, Typography, Button } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { Container, Grid, Typography, Button } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
 import ReputatioNavBar from '../../../components/navBar/reputationNavbar'
 import TemporaryDrawer from '../../../components/navBar/mobileDrawer'
 import Back from '../../../asset/images/myProfile/back.svg'
 import ValidationLinkedIn from '../../../components/automaticValidation/linkedinValidation/validationLinkedIn'
 
-
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     background: '#000000',
     flexGrow: 1,
@@ -20,13 +19,13 @@ const styles = theme => ({
     position: 'absolute',
     display: 'flex',
     justifyContent: 'center',
-    width: 'auto'
+    width: 'auto',
   },
   test: {
-    zIndex: 1
+    zIndex: 1,
   },
   selectedText: {
-    color: "#ACFD00",
+    color: '#ACFD00',
     font: 'normal normal normal 18px/18px Poppins',
     fontWeight: '500',
     cursor: 'pointer',
@@ -44,7 +43,7 @@ const styles = theme => ({
     fontSize: '26.63px',
     lineHeight: '39.95px',
     textAlign: 'center',
-    color: '#FFFFFF'
+    color: '#FFFFFF',
   },
   validInfoSubtitle: {
     fontFamily: 'Poppins',
@@ -53,7 +52,7 @@ const styles = theme => ({
     fontSize: '17.76px',
     lineHeight: '26.63px',
     textAlign: 'center',
-    color: '#5F5F5F'
+    color: '#5F5F5F',
   },
   moreButton: {
     fontFamily: 'Poppins',
@@ -68,7 +67,7 @@ const styles = theme => ({
     backgroundColor: 'rgba(0,0,0,0)',
     borderRadius: '10px',
     padding: '10px',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   moreButtonMobile: {
     fontFamily: 'Poppins',
@@ -84,94 +83,154 @@ const styles = theme => ({
     backgroundColor: 'rgba(28,28,28,0.49)',
     borderRadius: '10px',
     padding: '10px',
-    cursor: 'pointer'
-  }
-});
+    cursor: 'pointer',
+  },
+})
 
 class AutomaticValidationLinkedIn extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       windowWidth: window.innerWidth,
       tab: 0,
       woBussiness: false,
-    };
+    }
   }
   handleResize = (e) => {
-    this.setState({ windowWidth: window.innerWidth });
-  };
+    this.setState({ windowWidth: window.innerWidth })
+  }
   componentDidMount() {
-    window.addEventListener("resize", this.handleResize);
+    window.addEventListener('resize', this.handleResize)
   }
   Tabf = (value) => {
-    this.setState({ tab: value });
+    this.setState({ tab: value })
     console.log(this.state.tab)
   }
   render() {
     function getWindowDimensions() {
-      const { innerWidth: width } = window;
+      const { innerWidth: width } = window
       return {
-        width
-      };
+        width,
+      }
     }
-    const { width } = getWindowDimensions();
-    const { classes } = this.props;
+    const { width } = getWindowDimensions()
+    const { classes } = this.props
 
     const checkWoBussiness = (data) => {
       console.log(data)
       this.setState({ woBussiness: data })
     }
-    return (<React.Fragment>
-      <Grid container className={classes.root} component="main" maxWidth="md" style={{ display: 'flex', justifyContent: 'center' }}>
-        <Grid className={classes.test} container maxWidth="md" component="main" >
-          <Container component="main" maxWidth="md" container  >
-            <Grid container >
-              {width >= 600 ? <Grid item container xs={4} xl={4} sm={4} className={classes.paperContainer} >
-                <ReputatioNavBar />
-              </Grid> : <Grid item container xs={2} xl={2} sm={2} style={{ marginTop: 10, marginLeft: -20 }} alignItems='center'>
-                <TemporaryDrawer />
-              </Grid>}
-              {width >= 600 ?
-                <Grid xs={4} xl={4} sm={4} container justify='center' >
-                  <Typography style={{
-                    flexGrow: 1,
-                    marginTop: 40,
-                    align: "center",
-                    color: "#FFFFFF",
-                    font: " normal normal 40px/40px Poppins",
-                  }}>
-                    Truster
-                  </Typography>
-                </Grid> :
-                <Grid xs={10} xl={10} sm={10} container alignItems='center'>
-                  <Grid xs={11} xl={11} sm={11} container justify='flex-start'>
-                    <Typography style={{
-                      position: "absolute",
-                      left: '80px',
-                      top: '17px',
-                      flexGrow: 1,
-                      marginTop: 15,
-                      fontWeight: 400,
-                      align: "center",
-                      color: "#FFFFFF",
-                      font: " normal normal 24px/24px Poppins",
-                    }}>
+    return (
+      <React.Fragment>
+        <Grid
+          container
+          className={classes.root}
+          component="main"
+          maxWidth="md"
+          style={{ display: 'flex', justifyContent: 'center' }}
+        >
+          <Grid
+            className={classes.test}
+            container
+            maxWidth="md"
+            component="main"
+          >
+            <Container component="main" maxWidth="md" container>
+              <Grid container>
+                {width >= 600 ? (
+                  <Grid
+                    item
+                    container
+                    xs={4}
+                    xl={4}
+                    sm={4}
+                    className={classes.paperContainer}
+                  >
+                    <ReputatioNavBar />
+                  </Grid>
+                ) : (
+                  <Grid
+                    item
+                    container
+                    xs={2}
+                    xl={2}
+                    sm={2}
+                    style={{ marginTop: 10, marginLeft: -20 }}
+                    alignItems="center"
+                  >
+                    <TemporaryDrawer />
+                  </Grid>
+                )}
+                {width >= 600 ? (
+                  <Grid xs={4} xl={4} sm={4} container justify="center">
+                    <Typography
+                      style={{
+                        flexGrow: 1,
+                        marginTop: 40,
+                        align: 'center',
+                        color: '#FFFFFF',
+                        font: ' normal normal 40px/40px Poppins',
+                      }}
+                    >
                       Truster
                     </Typography>
                   </Grid>
-                  <Grid xs={1} xl={1} sm={1} container justify='flex-end' style={{ marginTop: 10 }}>
-                    <Button href="/"> <img src={Back} alt="Back" width="12px" style={{ marginRight: '-60px' }} /></Button>
+                ) : (
+                  <Grid xs={10} xl={10} sm={10} container alignItems="center">
+                    <Grid
+                      xs={11}
+                      xl={11}
+                      sm={11}
+                      container
+                      justify="flex-start"
+                    >
+                      <Typography
+                        style={{
+                          position: 'absolute',
+                          left: '80px',
+                          top: '17px',
+                          flexGrow: 1,
+                          marginTop: 15,
+                          fontWeight: 400,
+                          align: 'center',
+                          color: '#FFFFFF',
+                          font: ' normal normal 24px/24px Poppins',
+                        }}
+                      >
+                        Truster
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      xs={1}
+                      xl={1}
+                      sm={1}
+                      container
+                      justify="flex-end"
+                      style={{ marginTop: 10 }}
+                    >
+                      <Button href="/">
+                        {' '}
+                        <img
+                          src={Back}
+                          alt="Back"
+                          width="12px"
+                          style={{ marginRight: '-60px' }}
+                        />
+                      </Button>
+                    </Grid>
                   </Grid>
-                </Grid>}
-            </Grid>
-            <Grid>
-              <ValidationLinkedIn />
-            </Grid>
-          </Container>
+                )}
+              </Grid>
+              <Grid>
+                <ValidationLinkedIn />
+              </Grid>
+            </Container>
+          </Grid>
         </Grid>
-      </Grid >
-    </React.Fragment>
+      </React.Fragment>
     )
   }
 }
-export default withStyles(styles, { withTheme: true })(AutomaticValidationLinkedIn);
+export default withStyles(styles, { withTheme: true })(
+  AutomaticValidationLinkedIn
+)

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React, { useState, useEffect } from 'react'
+import { withStyles } from '@material-ui/core/styles'
 import {
   Grid,
   Toolbar,
@@ -7,28 +7,28 @@ import {
   Button,
   Hidden,
   Link,
-} from "@material-ui/core";
-import WindowDimensions from "../../components/UtilityComponents/WindowDimension";
-import Inicio from "../../asset/images/sidemenu/inicio.svg";
-import Busqueda from "../../asset/images/sidemenu/busqueda.svg";
-import MiPerfil from "../../asset/images/sidemenu/miperfil.svg";
-import MiNegocio from "../../asset/images/sidemenu/minegocio.svg";
-import MiReputacion from "../../asset/images/sidemenu/mireputacion.svg";
-import Compartir from "../../asset/images/sidemenu/compartir.svg";
-import Insertar from "../../asset/images/sidemenu/insertar.svg";
-import Ajustes from "../../asset/images/sidemenu/ajustes.svg";
-import Soporte from "../../asset/images/sidemenu/soporte.svg";
-import CerrarSesion from "../../asset/images/sidemenu/cerrarsesion.svg";
-import TemporaryDrawer from "./mobileDrawer";
-import Letter from "../../asset/images/letterLogo.svg";
-const { localStorage } = global.window;
-const userActive = localStorage.getItem("logueado");
+} from '@material-ui/core'
+import WindowDimensions from '../../components/UtilityComponents/WindowDimension'
+import Inicio from '../../asset/images/sidemenu/inicio.svg'
+import Busqueda from '../../asset/images/sidemenu/busqueda.svg'
+import MiPerfil from '../../asset/images/sidemenu/miperfil.svg'
+import MiNegocio from '../../asset/images/sidemenu/minegocio.svg'
+import MiReputacion from '../../asset/images/sidemenu/mireputacion.svg'
+import Compartir from '../../asset/images/sidemenu/compartir.svg'
+import Insertar from '../../asset/images/sidemenu/insertar.svg'
+import Ajustes from '../../asset/images/sidemenu/ajustes.svg'
+import Soporte from '../../asset/images/sidemenu/soporte.svg'
+import CerrarSesion from '../../asset/images/sidemenu/cerrarsesion.svg'
+import TemporaryDrawer from './mobileDrawer'
+import Letter from '../../asset/images/letterLogo.svg'
+const { localStorage } = global.window
+const userActive = localStorage.getItem('logueado')
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
     border: 0,
     margin: 0,
-    marginTop: "2vh",
+    marginTop: '2vh',
     height: 217,
   },
   menuButton: {
@@ -37,67 +37,67 @@ const styles = (theme) => ({
   title: {
     marginLeft: 60,
     flexGrow: 1,
-    align: "center",
-    color: "#FFFFFF",
-    font: " normal normal 40px/40px Poppins",
+    align: 'center',
+    color: '#FFFFFF',
+    font: ' normal normal 40px/40px Poppins',
   },
   navSign: {
     marginRight: 10,
-    color: "#ACFD00",
-    fontFamily: "Poppins",
-    fontSize: "16px",
-    fontStyle: " normal",
-    fontWeight: "700",
-    lineHeight: "24px",
-    letterSpacing: " -0.02em",
-    textAlign: "center",
+    color: '#ACFD00',
+    fontFamily: 'Poppins',
+    fontSize: '16px',
+    fontStyle: ' normal',
+    fontWeight: '700',
+    lineHeight: '24px',
+    letterSpacing: ' -0.02em',
+    textAlign: 'center',
   },
-});
+})
 
 const Navbar = ({ active, recover }) => {
-  const { width } = WindowDimensions();
-  const [toggler, setToggler] = useState(false);
-  const isActive = active;
-  const back = "<";
-  const nameUser = localStorage.getItem("nombre");
-  let $Show = "";
+  const { width } = WindowDimensions()
+  const [toggler, setToggler] = useState(false)
+  const isActive = active
+  const back = '<'
+  const nameUser = localStorage.getItem('nombre')
+  let $Show = ''
   if (isActive === 1) {
     $Show = (
       <Button
         href="/"
         style={{
-          color: "#ACFD00",
-          fontFamily: "Poppins",
-          fontSize: "16px",
-          fontStyle: " normal",
-          fontWeight: "700",
+          color: '#ACFD00',
+          fontFamily: 'Poppins',
+          fontSize: '16px',
+          fontStyle: ' normal',
+          fontWeight: '700',
           paddingTop: 17,
-          lineHeight: "24px",
-          letterSpacing: " -0.02em",
-          textAlign: "left",
-          border: "1px",
+          lineHeight: '24px',
+          letterSpacing: ' -0.02em',
+          textAlign: 'left',
+          border: '1px',
           marginTop: 5,
-          borderRadius: "20px",
-          borderColor: "#ACFD00",
-          textTransform: "none",
+          borderRadius: '20px',
+          borderColor: '#ACFD00',
+          textTransform: 'none',
         }}
       >
-        {" "}
+        {' '}
         Log in
       </Button>
-    );
+    )
   } else {
-    $Show = "";
+    $Show = ''
   }
   useEffect(() => {
-    const elementTemporal = document.getElementById("app");
+    const elementTemporal = document.getElementById('app')
     toggler
-      ? (elementTemporal.style.position = "fixed")
-      : (elementTemporal.style.position = "relative");
-  }, [toggler]);
+      ? (elementTemporal.style.position = 'fixed')
+      : (elementTemporal.style.position = 'relative')
+  }, [toggler])
   const handleToggler = () => {
-    setToggler((toggler) => !toggler);
-  };
+    setToggler((toggler) => !toggler)
+  }
   return (
     <Grid
       position="static"
@@ -116,22 +116,22 @@ const Navbar = ({ active, recover }) => {
             flexGrow: 1,
             border: 0,
             margin: 0,
-            marginTop: "2vh",
+            marginTop: '2vh',
             height: 217,
             zIndex: 100,
           }}
         >
           <Toolbar>
-            <div class="menu-wrap">
+            <div className="menu-wrap">
               <input
                 type="checkbox"
-                class="toggler"
+                className="toggler"
                 onChange={() => handleToggler()}
               />
-              <div class="hamburger">
+              <div className="hamburger">
                 <div></div>
               </div>
-              <div class="menu">
+              <div className="menu">
                 <div>
                   <div>
                     <Typography
@@ -139,9 +139,9 @@ const Navbar = ({ active, recover }) => {
                       style={{
                         marginLeft: 40,
                         flexGrow: 1,
-                        align: "center",
-                        color: "#FFFFFF",
-                        font: " normal normal 40px/40px Poppins",
+                        align: 'center',
+                        color: '#FFFFFF',
+                        font: ' normal normal 40px/40px Poppins',
                         marginBottom: 60,
                       }}
                     >
@@ -154,9 +154,9 @@ const Navbar = ({ active, recover }) => {
                       style={{
                         marginLeft: 40,
                         flexGrow: 1,
-                        align: "center",
-                        color: "#ACFD00",
-                        font: " normal normal 16px/16px Poppins",
+                        align: 'center',
+                        color: '#ACFD00',
+                        font: ' normal normal 16px/16px Poppins',
                         marginBottom: 10,
                       }}
                     >
@@ -166,70 +166,70 @@ const Navbar = ({ active, recover }) => {
                       style={{
                         marginLeft: 40,
                         flexGrow: 1,
-                        align: "center",
-                        color: "#FFFFFF",
+                        align: 'center',
+                        color: '#FFFFFF',
                         fontWeight: 700,
-                        font: " normal normal 40px/60px Poppins",
+                        font: ' normal normal 40px/60px Poppins',
                       }}
                     >
                       {nameUser}
                     </Typography>
-                    <ul style={{ paddingLeft: "40px" }}>
+                    <ul style={{ paddingLeft: '40px' }}>
                       <li>
-                        <Link href={userActive ? "/reputation" : "/"}>
+                        <Link href={userActive ? '/reputation' : '/'}>
                           <img
                             src={MiReputacion}
                             alt="mireputacion"
-                            style={{ paddingRight: 10, width: "12%" }}
-                          />{" "}
+                            style={{ paddingRight: 10, width: '12%' }}
+                          />{' '}
                           <span> Mi Reputación</span>
                         </Link>
                       </li>
                       <li>
-                        <Link href={userActive ? "/search" : "/"}>
+                        <Link href={userActive ? '/search' : '/'}>
                           <img
                             src={Busqueda}
                             alt="busqueda"
-                            style={{ paddingRight: 10, width: "12%" }}
-                          />{" "}
+                            style={{ paddingRight: 10, width: '12%' }}
+                          />{' '}
                           <span>Búsqueda</span>
                         </Link>
                       </li>
                       <li>
-                        <Link href={userActive ? "/myprofile" : "/"}>
+                        <Link href={userActive ? '/myprofile' : '/'}>
                           <img
                             src={MiPerfil}
                             alt="miperfil"
-                            style={{ paddingRight: 10, width: "11%" }}
-                          />{" "}
+                            style={{ paddingRight: 10, width: '11%' }}
+                          />{' '}
                           <span>Mi Perfíl</span>
                         </Link>
                       </li>
                       <li>
-                        <Link href={userActive ? "/mybusiness" : "/"}>
+                        <Link href={userActive ? '/mybusiness' : '/'}>
                           <img
                             src={MiNegocio}
                             alt="minegocio"
-                            style={{ paddingRight: 10, width: "13%" }}
-                          />{" "}
+                            style={{ paddingRight: 10, width: '13%' }}
+                          />{' '}
                           <span> Mi Negocio</span>
                         </Link>
                       </li>
                     </ul>
                     <hr
-                      width={"100%"}
+                      width={'100%'}
                       size={1}
-                      color={"#5e5e5d"}
+                      color={'#5e5e5d'}
                       style={{ marginBottom: 30, marginLeft: 20 }}
                     />
-                    <ul style={{ paddingLeft: "40px" }}>
+                    <ul style={{ paddingLeft: '40px' }}>
                       <li>
                         <Link href="/sharemyprofile">
                           <img
                             src={Compartir}
                             alt="compartir"
-                            style={{ paddingRight: 10, width: "11%" }}
-                          />{" "}
+                            style={{ paddingRight: 10, width: '11%' }}
+                          />{' '}
                           <span> Compartir Perfíl</span>
                         </Link>
                       </li>
@@ -238,8 +238,8 @@ const Navbar = ({ active, recover }) => {
                           <img
                             src={Ajustes}
                             alt="ajustes"
-                            style={{ paddingRight: 10, width: "12%" }}
-                          />{" "}
+                            style={{ paddingRight: 10, width: '12%' }}
+                          />{' '}
                           <span>Ajustes</span>
                         </Link>
                       </li>
@@ -248,50 +248,55 @@ const Navbar = ({ active, recover }) => {
                           <img
                             src={Soporte}
                             alt="soporte"
-                            style={{ paddingRight: 10, width: "11%" }}
-                          />{" "}
+                            style={{ paddingRight: 10, width: '11%' }}
+                          />{' '}
                           <span>Soporte</span>
                         </Link>
                       </li>
                     </ul>
                     <hr
-                      width={"100%"}
+                      width={'100%'}
                       size={1}
-                      color={"#5e5e5d"}
+                      color={'#5e5e5d'}
                       style={{ marginBottom: 30, marginLeft: 20 }}
                     />
                     <ul
                       style={{
-                        paddingLeft: "40px",
-                        display: "grid",
-                        justifyContent: "center",
+                        paddingLeft: '40px',
+                        display: 'grid',
+                        justifyContent: 'center',
                       }}
                     >
                       <li>
-                        <Link href="/" style={{ color: "#5e5e5d" }}>
+                        <Link href="/" style={{ color: '#5e5e5d' }}>
                           <span> Términos y Condiciones</span>
                         </Link>
                       </li>
                       <li>
-                        <Link href="/" style={{ color: "#5e5e5d" }}>
+                        <Link href="/" style={{ color: '#5e5e5d' }}>
                           <span>Política</span>
                         </Link>
                       </li>
-                      <li style={{ display: "flex", justifyContent: "center" }}>
+                      <li
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                      >
                         <Link
                           href="/"
                           style={{
-                            color: "#5e5e5d",
+                            color: '#5e5e5d',
                             fontSize: 15,
-                            display: "flex",
-                            alignItems: "center",
-                            columnGap: "6px",
+                            display: 'flex',
+                            alignItems: 'center',
+                            columnGap: '6px',
                           }}
                         >
                           <img
                             src={CerrarSesion}
                             alt="cerrarsesion"
-                            style={{ width: "14px", height: "14px" }}
+                            style={{ width: '14px', height: '14px' }}
                           />
                           <span>Cerrar Sesión</span>
                         </Link>
@@ -308,9 +313,9 @@ const Navbar = ({ active, recover }) => {
                   marginLeft: 145,
                   flexGrow: 1,
                   marginTop: 15,
-                  align: "center",
-                  color: "#FFFFFF",
-                  font: " normal normal 40px/40px Poppins",
+                  align: 'center',
+                  color: '#FFFFFF',
+                  font: ' normal normal 40px/40px Poppins',
                   //marginBottom: 217
                 }}
               >
@@ -325,9 +330,9 @@ const Navbar = ({ active, recover }) => {
                   marginLeft: 77,
                   flexGrow: 1,
                   marginTop: 15,
-                  align: "center",
-                  color: "#FFFFFF",
-                  font: " normal normal 40px/40px Poppins",
+                  align: 'center',
+                  color: '#FFFFFF',
+                  font: ' normal normal 40px/40px Poppins',
                   //marginBottom: 217
                 }}
               >
@@ -340,18 +345,18 @@ const Navbar = ({ active, recover }) => {
             <Hidden xsDown>{$Show}</Hidden>
             <Typography
               style={{
-                color: "#ACFD00",
-                fontFamily: "Poppins",
-                fontSize: "16px",
-                fontStyle: " normal",
+                color: '#ACFD00',
+                fontFamily: 'Poppins',
+                fontSize: '16px',
+                fontStyle: ' normal',
                 marginTop: 15,
-                fontWeight: "700",
-                lineHeight: "24px",
-                letterSpacing: " -0.02em",
-                textAlign: "left",
+                fontWeight: '700',
+                lineHeight: '24px',
+                letterSpacing: ' -0.02em',
+                textAlign: 'left',
               }}
             >
-              &nbsp;&nbsp;&nbsp;{" "}
+              &nbsp;&nbsp;&nbsp;{' '}
             </Typography>
 
             <Typography
@@ -359,19 +364,19 @@ const Navbar = ({ active, recover }) => {
                 marginTop: 15,
               }}
             >
-              {" "}
+              {' '}
               <Link
                 href="/register"
                 style={{
-                  color: "#FFFFFF",
-                  fontFamily: "Poppins",
-                  fontSize: "16px",
-                  fontStyle: " normal",
+                  color: '#FFFFFF',
+                  fontFamily: 'Poppins',
+                  fontSize: '16px',
+                  fontStyle: ' normal',
                   marginTop: 15,
-                  fontWeight: "700",
-                  lineHeight: "24px",
-                  letterSpacing: " -0.02em",
-                  textAlign: "center",
+                  fontWeight: '700',
+                  lineHeight: '24px',
+                  letterSpacing: ' -0.02em',
+                  textAlign: 'center',
                   marginRight: 0,
                 }}
               ></Link>
@@ -396,7 +401,7 @@ const Navbar = ({ active, recover }) => {
             xl={2}
             sm={2}
             justify="center"
-            style={{ alignContent: "flex-start" }}
+            style={{ alignContent: 'flex-start' }}
           >
             <TemporaryDrawer />
             {/* <div class="menu-wrap">
@@ -470,8 +475,8 @@ const Navbar = ({ active, recover }) => {
                     marginLeft: 10,
                     flexGrow: 1,
                     marginTop: 20,
-                    color: "#FFFFFF",
-                    font: " normal normal 35px/35px Poppins",
+                    color: '#FFFFFF',
+                    font: ' normal normal 35px/35px Poppins',
                   }}
                 >
                   <Link href="https://gotruster.com/">
@@ -483,21 +488,21 @@ const Navbar = ({ active, recover }) => {
                 <Grid container xs={10} xl={10} sm={10} justify="flex-end">
                   <button
                     style={{
-                      backgroundColor: "rgba(0,0,0,0)",
+                      backgroundColor: 'rgba(0,0,0,0)',
                       marginTop: 18,
                       width: 80,
                       height: 35,
-                      color: "#ACFD00",
-                      font: "normal normal normal 18px/24px PoppinsBold",
-                      border: "2px solid",
-                      borderColor: "#ACFD00",
+                      color: '#ACFD00',
+                      font: 'normal normal normal 18px/24px PoppinsBold',
+                      border: '2px solid',
+                      borderColor: '#ACFD00',
                       borderRadius: 5,
-                      textTransform: "none",
+                      textTransform: 'none',
                     }}
                   ></button>
                 </Grid>
               ) : (
-                ""
+                ''
               )}
             </Grid>
           ) : (
@@ -512,21 +517,21 @@ const Navbar = ({ active, recover }) => {
             >
               <Button
                 style={{
-                  color: "#999999",
+                  color: '#999999',
                   fontSize: 25,
-                  paddingLeft: "100%",
-                  font: " normal normal 35px/35px PoppinsBold",
+                  paddingLeft: '100%',
+                  font: ' normal normal 35px/35px PoppinsBold',
                 }}
                 href="/"
               >
-                {" "}
-                {back}{" "}
+                {' '}
+                {back}{' '}
               </Button>
             </Grid>
           )}
         </Grid>
       )}
     </Grid>
-  );
-};
-export default withStyles(styles, { withTheme: true })(Navbar);
+  )
+}
+export default withStyles(styles, { withTheme: true })(Navbar)

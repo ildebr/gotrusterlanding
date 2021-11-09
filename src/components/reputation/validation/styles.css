@@ -15,7 +15,7 @@
 .disabled .itemReputation .points {
   color: #333333;
 }
-.disabled .itemReputation svg path{
+.disabled .itemReputation svg path {
   fill: #333333;
 }
 .itemReputation {

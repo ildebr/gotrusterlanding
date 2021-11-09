@@ -1,273 +1,273 @@
-import React, { Component, useState, useEffect } from "react";
-import { Container, Grid, Typography, Button } from "@material-ui/core";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
-import InputBase from "@material-ui/core/InputBase";
-import { SMSValidations, ValidatioDetail } from "../../../services/hostConfig";
-import eyePhone from "../../../asset/images/automaticvalidation/phone/eyePhone.png";
-import WindowDimensions from "../../../components/UtilityComponents/WindowDimension";
-import cliente from "../../../setting/cliente";
-import { LoopCircleLoading } from "react-loadingg";
-import { getToken } from "./../../../setting/auth-helpers";
-import Swal from "sweetalert2";
+import React, { Component, useState, useEffect } from 'react'
+import { Container, Grid, Typography, Button } from '@material-ui/core'
+import { withStyles, makeStyles } from '@material-ui/core/styles'
+import InputBase from '@material-ui/core/InputBase'
+import { SMSValidations, ValidatioDetail } from '../../../services/hostConfig'
+import eyePhone from '../../../asset/images/automaticvalidation/phone/eyePhone.png'
+import WindowDimensions from '../../../components/UtilityComponents/WindowDimension'
+import cliente from '../../../setting/cliente'
+import { LoopCircleLoading } from 'react-loadingg'
+import { getToken } from './../../../setting/auth-helpers'
+import Swal from 'sweetalert2'
 
-const { localStorage } = global.window;
+const { localStorage } = global.window
 const useStyles = makeStyles((theme) => ({
   mainText: {
-    fontFamily: "Poppins",
+    fontFamily: 'Poppins',
     fontWeight: 700,
-    fontStyle: "normal",
-    fontSize: "38px",
-    lineHeight: "51px",
-    letterSpacing: "-0.02",
-    textAlign: "center",
-    color: "#FFFFFF",
-    width: "60%",
+    fontStyle: 'normal',
+    fontSize: '38px',
+    lineHeight: '51px',
+    letterSpacing: '-0.02',
+    textAlign: 'center',
+    color: '#FFFFFF',
+    width: '60%',
   },
   mainTextMobile: {
-    fontFamily: "Poppins",
+    fontFamily: 'Poppins',
     fontWeight: 700,
-    fontStyle: "normal",
-    fontSize: "25px",
-    lineHeight: "30px",
-    letterSpacing: "-0.02",
-    textAlign: "center",
-    color: "#FFFFFF",
-    width: "80%",
+    fontStyle: 'normal',
+    fontSize: '25px',
+    lineHeight: '30px',
+    letterSpacing: '-0.02',
+    textAlign: 'center',
+    color: '#FFFFFF',
+    width: '80%',
   },
   register: {
-    textAlign: "left",
-    fontFamily: "Poppins",
+    textAlign: 'left',
+    fontFamily: 'Poppins',
     fontWeight: 800,
-    fontStyle: "normal",
-    fontSize: "37.81px",
-    lineHeight: "46.22px",
-    color: "#ACFD00",
+    fontStyle: 'normal',
+    fontSize: '37.81px',
+    lineHeight: '46.22px',
+    color: '#ACFD00',
   },
   truster: {
-    textAlign: "left",
-    fontFamily: "Poppins",
+    textAlign: 'left',
+    fontFamily: 'Poppins',
     fontWeight: 500,
-    fontStyle: "normal",
-    fontSize: "21.01px",
-    lineHeight: "29.41px",
-    color: "#FFFFFF",
+    fontStyle: 'normal',
+    fontSize: '21.01px',
+    lineHeight: '29.41px',
+    color: '#FFFFFF',
   },
   inputTitle: {
-    textAlign: "center",
-    fontFamily: "Poppins",
+    textAlign: 'center',
+    fontFamily: 'Poppins',
     fontWeight: 600,
-    fontStyle: "normal",
-    fontSize: "12px",
-    lineHeight: "18px",
-    color: "#FFFFFF",
+    fontStyle: 'normal',
+    fontSize: '12px',
+    lineHeight: '18px',
+    color: '#FFFFFF',
   },
   ubtext: {
-    textAlign: "center",
-    fontFamily: "Poppins",
+    textAlign: 'center',
+    fontFamily: 'Poppins',
     fontWeight: 500,
-    fontStyle: "normal",
-    fontSize: "11px",
-    lineHeight: "15px",
-    letterSpacing: "-0.02",
-    color: "#666666",
-    width: "25%",
+    fontStyle: 'normal',
+    fontSize: '11px',
+    lineHeight: '15px',
+    letterSpacing: '-0.02',
+    color: '#666666',
+    width: '25%',
   },
   ubtextMobile: {
-    textAlign: "center",
-    fontFamily: "Poppins",
+    textAlign: 'center',
+    fontFamily: 'Poppins',
     fontWeight: 500,
-    fontStyle: "normal",
-    fontSize: "11px",
-    lineHeight: "15px",
-    letterSpacing: "-0.02",
-    color: "#666666",
-    width: "90%",
+    fontStyle: 'normal',
+    fontSize: '11px',
+    lineHeight: '15px',
+    letterSpacing: '-0.02',
+    color: '#666666',
+    width: '90%',
   },
   formButton2: {
     marginTop: theme.spacing(1),
     height: 50,
-    border: "1px solid",
-    borderColor: "#999999",
-    borderRadius: "15px",
-    color: "white",
-    font: "normal normal normal 16px/22px Poppins",
-    textAlignLast: "center",
-    "&:hover": {
-      border: "2px solid",
-      borderColor: "#ACFD00",
+    border: '1px solid',
+    borderColor: '#999999',
+    borderRadius: '15px',
+    color: 'white',
+    font: 'normal normal normal 16px/22px Poppins',
+    textAlignLast: 'center',
+    '&:hover': {
+      border: '2px solid',
+      borderColor: '#ACFD00',
     },
   },
   button: {
     marginTop: theme.spacing(1),
-    backgroundColor: "#ACFD00",
+    backgroundColor: '#ACFD00',
     borderRadius: 15,
     padding: 15,
-    textAlignLast: "center",
-    textTransform: "none",
-    border: "1px solid",
-    borderColor: "#ACFD00",
-    fontFamily: "Poppins",
+    textAlignLast: 'center',
+    textTransform: 'none',
+    border: '1px solid',
+    borderColor: '#ACFD00',
+    fontFamily: 'Poppins',
     fontWeight: 600,
-    fontStyle: "normal",
-    fontSize: "18px",
-    lineHeight: "27px",
-    letterSpacing: "-0.02",
-    color: "#252525",
-    cursor: "pointer",
-    width: "300px",
+    fontStyle: 'normal',
+    fontSize: '18px',
+    lineHeight: '27px',
+    letterSpacing: '-0.02',
+    color: '#252525',
+    cursor: 'pointer',
+    width: '300px',
   },
   buttonMobile: {
     marginTop: theme.spacing(1),
-    backgroundColor: "#ACFD00",
+    backgroundColor: '#ACFD00',
     borderRadius: 15,
     padding: 10,
-    textAlignLast: "center",
-    textTransform: "none",
-    border: "1px solid",
-    borderColor: "#ACFD00",
-    fontFamily: "Poppins",
+    textAlignLast: 'center',
+    textTransform: 'none',
+    border: '1px solid',
+    borderColor: '#ACFD00',
+    fontFamily: 'Poppins',
     fontWeight: 600,
-    fontStyle: "normal",
-    fontSize: "18px",
-    lineHeight: "27px",
-    letterSpacing: "-0.02",
-    color: "#252525",
-    cursor: "pointer",
-    width: "90%",
+    fontStyle: 'normal',
+    fontSize: '18px',
+    lineHeight: '27px',
+    letterSpacing: '-0.02',
+    color: '#252525',
+    cursor: 'pointer',
+    width: '90%',
   },
   cbutton: {
     marginTop: theme.spacing(1),
-    backgroundColor: "rgba(0,0,0,0)",
+    backgroundColor: 'rgba(0,0,0,0)',
     borderRadius: 15,
     padding: 15,
-    textAlignLast: "center",
-    textTransform: "none",
-    border: "2px solid",
-    borderColor: "#FFFFFF",
-    fontFamily: "Poppins",
+    textAlignLast: 'center',
+    textTransform: 'none',
+    border: '2px solid',
+    borderColor: '#FFFFFF',
+    fontFamily: 'Poppins',
     fontWeight: 500,
-    fontStyle: "normal",
-    fontSize: "18px",
-    lineHeight: "27px",
-    letterSpacing: "-0.02",
-    color: "#FFFFFF",
-    cursor: "pointer",
-    width: "150px",
+    fontStyle: 'normal',
+    fontSize: '18px',
+    lineHeight: '27px',
+    letterSpacing: '-0.02',
+    color: '#FFFFFF',
+    cursor: 'pointer',
+    width: '150px',
   },
   cbuttonMobile: {
     marginTop: theme.spacing(1),
-    backgroundColor: "rgba(0,0,0,0)",
+    backgroundColor: 'rgba(0,0,0,0)',
     borderRadius: 15,
     padding: 10,
-    textAlignLast: "center",
-    textTransform: "none",
-    border: "2px solid",
-    borderColor: "#FFFFFF",
-    fontFamily: "Poppins",
+    textAlignLast: 'center',
+    textTransform: 'none',
+    border: '2px solid',
+    borderColor: '#FFFFFF',
+    fontFamily: 'Poppins',
     fontWeight: 500,
-    fontStyle: "normal",
-    fontSize: "18px",
-    lineHeight: "27px",
-    letterSpacing: "-0.02",
-    color: "#FFFFFF",
-    cursor: "pointer",
-    width: "90%",
+    fontStyle: 'normal',
+    fontSize: '18px',
+    lineHeight: '27px',
+    letterSpacing: '-0.02',
+    color: '#FFFFFF',
+    cursor: 'pointer',
+    width: '90%',
   },
   nomsg: {
-    textAlign: "center",
-    fontFamily: "Poppins",
+    textAlign: 'center',
+    fontFamily: 'Poppins',
     fontWeight: 500,
-    fontStyle: "normal",
-    fontSize: "12px",
-    lineHeight: "18px",
-    color: "#999999",
+    fontStyle: 'normal',
+    fontSize: '12px',
+    lineHeight: '18px',
+    color: '#999999',
   },
   soporte: {
-    textAlign: "center",
-    fontFamily: "Poppins",
+    textAlign: 'center',
+    fontFamily: 'Poppins',
     fontWeight: 700,
-    fontStyle: "normal",
-    fontSize: "12px",
-    lineHeight: "18px",
-    color: "#ACFD00",
-    cursor: "pointer",
+    fontStyle: 'normal',
+    fontSize: '12px',
+    lineHeight: '18px',
+    color: '#ACFD00',
+    cursor: 'pointer',
   },
-}));
+}))
 
-const MainText = `Para validar tu teléfono, te enviaremos un sms con un código de seguridad.`;
+const MainText = `Para validar tu teléfono, te enviaremos un sms con un código de seguridad.`
 const RegisterText = `Registrate y accede a todo el perfil de ${localStorage.getItem(
-  "nombre"
-)}`;
+  'nombre'
+)}`
 const Text =
-  "Utiliza el formato +541167880000, solo son válidos teléfonos argentinos. Ingresar sin codigo de area.";
-const SentText = "No utilices guiones , el código es valido durante 1 minuto";
+  'Utiliza el formato +541167880000, solo son válidos teléfonos argentinos. Ingresar sin codigo de area.'
+const SentText = 'No utilices guiones , el código es valido durante 1 minuto'
 
 const ValidationPhone = () => {
-  const { width } = WindowDimensions();
-  const [Sent, setSent] = useState(false);
-  const [to, setTo] = useState("");
-  const [sendCode, setsendCode] = useState("");
-  const [code, setCode] = useState("");
-  const [active, setActive] = useState(true);
-  const [submit, setSubmit] = useState(false);
-  const [error, setError] = useState(false);
-  const [show, setShow] = React.useState(false);
+  const { width } = WindowDimensions()
+  const [Sent, setSent] = useState(false)
+  const [to, setTo] = useState('')
+  const [sendCode, setsendCode] = useState('')
+  const [code, setCode] = useState('')
+  const [active, setActive] = useState(true)
+  const [submit, setSubmit] = useState(false)
+  const [error, setError] = useState(false)
+  const [show, setShow] = React.useState(false)
 
   const [values, setValues] = useState({
-    phone: "",
-    code: "",
-    confirmation: "",
-  });
-  const [checkCode, setCheckCode] = useState(false);
-  const classes = useStyles();
+    phone: '',
+    code: '',
+    confirmation: '',
+  })
+  const [checkCode, setCheckCode] = useState(false)
+  const classes = useStyles()
   const namefull =
-    localStorage.getItem("nombre") + " " + localStorage.getItem("apellido");
+    localStorage.getItem('nombre') + ' ' + localStorage.getItem('apellido')
 
   const handleTo = (e) => {
-    setTo(e.target.value);
-  };
+    setTo(e.target.value)
+  }
   const toggleSend = () => {
     //  handlenSubmit();
-    setSubmit((submit) => !submit);
-  };
+    setSubmit((submit) => !submit)
+  }
   const toggleRSend = () => {
-    handleVerifyCode();
-  };
+    handleVerifyCode()
+  }
   const handleCode = (e) => {
-    setCode(e.target.value);
-    console.log("probando esta parte", e.target.value);
-  };
+    setCode(e.target.value)
+    console.log('probando esta parte', e.target.value)
+  }
 
   const handleValues = (e) => {
-    const aux = { ...values };
-    if (e.target.name === "code") {
-      e.target.value.length <= 4 && (aux[e.target.name] = e.target.value);
+    const aux = { ...values }
+    if (e.target.name === 'code') {
+      e.target.value.length <= 4 && (aux[e.target.name] = e.target.value)
     } else {
-      console.log(e.target.value.length);
-      e.target.value.length < 11 && (aux[e.target.name] = e.target.value);
+      console.log(e.target.value.length)
+      e.target.value.length < 11 && (aux[e.target.name] = e.target.value)
     }
-    setValues(aux);
-  };
+    setValues(aux)
+  }
 
   const handleVerifyCode = (e) => {
-    let URLVal = ValidatioDetail();
-    let idUser = localStorage.getItem("userId");
-    var date = new Date();
+    let URLVal = ValidatioDetail()
+    let idUser = localStorage.getItem('userId')
+    let date = new Date()
     let formatted_date =
-      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    console.log("Codigo recibido", code);
-    console.log("Codigo tecleado", sendCode);
+      date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+    console.log('Codigo recibido', code)
+    console.log('Codigo tecleado', sendCode)
     // debugger
     if (parseInt(values.code) === values.confirmation) {
-      setShow(<LoopCircleLoading />);
-      setActive(true);
-      const token = getToken();
+      setShow(<LoopCircleLoading />)
+      setActive(true)
+      const token = getToken()
       const newValidations = {
         customer: {
           id: idUser,
           user: {
             id: idUser,
-            login: localStorage.getItem("email"),
+            login: localStorage.getItem('email'),
           },
         },
         points: {
@@ -275,111 +275,111 @@ const ValidationPhone = () => {
         },
         validationCreationDate: formatted_date,
         validationEnabled: true,
-        validationExtra: "string",
+        validationExtra: 'string',
         validationModificationDate: formatted_date,
-        validationName: "CELLPHONE",
-        validationStatus: "APPROVED",
-      };
-      console.log(newValidations);
+        validationName: 'CELLPHONE',
+        validationStatus: 'APPROVED',
+      }
+      console.log(newValidations)
       cliente
         .post(URLVal, newValidations, {
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
         })
         .then((response) => {
-          return response.data;
+          return response.data
         })
         .then((response) => {
-          console.log(response);
-          window.open("/completedAutomaticvalidationphone", "_self");
+          console.log(response)
+          window.open('/completedAutomaticvalidationphone', '_self')
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
     } else {
       //  setSent(true);
       //   setShow(false);
-      setActive(true);
+      setActive(true)
       setValues({
-        code: "",
+        code: '',
         confirmation: values.confirmation,
         phone: values.phone,
-      });
+      })
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "El codigo insertado no es correcto",
-        footer: "GoTruster",
-      });
+        icon: 'error',
+        title: 'Oops...',
+        text: 'El codigo insertado no es correcto',
+        footer: 'GoTruster',
+      })
     }
-  };
-  let $show = show;
-  let $wait = "";
+  }
+  let $show = show
+  let $wait = ''
   if ($show) {
-    $wait = <LoopCircleLoading />;
+    $wait = <LoopCircleLoading />
   } else {
-    $wait = "";
+    $wait = ''
   }
   useEffect(() => {
-    let Url = SMSValidations();
+    let Url = SMSValidations()
     if (submit) {
-      if (values.phone !== "") {
+      if (values.phone !== '') {
         //  setShow(true);
         //setActive(true);
         const dataRegister = {
           to: `+54${values.phone}`,
-        };
+        }
 
         cliente
           .post(Url, dataRegister, {
             headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
             },
           })
           .then((response) => {
             //  setTo("");
-            const aux = { ...values };
-            aux.confirmation = response.data;
+            const aux = { ...values }
+            aux.confirmation = response.data
             aux.phone = ''
-            setValues(aux);
-            setCheckCode(true);
+            setValues(aux)
+            setCheckCode(true)
             //setShow(false);
             //setsendCode(response.data);
             //  setActive(true);
             //   setSent(true);
-          });
+          })
       }
-      setActive(true);
-      setSubmit(false);
+      setActive(true)
+      setSubmit(false)
     }
-  }, [submit]);
+  }, [submit])
   const reset = () => {
-    setValues({ phone: "", code: "", confirmation: "" });
-    setActive(true);
-    setCheckCode(false);
-  };
+    setValues({ phone: '', code: '', confirmation: '' })
+    setActive(true)
+    setCheckCode(false)
+  }
   useEffect(() => {
-    !checkCode && setSubmit(false);
-    checkCode && setActive(true);
-  }, [checkCode]);
+    !checkCode && setSubmit(false)
+    checkCode && setActive(true)
+  }, [checkCode])
   useEffect(() => {
-    console.log(values);
+    console.log(values)
 
     if (values.code.length === 4 || values.phone.length === 10) {
-      setActive(false);
+      setActive(false)
     } else {
-      setActive(true);
+      setActive(true)
     }
-  }, [values]);
+  }, [values])
   const check = (e) => {
-    console.log("valus", e);
-    e.target.name === "phone"
+    console.log('valus', e)
+    e.target.name === 'phone'
       ? values.phone.length === 10 && setSubmit(true)
-      : values.code.length === 4 && handleVerifyCode();
-    e.preventDefault();
-  };
+      : values.code.length === 4 && handleVerifyCode()
+    e.preventDefault()
+  }
   return (
     <Grid
       position="static"
@@ -398,7 +398,7 @@ const ValidationPhone = () => {
         xl={12}
         sm={12}
         container
-        style={{ marginTop: "30px" }}
+        style={{ marginTop: '30px' }}
         justify="center"
       >
         {width >= 600 ? (
@@ -413,15 +413,15 @@ const ValidationPhone = () => {
           xl={12}
           sm={12}
           container
-          style={{ marginTop: "30px" }}
+          style={{ marginTop: '30px' }}
           justify="center"
         >
           <form
             style={{
-              width: width >= 600 ? "40%" : "90%",
+              width: width >= 600 ? '40%' : '90%',
               marginTop: 10,
-              justifyContent: "center",
-              alignContent: "center",
+              justifyContent: 'center',
+              alignContent: 'center',
             }}
             // onSubmit={this.handleSubmit}
             onSubmit={(e) => check(e)}
@@ -438,7 +438,7 @@ const ValidationPhone = () => {
               id="telefono"
               name="phone"
               value={values.phone}
-              inputProps={{ style: { textAlign: "left" } }}
+              inputProps={{ style: { textAlign: 'left' } }}
               className={classes.formButton2}
               onChange={(e) => handleValues(e)}
               required
@@ -451,15 +451,15 @@ const ValidationPhone = () => {
           xl={12}
           sm={12}
           container
-          style={{ marginTop: "30px" }}
+          style={{ marginTop: '30px' }}
           justify="center"
         >
           <form
             style={{
-              width: width >= 600 ? "40%" : "90%",
+              width: width >= 600 ? '40%' : '90%',
               marginTop: 10,
-              justifyContent: "center",
-              alignContent: "center",
+              justifyContent: 'center',
+              alignContent: 'center',
             }}
             // onSubmit={this.handleSubmit}
             name="code"
@@ -473,7 +473,7 @@ const ValidationPhone = () => {
               id="codigo"
               name="code"
               value={values.code}
-              inputProps={{ style: { textAlign: "left" } }}
+              inputProps={{ style: { textAlign: 'left' } }}
               className={classes.formButton2}
               onChange={(e) => handleValues(e)}
               required
@@ -487,7 +487,7 @@ const ValidationPhone = () => {
         xl={12}
         sm={12}
         container
-        style={{ marginTop: "10px" }}
+        style={{ marginTop: '10px' }}
         justify="center"
       >
         {width >= 600 ? (
@@ -505,7 +505,7 @@ const ValidationPhone = () => {
         xl={12}
         sm={12}
         container
-        style={{ marginTop: "20px" }}
+        style={{ marginTop: '20px' }}
         justify="center"
       >
         {width >= 600 ? (
@@ -514,11 +514,11 @@ const ValidationPhone = () => {
             xl={5}
             sm={5}
             container
-            style={{ marginTop: "10px", marginLeft: "-30px" }}
+            style={{ marginTop: '10px', marginLeft: '-30px' }}
             justify="flex-end"
           >
             {!checkCode ? (
-              <a href={"/reputation"}>
+              <a href={'/reputation'}>
                 <Button className={classes.cbutton}>Cancelar</Button>
               </a>
             ) : (
@@ -533,7 +533,7 @@ const ValidationPhone = () => {
             xl={12}
             sm={12}
             container
-            style={{ marginTop: "10px" }}
+            style={{ marginTop: '10px' }}
             justify="center"
           >
             {!checkCode ? (
@@ -561,7 +561,7 @@ const ValidationPhone = () => {
             xl={7}
             sm={7}
             container
-            style={{ marginTop: "10px", marginLeft: "30px" }}
+            style={{ marginTop: '10px', marginLeft: '30px' }}
             justify="flex-start"
           >
             {!checkCode ? (
@@ -588,7 +588,7 @@ const ValidationPhone = () => {
             xl={12}
             sm={12}
             container
-            style={{ marginTop: "10px" }}
+            style={{ marginTop: '10px' }}
             justify="center"
           >
             {!checkCode ? (
@@ -608,15 +608,15 @@ const ValidationPhone = () => {
         xl={12}
         sm={12}
         container
-        style={{ marginTop: "40px", marginBottom: "50px" }}
+        style={{ marginTop: '40px', marginBottom: '50px' }}
         justify="center"
       >
-        <Typography className={classes.nomsg} style={{ marginRight: "5px" }}>
+        <Typography className={classes.nomsg} style={{ marginRight: '5px' }}>
           ¿No te llega el mensaje?
         </Typography>
         <Typography className={classes.soporte}>Contactá a soporte</Typography>
       </Grid>
     </Grid>
-  );
-};
-export default ValidationPhone;
+  )
+}
+export default ValidationPhone

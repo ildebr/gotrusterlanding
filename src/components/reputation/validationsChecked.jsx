@@ -1,9 +1,9 @@
-import React from "react";
-import validationsJson from "./validations.json";
+import React from 'react'
+import validationsJson from './validations.json'
 
-import ItemValidation from "./validation";
+import ItemValidation from './validation'
 function ValidationsChecked(props) {
-  const { loading, validations } = props;
+  const { loading, validations } = props
 
   return (
     <div className="containerValidations">
@@ -36,6 +36,6 @@ function ValidationsChecked(props) {
         />
       </div>
     </div>
-  );
+  )
 }
-export default ValidationsChecked;
+export default ValidationsChecked

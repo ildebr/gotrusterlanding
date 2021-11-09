@@ -12,6 +12,6 @@ function ArrowRight() {
         fill="#ACFD00"
       />
     </svg>
-  );
+  )
 }
-export default ArrowRight;
+export default ArrowRight

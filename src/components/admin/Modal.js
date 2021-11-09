@@ -1,8 +1,8 @@
-import React, { useRef, useEffect, useCallback } from 'react';
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { useSpring, animated } from 'react-spring';
-import styled from 'styled-components';
-import { MdClose } from 'react-icons/md';
+import React, { useRef, useEffect, useCallback } from 'react'
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
+import { useSpring, animated } from 'react-spring'
+import styled from 'styled-components'
+import { MdClose } from 'react-icons/md'
 
 const Background = styled.div`
   width: 100%;
@@ -16,7 +16,7 @@ const Background = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 10;
-`;
+`
 
 const ModalWrapper = styled.div`
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
@@ -26,14 +26,14 @@ const ModalWrapper = styled.div`
   position: relative;
   z-index: 10;
   border-radius: 10px;
-`;
+`
 
 const ModalImg = styled.img`
   width: 100%;
   height: 100%;
   border-radius: 10px 0 0 10px;
   background: #000;
-`;
+`
 
 const CloseModalButton = styled(MdClose)`
   cursor: pointer;
@@ -44,42 +44,39 @@ const CloseModalButton = styled(MdClose)`
   height: 32px;
   padding: 0;
   z-index: 10;
-`;
+`
 
 export const Modal = ({ showModal, setShowModal, imageRef }) => {
-  const modalRef = useRef();
+  const modalRef = useRef()
 
   const animation = useSpring({
     config: {
-      duration: 250
+      duration: 250,
     },
     opacity: showModal ? 1 : 0,
-    transform: showModal ? `translateY(0%)` : `translateY(-100%)`
-  });
+    transform: showModal ? `translateY(0%)` : `translateY(-100%)`,
+  })
 
-  const closeModal = e => {
+  const closeModal = (e) => {
     if (modalRef.current === e.target) {
-      setShowModal(false);
+      setShowModal(false)
     }
-  };
+  }
 
   const keyPress = useCallback(
-    e => {
+    (e) => {
       if (e.key === 'Escape' && showModal) {
-        setShowModal(false);
-        console.log('I pressed');
+        setShowModal(false)
+        console.log('I pressed')
       }
     },
     [setShowModal, showModal]
-  );
+  )
 
-  useEffect(
-    () => {
-      document.addEventListener('keydown', keyPress);
-      return () => document.removeEventListener('keydown', keyPress);
-    },
-    [keyPress]
-  );
+  useEffect(() => {
+    document.addEventListener('keydown', keyPress)
+    return () => document.removeEventListener('keydown', keyPress)
+  }, [keyPress])
 
   return (
     <>
@@ -87,30 +84,39 @@ export const Modal = ({ showModal, setShowModal, imageRef }) => {
         <Background onClick={closeModal} ref={modalRef}>
           <animated.div style={animation}>
             <ModalWrapper showModal={showModal}>
-              <TransformWrapper 
-                defaultScale={0.3} 
+              <TransformWrapper
+                defaultScale={0.3}
                 options={{
                   minScale: 0.1,
-                  centerContent: true 
-                }}>
+                  centerContent: true,
+                }}
+              >
                 {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                   <React.Fragment>
-                    <div style={{height: 500, width: 800 }}> 
+                    <div style={{ height: 500, width: 800 }}>
                       <TransformComponent>
-                        <ModalImg src={imageRef.current.src} alt='camera' style={{height: 500, width: 800, backgroundColor: 'blue' }} />  
+                        <ModalImg
+                          src={imageRef.current.src}
+                          alt="camera"
+                          style={{
+                            height: 500,
+                            width: 800,
+                            backgroundColor: 'blue',
+                          }}
+                        />
                       </TransformComponent>
                     </div>
                   </React.Fragment>
                 )}
               </TransformWrapper>
               <CloseModalButton
-                aria-label='Close modal'
-                onClick={() => setShowModal(prev => !prev)}
+                aria-label="Close modal"
+                onClick={() => setShowModal((prev) => !prev)}
               />
             </ModalWrapper>
           </animated.div>
         </Background>
       ) : null}
     </>
-  );
-};
+  )
+}

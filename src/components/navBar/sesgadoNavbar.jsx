@@ -1,70 +1,78 @@
-import React from 'react';
-import { withStyles } from "@material-ui/core/styles";
-import { Grid, Toolbar, Typography, Link } from '@material-ui/core';
+import React from 'react'
+import { withStyles } from '@material-ui/core/styles'
+import { Grid, Toolbar, Typography, Link } from '@material-ui/core'
 import Letter from '../../asset/images/letterLogo.svg'
 
-const { localStorage } = global.window;
-const userActive = localStorage.getItem('logueado');
-const styles = theme => ({
-    root: {
+const { localStorage } = global.window
+const userActive = localStorage.getItem('logueado')
+const styles = (theme) => ({
+  root: {
+    flexGrow: 1,
+    border: 0,
+    margin: 0,
+    marginTop: '2vh',
+    height: 217,
+  },
+  menuButton: {
+    marginRight: 2,
+  },
+  title: {
+    //marginLeft: 60,
+    flexGrow: 1,
+    align: 'center',
+    color: '#FFFFFF',
+    font: ' normal normal 40px/40px Poppins',
+  },
+  navSign: {
+    marginRight: 10,
+    color: '#ACFD00',
+    fontFamily: 'Poppins',
+    fontSize: '16px',
+    fontStyle: ' normal',
+    fontWeight: '700',
+    lineHeight: '24px',
+    letterSpacing: ' -0.02em',
+    textAlign: 'center',
+  },
+})
+
+const SesgadoNavbar = () => {
+  const nameUser = localStorage.getItem('nombre')
+  return (
+    <Grid
+      position="static"
+      color="transparent"
+      style={{
         flexGrow: 1,
         border: 0,
         margin: 0,
-        marginTop: '2vh',
-        height: 217,
-    },
-    menuButton: {
-        marginRight: 2,
-    },
-    title: {
-        //marginLeft: 60,
-        flexGrow: 1,
-        align: "center",
-        color: "#FFFFFF",
-        font: " normal normal 40px/40px Poppins",
-    },
-    navSign: {
-        marginRight: 10,
-        color: '#ACFD00',
-        fontFamily: 'Poppins',
-        fontSize: '16px',
-        fontStyle: ' normal',
-        fontWeight: '700',
-        lineHeight: '24px',
-        letterSpacing: ' -0.02em',
-        textAlign: 'center'
-    },
-});
+        zIndex: 100,
+      }}
+    >
+      <Toolbar>
+        <div className="menu-wrap">
+          <input type="checkbox" className="toggler" />
+          {/* <div class="hamburger2"><div></div></div> */}
+          <div className="menu">
+            <div>
+              <div>
+                <Typography
+                  variant="h6"
+                  style={{
+                    marginLeft: 40,
+                    flexGrow: 1,
+                    align: 'center',
+                    color: '#FFFFFF',
+                    font: ' normal normal 40px/40px Poppins',
+                    marginBottom: 60,
+                  }}
+                >
+                  <Link href="https://gotruster.com/">
+                    <img src={Letter} />
+                  </Link>
+                </Typography>
 
-
-const SesgadoNavbar = () => {
-    const nameUser = localStorage.getItem("nombre");
-    return (
-        <Grid position="static" color="transparent" style={{
-            flexGrow: 1,
-            border: 0,
-            margin: 0,
-            zIndex: 100
-        }} >
-            <Toolbar>
-                <div class="menu-wrap">
-                    <input type="checkbox" class="toggler" />
-                    {/* <div class="hamburger2"><div></div></div> */}
-                    <div class="menu">
-                        <div>
-                            <div>
-                                <Typography variant="h6" style={{
-                                    marginLeft: 40,
-                                    flexGrow: 1,
-                                    align: "center",
-                                    color: "#FFFFFF",
-                                    font: " normal normal 40px/40px Poppins",
-                                    marginBottom: 60
-                                }}>
-                                     <Link href='https://gotruster.com/'><img src={Letter}/></Link>
-                                    </Typography>
-
-                                {/* <Typography style={{
+                {/* <Typography style={{
                                     marginLeft: 40,
                                     flexGrow: 1,
                                     align: "center",
@@ -106,11 +114,12 @@ const SesgadoNavbar = () => {
                                     <li><Link href='/' style={{ color: "#5e5e5d" }}>Política</Link></li>
                                     <li><Link href='/' style={{ color: "#5e5e5d", fontSize: 12 }}><img src={CerrarSesion} alt='cerrarsesion' style={{ paddingRight: 5, width: '8px' }} /> Cerrar Sesión</Link></li>
                                 </ul> */}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </Toolbar>
-        </Grid>)
+              </div>
+            </div>
+          </div>
+        </div>
+      </Toolbar>
+    </Grid>
+  )
 }
-export default withStyles(styles, { withTheme: true })(SesgadoNavbar);
+export default withStyles(styles, { withTheme: true })(SesgadoNavbar)

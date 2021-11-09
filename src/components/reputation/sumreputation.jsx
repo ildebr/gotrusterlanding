@@ -1,13 +1,13 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import validationsJson from "./validations.json";
-import ItemValidation from "./validation";
+import React from 'react'
+import { withStyles } from '@material-ui/core/styles'
+import validationsJson from './validations.json'
+import ItemValidation from './validation'
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
     border: 0,
     margin: 0,
-    marginTop: "2vh",
+    marginTop: '2vh',
     height: 217,
   },
   menuButton: {
@@ -16,25 +16,25 @@ const styles = (theme) => ({
   title: {
     marginLeft: 60,
     flexGrow: 1,
-    align: "center",
-    color: "#FFFFFF",
-    font: " normal normal 40px/40px Poppins",
+    align: 'center',
+    color: '#FFFFFF',
+    font: ' normal normal 40px/40px Poppins',
   },
   navSign: {
     marginRight: 10,
-    color: "#ACFD00",
-    fontFamily: "Poppins",
-    fontSize: "16px",
-    fontStyle: " normal",
-    fontWeight: "700",
-    lineHeight: "24px",
-    letterSpacing: " -0.02em",
-    textAlign: "center",
+    color: '#ACFD00',
+    fontFamily: 'Poppins',
+    fontSize: '16px',
+    fontStyle: ' normal',
+    fontWeight: '700',
+    lineHeight: '24px',
+    letterSpacing: ' -0.02em',
+    textAlign: 'center',
   },
-});
+})
 
 const SumReputation = (props) => {
-  const { loading, validations } = props;
+  const { loading, validations } = props
 
   return (
     <div className="containerValidations">
@@ -59,7 +59,7 @@ const SumReputation = (props) => {
           ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default withStyles(styles, { withTheme: true })(SumReputation);
+export default withStyles(styles, { withTheme: true })(SumReputation)

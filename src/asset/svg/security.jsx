@@ -12,6 +12,6 @@ function Security() {
         fill="#ACFD00"
       />
     </svg>
-  );
+  )
 }
-export default Security;
+export default Security

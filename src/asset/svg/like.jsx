@@ -12,6 +12,6 @@ function Like() {
         fill="#ACFD00"
       />
     </svg>
-  );
+  )
 }
-export default Like;
+export default Like

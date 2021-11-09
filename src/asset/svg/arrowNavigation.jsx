@@ -12,6 +12,6 @@ function ArrowNavigation() {
         fill="#E5E5E5"
       />
     </svg>
-  );
+  )
 }
-export default ArrowNavigation;
+export default ArrowNavigation

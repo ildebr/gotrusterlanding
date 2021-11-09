@@ -12,6 +12,6 @@ function Share() {
         fill="#ACFD00"
       />
     </svg>
-  );
+  )
 }
-export default Share;
+export default Share

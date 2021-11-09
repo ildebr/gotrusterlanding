@@ -12,6 +12,6 @@ function Clock() {
         fill="#22C5FD"
       />
     </svg>
-  );
+  )
 }
 export default Clock

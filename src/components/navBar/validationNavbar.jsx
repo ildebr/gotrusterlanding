@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React, { useEffect, useState } from 'react'
+import { withStyles } from '@material-ui/core/styles'
 import {
   Grid,
   Toolbar,
@@ -7,30 +7,30 @@ import {
   Button,
   Hidden,
   Link,
-} from "@material-ui/core";
-import WindowDimensions from "../../components/UtilityComponents/WindowDimension";
+} from '@material-ui/core'
+import WindowDimensions from '../../components/UtilityComponents/WindowDimension'
 
-import Ok from "../../asset/images/myProfile/ok.svg";
-import ProfilePicture from "../../asset/images/admin/profilePicture.png";
-import Busqueda from "../../asset/images/sidemenu/busqueda.svg";
-import MiPerfil from "../../asset/images/sidemenu/miperfil.svg";
-import MiNegocio from "../../asset/images/sidemenu/minegocio.svg";
-import MiReputacion from "../../asset/images/sidemenu/mireputacion.svg";
-import Compartir from "../../asset/images/sidemenu/compartir.svg";
-import Insertar from "../../asset/images/sidemenu/insertar.svg";
-import Ajustes from "../../asset/images/sidemenu/ajustes.svg";
-import Soporte from "../../asset/images/sidemenu/soporte.svg";
-import CerrarSesion from "../../asset/images/sidemenu/cerrarsesion.svg";
-import TemporaryDrawer from "./mobileDrawer";
-import Letter from "../../asset/images/letterLogo.svg";
-const { localStorage } = global.window;
-const userActive = localStorage.getItem("logueado");
+import Ok from '../../asset/images/myProfile/ok.svg'
+import ProfilePicture from '../../asset/images/admin/profilePicture.png'
+import Busqueda from '../../asset/images/sidemenu/busqueda.svg'
+import MiPerfil from '../../asset/images/sidemenu/miperfil.svg'
+import MiNegocio from '../../asset/images/sidemenu/minegocio.svg'
+import MiReputacion from '../../asset/images/sidemenu/mireputacion.svg'
+import Compartir from '../../asset/images/sidemenu/compartir.svg'
+import Insertar from '../../asset/images/sidemenu/insertar.svg'
+import Ajustes from '../../asset/images/sidemenu/ajustes.svg'
+import Soporte from '../../asset/images/sidemenu/soporte.svg'
+import CerrarSesion from '../../asset/images/sidemenu/cerrarsesion.svg'
+import TemporaryDrawer from './mobileDrawer'
+import Letter from '../../asset/images/letterLogo.svg'
+const { localStorage } = global.window
+const userActive = localStorage.getItem('logueado')
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
     border: 0,
     margin: 0,
-    marginTop: "2vh",
+    marginTop: '2vh',
     height: 217,
   },
   menuButton: {
@@ -39,40 +39,40 @@ const styles = (theme) => ({
   title: {
     marginLeft: 60,
     flexGrow: 1,
-    align: "center",
-    color: "#FFFFFF",
-    font: " normal normal 40px/40px Poppins",
+    align: 'center',
+    color: '#FFFFFF',
+    font: ' normal normal 40px/40px Poppins',
   },
   navSign: {
     marginRight: 10,
-    color: "#ACFD00",
-    fontFamily: "Poppins",
-    fontSize: "16px",
-    fontStyle: " normal",
-    fontWeight: "700",
-    lineHeight: "24px",
-    letterSpacing: " -0.02em",
-    textAlign: "center",
+    color: '#ACFD00',
+    fontFamily: 'Poppins',
+    fontSize: '16px',
+    fontStyle: ' normal',
+    fontWeight: '700',
+    lineHeight: '24px',
+    letterSpacing: ' -0.02em',
+    textAlign: 'center',
   },
-});
+})
 
 const ValidationNavbar = ({ active, recover }) => {
-  const { width } = WindowDimensions();
-  const isActive = active;
-  const nameUser = localStorage.getItem("nombre");
-  const back = "<";
-  let $Show = "";
+  const { width } = WindowDimensions()
+  const isActive = active
+  const nameUser = localStorage.getItem('nombre')
+  const back = '<'
+  let $Show = ''
   if (isActive === 1) {
     $Show = (
       <img
         src={Ok}
         alt="ok"
         width="20px"
-        style={{ marginTop: 30, position: "absolute" }}
+        style={{ marginTop: 30, position: 'absolute' }}
       />
-    );
+    )
   } else {
-    $Show = "";
+    $Show = ''
   }
 
   /*  const [user, setUser] = useState(null)
@@ -81,8 +81,8 @@ const ValidationNavbar = ({ active, recover }) => {
     const [imagesArray, setImagesArray] = useState([]);
      */
   const addDefaultPofileImage = (e) => {
-    e.target.src = ProfilePicture;
-  };
+    e.target.src = ProfilePicture
+  }
   return (
     <Grid
       position="static"
@@ -101,20 +101,20 @@ const ValidationNavbar = ({ active, recover }) => {
             flexGrow: 1,
             border: 0,
             margin: 0,
-            marginTop: "2vh",
+            marginTop: '2vh',
             height: 141,
           }}
         >
           <Toolbar>
-            <div class="menu-wrap">
-              <input type="checkbox" class="toggler" />
+            <div className="menu-wrap">
+              <input type="checkbox" className="toggler" />
               <div
-                class="hamburger"
-                style={{ width: "30px", heigth: "20px", top: 4 }}
+                className="hamburger"
+                style={{ width: '30px', heigth: '20px', top: 4 }}
               >
                 <div></div>
               </div>
-              <div class="menu">
+              <div className="menu">
                 <div>
                   <div>
                     <Typography
@@ -122,9 +122,9 @@ const ValidationNavbar = ({ active, recover }) => {
                       style={{
                         marginLeft: 40,
                         flexGrow: 1,
-                        align: "center",
-                        color: "#FFFFFF",
-                        font: " normal normal 40px/40px Poppins",
+                        align: 'center',
+                        color: '#FFFFFF',
+                        font: ' normal normal 40px/40px Poppins',
                         marginBottom: 60,
                         // paddingLeft:'157px'
                       }}
@@ -138,9 +138,9 @@ const ValidationNavbar = ({ active, recover }) => {
                       style={{
                         marginLeft: 40,
                         flexGrow: 1,
-                        align: "center",
-                        color: "#ACFD00",
-                        font: " normal normal 16px/16px Poppins",
+                        align: 'center',
+                        color: '#ACFD00',
+                        font: ' normal normal 16px/16px Poppins',
                         marginBottom: 10,
                       }}
                     >
@@ -150,70 +150,70 @@ const ValidationNavbar = ({ active, recover }) => {
                       style={{
                         marginLeft: 40,
                         flexGrow: 1,
-                        align: "center",
-                        color: "#FFFFFF",
+                        align: 'center',
+                        color: '#FFFFFF',
                         fontWeight: 700,
-                        font: " normal normal 40px/60px Poppins",
+                        font: ' normal normal 40px/60px Poppins',
                       }}
                     >
                       {nameUser}
                     </Typography>
-                    <ul style={{ paddingLeft: "40px" }}>
+                    <ul style={{ paddingLeft: '40px' }}>
                       <li>
-                        <Link href={userActive ? "/reputation" : "/"}>
+                        <Link href={userActive ? '/reputation' : '/'}>
                           <img
                             src={MiReputacion}
                             alt="mireputacion"
-                            style={{ paddingRight: 10, width: "12%" }}
-                          />{" "}
+                            style={{ paddingRight: 10, width: '12%' }}
+                          />{' '}
                           Mi Reputación
                         </Link>
                       </li>
                       <li>
-                        <Link href={userActive ? "/search" : "/"}>
+                        <Link href={userActive ? '/search' : '/'}>
                           <img
                             src={Busqueda}
                             alt="busqueda"
-                            style={{ paddingRight: 10, width: "12%" }}
-                          />{" "}
+                            style={{ paddingRight: 10, width: '12%' }}
+                          />{' '}
                           Búsqueda
                         </Link>
                       </li>
                       <li>
-                        <Link href={userActive ? "/myprofile" : "/"}>
+                        <Link href={userActive ? '/myprofile' : '/'}>
                           <img
                             src={MiPerfil}
                             alt="miperfil"
-                            style={{ paddingRight: 10, width: "11%" }}
-                          />{" "}
+                            style={{ paddingRight: 10, width: '11%' }}
+                          />{' '}
                           Mi Perfíl
                         </Link>
                       </li>
                       <li>
-                        <Link href={userActive ? "/mybusiness" : "/"}>
+                        <Link href={userActive ? '/mybusiness' : '/'}>
                           <img
                             src={MiNegocio}
                             alt="minegocio"
-                            style={{ paddingRight: 10, width: "13%" }}
-                          />{" "}
+                            style={{ paddingRight: 10, width: '13%' }}
+                          />{' '}
                           Mi Negocio
                         </Link>
                       </li>
                     </ul>
                     <hr
-                      width={"100%"}
+                      width={'100%'}
                       size={1}
-                      color={"#5e5e5d"}
+                      color={'#5e5e5d'}
                       style={{ marginBottom: 30, marginLeft: 20 }}
                     />
-                    <ul style={{ paddingLeft: "40px" }}>
+                    <ul style={{ paddingLeft: '40px' }}>
                       <li>
                         <Link href="/sharemyprofile">
                           <img
                             src={Compartir}
                             alt="compartir"
-                            style={{ paddingRight: 10, width: "11%" }}
-                          />{" "}
+                            style={{ paddingRight: 10, width: '11%' }}
+                          />{' '}
                           Compartir Perfíl
                         </Link>
                       </li>
@@ -222,8 +222,8 @@ const ValidationNavbar = ({ active, recover }) => {
                           <img
                             src={Insertar}
                             alt="insertar"
-                            style={{ paddingRight: 10, width: "13%" }}
-                          />{" "}
+                            style={{ paddingRight: 10, width: '13%' }}
+                          />{' '}
                           Insertar Perfíl
                         </Link>
                       </li>
@@ -232,8 +232,8 @@ const ValidationNavbar = ({ active, recover }) => {
                           <img
                             src={Ajustes}
                             alt="ajustes"
-                            style={{ paddingRight: 10, width: "12%" }}
-                          />{" "}
+                            style={{ paddingRight: 10, width: '12%' }}
+                          />{' '}
                           Ajustes
                         </Link>
                       </li>
@@ -242,50 +242,50 @@ const ValidationNavbar = ({ active, recover }) => {
                           <img
                             src={Soporte}
                             alt="soporte"
-                            style={{ paddingRight: 10, width: "11%" }}
-                          />{" "}
+                            style={{ paddingRight: 10, width: '11%' }}
+                          />{' '}
                           Soporte
                         </Link>
                       </li>
                     </ul>
                     <hr
-                      width={"100%"}
+                      width={'100%'}
                       size={1}
-                      color={"#5e5e5d"}
+                      color={'#5e5e5d'}
                       style={{ marginBottom: 30, marginLeft: 20 }}
                     />
                     <ul
                       style={{
-                        paddingLeft: "40px",
-                        display: "grid",
-                        justifyContent: "center",
+                        paddingLeft: '40px',
+                        display: 'grid',
+                        justifyContent: 'center',
                       }}
                     >
                       <li>
-                        <Link href="/" style={{ color: "#5e5e5d" }}>
+                        <Link href="/" style={{ color: '#5e5e5d' }}>
                           Términos y Condiciones
                         </Link>
                       </li>
                       <li>
-                        <Link href="/" style={{ color: "#5e5e5d" }}>
+                        <Link href="/" style={{ color: '#5e5e5d' }}>
                           Política
                         </Link>
-                      </li>{" "}
+                      </li>{' '}
                       <li>
                         <Link
                           href="/"
                           style={{
-                            color: "#5e5e5d",
+                            color: '#5e5e5d',
                             fontSize: 15,
-                            display: "flex",
-                            alignItems: "center",
-                            columnGap: "6px",
+                            display: 'flex',
+                            alignItems: 'center',
+                            columnGap: '6px',
                           }}
                         >
                           <img
                             src={CerrarSesion}
                             alt="cerrarsesion"
-                            style={{ width: "14px", height: "14px" }}
+                            style={{ width: '14px', height: '14px' }}
                           />
                           Cerrar Sesión
                         </Link>
@@ -302,9 +302,9 @@ const ValidationNavbar = ({ active, recover }) => {
                   marginLeft: 145,
                   flexGrow: 1,
                   marginTop: 15,
-                  align: "center",
-                  color: "#FFFFFF",
-                  font: " normal normal 40px/40px Poppins",
+                  align: 'center',
+                  color: '#FFFFFF',
+                  font: ' normal normal 40px/40px Poppins',
                   //paddingLeft:'157px'
                   //marginBottom: 217
                 }}
@@ -320,10 +320,10 @@ const ValidationNavbar = ({ active, recover }) => {
                   marginLeft: 77,
                   flexGrow: 1,
                   marginTop: 15,
-                  align: "center",
-                  color: "#FFFFFF",
-                  font: " normal normal 40px/40px Poppins",
-                  paddingLeft: "157px",
+                  align: 'center',
+                  color: '#FFFFFF',
+                  font: ' normal normal 40px/40px Poppins',
+                  paddingLeft: '157px',
                   //marginBottom: 217
                 }}
               >
@@ -336,33 +336,31 @@ const ValidationNavbar = ({ active, recover }) => {
             <Hidden xsDown>{$Show}</Hidden>
             <Typography
               style={{
-                color: "#ACFD00",
-                fontFamily: "Poppins",
-                fontSize: "16px",
-                fontStyle: " normal",
+                color: '#ACFD00',
+                fontFamily: 'Poppins',
+                fontSize: '16px',
+                fontStyle: ' normal',
                 marginTop: 15,
-                fontWeight: "700",
-                lineHeight: "24px",
-                letterSpacing: " -0.02em",
-                textAlign: "left",
+                fontWeight: '700',
+                lineHeight: '24px',
+                letterSpacing: ' -0.02em',
+                textAlign: 'left',
               }}
             >
-              &nbsp;&nbsp;&nbsp;{" "}
+              &nbsp;&nbsp;&nbsp;{' '}
             </Typography>
 
             <img
-              src={
-                "https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/" +
-                localStorage.getItem("userLogin") +
-                ".png"
-              }
+              src={`https://truster-bucket.s3.us-west-2.amazonaws.com/images/perfil/${localStorage.getItem(
+                'userLogin'
+              )}.png`}
               style={{
                 marginTop: 30,
                 marginRight: 15,
                 height: 50,
                 width: 50,
-                borderRadius: "50%",
-                objectFit: "cover",
+                borderRadius: '50%',
+                objectFit: 'cover',
               }}
               onError={addDefaultPofileImage}
             />
@@ -372,37 +370,37 @@ const ValidationNavbar = ({ active, recover }) => {
                 marginTop: 15,
               }}
             >
-              {" "}
+              {' '}
               <Button
                 href="/"
                 style={{
-                  color: "#FFFFFF",
-                  fontFamily: "Poppins",
-                  fontSize: "16px",
-                  fontStyle: " normal",
-                  width: "155px",
-                  height: "52px",
+                  color: '#FFFFFF',
+                  fontFamily: 'Poppins',
+                  fontSize: '16px',
+                  fontStyle: ' normal',
+                  width: '155px',
+                  height: '52px',
                   marginTop: 15,
-                  fontWeight: "700",
-                  lineHeight: "24px",
-                  letterSpacing: " -0.02em",
-                  textAlign: "center",
+                  fontWeight: '700',
+                  lineHeight: '24px',
+                  letterSpacing: ' -0.02em',
+                  textAlign: 'center',
 
                   marginRight: 0,
-                  background: "rgba(231, 231, 231, 0.05)",
-                  opacity: "0.8",
-                  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-                  borderRadius: "63px",
-                  textTransform: "none",
+                  background: 'rgba(231, 231, 231, 0.05)',
+                  opacity: '0.8',
+                  boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+                  borderRadius: '63px',
+                  textTransform: 'none',
                 }}
               >
                 <Typography
                   style={{
-                    color: "#FFFFFF",
-                    fontSize: "16px",
-                    fontStyle: " normal",
-                    textTransform: "none",
-                    fontFamily: "Poppins",
+                    color: '#FFFFFF',
+                    fontSize: '16px',
+                    fontStyle: ' normal',
+                    textTransform: 'none',
+                    fontFamily: 'Poppins',
                     marginTop: 15,
                   }}
                 >
@@ -410,10 +408,10 @@ const ValidationNavbar = ({ active, recover }) => {
                   <Typography
                     style={{
                       paddingLeft: 0,
-                      width: "155px",
-                      color: "#ACFD00",
-                      font: "normal normal normal 11px/12px PoppinsBold",
-                      textTransform: "none",
+                      width: '155px',
+                      color: '#ACFD00',
+                      font: 'normal normal normal 11px/12px PoppinsBold',
+                      textTransform: 'none',
                       marginBottom: 15,
                     }}
                   >
@@ -442,7 +440,7 @@ const ValidationNavbar = ({ active, recover }) => {
             xl={2}
             sm={2}
             justify="center"
-            style={{ alignContent: "flex-start" }}
+            style={{ alignContent: 'flex-start' }}
           >
             <TemporaryDrawer />
           </Grid>
@@ -455,8 +453,8 @@ const ValidationNavbar = ({ active, recover }) => {
                     marginLeft: 10,
                     flexGrow: 1,
                     marginTop: 20,
-                    color: "#FFFFFF",
-                    font: " normal normal 35px/35px Poppins",
+                    color: '#FFFFFF',
+                    font: ' normal normal 35px/35px Poppins',
                   }}
                 >
                   Truster
@@ -466,23 +464,23 @@ const ValidationNavbar = ({ active, recover }) => {
                 <Grid container xs={10} xl={10} sm={10} justify="flex-end">
                   <button
                     style={{
-                      backgroundColor: "rgba(0,0,0,0)",
+                      backgroundColor: 'rgba(0,0,0,0)',
                       marginTop: 18,
                       width: 80,
                       height: 35,
-                      color: "#ACFD00",
-                      font: "normal normal normal 18px/24px PoppinsBold",
-                      border: "2px solid",
-                      borderColor: "#ACFD00",
+                      color: '#ACFD00',
+                      font: 'normal normal normal 18px/24px PoppinsBold',
+                      border: '2px solid',
+                      borderColor: '#ACFD00',
                       borderRadius: 5,
-                      textTransform: "none",
+                      textTransform: 'none',
                     }}
                   >
                     Log In
                   </button>
                 </Grid>
               ) : (
-                ""
+                ''
               )}
             </Grid>
           ) : (
@@ -492,10 +490,10 @@ const ValidationNavbar = ({ active, recover }) => {
                 marginLeft: 10,
                 flexGrow: 1,
                 marginTop: 20,
-                textAlign: "left",
-                paddingLeft: "16px",
-                color: "#FFFFFF",
-                font: " normal normal 30px/30px Poppins",
+                textAlign: 'left',
+                paddingLeft: '16px',
+                color: '#FFFFFF',
+                font: ' normal normal 30px/30px Poppins',
               }}
             >
               Truster
@@ -504,6 +502,6 @@ const ValidationNavbar = ({ active, recover }) => {
         </Grid>
       )}
     </Grid>
-  );
-};
-export default withStyles(styles, { withTheme: true })(ValidationNavbar);
+  )
+}
+export default withStyles(styles, { withTheme: true })(ValidationNavbar)

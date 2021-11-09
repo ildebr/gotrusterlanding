@@ -12,6 +12,6 @@ function Error() {
         fill="#E94342"
       />
     </svg>
-  );
+  )
 }
-export default Error;
+export default Error

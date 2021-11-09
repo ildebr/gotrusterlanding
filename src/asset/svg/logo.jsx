@@ -16,6 +16,6 @@ function Logo() {
         fill="#ACFD00"
       />
     </svg>
-  );
+  )
 }
-export default Logo;
+export default Logo

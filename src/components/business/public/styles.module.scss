@@ -1,7 +1,3 @@
-* {
-  box-sizing: border-box;
-  font-family: "Poppins";
-}
 .containerPublicProfile {
   display: grid;
   grid-template-rows: 525px 1fr;
@@ -9,6 +5,23 @@
   height: 100%;
   width: 100%;
   position: absolute;
+  button {
+    background: transparent;
+    border: none;
+    min-width: 280px;
+    min-height: 54px;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 12px;
+    padding: 12px;
+    cursor: pointer;
+  }
+  & > * {
+    box-sizing: border-box;
+    font-family: 'Poppins';
+  }
 }
 .containerPublicProfile .contentPublicProfile {
   max-width: 1440px;
@@ -281,27 +294,15 @@
   display: grid;
   row-gap: 24px;
 }
-button {
-  background: transparent;
-  border: none;
-  min-width: 280px;
-  min-height: 54px;
-  border-radius: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: 12px;
-  padding: 12px;
-  cursor: pointer;
-}
+
 .button {
   border-radius: 12px;
   display: grid;
   place-items: center;
-}
-.button .reputation {
-  border: 1px solid #acfd00;
-  color: #acfd00;
-  font-size: 20px;
-  font-weight: bold;
+  .reputation {
+    border: 1px solid #acfd00;
+    color: #acfd00;
+    font-size: 20px;
+    font-weight: bold;
+  }
 }

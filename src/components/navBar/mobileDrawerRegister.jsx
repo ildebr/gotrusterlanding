@@ -1,6 +1,6 @@
-import React from 'react';
-import Drawer from '@material-ui/core/Drawer';
-import { Grid, Typography, Button, Link } from '@material-ui/core';
+import React from 'react'
+import Drawer from '@material-ui/core/Drawer'
+import { Grid, Typography, Button, Link } from '@material-ui/core'
 import Inicio from '../../asset/images/sidemenu/inicio.svg'
 import Busqueda from '../../asset/images/sidemenu/busqueda.svg'
 import MiPerfil from '../../asset/images/sidemenu/miperfil.svg'
@@ -14,51 +14,68 @@ import CerrarSesion from '../../asset/images/sidemenu/cerrarsesion.svg'
 import BurgerIcon from '../../asset/images/navBar/burger.svg'
 import Logo from '../../asset/images/navBar/logo.svg'
 import X from '../../asset/images/navBar/x.svg'
-const { localStorage } = global.window;
-const userActive = localStorage.getItem('logueado');
+const { localStorage } = global.window
+const userActive = localStorage.getItem('logueado')
 export default function TemporaryDrawer() {
-    const [state, setState] = React.useState({
-        left: false,
-    });
-    const nameUser = localStorage.getItem("nombre");
-    const toggleDrawer = (anchor, open) => (event) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-            return;
-        }
-        setState({ ...state, [anchor]: open });
-    };
+  const [state, setState] = React.useState({
+    left: false,
+  })
+  const nameUser = localStorage.getItem('nombre')
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return
+    }
+    setState({ ...state, [anchor]: open })
+  }
 
-    const list = (anchor) => (
-       
-        <div
-            style={{ background: '#1A1A1A', height: '300vh' }}
-            role="presentation"
-            onClick={toggleDrawer(anchor, false)}
-            onKeyDown={toggleDrawer(anchor, false)}
-        >
-            <Grid container style={{ padding: 30, marginTop: 15, paddingRight: 0 }}>
-                <Grid container xs={10} xl={10} sm={10} >
-                    <Grid container xs={6} xl={6} sm={6} justify='flex-start' alignItems='center'>
-                        <img src={Logo} alt='logo' />
-                    </Grid>
-                    <Grid container xs={6} xl={6} sm={6} justify='flex-end' alignItems='center'>
-                        <img src={X} alt='x' />
-                    </Grid>
-                </Grid>
-                <Grid container xs={12} xl={12} sm={12} >
-
-                    <Typography style={{
-                        marginTop: 40,
-                        flexGrow: 1,
-                        align: "center",
-                        color: "#ACFD00",
-                        font: " normal normal 14px/14px Poppins",
-                        marginBottom: 10
-                    }}>
-                        BIENVENIDO
-                </Typography>
-                </Grid>
-                {/*<Grid container xs={12} xl={12} sm={12} >
+  const list = (anchor) => (
+    <div
+      style={{ background: '#1A1A1A', height: '300vh' }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <Grid container style={{ padding: 30, marginTop: 15, paddingRight: 0 }}>
+        <Grid container xs={10} xl={10} sm={10}>
+          <Grid
+            container
+            xs={6}
+            xl={6}
+            sm={6}
+            justify="flex-start"
+            alignItems="center"
+          >
+            <img src={Logo} alt="logo" />
+          </Grid>
+          <Grid
+            container
+            xs={6}
+            xl={6}
+            sm={6}
+            justify="flex-end"
+            alignItems="center"
+          >
+            <img src={X} alt="x" />
+          </Grid>
+        </Grid>
+        <Grid container xs={12} xl={12} sm={12}>
+          <Typography
+            style={{
+              marginTop: 40,
+              flexGrow: 1,
+              align: 'center',
+              color: '#ACFD00',
+              font: ' normal normal 14px/14px Poppins',
+              marginBottom: 10,
+            }}
+          >
+            BIENVENIDO
+          </Typography>
+        </Grid>
+        {/*<Grid container xs={12} xl={12} sm={12} >
                     <Typography style={{
                         flexGrow: 1,
                         align: "center",
@@ -228,21 +245,27 @@ export default function TemporaryDrawer() {
                         }}>Cerrar Sesión</Typography></Link>
                     </Grid>
                 </Grid>*/}
-            </Grid>
-        </div>
-    );
+      </Grid>
+    </div>
+  )
 
-    return (
-        <div>
-            <React.Fragment key={'left'}>
-                <Grid container style={{ marginTop: '20px', marginLeft: '20px' }}>
-                    <Button onClick={toggleDrawer('left', true)}><img src={BurgerIcon} alt='burger' width='20px' /></Button>
-                </Grid>
-                <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)} >
-                    {list('left')}
-                </Drawer>
-            </React.Fragment>
-            )
-        </div>
-    );
+  return (
+    <div>
+      <React.Fragment key={'left'}>
+        <Grid container style={{ marginTop: '20px', marginLeft: '20px' }}>
+          <Button onClick={toggleDrawer('left', true)}>
+            <img src={BurgerIcon} alt="burger" width="20px" />
+          </Button>
+        </Grid>
+        <Drawer
+          anchor={'left'}
+          open={state['left']}
+          onClose={toggleDrawer('left', false)}
+        >
+          {list('left')}
+        </Drawer>
+      </React.Fragment>
+      )
+    </div>
+  )
 }
