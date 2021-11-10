@@ -228,7 +228,7 @@ class Login extends Component {
     this.setState({ windowWidth: window.innerWidth })
   }
   componentDidMount() {
-    fetch(loaderServices())
+   // fetch(loaderServices())
     localStorage.clear()
     localStorage.setItem('formato', 'undefined')
     localStorage.setItem('thisEmail', 'undefined')
