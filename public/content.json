@@ -1,0 +1,126 @@
+[
+  {
+    "sections": [
+      {
+        "section": "hero",
+        "data": [
+          {
+            "id": 0,
+            "src": "/hero/slide1-background.png",
+            "title": "Sed ut perspiciatis unde omnis iste natus ",
+            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.",
+            "button": "Read more",
+            "slug": "#"
+          },
+          {
+            "id": 1,
+            "src": "/hero/slide2-background.png",
+            "title": "Sed ut perspiciatis unde omnis iste natus",
+            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.",
+            "button": "Read more",
+            "slug": "#"
+          },
+          {
+            "id": 2,
+            "src": "/hero/slide3-background.png",
+            "title": "Sed ut perspiciatis unde omnis iste natus",
+            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.",
+            "button": "Read more",
+            "slug": "#"
+          }
+        ]
+      },
+      {
+        "section": "about",
+        "data": [
+          {
+            "img": "/about.png",
+            "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat."
+          }
+        ]
+      },
+      {
+        "section": "products",
+        "data": [
+          {
+            "title": "Aliquam at dui lorem ipsum",
+            "list": [
+              "- Ut mattis gravida efficitur.",
+              " - Ut feugiat vehicula nibh, efficitur laoreet justo. ",
+              "- Molestie id. Integer varius enim sit amet egestas. ",
+              "- Ut mattis gravida efficitur."
+            ]
+          },
+          {
+            "title": "Aliquam at dui lorem ipsum",
+            "list": [
+              "- Ut mattis gravida efficitur.",
+              " - Ut feugiat vehicula nibh, efficitur laoreet justo. ",
+              "- Molestie id. Integer varius enim sit amet egestas. ",
+              "- Ut mattis gravida efficitur."
+            ]
+          },
+          {
+            "title": "Aliquam at dui lorem ipsum",
+            "list": [
+              "- Ut mattis gravida efficitur.",
+              " - Ut feugiat vehicula nibh, efficitur laoreet justo. ",
+              "- Molestie id. Integer varius enim sit amet egestas. ",
+              "- Ut mattis gravida efficitur."
+            ]
+          }
+        ]
+      },
+      {
+        "section": "services",
+        "data": [
+          {
+            "img": "/services/cloud.svg",
+            "title": "Stet clita kasd gubergren"
+          },
+          {
+            "img": "/services/earth.svg",
+            "title": "Stet clita kasd gubergren"
+          },
+          {
+            "img": "/services/friends.svg",
+            "title": "Stet clita kasd gubergren"
+          },
+          {
+            "img": "/services/headset.svg",
+            "title": "Stet clita kasd gubergren"
+          }
+        ]
+      },
+      {
+        "section": "details",
+        "data": [
+          {
+            "img": "/details/anchor.svg",
+            "title": "Donec egestas tortor quis turpis finibus vestibulum vel nec ex. Nunc sed velit ullamcorper."
+          },
+          {
+            "img": "/details/bandcamp.svg",
+            "title": "Donec egestas tortor quis turpis finibus vestibulum vel nec ex. Nunc sed velit ullamcorper."
+          },
+          {
+            "img": "/details/bell.svg",
+            "title": "Donec egestas tortor quis turpis finibus vestibulum vel nec ex. Nunc sed velit ullamcorper."
+          },
+          {
+            "img": "/details/bookmark.svg",
+            "title": "Donec egestas tortor quis turpis finibus vestibulum vel nec ex. Nunc sed velit ullamcorper."
+          },
+          {
+            "img": "/details/box-open.svg",
+            "title": "Donec egestas tortor quis turpis finibus vestibulum vel nec ex. Nunc sed velit ullamcorper."
+          },
+          {
+            "img": "/details/brush.svg",
+            "title": "Donec egestas tortor quis turpis finibus vestibulum vel nec ex. Nunc sed velit ullamcorper."
+          }
+        ]
+      }
+    ]
+  }
+]

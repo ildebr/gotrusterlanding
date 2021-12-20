@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "src",
-    "target": "ES2021",
+    "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -17,7 +17,12 @@
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true
   },
-
-  "exclude": ["node_modules", "public"],
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.module.scss.d.ts"]
+ 
+  "exclude": ["node_modules", ".next", "out", "_next"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.module.scss.d.ts"
+  ]
 }

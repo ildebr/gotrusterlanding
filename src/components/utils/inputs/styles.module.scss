@@ -1,0 +1,59 @@
+@import "src/vars.scss";
+.button {
+  background: $orange;
+  border: 0;
+  display: grid;
+  place-items: center;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 12px 36px;
+  border-radius: 48px;
+}
+.area {
+  textarea {
+    background: none;
+    border: none;
+    width: 100%;
+    height: 100%;
+    padding: 0 0 12px 0;
+    border-bottom: 1px solid #5f6368;
+    outline: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: $black;
+  
+    &:focus {
+      color: $orange;
+      border-color: $orange;
+      &::placeholder {
+        color: $orange;
+      }
+    }
+  }
+}
+.input {
+  height: 36px;
+
+  input {
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: $black;
+    padding: 0 0 12px 0;
+    border-bottom: 1px solid #5f6368;
+    transition: all 0.2s linear;
+    &:focus {
+      color: $orange;
+      border-color: $orange;
+      &::placeholder {
+        color: $orange;
+      }
+    }
+  }
+}

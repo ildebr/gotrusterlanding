@@ -1,0 +1,82 @@
+@import "/src/vars.scss";
+.contact {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  padding: 124px 0;
+  background: $grey;
+  position: relative;
+  .content {
+    max-width: 1440px;
+    padding: 0 64px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    .images {
+      z-index: 2;
+    }
+    .form {
+      display: flex;
+      flex-direction: column;
+      row-gap: 64px;
+      max-width: 470px;
+      width: 100%;
+      h1 {
+        span {
+          color: $orange;
+        }
+      }
+      form {
+        display: grid;
+        row-gap: 36px;
+      }
+      .done {
+        color: $orange;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .err {
+        color: red;
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+  }
+  .background {
+    position: absolute;
+    background: #dce1da;
+    right: 0;
+    top: 0;
+    width: 400px;
+    height: 100%;
+  }
+}
+@media (min-width: 320px) {
+  .contact {
+    .background {
+      display: none;
+    }
+    .content {
+      justify-content: center;
+      .images {
+        display: none;
+      }
+    }
+  }
+}
+@media (min-width: 1240px) {
+  .contact {
+    .background {
+      display: block;
+    }
+
+    .content {
+      justify-content: space-between;
+      .images {
+        display: flex;
+      }
+    }
+  }
+}
