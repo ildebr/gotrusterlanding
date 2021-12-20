@@ -2,7 +2,7 @@
 .products {
   display: grid;
   place-items: center;
-  background: $alternative-grey;
+  background: $surface2-dark;
   padding: 124px 0;
   .content {
     display: flex;
@@ -16,7 +16,7 @@
       align-items: center;
       row-gap: 24px;
       span {
-        color: $orange;
+        color: $brand-dark;
         font-weight: 700;
         font-size: 22px;
       }
@@ -32,12 +32,12 @@
         display: flex;
         flex-direction: column;
         row-gap: 24px;
-        background: $white;
+        background: $surface1-dark;
         padding: 24px;
         transition: all 0.2s ease-out;
-        border-bottom: 6px solid $orange;
+        border-bottom: 6px solid $brand-dark;
         span {
-          color: $black;
+          color: $text1-dark;
           font-size: 22px;
           font-weight: 700;
           line-height: 28px;
@@ -52,7 +52,7 @@
           li {
             font-size: 16px;
             line-height: 28px;
-            color: $black;
+            color: $text1-dark;
           }
         }
         &:hover {

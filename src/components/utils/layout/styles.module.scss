@@ -8,12 +8,13 @@
 }
 .header {
   transition: all 0.3s 0.1s ease-out;
-  position: fixed;
+  //position: fixed;
   z-index: 99;
   width: 100%;
+  background-color: $surface1-dark;
   display: flex;
-  border-bottom: 1px solid $orange;
-  height: 100px;
+  border-bottom: 1px solid $surface2-dark;
+  height: 60px;
   justify-content: center;
   align-items: center;
   .content {
@@ -28,6 +29,7 @@
       display: flex;
       align-items: center;
       transition: all 0.4s ease-out;
+      opacity: 0;
     }
     .menu {
       display: flex;
@@ -39,11 +41,12 @@
   }
 }
 .scroll {
-  background: $orange;
+  background: $brand-dark;
   height: 58px;
   .content {
     .logo {
       transform: scale(0.7);
+      opacity: 1;
     }
     .menu {
       .link {
@@ -67,7 +70,7 @@
     opacity: 1;
     width: 100%;
     margin: 0;
-    border: 2px solid $orange;
+    border: 2px solid $brand-dark;
   }
   a {
     display: flex;
@@ -76,10 +79,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+
     span {
       font-size: 16px;
-      color: $white;
+      color: $text1-dark;
       font-weight: 500;
     }
   }
@@ -89,7 +92,7 @@
   width: 100%;
   place-items: center;
 
-  background: $black;
+  background: $surface1-dark;
   .content {
     max-width: 1440px;
     padding: 64px;
@@ -105,7 +108,7 @@
       justify-content: space-between;
       row-gap: 24px;
       span {
-        color: $orange;
+        color: $brand-dark;
       }
     }
     .links {
@@ -121,7 +124,7 @@
       align-items: stretch;
       span {
         font-size: 24px;
-        color: $white;
+        color: $text1-dark;
         font-weight: 700;
       }
       .icons {
@@ -174,7 +177,7 @@
 }
 @media (min-width: 800px) {
   .header {
-    height: 100px;
+    height: 60px;
     padding: 0;
     .content {
       gap: 0;
@@ -188,7 +191,7 @@
       }
     }
   }
-  .scroll{
+  .scroll {
     height: 58px !important;
   }
 }

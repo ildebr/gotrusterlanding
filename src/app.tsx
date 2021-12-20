@@ -5,6 +5,7 @@ import Services from "components/specific/services";
 import Products from "components/specific/products";
 import Details from "components/specific/details";
 import Contact from "components/specific/contact";
+import Hero from "components/utils/hero";
 function App(): JSX.Element {
   const [data, setData] = useState<any>({ sections: [{ data: [] }] });
   const [loading, setLoading] = useState(true);
@@ -32,7 +33,7 @@ function App(): JSX.Element {
     <>
       {!loading && (
         <>
-          <HeroCarousel data={data.sections[0].data} />
+          <Hero />
           <About data={data.sections[1].data} />
           <Services data={data.sections[3].data} />
           <Products data={data.sections[2].data} />

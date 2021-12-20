@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useResize, useGetScroll } from "hooks";
 import LinkB from "./link";
+import { Logo } from "svg";
 
 import styles from "./styles.module.scss";
 function Header(): JSX.Element {
@@ -14,8 +15,9 @@ function Header(): JSX.Element {
     <div className={`${header.styles.class}`} ref={getScroll}>
       <div className={styles.content}>
         <div className={styles.logo}>
-          <img src="/logo_25w.png" alt="25 watts" />
+          <Logo />
         </div>
+
         <div className={styles.menu}>
           <LinkB href="home" label="Home" line={true} />
 

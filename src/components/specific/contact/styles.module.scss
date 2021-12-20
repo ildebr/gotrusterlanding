@@ -4,7 +4,7 @@
   place-items: center;
   width: 100%;
   padding: 124px 0;
-  background: $grey;
+  background: $surface2-dark;
   position: relative;
   .content {
     max-width: 1440px;
@@ -25,7 +25,7 @@
       width: 100%;
       h1 {
         span {
-          color: $orange;
+          color: $brand-dark;
         }
       }
       form {
@@ -33,7 +33,7 @@
         row-gap: 36px;
       }
       .done {
-        color: $orange;
+        color: $brand-dark;
         font-size: 16px;
         font-weight: 500;
       }

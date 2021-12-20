@@ -1,6 +1,52 @@
-$orange: #e0752f;
-$white: #fff;
-$black: #343434;
-$grey: #f2f4f1;
-$alternative-grey: #dce1da;
-$shadow: 0px 8px 24px #42533b66;
+@function hsl-str($h, $s, $l) {
+  @return unquote("hsl(#{$h}, #{$s}, #{$l})");
+}
+$ui-green: #acfd00;
+$monocromatic-white: #fff;
+$monocromatic-grey: #a3a3a3;
+$monocromatic-black: #1c1c1c;
+
+$brand-hue: 79;
+$brand-saturation: 100%;
+$brand-lightness: 50%;
+$brand-dark: hsl-str(
+  $brand-hue,
+  calc($brand-saturation / 2),
+  calc($brand-lightness / 1.5)
+);
+$surface1-dark: hsl-str($brand-hue, 5%, 10%);
+$surface2-dark: hsl-str($brand-hue, 5%, 15%);
+$surface3-dark: hsl-str($brand-hue, 5%, 20%);
+$surface4-dark: hsl-str($brand-hue, 5%, 25%);
+
+$surface-shadow: $brand-hue 50% 3%;
+$shadow-strength: 0.6;
+$text1-dark: hsl-str($brand-hue, 15%, 85%);
+$text2-dark: hsl-str($brand-hue, 5%, 65%);
+$text3-dark: hsl-str($brand-hue, 5%, 25%);
+
+$border: 1px solid hsl-str($brand-hue, 5%, 13%);
+$shadow: 0px 2.8px 1.9px
+    hsl-str($brand-hue, 50%, (3% / ($shadow-strength + 0.03))),
+  0px 6.7px 4.7px hsl-str($brand-hue, 50%, calc(3% / ($shadow-strength + 0.01))),
+  0px 22.3px 15.6px rgba(0, 0, 0, 0.085), 0px 41.8px 29.2px rgba(0, 0, 0, 0.097),
+  0px 100px 70px rgba(0, 0, 0, 0.14);
+
+$shadow-dark: 0 2.8px 2.2px
+    hsl-str($brand-hue, 50%, (3% / ($shadow-strength + 0.03))),
+  0 6.7px 5.3px hsl-str($brand-hue, 50%, calc(3% / ($shadow-strength + 0.01))),
+  0 12.5px 10px hsl-str($brand-hue, 50%, calc(3% / ($shadow-strength + 0.02))),
+  0 22.3px 17.9px hsl-str($brand-hue, 50%, calc(3% / ($shadow-strength + 0.02))),
+  0 41.8px 33.4px hsl-str($brand-hue, 50%, calc(3% / ($shadow-strength + 0.03))),
+  0 100px 80px hsl-str($brand-hue, 50%, calc(3% / $shadow-strength));
+
+$shadow-dark2: 0px 2.8px 2.2px
+    hsl-str($brand-hue, 40%, (3% / ($shadow-strength + 0.03))),
+  0px 6.7px 5.3px hsl-str($brand-hue, 40%, calc(3% / ($shadow-strength + 0.01))),
+  0px 12.5px 10px hsl-str($brand-hue, 40%, calc(3% / ($shadow-strength + 0.02))),
+  0px 22.3px 17.9px
+    hsl-str($brand-hue, 40%, calc(3% / ($shadow-strength + 0.02))),
+  0px 41.8px 33.4px
+    hsl-str($brand-hue, 40%, calc(3% / ($shadow-strength + 0.03))),
+  0px 100px 80px hsl-str($brand-hue, 40%, calc(3% / $shadow-strength));
+$drop-shadow: 0px 0px 42px 11px rgba(39, 60, 46, 0.46);
