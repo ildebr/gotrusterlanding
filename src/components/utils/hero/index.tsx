@@ -6,10 +6,13 @@ function Hero(): JSX.Element {
       <div className={styles.content}>
         <div className={styles.information}>
           <h1>La confianza es tu negocio.</h1>
-      
+          <p>
+            Construí fácilmente tu reputación de usuario confiable, llegá a más
+            gente y vendé más.
+          </p>
         </div>
         <div className={styles.logo}>
-          <Logo />
+          <img src="/images/hero.png" alt="hero" />
         </div>
       </div>
     </div>

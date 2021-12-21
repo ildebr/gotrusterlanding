@@ -11,8 +11,8 @@ $brand-saturation: 100%;
 $brand-lightness: 50%;
 $brand-dark: hsl-str(
   $brand-hue,
-  calc($brand-saturation / 2),
-  calc($brand-lightness / 1.5)
+  calc($brand-saturation / 1.5),
+  calc($brand-lightness / 1.2)
 );
 $surface1-dark: hsl-str($brand-hue, 5%, 10%);
 $surface2-dark: hsl-str($brand-hue, 5%, 15%);
@@ -49,4 +49,8 @@ $shadow-dark2: 0px 2.8px 2.2px
   0px 41.8px 33.4px
     hsl-str($brand-hue, 40%, calc(3% / ($shadow-strength + 0.03))),
   0px 100px 80px hsl-str($brand-hue, 40%, calc(3% / $shadow-strength));
-$drop-shadow: 0px 0px 42px 11px rgba(39, 60, 46, 0.46);
+$drop-shadow:  0px 2.8px 1.9px
+hsl-str($brand-hue, 50%, (3% / ($shadow-strength + 0.03))),
+0px 6.7px 4.7px hsl-str($brand-hue, 50%, calc(3% / ($shadow-strength + 0.01))),
+0px 22.3px 15.6px rgba(0, 0, 0, 0.085), 0px 41.8px 29.2px rgba(0, 0, 0, 0.097),
+0px 100px 70px rgba(0, 0, 0, 0.14);

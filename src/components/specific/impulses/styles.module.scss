@@ -1,0 +1,33 @@
+@import "/src/vars.scss";
+
+.impulses {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  margin: 124px 0;
+  .content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 48px;
+    max-width: 1440px;
+    .row {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      column-gap: 64px;
+      .information {
+        display: flex;
+        flex-direction: column;
+        row-gap: 24px;
+        p {
+          max-width: 400px;
+          color: $text2-dark;
+        }
+        svg {
+          width: 62px;
+          height: 62px;
+        }
+      }
+    }
+  }
+}

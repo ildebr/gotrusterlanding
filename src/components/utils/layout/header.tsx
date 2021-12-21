@@ -1,18 +1,12 @@
-import { useState, useEffect, useRef } from "react";
-import { useResize, useGetScroll } from "hooks";
+
 import LinkB from "./link";
 import { Logo } from "svg";
 
 import styles from "./styles.module.scss";
 function Header(): JSX.Element {
-  const headerRef = useRef(null);
-  const [header, setHeader] = useState({
-    styles: { active: styles.scroll, class: styles.header },
-  });
-  const device = useResize();
-  const getScroll = useGetScroll(headerRef, header, styles);
+ 
   return (
-    <div className={`${header.styles.class}`} ref={getScroll}>
+    <div className={`${styles.header}`}>
       <div className={styles.content}>
         <div className={styles.logo}>
           <Logo />

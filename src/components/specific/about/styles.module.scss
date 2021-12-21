@@ -2,34 +2,55 @@
 .about {
   display: grid;
   place-items: center;
+  // align-items: center;
   width: 100%;
-  border-left: 20px solid $brand-dark;
-  margin: 64px 0;
+  margin: 124px 0;
+  height: auto;
   .content {
+    margin-top: 224px;
     display: flex;
+    flex-direction: column;
+    row-gap: 24px;
     width: 100%;
-    justify-content: center;
+    //justify-content: center;
     flex-wrap: wrap;
     max-width: 1440px;
     column-gap: 64px;
     padding: 0 64px;
     .info {
       display: flex;
-      flex-direction: column;
       row-gap: 24px;
       justify-content: center;
       h1 {
-        span {
-          color: $brand-dark;
-        }
+        color: $brand-dark;
       }
       p {
         max-width: 600px;
         width: auto;
       }
     }
-    .action {
+    .vantages {
       display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      gap: 48px;
+      .point {
+        display: flex;
+        flex-direction: column;
+        padding: 36px;
+        border-radius: 24px;
+        box-shadow: $shadow;
+        row-gap: 12px;
+
+        max-width: 520px;
+        h2 {
+          color: $text1-dark;
+        }
+        p {
+          color: $text2-dark;
+        }
+      }
     }
   }
 }
@@ -53,11 +74,7 @@
 }
 @media (min-width: 1240px) {
   .about {
-    border-left: 20px solid $brand-dark;
     .content {
-      .action {
-        justify-content: flex-start;
-      }
       h1,
       span,
       p {

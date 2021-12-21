@@ -29,7 +29,14 @@
       display: flex;
       align-items: center;
       transition: all 0.4s ease-out;
-      opacity: 0;
+      opacity: 1;
+      svg{
+        width: 36px;
+        height: 36px;
+        path{
+          fill: $brand-dark;
+        }
+      }
     }
     .menu {
       display: flex;
