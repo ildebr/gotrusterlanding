@@ -5,7 +5,7 @@
   position: relative;
   place-items: center;
   height: 700px;
-  background-color: $surface2-dark;
+  background-color: $surface1-dark;
   width: 100%;
   padding: 48px;
   .content {
@@ -17,7 +17,7 @@
     .information {
       max-width: 600px;
       width: fit-content;
-      transform: translateY(-200px);
+      transform: translateY(-100px);
       display: grid;
       row-gap: 24px;
       h1 {

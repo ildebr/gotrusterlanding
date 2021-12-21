@@ -7,18 +7,10 @@ function LinkB(props: {
 }): JSX.Element {
   const { href, label, line } = props;
   return (
-    <div className={styles.link}>
-      <Link
-        activeClass="active"
-        to={href}
-        spy={true}
-        smooth={true}
-        offset={-70}
-        duration={500}
-      >
+    <div className={`${styles.link} ${styles.linkApp}`}>
+      <a href={href}>
         <span>{label}</span>
-      </Link>
-     
+      </a>
     </div>
   );
 }
