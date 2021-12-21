@@ -1,0 +1,35 @@
+@import "/src/vars.scss";
+
+.invitation {
+  display: grid;
+  place-items: center;
+  height: 500px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  .content {
+    display: flex;
+    flex-direction: column;
+    max-width: 1440px;
+    row-gap: 24px;
+    justify-content: center;
+    align-items: center;
+    a {
+      width: fit-content;
+      display: grid;
+      place-items: center;
+      background: $brand-dark;
+      border: none;
+      padding: 6px 48px;
+      color: $text1-dark;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 24px;
+    }
+    span {
+        font-size: 24px;
+        color: $text2-dark;
+        font-weight: 600;
+    }
+  }
+}

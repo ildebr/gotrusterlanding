@@ -8,6 +8,7 @@ import Contact from "components/specific/contact";
 import Points from "components/specific/points";
 import Hero from "components/utils/hero";
 import Impulses from "components/specific/impulses";
+import Invitation from "components/specific/invitation";
 function App(): JSX.Element {
   return (
     <>
@@ -15,6 +16,7 @@ function App(): JSX.Element {
       <About />
       <Points />
       <Impulses />
+      <Invitation />
     </>
   );
 }
